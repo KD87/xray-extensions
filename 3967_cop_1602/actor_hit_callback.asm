@@ -12,6 +12,7 @@ CActor_HitSignal_ext:
 	mov     ebp, esp
 	push    edi
 	mov     edi, ecx ; this
+	push    ecx
 ; вызываем скриптовый колбек на хит
 ;callback(GameObject::eHit)(
 ;		this->lua_game_object(), 
@@ -19,18 +20,18 @@ CActor_HitSignal_ext:
 ;		vLocalDir,
 ;		who->lua_game_object(),
 ;		element);
-	jmp l1
+	;jmp l1
 	mov     ecx, dword ptr [ebp+4h+10h]
 	push    ecx ; push element
 	mov     ecx, dword ptr [ebp+4h+0Ch]
 	call    CGameObject__lua_game_object
 	push    eax ; push who.game_object
 	mov     eax, dword ptr [ebp+4h+08h]
-	mov     ecx, [eax]
+	mov     ecx, [eax + 8h]
 	push    ecx ; push dir_x
 	mov     ecx, [eax + 4h]
 	push    ecx ; push dir_y
-	mov     ecx, [eax + 8h]
+	mov     ecx, [eax]
 	push    ecx ; push dir_z
 	mov     eax, [ebp+4h+4h] ; perc
     push    eax
@@ -45,8 +46,9 @@ l1:
 	call    CGameObject__callback ; eax = hit_callback
 	mov     ecx, eax ; ecx = hit_callback
 	
-	;call    script_hit_callback
+	call    script_hit_callback
 	; ----
+	pop     ecx
 	pop     edi
 	pop     ebp
 ; делаем то, что вырезали
