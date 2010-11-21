@@ -288,6 +288,38 @@ CUIPdaWnd__SetActiveSubdialog_1:
 ;.text:104428C3		mov     eax, [esi+78h]
 ;.text:104428C6 	test    eax, eax
 
+;ищется по названию
+org 10509D9Ah - shift
+__RTDynamicCast:
+;.text:10509D9A                 jmp     ds:__imp___RTDynamicCast
+
+org 1026F8C0h - shift
+CActor__SetWeaponHideState:
+
+; public: void __thiscall CPHMovementControl::DestroyCharacter(void)
+org 104FE590h - shift
+CPHMovementControl__DestroyCharacter:
+
+; protected: bool __thiscall CActor::use_Vehicle(class CHolderCustom *)
+org 10278B8Ah - shift
+CActor__use_Vehicle_part:
+    ;было
+;.text:10278B8A                 mov     dword ptr [esi+540h], 0
+	;стало
+	jmp		CActor__use_Vehicle_chunk_1
+	nop
+	nop
+	nop
+	nop
+	nop
+	
+loc_10278B94:
+;.text:10278B94                 pop     edi
+;.text:10278B95                 mov     al, 1
+;.text:10278B97                 pop     esi
+;.text:10278B98                 add     esp, 0Ch
+;.text:10278B9B                 retn    4
+
 
 ;===================| Секция .idata  |=========================================
 ; Ищутся по именам в окне Names IDA
@@ -305,10 +337,18 @@ org 10512DB8h - shift
 _Console_	dd ?  ; class CConsole * Console
 org 10513264h - shift
 _phTimefactor_	dd ? ; float phTimefactor
+org 1062CD54h - shift
+_R0_AVCCar dd ?  ; class CCar `RTTI Type Descriptor'
+org 1062D130h - shift
+_R0_AVCHolderCustom	dd ?  ; class CHolderCustom `RTTI Type Descriptor'
+org 10512258h - shift
+__imp___RTDynamicCast dd ? ; __imp___RTDynamicCast
 
 ;===================| Секция .data  |=========================================
 ;сначала находится в билде 2947, а потом ищется в аналогичных функциях COP
 org 10635C44h - shift
 g_fov dd ?
+org 1064EA60h - shift
+INV_STATE_CAR	 dw ?	; unsigned int INV_STATE_CAR
 
 
