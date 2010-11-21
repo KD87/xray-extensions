@@ -8,3 +8,4 @@
 0x104CCC32 4 блокировка сообщения "'cannot find rank for ..."
 0x103349CD 5 CCC_RegisterCommands_part_0 ; добавление консольных команд
 0x104428BB 8 CUIPdaWnd__SetActiveSubdialog_ext ; посылка инфопоршня при смене закладок в ПДА
+0x10278B8A 10 CActor__use_Vehicle_part ; возможность ездить на машинках
