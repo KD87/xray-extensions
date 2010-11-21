@@ -207,6 +207,7 @@ aSetHeading db "SetHeading", 0
 
 
 include actor_hit_callback.asm
+include console_fix.asm
 ;=================================================
 
 log_str:

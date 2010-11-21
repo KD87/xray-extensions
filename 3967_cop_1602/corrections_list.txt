@@ -6,3 +6,4 @@
 0x1047F4B5 5 CUIStatic_extention_1 ; врезка с инструкцией перехода - 5 байт
 0x1047F504 5 CUIStatic_extention_2 ; врезка с инструкцией перехода - 5 байт
 0x104CCC32 4 блокировка сообщения "'cannot find rank for ..."
+0x103349CD 5 CCC_RegisterCommands_part_0 ; добавление консольных команд
