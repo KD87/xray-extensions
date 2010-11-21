@@ -205,9 +205,10 @@ aS_4 db "%s", 0
 aSettexturerect db "SetTextureRect", 0
 aSetHeading db "SetHeading", 0
 
-
 include actor_hit_callback.asm
 include console_fix.asm
+include pda_fix.asm
+
 ;=================================================
 
 log_str:

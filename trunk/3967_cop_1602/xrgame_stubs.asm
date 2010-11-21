@@ -247,13 +247,47 @@ _atexit:
 org 103349CDh - shift
 CCC_RegisterCommands_part_0:
 	;было
-;.text:103349CD 008                 mov     eax, 4000h
+;.text:103349CD		mov     eax, 4000h
 	;стало
 	jmp		CCC_RegisterCommands_chunk_0
 	
 CCC_RegisterCommands_1:
-;.text:103349D2 008                 test    dword_1064FB44, eax
-;.text:103349D8 008                 jnz     short loc_10334A0D
+;.text:103349D2		test    dword_1064FB44, eax
+;.text:103349D8		jnz     short loc_10334A0D
+
+; void __cdecl InventoryUtilities::SendInfoToActor(const char info_portion)
+; как найти: ищем строчку "ui_pda_hide", переходим по ссылке на код, который на нее ссылается
+; там будет что-то вида:
+;.text:10442B5E		push    offset aUi_pda_hide ; "ui_pda_hide"
+;.text:10442B63		call    sub_10466290 <= это и есть нужная функция InventoryUtilities__SendInfoToActor
+org 10466290h - shift
+InventoryUtilities__SendInfoToActor:
+
+; void __thiscall CUIPdaWnd::SetActiveSubdialog(CUIPdaWnd *this, EPdaTabs section)
+;как найти: ищем строку "CUIPdaWnd::SetActiveSubdialog" - функция, в которой она используется, и есть нужная
+;.text:104428B0     CUIPdaWnd__SetActiveSubdialog proc near 
+;.text:104428B0     section         = dword ptr  4
+;.text:104428B0
+;.text:104428B0		push    esi
+;.text:104428B1		mov     esi, ecx
+;.text:104428B3		mov     eax, [esi+7Ch]
+;.text:104428B6		push    edi
+;.text:104428B7		mov     edi, [esp+8+section]
+org 104428BBh - shift
+CUIPdaWnd__SetActiveSubdialog_ext:
+	;было
+;.text:104428BB		cmp     eax, [edi]
+;.text:104428BD		jz      loc_104429F8
+	;стало
+	jmp		CUIPdaWnd__SetActiveSubdialog_chunk
+	nop
+	nop
+	nop
+	
+CUIPdaWnd__SetActiveSubdialog_1:	
+;.text:104428C3		mov     eax, [esi+78h]
+;.text:104428C6 	test    eax, eax
+
 
 ;===================| Секция .idata  |=========================================
 ; Ищутся по именам в окне Names IDA
