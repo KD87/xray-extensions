@@ -7,3 +7,4 @@
 0x1047F504 5 CUIStatic_extention_2 ; врезка с инструкцией перехода - 5 байт
 0x104CCC32 4 блокировка сообщения "'cannot find rank for ..."
 0x103349CD 5 CCC_RegisterCommands_part_0 ; добавление консольных команд
+0x104428BB 8 CUIPdaWnd__SetActiveSubdialog_ext ; посылка инфопоршня при смене закладок в ПДА
