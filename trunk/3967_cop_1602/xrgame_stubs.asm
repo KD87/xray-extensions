@@ -237,13 +237,44 @@ CCustomHUD__GetRQ:
 org 104CCC2Eh + 4 - shift ; в список правок впишем 0x104CCC32 4
 		 dword 00000000h ; второй аргумент инструкции   mov     [esp+34h+var_24], 0FFFFFFFFh
 
+; ищется по названию atexit
+; используется для вызова деструкторов у статических объектов
+org 10509FD0h - shift
+_atexit:
+
+; void __cdecl CCC_RegisterCommands()
+; как найти: находим DllMain по названию и первая вызываемая функция будет она
+org 103349CDh - shift
+CCC_RegisterCommands_part_0:
+	;было
+;.text:103349CD 008                 mov     eax, 4000h
+	;стало
+	jmp		CCC_RegisterCommands_chunk_0
+	
+CCC_RegisterCommands_1:
+;.text:103349D2 008                 test    dword_1064FB44, eax
+;.text:103349D8 008                 jnz     short loc_10334A0D
+
 ;===================| Секция .idata  |=========================================
+; Ищутся по именам в окне Names IDA
 org 10512558h - shift
 FlushLog dword ? ; void __cdecl FlushLog(void)
 org 10512820h - shift 
 Msg      dword ? ; void __cdecl Msg(char const *, ...)
 org 10512D30h - shift
 g_hud    dword ? ; class CCustomHUD * g_hud
+org 10512B0Ch - shift
+_CCC_Float_	dd ? ; public: __thiscall CCC_Float::CCC_Float(char const *, float *, float, float)
+org 10512AF4h - shift
+_1CCC_Float_	dd ?  ; public: virtual __thiscall CCC_Float::~CCC_Float(void)
+org 10512DB8h - shift
+_Console_	dd ?  ; class CConsole * Console
+org 10513264h - shift
+_phTimefactor_	dd ? ; float phTimefactor
 
+;===================| Секция .data  |=========================================
+;сначала находится в билде 2947, а потом ищется в аналогичных функциях COP
+org 10635C44h - shift
+g_fov dd ?
 
 
