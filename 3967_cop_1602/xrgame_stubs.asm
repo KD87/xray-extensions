@@ -320,6 +320,16 @@ loc_10278B94:
 ;.text:10278B98                 add     esp, 0Ch
 ;.text:10278B9B                 retn    4
 
+; public: void __thiscall CScriptGameObject::UnloadMagazine(void)
+;как найти: ищем строку "unload_magazine" gjgflftv yf rjl dblf^
+;.text:101EDED1                 push    offset aUnload_magazin ; "unload_magazine"
+;.text:101EDED6                 mov     ecx, eax
+;.text:101EDED8                 mov     [esp+64h+var_38], offset sub_101c97c0 ; <<< искомая функция
+;.text:101EDEE0                 call    sub_101D4350
+org 101C9835h - shift
+CScriptGameObject__UnloadMagazine_part:
+push    1
+
 
 ;===================| Секция .idata  |=========================================
 ; Ищутся по именам в окне Names IDA
