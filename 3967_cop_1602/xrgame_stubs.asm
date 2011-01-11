@@ -331,6 +331,24 @@ CScriptGameObject__UnloadMagazine_part:
 push    1
 
 
+;==============================================================================
+; ищется по ссылке на строку "li_pause_key"
+;.text:10237540 CLevel__IR_OnKeyboardPress proc near    ; DATA XREF: .rdata:1054857Co
+;.text:10237540                 mov     eax, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
+org 10237545h - shift
+	jmp level_input_fix
+;.text:10237545                 sub     esp, 410h
+org 1023754Bh - shift
+back_from_level_input_fix:
+;.text:1023754B                 cmp     dword ptr [eax+0Ch], 0
+
+
+org 103065C0h - shift
+script_callback_int_int: ; this - в ecx, два аргумента в стеке
+
+org 1026A790h - shift
+Actor:
+
 ;===================| Секция .idata  |=========================================
 ; Ищутся по именам в окне Names IDA
 org 10512558h - shift
@@ -361,4 +379,7 @@ g_fov dd ?
 org 1064EA60h - shift
 INV_STATE_CAR	 dw ?	; unsigned int INV_STATE_CAR
 
+
+org 1064E2C0h - shift
+g_Actor  dd ?
 
