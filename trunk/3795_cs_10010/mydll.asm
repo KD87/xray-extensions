@@ -5,7 +5,7 @@
 
 include addr.inc
 
-_code segment byte public 'CODE' use32
+_code segment public 'CODE' use32
 	assume cs:_code
 	assume ds:_code
 ; заглушка для линковшика
@@ -21,13 +21,10 @@ org sec1_sec2_dist
 
 include global_ns_fix.asm
 include level_ns_fix.asm
-include cuistatic_fix.asm
+include actor_input_fix.asm
 include actor_hit_callback.asm
-include console_fix.asm
-include pda_fix.asm
-include car_fix.asm
-include level_input_fix.asm
-
+include game_object_fix.asm
+include cuiwindow_fix.asm
 _code ENDS
 
 end LibMain

@@ -1,0 +1,8 @@
+0x10190492 5 global_space_ext ; врезка с инструкцией перехода - 5 байт
+0x10155D87 5 ; jmp game_object_fix
+0x101A6E50 5 ; jmp call_key_press_callback
+0x101A71F0 5 ; jmp call_key_release_callback
+0x101A7330 5 ; jmp call_key_hold_callback
+0x101A6CA5 5 ; jmp call_mouse_wheel_callback
+0x101DE710 5 ; jmp call_mouse_move_callback
+;0x101A6DC0 5 ; jmp call_mouse_move_callback

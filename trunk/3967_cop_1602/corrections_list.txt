@@ -10,3 +10,4 @@
 0x104428BB 8 CUIPdaWnd__SetActiveSubdialog_ext ; посылка инфопоршня при смене закладок в ПДА
 0x10278B8A 10 CActor__use_Vehicle_part ; возможность ездить на машинках
 0x101C9835 2 CScriptGameObject__UnloadMagazine_part ; при вызове game_object:unload_magazine() в инвентарь выкладываются заряженные в оружие патроны
+0x10237545 5 ; jmp level_input_fix
