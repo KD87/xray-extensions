@@ -5,9 +5,9 @@
 
 include addr.inc
 
-_code segment public 'CODE' use32
-	assume cs:_code
-	assume ds:_code
+_CODE segment public 'CODE' use32
+	assume cs:_CODE
+	assume ds:_CODE
 ; заглушка для линковшика
 LibMain proc STDCALL instance:DWORD,reason:DWORD,unused:DWORD 
     ret
@@ -29,7 +29,7 @@ include actor_input_fix.asm
 include global_ns_fix.asm
 include game_object_fix.asm
 
-_code ENDS
+_CODE ENDS
 
 end LibMain
 
