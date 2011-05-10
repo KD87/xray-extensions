@@ -27,8 +27,13 @@ org sec1_sec2_dist
 
 include actor_input_fix.asm
 include global_ns_fix.asm
+include global_ns_fix2.asm
 include game_object_fix.asm
-
+include actor_hit_callback.asm
+include hit_memory_manager_fix.asm
+include actor_inventory_callbacks.asm
+include alife_simulator_fix.asm
+include weapon_fix.asm
 _CODE ENDS
 
 end LibMain

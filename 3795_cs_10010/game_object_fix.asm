@@ -38,8 +38,22 @@ game_object_fix:
 	push    edx
 	lea     edi, [esp+88h-6Ch]
 	mov     ebx, eax
-	mov     [esp+88h-6Ch], offset item_on_belt
+	mov     [esp+88h-6Ch], offset CScriptGameObject__GetItemOnBelt
 	call    item_on_belt_registration
+	; регистрация метода получения количества объектов на поясе
+	xor     bl, bl
+	mov     byte ptr [esp+80h+4h], bl
+	mov     ecx, [esp+80h+4h]
+	push    ecx
+	mov     byte ptr [esp+84h-68h], bl
+	mov     edx, [esp+84h-68h]
+	push    edx
+	lea     ecx, [esp+88h-6Ch]
+	push    ecx
+	push    offset aBelt_object_count ; "belt_object_count"
+	push    eax
+	mov     [esp+94h-6Ch], offset CScriptGameObject__GetBeltObjectCount
+	call    register__object_count
 	; регистрируем функцию получения топлива у машины
 	xor     ebx, ebx ; ?????????????????????????????????????
 	mov     byte ptr [esp+80h+4], bl
@@ -108,6 +122,19 @@ game_object_fix:
 	mov     ebx, eax
 	mov     [esp+8Ch-6Ch], offset CScriptGameObject__SetFuelConsumption
 	call    register_set_actor_direction
+	; регистрируем функцию установки имени персонажа
+	xor     bl, bl
+	mov     byte ptr [esp+58h-28h], bl
+	mov     ecx, [esp+58h-28h]
+	mov     byte ptr [esp+58h-30h], bl
+	mov     edx, [esp+58h-30h]
+	push    ecx
+	push    edx
+	push    offset aSet_character_name ; "set_character_name"
+	lea     edi, [esp+64h-38h]
+	mov     ebx, eax
+	mov     [esp+64h-38h], offset CScriptGameObject__set_character_name
+	call    register_sound_prefix
 	; идём обратно
 	jmp back_from_game_object_fix
 
@@ -120,7 +147,9 @@ aSet_fuel db "set_fuel", 0
 aGet_fuel_consumption db "get_fuel_consumption", 0
 aSet_fuel_consumption db "set_fuel_consumption", 0
 aGet_fuel_tank db "get_fuel_tank", 0
-
+aBelt_object_count db "belt_object_count", 0
+aItem_on_belt db "item_on_belt", 0
+aSet_character_name db "set_character_name", 0
 
 ; GetTargetObject:
 	; mov     eax, [g_hud] ; CCustomHUD * g_hud
@@ -368,29 +397,6 @@ lab6:
                 retn    8
 item_on_belt_registration endp
 
-aItem_on_belt db "item_on_belt", 0
-
-
-item_on_belt    proc
-
-arg_0           = dword ptr  8
-
-                push    ebp
-                mov     ebp, esp
-				push edi
-				;mov     ecx, [ecx+4]
-                ;mov     edi, ecx
-				call Actor ; eax = client actor
-				mov edi, eax
-                call    CGameObject__lua_game_object
-				;xor eax, eax
-				
-				pop edi
-                pop     ebp
-                retn    4
-item_on_belt    endp
-
-
 CScriptGameObject__GetFuel proc
 var_4 = dword ptr -4
 
@@ -459,3 +465,154 @@ dir = dword ptr  8
 	pop     ebp
 	retn    4
 CScriptGameObject__SetFuelConsumption endp
+
+
+CScriptGameObject__GetBeltObjectCount proc near
+                push    ebp
+                mov     ebp, esp
+                and     esp, 0FFFFFFF8h
+                mov     ecx, [ecx+4] ; ecx = m_game_object
+                test    ecx, ecx
+                jz      short lab1
+                mov     eax, [ecx]   ; eax = vtable ???
+                mov     edx, [eax+80h]
+                call    edx          ; eax = CInventoryOwner
+                test    eax, eax
+                jz      short lab1
+                mov     ecx, [eax+1Ch] ; ecx = CInventory
+                mov     eax, [ecx+32]   ; eax = &end
+                sub     eax, [ecx+28]   ; eax = &end - &start
+                ;add     ecx, 4         ; eax = &end - &start + 4
+                sar     eax, 2         ; eax = (&end - &start + 4) / 4
+                mov     esp, ebp
+                pop     ebp
+                retn
+; ---------------------------------------------------------------------------
+lab1:
+                xor     eax, eax
+                mov     esp, ebp
+                pop     ebp
+                retn
+CScriptGameObject__GetBeltObjectCount endp
+
+CScriptGameObject__GetItemOnBelt_old    proc
+
+arg_0           = dword ptr  8
+
+                push    ebp
+                mov     ebp, esp
+				push edi
+				;mov     ecx, [ecx+4]
+                ;mov     edi, ecx
+				call Actor ; eax = client actor
+				mov edi, eax
+                call    CGameObject__lua_game_object
+				;xor eax, eax
+				
+				pop edi
+                pop     ebp
+                retn    4
+CScriptGameObject__GetItemOnBelt_old    endp
+
+CScriptGameObject__GetItemOnBelt proc
+arg_0 = dword ptr  8
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	mov     ecx, [ecx+4] ; ecx = m_game_object
+	test    ecx, ecx
+	push    edi
+	jz      short fail_exit
+	mov     eax, [ecx]
+	mov     edx, [eax+80h]
+	call    edx         ; eax = CInventoryOwner
+	test    eax, eax
+	jz      short fail_exit
+	mov     ecx, [eax+1Ch]  ; ecx = CInventory
+	
+	mov     edx, [ecx+32] ; edx = &end
+	;mov     edx, [ecx+8] ; edx = &end
+	sub     edx, [ecx+28] ; edx = &end - &begin
+	;sub     edx, [ecx+4] ; edx = &end - &begin
+	
+	mov     eax, [ebp+arg_0]  ; eax = index
+	sar     edx, 2            ; edx = (&end - &begin)/4 == <общее количество объектов на поясе>
+	cmp     edx, eax ; если количество <= индексу, значит что-то не то
+	jbe     short fail_exit
+	
+	mov     ecx, [ecx+28] ; ecx = &begin
+	;mov     ecx, [ecx+4] ; ecx = &begin
+	
+	shl     eax, 2        ; eax = index * 4
+	mov     eax, [eax+ecx] ; получаем предмет из массива
+	test    eax, eax 
+	jz      short fail_exit ; если там ноль, валим отсюда
+	; приводим CInventoryItem к CGameObject
+	mov     edx, [eax]
+	mov     ecx, eax
+	mov     eax, [edx+124h]
+	call    eax
+	test    eax, eax
+	jz      fail_exit
+	; получаем CScriptGameObject из CGameObject 
+	mov     edi, eax
+	call    CGameObject__lua_game_object
+	jmp     success
+fail_exit:
+	xor     eax, eax
+success:
+	pop     edi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__GetItemOnBelt endp
+
+
+;m_belt; // begin == 7*4   end == 8*4
+
+CScriptGameObject__set_character_name proc
+arg_0 = dword ptr  8
+	
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	
+	mov     ecx, [ecx+4] ; ecx = m_game_object
+	test    ecx, ecx
+	jz      short fail ; if (!m_game_object) goto fail
+	mov     eax, [ecx]
+	mov     edx, [eax+80h]
+	call    edx     ;  eax = pInventoryOwner
+	test    eax, eax 
+	jz     short fail
+	mov     esi, eax
+
+	mov     edi, offset aTestName
+	mov     ecx, edi
+	lea     edx, [ecx+1]
+len_loop:
+	mov     al, [ecx]
+	add     ecx, 1
+	test    al, al
+	jnz     short len_loop
+
+	sub     ecx, edx
+	add     ecx, edi
+	push    ecx
+	push    edi
+	lea     eax, [esi+40h]
+	call    xr_string__assign_operator
+fail:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__set_character_name endp
+
+aTestName db "it is a test name", 0
+aEmpty_str db 0

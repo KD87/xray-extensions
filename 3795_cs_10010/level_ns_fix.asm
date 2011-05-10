@@ -44,7 +44,30 @@ level_ns_extension_1 proc
 	push    eax
 	call    get_snd_volume_register ; регистрируем функцию с прототипом как у   get_snd_volume
 	add     esp, 08h
-	
+;------------< регистрируем функцию для скрывания миникарты >------
+	mov     eax, esp
+	push    ecx
+	push    offset hide_minimap_old1
+	push    offset aHide_minimap ; "hide_minimap"
+	push    eax
+	call    register_level_disable_input
+	add     esp, 0Ch
+;------------< регистрируем функцию для показывания миникарты >------
+	mov     eax, esp
+	push    ecx
+	push    offset show_minimap_new
+	push    offset aShow_minimap ; "show_minimap"
+	push    eax
+	call    register_level_disable_input
+	add     esp, 0Ch
+;------------< регистрируем функцию для получения статуса миникарты >------
+	mov     eax, esp
+	push    offset minimap_shown_old
+	push    offset aMinimap_shown ; "minimap_shown"
+	push    eax
+	call    register_is_wfx_playing
+	pop     ecx
+	pop     ecx
 skip:
 	
 level_ns_extension_1 endp
@@ -66,6 +89,10 @@ aSet_ph_time_factor db "set_ph_time_factor", 0
 aGet_ph_time_factor db "get_ph_time_factor", 0
 aGet_fov db "get_fov", 0
 aSet_fov db "set_fov", 0
+aHide_minimap db "hide_minimap", 0
+aShow_minimap db "show_minimap", 0
+aMinimap_shown db "minimap_shown", 0
+
 
 level_ns_extension_2 proc
  ; здесь надо добавлять столько раз   "mov ecx, eax" + "call esi", сколько добавляли функций
@@ -89,6 +116,15 @@ level_ns_extension_2 proc
 	mov     ecx, eax
 	call    esi 
 	; для get_fov
+	mov     ecx, eax
+	call    esi 
+	; для hide_minimap
+	mov     ecx, eax
+	call    esi 
+	; для show_minimap
+	mov     ecx, eax
+	call    esi 
+	; для minimap_shown
 	mov     ecx, eax
 	call    esi 
 skip:
@@ -162,3 +198,130 @@ arg_0           = dword ptr  4
 	mov     [g_fov], eax
 	retn
 SetFOV endp
+
+
+hide_minimap_old proc
+	mov     eax, g_pGameLevel
+	mov     eax, [eax]
+	mov     eax, [eax+40104h] ; ecx = pHUD
+	mov     eax, [eax]    ; edx = CHUDManager.vtable
+	mov     eax, [eax+18h] ; eax = CHUDManager::GetUI
+	call    eax            ; eax = GetUI()
+	mov     ecx, [eax+64] ; CUIMainIngameWnd*		UIMainIngameWnd; // 64
+	;mov     ecx, [eax+1564h] ; CUIZoneMap*			UIZoneMap; // 1564h	
+	mov     eax, 0
+	push    eax
+	call    CUIWindow__Show
+	retn
+hide_minimap_old endp
+
+hide_minimap_old1 proc
+	push eax
+	push ecx
+	push edx
+	
+	mov     ecx, g_pGameLevel
+	mov     edx, [ecx]
+	mov     ecx, [edx+40104h]
+	mov     eax, [ecx]
+	mov     edx, [eax+18h]
+	call    edx
+	mov     eax, [eax+40h]
+	mov     eax, [eax+1564h]
+	mov     byte ptr [eax+4], 0
+	
+	;mov     eax, [eax]
+	;mov     eax, [eax+6Ch]
+	;xor     edx, edx
+	;push    edx
+	;call    eax
+
+	
+	
+	push    offset hide_msg
+	call    ds:[Msg] 
+	add     esp, 04h
+
+	pop edx
+	pop ecx
+	pop eax
+	retn
+hide_minimap_old1 endp
+
+hide_msg db "trying hide minimap", 0
+
+minimap_shown_old proc
+	push ecx
+	push edx
+	
+	mov     ecx, g_pGameLevel
+	mov     edx, [ecx]
+	mov     ecx, [edx+40104h]
+	mov     eax, [ecx]
+	mov     edx, [eax+18h]
+	call    edx
+	mov     eax, [eax+40h]
+	mov     edx, [eax+1564h]
+	xor eax, eax
+	mov     al, byte ptr [edx+4]
+
+	pop edx
+	pop ecx
+	retn
+minimap_shown_old endp
+
+minimap_draw_fix proc
+	cmp byte ptr [is_minimap_shown], 0
+	jmp back_from_minimap_draw_fix__skip_minimap_drawing ; проверка нашего флажка
+	jz back_from_minimap_draw_fix__skip_minimap_drawing ; проверка нашего флажка
+	cmp     byte ptr [esi+4], 0 ; выполняем вырезанную инструкцию
+	jz back_from_minimap_draw_fix__skip_minimap_drawing ; проверка встроенного флажка, хоть от неё и нет толка
+	;
+	push    offset hide_msg
+	call    ds:[Msg] 
+	add     esp, 04h
+	;
+	jmp back_from_minimap_draw_fix__draw_minimap
+minimap_draw_fix endp
+
+hide_minimap proc
+	mov [is_minimap_shown], 0
+	retn
+hide_minimap endp
+
+show_minimap proc
+	mov [is_minimap_shown], 1
+	retn
+show_minimap endp
+minimap_shown proc
+	mov     al, [is_minimap_shown]
+	retn
+minimap_shown endp
+is_minimap_shown db 1
+
+show_minimap_new proc
+	push eax
+	push ecx
+	push edx
+	
+	mov     ecx, g_pGameLevel
+	mov     edx, [ecx]
+	mov     ecx, [edx+40104h]
+	mov     eax, [ecx]
+	mov     edx, [eax+18h]
+	call    edx
+	mov     eax, [eax+40h]
+	mov     eax, [eax+1564h]
+	mov     byte ptr [eax+4], 1
+
+	push    offset show_msg
+	call    ds:[Msg] 
+	add     esp, 04h
+	
+	pop edx
+	pop ecx
+	pop eax
+	retn
+show_minimap_new endp
+
+show_msg db "trying show minimap", 0

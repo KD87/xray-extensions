@@ -2,6 +2,77 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+org 1032A8BCh - shift
+CUIWindow__Show: ; this в ECX
+
+org 101E0BF1h - shift
+register_level_disable_input: ; регистрация в пространстве имён level функции с прототипом void fun(void)
+
+org 101A5207h - shift
+register_is_wfx_playing: ; регистрация в пространстве имён level функции с прототипом bool fun(void)
+
+org 1017AA30h - shift
+register__object_count: ; регистрация метода game_object без аргументов, возвращащего int
+
+
+org 1017B4F0h - shift
+register_sound_prefix:  ; регистрация метода game_object с прототипом void fun(string* s)
+
+org 1004EFE0h - shift
+xr_string__assign_operator:
+
+
+
+;.text:1042EB51                 mov     byte ptr [ecx+4], 1
+org 1042EB51h - shift
+	nop
+	nop
+	nop
+	nop
+
+;.text:104316DE                 mov     byte ptr [esi+4], 1
+org 104316DEh - shift
+	nop
+	nop
+	nop
+	nop
+
+;.text:10438809                 mov     byte ptr [eax+4], 0
+org 10438809h - shift
+	nop
+	nop
+	nop
+	nop
+
+;.text:1043C994                 mov     byte ptr [eax+4], 1
+org 1043C994h - shift
+	nop
+	nop
+	nop
+	nop
+	
+; скрывание миникарты. В миникарте есть свой флажок видимости, но он постоянно где-то переписывается в true
+; так что вводим свой и делаем врезку в функцию отрисовки
+
+;.text:10438A10 CUIActorMenu__Draw proc near
+;...
+;.text:10438A30                 mov     esi, [eax+1564h]
+org 10438A36h - shift
+	jmp minimap_draw_fix
+;.text:10438A36                 cmp     byte ptr [esi+4], 0 ; <== это было
+;.text:10438A3A                 jz      short loc_10438A69
+org 10438A3Ch - shift
+back_from_minimap_draw_fix__draw_minimap:
+;.text:10438A3C                 mov     edx, [esi+3D8h]
+;...
+;.text:10438A69
+;.text:10438A69 loc_10438A69:    
+org 10438A69h - shift
+back_from_minimap_draw_fix__skip_minimap_drawing:
+;.text:10438A69                 mov     ecx, [edi+0A0h]
+
+
+
 ; миниправка функции get_rank на предмет блокировки сообщения "'cannot find rank for ..."
 ; для стволов, не прописанных в mp_ranks
 ; Сейчас, если ранг не найден, функция будет возвращать ранг 0 

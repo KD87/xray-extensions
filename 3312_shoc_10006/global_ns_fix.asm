@@ -1,3 +1,4 @@
+include global_ns_reg_macro.asm
 ;===============| расширение регистрации глобального пространства имЄн |=======
 ALIGN_8
 global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
@@ -12,7 +13,7 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
     call    error_log_register
 	; регистраци€ функции "bind_to_dik"
 	push    offset bind_to_dik
-	push    offset aBind_to_dik  ; "bit_or"
+	push    offset aBind_to_dik  ; "bind_to_dik"
 	push    [ebp+8h]
 	call    bit_and_register
 	add     esp, 0Ch
@@ -28,7 +29,7 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	push    [ebp+8h]
 	call    bit_and_register
 	add     esp, 0Ch
-	
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg0, "set_int_arg0"
 	; ; регистраци€ функции "flush1", вместо нерабочей "flush"
      ; lea     eax, [ebp-1]
      ; push    eax
@@ -100,6 +101,8 @@ ALIGN_8
 aF_4 db "%f", 0
 ALIGN_8
 aS_4 db "%s", 0
+
+
 ALIGN_8
 bind_to_dik proc near
 
@@ -107,11 +110,11 @@ _action_id      = dword ptr  4
 ;stub = dword ptr 4
 
 	mov     eax, [esp+_action_id]         ; 
-	cmp     eax, 78
-	jnz     lab3
-	mov     eax, 100000
-	retn
-lab3:
+	cmp     eax, 76
+	jg      arg_out_of_range
+	cmp     eax, 0
+	jl      arg_out_of_range
+; аргумент в пределах допустимого диапазона
 	imul    eax, 0Ch                      ; 
 	add     eax, offset g_key_bindings    ; g_key_bindings[cmd]
 	mov     ecx, [eax+4]                  ; ecx = g_key_bindings[cmd].m_keyboard[0]
@@ -122,11 +125,14 @@ lab3:
 lab1:
 	mov     eax, [eax+8]
 	test    eax, eax
-	jz      short lab2
+	jz      short not_binded
 	mov     eax, [eax+4]
 	retn
-lab2:
+not_binded:
 	xor     eax, eax
+	retn
+arg_out_of_range: ; аргумент вне допустимого диапазона
+	mov     eax, 100000
 	retn
 bind_to_dik endp
 
@@ -147,3 +153,11 @@ _flags      = dword ptr  4
 	mov     eax, [extensions_flags]
 	retn
 get_extensions_flags endp
+
+SetIntArg0 proc
+int_arg = dword ptr  4
+	mov     eax, [esp+int_arg]
+	mov     g_shift_argument, eax
+	retn
+SetIntArg0 endp
+

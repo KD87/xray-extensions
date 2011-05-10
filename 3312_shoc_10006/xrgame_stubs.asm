@@ -1,6 +1,260 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+
+;.text:102D5B12                 movss   xmm0, [ebp+time_factor]
+org 102D5B17h - shift
+	jmp time_fix_jmp_label
+;.text:102D5B17                 mov     [edi+8], eax
+;.text:102D5B1A                 mov     [edi+0Ch], edx
+;.text:102D5B1D                 mov     edx, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
+;.text:102D5B23                 mov     eax, [edx+204h]
+;.text:102D5B29                 mov     [edi+18h], eax
+org 102D5B2Ch - shift
+time_fix_jmp_label:
+;.text:102D5B2C                 movss   dword ptr [edi+10h], xmm0
+
+
+
+
+; дополнительные врезки для расширения глобального пространства имён
+org 10149CA2h - shift
+	jmp global_space_ext2
+;.text:10149CA2                 call    register__gs_sell_condition__fl_fl
+;.text:10149CA7                 pop     ecx
+;.text:10149CA8                 pop     ecx
+org 10149CA9h - shift
+back_from_global_space_ext2:
+;.text:10149CA9                 mov     eax, esp
+;.text:10149CAB                 push    offset sss__inifile_string
+;.text:10149CB0                 push    esi
+;.text:10149CB1                 push    eax
+;.text:10149CB2                 call    register__gs_show_condition
+
+org 10149D24h - shift
+	jmp global_space_ext2_additional
+;.text:10149D24                 mov     ecx, eax
+;.text:10149D26                 call    esi ; luabind::scope::operator,(luabind::scope) ; luabind::scope::operator,(luabind::scope)
+;.text:10149D28                 mov     ecx, eax
+;.text:10149D2A                 call    esi ; luabind::scope::operator,(luabind::scope) ; luabind::scope::operator,(luabind::scope)
+org 10149D2Ch - shift
+back_from_global_space_ext2_additional:
+;.text:10149D2C                 mov     ecx, eax
+;.text:10149D2E                 call    esi ; luabind::scope::operator,(luabind::scope) ; luabind::scope::operator,(luabind::scope)
+
+
+
+; убираем кривую смену визуала при попадании костюма в рюкзак. Это будет делаться скриптом
+
+;.text:1024C290 ; void __thiscall CCustomOutfit__OnMoveToRuck(int this)
+org 1024C290h - shift
+	retn ; вставить в список врезок. Длина команды == 1 байт
+;.text:1024C290                 push    ecx
+;.text:1024C291                 push    esi
+
+
+
+org 1014C880h - shift
+register__set_tip_text:
+
+org 1014CCE0h - shift
+register__string_void:
+
+; вставки для коррекции скриптового изменения FOV
+;.text:101DE710 ; void __thiscall CActor__IR_OnMouseMove(int a1, int d_x, int d_y)
+;...
+;.text:101DE769                 mov     edx, ds:?psMouseSensScale@@3MA ; float psMouseSensScale
+org 101DE76Fh - shift
+	fdiv    ds:g_fov
+;.text:101DE76F                 fmul    ds:_1_fov
+;.text:101DE775                 mov     eax, ds:?psMouseSens@@3MA ; float psMouseSens
+
+;.text:1023B208                 movss   xmm0, dword ptr [esi+70h]
+org 1023B20Dh - shift
+	divss   xmm0, ds:g_fov
+;.text:1023B20D                 mulss   xmm0, ds:_1_fov
+;.text:1023B215                 mov     ecx, ds:?psMouseSensScale@@3MA ; float psMouseSensScale
+
+;.text:10274018                 movss   xmm0, dword ptr [esi+70h]
+org 1027401Dh - shift
+	divss   xmm0, ds:g_fov
+;.text:1027401D                 mulss   xmm0, ds:_1_fov
+;.text:10274025                 mov     ecx, ds:?psMouseSensScale@@3MA ; float psMouseSensScale
+
+;.text:10287823                 movss   xmm0, dword ptr [edx+70h]
+org 10287828h - shift
+	divss   xmm0, ds:g_fov
+;.text:10287828                 mulss   xmm0, ds:_1_fov
+;.text:10287830                 mulss   xmm0, dword ptr [eax]
+
+
+
+
+
+; фрагмент функции CWeapon__UpdateAddonsVisibility
+org 1021CA2Fh - shift
+	jmp UpdateAddonsVisibility_fix
+;.text:1021CA2F                 mov     ecx, esi ; <== это было
+;.text:1021CA31                 call    ds:?CalculateBones_Invalidate@CKinematics@@QAEXXZ ; CKinematics::CalculateBones_Invalidate(void)
+org 1021CA37h - shift
+back_from_UpdateAddonsVisibility_fix:
+;.text:1021CA37                 mov     eax, [esi]
+;.text:1021CA39                 mov     edx, [eax+40h]
+;.text:1021CA3C                 push    0
+;.text:1021CA3E                 mov     ecx, esi
+;.text:1021CA40                 call    edx
+;.text:1021CA42                 pop     esi
+;.text:1021CA43                 pop     ebp
+;.text:1021CA44                 pop     ebx
+;.text:1021CA45                 retn
+;.text:1021CA45 CWeapon__UpdateAddonsVisibility endp
+
+;org 10458970h - shift
+;CKinematics__CalculateBones_Invalidate:
+
+org 100F6B60h - shift
+script_callback__void: ; this - в регистре eax. Аргументов нет
+
+org 1006E8E0h - shift
+CALifeUpdateManager__teleport_object: ;(int this<esi>, unsigned __int16 id, int game_vertex_id, int level_vertex_id, int position)
+
+
+; фрагмент функции регистрации класса alife_simulator
+; void __cdecl CALifeSimulator__script_register(int lua_state)
+
+;.text:1004C9A6                 mov     [ebp+var_8], offset create_with_parent
+;.text:1004C9AD                 call    register__create_with_parent ; <== было
+org 1004C9ADh - shift
+	jmp alife_simulator_fix
+back_from_alife_simulator_fix:
+;.text:1004C9B2                 mov     ecx, eax
+
+
+org 1004E602h - shift
+register__create_with_parent: ; функция регистрации в классе alife_simulator метода
+; create(string <имя секции объекта>, vector* position, int level_vertex_id, int game_vertex_id, int parent_id)
+
+
+org 1045094Ch - shift
+__RTDynamicCast:
+
+org 1014D690h - shift
+register__remove_sound: ;  ; регистрация метода game_object с прототипом void fun(int)
+
+
+org 10158CD0h - shift
+register_general_goodwill: ; регистрация метода game_object с прототипом int fun(game_object*)
+
+org 10206310h - shift 
+CInventory__InBelt: ; int item<eax>, int this<ecx>
+org 102062C0h - shift
+CInventory__InSlot: ; int this<ebx>, int item<edi>
+
+org 10206390h - shift
+CInventory__CanPutInSlot: ; this<ebx>, int item<esi>
+org 10206350h - shift
+CInventory__CanPutInRuck: ; == ! CInventory__InRuck ; int item<eax>, int this<ecx>
+org 10206410h
+CInventory__CanPutInBelt: ; item<edi>, int this<esi>
+
+
+org 10205EC0h - shift
+CInventory__CalcTotalWeight:
+
+
+org 10204D90h - shift
+CInventory__Ruck: ; ??????????????????????????
+org 10204BE0h - shift
+CInventory__Belt: ; this<eax>, int item <stack>
+org 10204A90h - shift
+CInventory__Slot: ; item<eax>, this<ecx>, bool activate <stack>
+
+
+
+org 101CA2F0h - shift
+script_use_callback:
+
+
+;CInventory__Belt
+;.text:10204D6F                 call    ds:?processing_activate@CObject@@QAEXXZ ; CObject::processing_activate(void)
+org 10204D75h - shift
+	jmp on_belt_callback
+;.text:10204D75                 pop     edi
+;.text:10204D76                 pop     esi
+;.text:10204D77                 pop     ebp
+;.text:10204D78                 mov     al, 1
+;.text:10204D7A                 pop     ebx
+;.text:10204D7B                 add     esp, 8
+;.text:10204D7E                 retn    4
+
+;CInventory__Ruck
+;.text:10204F0D                 call    ds:?processing_deactivate@CObject@@QAEXXZ ; CObject::processing_deactivate(void)
+org 10204F13h - shift
+	jmp on_ruck_callback
+;.text:10204F13                 pop     edi
+;.text:10204F14                 pop     ebp
+;.text:10204F15                 mov     al, 1
+;.text:10204F17                 pop     ebx
+;.text:10204F18                 add     esp, 0Ch
+;.text:10204F1B                 retn    4
+
+;CInventory__Slot
+;.text:10204BC9                 call    ds:?processing_activate@CObject@@QAEXXZ ; CObject::processing_activate(void)
+org 10204BCFh - shift
+	jmp on_slot_callback
+;.text:10204BCF                 pop     edi
+;.text:10204BD0                 pop     esi
+;.text:10204BD1                 mov     al, 1
+;.text:10204BD3                 pop     ebx
+;.text:10204BD4                 retn    4
+
+
+
+
+org 1014C2B0h - shift
+register_object_count: ; функция для регистрации метода game_object с прототипом int fun(void);
+
+
+
+;.text:101C6DC0 ; void __thiscall CActor__HitSignal(int this, float perc, void *dir, int who, unsigned __int16 bone)
+org 101C6DC0h - shift
+	jmp CActor_HitSignal_ext
+;.text:101C6DC0                 sub     esp, 0Ch
+;.text:101C6DC3                 push    edi
+;.text:101C6DC4                 mov     edi, ecx
+org 101C6DC6h - shift
+back_to_CActor_HitSignal:
+;.text:101C6DC6                 mov     eax, [edi+1B8h]
+;.text:101C6DCC                 movss   xmm0, dword ptr [eax+4]
+;.text:101C6DD1                 comiss  xmm0, ds:float_10459F94
+;.text:101C6DD8                 jbe     loc_101C7298
+
+
+
+; void __userpurge CHitMemoryManager__add3(int ebx0<ebx>, int entity)
+org 100138F0h - shift
+	jmp CHitMemoryManager__add3_fix
+;.text:100138F0                 sub     esp, 0Ch
+;.text:100138F3                 xorps   xmm0, xmm0
+;.text:100138F6                 fldz
+org 100138F8h - shift
+back_to_CHitMemoryManager__add3:
+;.text:100138F8                 xor     eax, eax
+;.text:100138FA                 push    eax             ; a5
+
+
+
+; миниправка функции get_rank на предмет блокировки сообщения "'cannot find rank for ..."
+; для стволов, не прописанных в mp_ranks
+
+;.text:10443CEC                 push    edi
+;.text:10443CED                 mov     [esp+30h+var_24], 0FFFFFFFFh
+org 10443CEDh - shift
+	mov     dword ptr [esp+30h-24h], 0h
+;.text:10443CF5                 jz      short loc_10443CFD
+
+
+
 org 10149CF8h - shift
 	;call script_register_game_object1
 
@@ -342,6 +596,10 @@ CScriptGameObject__get_car:
 org 10458DA8h - shift
 Msg dword ?
 
+org 104586CCh - shift
+processing_activate dword ?
+
+
 ;===================| Секция .data  |=========================================
 ;сначала находится в билде 2947, а потом ищется в аналогичных функциях релиза
 ;===================| Секция .data  |=========================================
@@ -362,4 +620,146 @@ org 104585A8h - shift
 pInput dd ?
 org 104585ACh - shift
 CInput__GetAsyncKeyState:
+
+
+
+; набор заглушек для регистрации item_on_belt, item_in_ruck и др. с прототипом game_object* fun(int);
+org 10151320h - shift
+sub_10151320:
+org 10151A80h - shift
+sub_10151A80:
+org 10151AE0h - shift
+sub_10151AE0:
+
+;.idata
+org 10458F78h - shift
+?set_match_fun@overload_rep_base@detail@luabind@@QAEXABV?$function1@HPAUlua_State@@V?$allocator@Vfunction_base@boost@@@std@@@boost@@@Z dword ?
+org 10458F4Ch - shift
+?set_fun@overload_rep@detail@luabind@@QAEXABV?$function1@HPAUlua_State@@V?$allocator@Vfunction_base@boost@@@std@@@boost@@@Z dword ?
+org 10458F48h - shift
+?add_method@class_base@detail@luabind@@QAEXPBDABUoverload_rep@23@@Z dword ?
+org 10458F54h - shift
+??1overload_rep@detail@luabind@@QAE@XZ dword ?
+
+; набор заглушек для регистрации move_on_belt, move_in_ruck и др. с прототипом bool fun(game_object*);
+
+org 1015DEF0h - shift
+sub_1015DEF0:
+org 1014F020h - shift
+sub_1014F020:
+org 1014F450h - shift
+sub_1014F450:
+;.idata
+; эти не надо, уже были ранее
+;?set_match_fun@overload_rep_base@detail@luabind@@QAEXABV?$function1@HPAUlua_State@@V?$allocator@Vfunction_base@boost@@@std@@@boost@@@Z dword ?
+;?set_fun@overload_rep@detail@luabind@@QAEXABV?$function1@HPAUlua_State@@V?$allocator@Vfunction_base@boost@@@std@@@boost@@@Z dword ?
+;?add_method@class_base@detail@luabind@@QAEXPBDABUoverload_rep@23@@Z dword ?
+;??1overload_rep@detail@luabind@@QAE@XZ dword ?
+
+;  набор заглушек для регистрации level_vertex_light с прототипом float fun(int);
+org 101513C0h - shift
+sub_101513C0:
+
+; register__get_current_outfit_protection
+org 1014F820h - shift
+sub_1014F820:
+org 10150020h - shift
+sub_10150020:
+org 10150A80h - shift
+sub_10150A80:
+
+;  register__set_const_force
+org 1015EA90h - shift
+sub_1015EA90:
+org 1015EBD0h - shift
+sub_1015EBD0:
+org 1015EC30h - shift
+sub_1015EC30:
+
+;get_task_state = get_xxx_int
+org 1015D390h - shift
+sub_1015D390:
+org 1015D480h - shift
+sub_1015D480:
+org 1015D4E0h - shift
+sub_1015D4E0:
+
+
+   ; void change_team(int team, int squad, int group);
+;vertex_in_direction
+;play_sound = set_xxx_int
+;set_character_community = set_xxx_string
+
+; какие-то поля для динамического приведения типа к CWeaponMagazinedWGrenade
+org 10556CC8h - shift
+off_10556CC8 dword ?
+org 10538CDCh - shift
+off_10538CDC dword ?
+
+
+; необходимые заглушки для регистрации функции телепорта в alife_simulator
+org 100015E0h - shift 
+sub_100015E0:
+org 10004260h - shift 
+sub_10004260:
+org 1004F0C3h - shift 
+sub_1004F0C3:
+org 1004F90Eh - shift 
+sub_1004F90E:
+org 1004F91Ah - shift 
+sub_1004F91A:
+org 10255F80h - shift 
+sub_10255F80:
+org 1030E428h - shift 
+sub_1030E428:
+
+; необходимые заглушки для регистрации функции-метода game_object с прототипом void fun(int, int, int)
+org 1015A230h - shift
+sub_1015A230:
+org 1015F0E0h - shift
+sub_1015F0E0:
+org 1015A320h - shift
+sub_1015A320:
+
+
+org 10458A44h - shift
+CKinematics__LL_BoneID dword ? ; функция получения номера кости по её имени
+org 104588F4h - shift
+CKinematics__LL_GetBonesVisible dword ? ; получение видимости всех костей
+org 104588F8h - shift
+CKinematics__LL_SetBoneVisible dword ? ; установка видимости кости
+org 104588C0h - shift
+CKinematics__LL_GetBoneVisible dword ? ; получение видимости кости с заданным номером
+org 10458970h - shift
+CKinematics__CalculateBones_Invalidate dword ?
+
+
+org 1053C598h - shift
+g_fov dword ?
+
+org 10458DB0h - shift
+g_pStringContainer dword ?
+org 10458DACh - shift
+str_container__dock dword ?
+
+
+org 10458714h - shift
+CObject__cNameVisual_set dword ?
+org 101D2D30h - shift
+CActor__ChangeVisual:
+
+org 10458A4Ch - shift
+g_pGamePersistent dword ?
+
+
+org 10458504h - shift
+CEnvironment__SetGameTime dword ?
+
+org 10149F6Eh - shift
+register__gs_sell_condition__fl_fl:
+
+org 10458EECh - shift
+luabind__scope__operator_ dword ?
+
+
 
