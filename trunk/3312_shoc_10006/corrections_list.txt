@@ -1,8 +1,29 @@
-0x10190492 5 global_space_ext ; врезка с инструкцией перехода - 5 байт
+0x10190492 5 ; jmp global_space_ext ; врезка с инструкцией перехода - 5 байт
+0x10149CA2 5 ; jmp global_space_ext2
+0x10149D24 5 ; jmp global_space_ext2_additional
 0x10155D87 5 ; jmp game_object_fix
 0x101A6E50 5 ; jmp call_key_press_callback
 0x101A71F0 5 ; jmp call_key_release_callback
 0x101A7330 5 ; jmp call_key_hold_callback
 0x101A6CA5 5 ; jmp call_mouse_wheel_callback
 0x101DE710 5 ; jmp call_mouse_move_callback
+0x10443CED 8 ; предоствращение вылета при невключении ствола в mp_ranks
+0x101C6DC0 5 ; jmp CActor_HitSignal_ext
+0x10204D75 5 ; jmp on_belt_callback
+0x10204F13 5 ; jmp on_ruck_callback
+0x10204BCF 5 ; jmp on_slot_callback
+0x1004C9AD 5 ; jmp alife_simulator_fix
+0x1024C290 1 ; retn
+
+;0x102D5B17 5 ; jmp time_fix_jmp_label
+
+
+;0x101DE76F 6 ; fdiv    ds:g_fov
+;0x1023B20D 8 ; divss   xmm0, ds:g_fov
+;0x1027401D 8 ; divss   xmm0, ds:g_fov
+;0x10287828 8 ; divss   xmm0, ds:g_fov
+
+;0x1021CA2F 5 ; jmp UpdateAddonsVisibility_fix
+
+;0x100138F0 5 ;	jmp CHitMemoryManager__add3_fix
 ;0x101A6DC0 5 ; jmp call_mouse_move_callback
