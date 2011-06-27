@@ -7,11 +7,11 @@ alife_simulator_fix proc
 	call    register__create_with_parent
 	; делаем то, что хотели
 	ALIFE_SIM_PERFORM_EXPORT__TELEPORT register_teleport_object, CALifeSimulator__TeleportObject
-	pusha
-	push offset alife_sim_reg_msg
-	call Msg
-	pop eax
-	popa
+	;pusha
+	;push offset alife_sim_reg_msg
+	;call Msg
+	;pop eax
+	;popa
 	; идём обратно
 	jmp back_from_alife_simulator_fix
 alife_simulator_fix endp

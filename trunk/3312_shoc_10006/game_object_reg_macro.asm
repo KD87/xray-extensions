@@ -683,3 +683,26 @@ loc_1015732E:
 script_function_name db fun_name, 0
 register_fun_name endp
 ENDM
+
+PERFORM_EXPORT_VOID__GO MACRO fun_to_export:REQ, fun_name_str:REQ
+LOCAL lab1
+LOCAL fun_name
+	jmp     lab1
+fun_name db fun_name_str, 0
+lab1:
+	mov     ecx, eax
+	mov     byte ptr [esp+58h-38h], bl
+	mov     eax, [esp+58h-38h]
+	push    eax
+	mov     byte ptr [esp+5Ch-40h], bl
+	mov     edx, [esp+5Ch-40h]
+	push    edx
+	push    offset fun_name
+	lea     eax, [esp+64h-48h]
+	mov     ebx, ecx
+	mov     [esp+64h-48h], offset fun_to_export
+	call    register__run_talk_dialog
+ENDM
+
+
+

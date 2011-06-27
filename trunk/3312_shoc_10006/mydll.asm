@@ -34,6 +34,11 @@ include hit_memory_manager_fix.asm
 include actor_inventory_callbacks.asm
 include alife_simulator_fix.asm
 include weapon_fix.asm
+include console_commands_reg_fix.asm
+include CInventory_fix.asm
+include inventory_box_fix.asm
+include	level_ns_fix.asm
+
 _CODE ENDS
 
 end LibMain

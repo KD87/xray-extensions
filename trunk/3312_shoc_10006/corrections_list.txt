@@ -13,7 +13,24 @@
 0x10204F13 5 ; jmp on_ruck_callback
 0x10204BCF 5 ; jmp on_slot_callback
 0x1004C9AD 5 ; jmp alife_simulator_fix
-0x1024C290 1 ; retn
+0x1024C290 1 ; retn ; правка смены визуала актора
+0x1028E30E 5 ; jmp add_console_commands_fix 
+0x102862E0 5 ; jmp inventory_box_fix
+0x101AEF0F 5 ; level_ns_extension_1 ; get_target_dist, get_target_obj
+0x101AF1C1 8 ; level_ns_extension_2 ; get_target_dist, get_target_obj
+0x103561C9 5 ; jmp     addr_103561DD ; skip annoying msg "sv ownership id_parent ..."
+0x103561DD 8 ; part2: mov esi,10h; nop; nop; nop;
+0x1035646D 5 ; jmp     addr_10356481 ; skip annoying msg "sv reject. id_parent ..."
+0x10356481 8 ; part2: mov ebx,10h; nop; nop; nop;
+0x10355D85 5 ; jmp addr_10355D9B ; skip annoying msg "sv destroy object ..."
+0x103B8DEB 5 ; jmp addr_103B8DFF ; skip annoying msg "[16-9] get_xml_name for ..."
+
+
+;0x102065B7 9 ; jmp loc_1020663C_return_true ; фикс инвентаря часть 1
+;0x1020432D 5 ; jmp CInventory__CInventory_fix ; фикс инвентаря часть 2
+;0x102046B1 5 ; jmp CInventory__Take_fix ; фикс инвентаря часть 3
+;0x10204ED4 5 ; jmp CInventory__Ruck_fix ; фикс инвентаря часть 4
+;0x10204A57 5 ; jmp CInventory__DropItem_fix ; фикс инвентаря часть 5
 
 ;0x102D5B17 5 ; jmp time_fix_jmp_label
 
