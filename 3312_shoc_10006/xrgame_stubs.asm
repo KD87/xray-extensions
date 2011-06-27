@@ -1,6 +1,244 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+;.text:103B8CC0 ui_core__get_xml_name proc near     
+
+;.text:103B8DE8                 mov     [eax+4], dl
+;.text:103B8DEB loc_103B8DEB:  
+org 103B8DEBh - shift
+	jmp addr_103B8DFF
+;.text:103B8DEB                 lea     eax, [esp+414h+Str]
+;.text:103B8DEF                 push    eax
+;.text:103B8DF0                 push    esi
+;.text:103B8DF1                 push    offset a169Get_xml_nam ; "[16-9] get_xml_name for[%s] returns [%s"...
+;.text:103B8DF6                 call    ds:?Msg@@YAXPBDZZ ; Msg(char const *,...)
+;.text:103B8DFC                 add     esp, 0Ch
+org 103B8DFFh - shift
+addr_103B8DFF:
+;.text:103B8DFF                 pop     edi
+;.text:103B8E00
+
+
+
+
+
+;.text:10355D40 xrServer__Process_event_destroy proc near 
+
+;.text:10355D7F                 mov     ecx, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
+org 10355D85h - shift
+	jmp addr_10355D9B
+;.text:10355D85                 mov     edx, [ecx+0F4h]
+;.text:10355D8B                 push    edx
+;.text:10355D8C                 push    eax
+;.text:10355D8D                 push    offset aSvDestroyObjec ; "sv destroy object %s [%d]"
+;.text:10355D92                 call    ds:?Msg@@YAXPBDZZ ; Msg(char const *,...)
+;.text:10355D98                 add     esp, 0Ch
+org 10355D9Bh - shift
+addr_10355D9B:
+;.text:10355D9B                 cmp     [esp+4060h+var_4024], ebx
+
+
+
+
+
+;.text:10356400 xrServer__Process_event_reject proc near 
+
+;.text:10356467                 mov     ecx, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
+org 1035646Dh - shift
+	jmp     addr_10356481
+;.text:1035646D                 mov     edx, [ecx+0F4h]
+;.text:10356473                 push    edx
+;.text:10356474                 push    ebx
+;.text:10356475                 push    eax
+;.text:10356476                 push    offset aSvReject_Id_pa ; "sv reject. id_parent %s id_entity %s [%"...
+;.text:1035647B                 call    ds:?Msg@@YAXPBDZZ ; Msg(char const *,...)
+org 10356481h - shift
+addr_10356481:
+	mov    ebx, 10h
+	nop
+	nop
+	nop
+;.text:10356481                 mov     ebx, 10h
+;.text:10356486                 add     esp, 10h
+;.text:10356489                 cmp     [esp+48h+var_20], ebx
+
+
+
+
+;.text:10356140 xrServer__Process_event_ownership proc near 
+
+;.text:103561C3 loc_103561C3:                           ; CODE XREF: xrServer__Process_event_ownership+7Ej
+;.text:103561C3                 mov     ecx, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
+org 103561C9h - shift
+	jmp     addr_103561DD
+;.text:103561C9                 mov     edx, [ecx+0F4h]
+;.text:103561CF                 push    edx
+;.text:103561D0                 push    esi
+;.text:103561D1                 push    eax
+;.text:103561D2                 push    offset aSvOwnershipId_ ; "sv ownership id_parent %s id_entity %s "...
+;.text:103561D7                 call    ds:?Msg@@YAXPBDZZ ; Msg(char const *,...)
+org 103561DDh - shift
+addr_103561DD:
+	mov    esi, 10h
+	nop
+	nop
+	nop
+;.text:103561DD                 mov     esi, 10h
+;.text:103561E2                 add     esp, 10h
+;.text:103561E5                 cmp     [esp+6Ch+var_3C], esi
+
+
+
+org 101AD260h - shift
+get_object_by_id:
+; добавляем колбек на взятие в инвентарный ящик
+
+;.text:102861A0 ; void __thiscall CInventoryBox__OnEvent(int this, int packet, __int16 type)
+
+org 102862E0h - shift
+	jmp inventory_box_fix
+;.text:102862E0                 call    xr_vector_u16___push_back
+;.text:102862E5                 push    0               ; bool
+;.text:102862E7                 push    ebx             ; obj
+;.text:102862E8                 mov     ecx, esi        ; this
+;.text:102862EA                 call    ds:?H_SetParent@CObject@@QAEPAV1@PAV1@_N@Z ; CObject::H_SetParent(CObject *,bool)
+;.text:102862F0                 push    0
+;.text:102862F2                 mov     ecx, esi
+;.text:102862F4                 call    ds:?setVisible@CObject@@QAEXH@Z ; CObject::setVisible(int)
+;.text:102862FA                 push    0
+;.text:102862FC                 mov     ecx, esi
+;.text:102862FE                 call    ds:?setEnabled@CObject@@QAEXH@Z ; CObject::setEnabled(int)
+org 10286304h - shift
+back_from_inventory_box_fix:
+;.text:10286304 loc_10286304:                           ; CODE XREF: CInventoryBox__OnEvent+23j
+
+
+org 10011380h - shift
+xr_vector_u16___push_back: ; запись идентификатора предмета в список предметов инвентарного ящика
+
+org 1042BF40h - shift
+CUIGameSP__StartCarBody:
+
+org 1014C760h - shift
+register__run_talk_dialog: ; функция регистрации метода game_object спрототипом void fun(game_object*)
+
+; попытка вылечить вылет при переносе предмета в багажник машины
+
+;.text:10206590 CInventory__CanTakeItem proc near       ; CODE XREF: sub_100F7960+8Ap
+;.text:102065B3                 test    al, al
+;.text:102065B5                 jz      short loc_102065A3
+org 102065B7h - shift
+	nop
+	nop
+	nop
+	nop
+	jmp loc_1020663C_return_true
+;.text:102065B7                 mov     eax, [esi+8]
+;.text:102065BA                 mov     ecx, [esi+0Ch]
+;.text:102065BD                 cmp     eax, ecx
+;.text:102065BF                 jz      short loc_102065E9
+;.text:102065C1                 mov     edx, [edi+0D4h]
+;.text:102065C7                 movzx   edx, word ptr [edx+0A4h]
+;.text:102065CE                 push    ebx
+;.text:102065CF                 nop
+
+org 1020663Ch - shift
+loc_1020663C_return_true:
+;.text:1020663C loc_1020663C:                           ; CODE XREF: CInventory__CanTakeItem+78j
+;.text:1020663C                 mov     al, 1
+;.text:1020663E                 pop     ecx
+;.text:1020663F                 retn
+;.text:1020663F CInventory__CanTakeItem endp
+
+
+
+; в конструкторе сразу обнулить m_pOwner для дальнейшей определённости
+
+;.text:102041A0 ; void __usercall CInventory__CInventory(int this<esi>)
+
+;.text:10204328                 movss   dword ptr [esi+6Ch], xmm0
+org 1020432Dh - shift
+	jmp CInventory__CInventory_fix
+;.text:1020432D                 mov     eax, esi
+;.text:1020432F                 pop     ebx
+;.text:10204330                 add     esp, 110h
+;.text:10204336                 retn
+
+; в CInventory__Take проверить m_pOwner на нулевое значение и сделать обход ветки, его использующей
+
+;.text:102044F0 CInventory__Take proc near
+;
+;.text:1020469C                 call    CInventory__Ruck
+;.text:102046A1                 jmp     short loc_102046B1
+;.text:102046A3 ; ---------------------------------------------------------------------------
+;
+;.text:102046B1 loc_102046B1:                           ; CODE XREF: CInventory__Take+1A7j
+;.text:102046B1                                         ; CInventory__Take+1B1j
+org 102046B1h - shift
+	jmp CInventory__Take_fix
+;.text:102046B1                 mov     ecx, [ebx+60h]
+;.text:102046B4                 mov     eax, [ecx]
+;.text:102046B6                 mov     edx, [eax+0B4h]
+;.text:102046BC                 push    ebp
+;.text:102046BD                 call    edx
+org 102046BFh - shift
+back_from_CInventory__Take_fix:
+;.text:102046BF                 mov     edi, ebx        ; EDI
+;.text:102046C1                 call    CInventory__CalcTotalWeight
+
+; в CInventory__Ruck сделать проверку 
+
+;.text:10204D90 ; char __userpurge CInventory__Ruck<al>(int this<esi>, int item)
+;.text:10204ED1                 mov     [esi+78h], ecx
+org 10204ED4h - shift
+	jmp CInventory__Ruck_fix
+;.text:10204ED4                 mov     ecx, [esi+60h]
+;.text:10204ED7                 mov     eax, [ebp+98h]
+;.text:10204EDD                 mov     edx, [ecx]
+;.text:10204EDF                 mov     edx, [edx+0BCh]
+;.text:10204EE5                 push    eax
+;.text:10204EE6                 push    ebp
+;.text:10204EE7                 call    edx
+org 10204EE9h - shift
+back_from_CInventory__Ruck_fix:
+;.text:10204EE9                 mov     dword ptr [ebp+98h], 3
+
+; аналогично в CInventory__DropItem
+
+;.text:102046F0 CInventory__DropItem proc near
+
+;.text:10204A57 loc_10204A57:
+org 10204A57h - shift
+	jmp CInventory__DropItem_fix
+;.text:10204A57                 mov     ecx, [esi+60h]
+;.text:10204A5A                 mov     edx, [ecx]
+;.text:10204A5C                 push    eax
+;.text:10204A5D                 mov     eax, [edx+0C4h]
+;.text:10204A63                 call    eax
+org 10204A65h - shift
+back_from_CInventory__DropItem_fix:
+;.text:10204A65                 mov     edi, esi        ; EDI
+;.text:10204A67                 call    CInventory__CalcTotalWeight
+
+
+
+
+
+
+;.text:10289420 CCC_RegisterCommands proc near          ; CODE XREF: DllMain(x,x,x)+9p
+; ...
+;.text:1028E30C                 call    esi ; CConsole::AddCommand(IConsole_Command *) ; CConsole::AddCommand(IConsole_Command *)
+org 1028E30Eh - shift
+	jmp add_console_commands_fix ; возвращаться сюда не будем, прямо там сделаем возврат из функции
+;.text:1028E30E                 pop     edi
+;.text:1028E30F                 pop     esi
+;.text:1028E310                 pop     ebx
+;.text:1028E311                 retn
+
+
+
+org 10173415h - shift
+register_gs__bool__void: ; регистрация в глобальном пространстве имён функции с прототипом bool fun(void)
 
 ;.text:102D5B12                 movss   xmm0, [ebp+time_factor]
 org 102D5B17h - shift
@@ -761,5 +999,114 @@ register__gs_sell_condition__fl_fl:
 org 10458EECh - shift
 luabind__scope__operator_ dword ?
 
+;-------------------------------------------------------------
+; level.get_target_dist()
+;-------------------------------------------------------------
+org 101AF85Dh - shift
+get_snd_volume_register:
+
+org 101AEF0Fh - shift
+	jmp level_ns_extension_1
+
+org 101AEF14h - shift
+back_to_level_ns_ext_1:
+
+org 101AF1C1h - shift
+	jmp level_ns_extension_2
+	nop
+	nop
+	nop
+	
+org 101AF1C9h - shift
+back_to_level_ns_ext_2:
+
+org 10458498h - shift
+g_hud    dword ? ; class CCustomHUD * g_hud
+
+;-------------------------------------------------------------
+; level.get_target_obj()
+;-------------------------------------------------------------
+org 10458B04h - shift
+?Memory@@3VxrMemory@@A	dword	?
+
+org 10458DFCh - shift
+?mem_alloc@xrMemory@@QAEPAXI@Z	dword	?
+
+org 10458EB4h - shift
+??0registration@detail@luabind@@QAE@XZ	dword	?
+
+org 101AF65Fh - shift
+loc_101AF65F:
+
+org 10481E80h - shift
+off_10481E80:
+
+org 101AD260h - shift
+sub_101AD260:
+
+org 101AF661h - shift
+loc_101AF661:
 
 
+;=================================================
+; затычки для регистрации консольной команды на изменение целого с двумя пределами
+
+org 104A7014h - shift
+off_104A7014    dd ?
+
+org 10458678h - shift
+Console dd ?
+
+org 10450A5Fh - shift
+_atexit:
+
+org 104589C0h - shift
+CConsole__AddCommand dd ?
+
+org 104587FCh - shift
+CCC_Integer__CCC_Integer dd ?
+
+org 10458814h - shift
+CCC_Integer___CCC_Integer dd ?
+
+org 1056063Ch - shift
+g_bHudAdjustMode dd ?
+
+;-------------------
+org 104A702Ch - shift
+off_104A702C dd ?
+
+org 104587D4h - shift
+CCC_Float__CCC_Float dd ?
+
+org 104587E4h - shift
+CCC_Float___CCC_Float dd ?
+
+org 10560640h - shift
+g_fHudAdjustValue dd ?                  
+
+; заглушки для функции преобразования SGO в CInventoryBox
+
+org 1054F0B0h - shift
+off_1054F0B0    dd ?
+
+org 1053A6A0h - shift
+??_R0?AVCGameObject@@@8 dd ?
+
+; заглушки для функции получения худа
+org 1054F0E8h - shift
+off_1054F0E8 dd ?
+
+org 1054F0CCh - shift
+off_1054F0CC dd ?
+
+org 104589FCh - shift
+g_pGameLevel dd ?
+
+; заглушки для фикса инвентаря
+org 10458870h - shift
+CObject__H_SetParent dd ?
+org 10458A9Ch - shift
+CObject__setVisible dd ?
+org 10458AA8h - shift
+CObject__setEnabled dd ?

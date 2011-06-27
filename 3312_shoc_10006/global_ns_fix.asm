@@ -30,6 +30,7 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	call    bit_and_register
 	add     esp, 0Ch
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg0, "set_int_arg0"
+	;GLOBAL_NS_PERFORM_EXPORT__BOOL__VOID IsPdaMenuShown, "is_pda_shown"
 	; ; регистраци€ функции "flush1", вместо нерабочей "flush"
      ; lea     eax, [ebp-1]
      ; push    eax
@@ -161,3 +162,8 @@ int_arg = dword ptr  4
 	retn
 SetIntArg0 endp
 
+
+IsPdaMenuShown proc
+	mov eax, 1
+	retn
+IsPdaMenuShown endp

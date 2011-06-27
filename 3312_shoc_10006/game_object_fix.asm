@@ -35,6 +35,8 @@ REGISTER_INT__STRING_INT register_get_custom_monster_int, "get_custom_monster_in
 
 REGISTER_INT__STRING_INT register_set_actor_shared_str, "set_actor_shared_str"
 
+REGISTER_GO__INT register_item_in_inv_box, "object_from_inv_box"
+
 game_object_fix proc
 ; делаем то, что вырезали 
 	call    enable_vision_register
@@ -88,6 +90,8 @@ game_object_fix proc
 	PERFORM_EXPORT_BOOL__GO register_is_in_slot, CScriptGameObject__IsInSlot
 	; регистрируем функцию получения общего веса инвентаря
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetInventoryWeight, "get_inventory_weight"
+	; регистрируем функцию получения предмета из инвентарного ящика по номеру
+	PERFORM_EXPORT_GO__INT register_item_in_inv_box, CScriptGameObject__item_in_inv_box
 	; test get_id
 	mov     ecx, eax
 	mov     byte ptr [esp+58h-38h], bl
@@ -159,6 +163,12 @@ game_object_fix proc
 	
 	PERFORM_EXPORT_VOID__STRING CScriptGameObject__SetActorVisual, "set_actor_visual"
 	
+	PERFORM_EXPORT_VOID__GO CScriptGameObject__OpenInventoryBox, "open_inventory_box"
+	; регистрируем функцию получения количества предметов в ящике
+	PERFORM_EXPORT_INT__VOID CScriptGameObject__InvBoxCount, "inv_box_count"
+	; получение инвентарного веса
+	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetWeght, "get_weight"
+
 	; идём обратно
 	jmp back_from_game_object_fix
 game_object_fix endp
@@ -2051,3 +2061,272 @@ exit_fail:
 	pop     ebp
 	retn    4
 CScriptGameObject__SetActorVisual endp
+
+CScriptGameObject__OpenInventoryBox proc
+SGO_inv_box = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	push    ebx
+	push    esi
+	push    edi
+
+	mov     esi, ecx ; SGO_actor
+	;
+	call    GetGameSP
+	test    eax, eax
+	jz      exit
+	mov     edi, eax ; hud
+	;
+	mov     ecx, [ebp+SGO_inv_box]
+	call    Cast_SGO_to_CInventoryBox
+	push    eax
+	mov     ecx, esi
+	call    Cast_SGO_to_CInventoryOwner
+	push    eax
+
+	mov     eax, edi
+	call    CUIGameSP__StartCarBody
+exit:
+	pop     edi
+	pop     esi
+	pop     ebx
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__OpenInventoryBox endp
+
+
+Cast_SGO_to_CInventoryBox proc  ; ecx - argument, eax - result
+	push    esi
+	push    edi
+
+	mov     esi, ecx
+	mov     edi, [esi+4]
+	test    edi, edi
+	jz      short lab1
+	call    CGameObject__lua_game_object
+lab1:
+	mov     esi, [esi+4]
+	xor     eax, eax
+	test    esi, esi
+	jz      short exit
+	push    0               ; a5
+	push    offset off_1054F0B0 ; a4
+	push    offset ??_R0?AVCGameObject@@@8 ; a3
+	push    0               ; a2
+	push    esi             ; a1
+	call    __RTDynamicCast
+	add     esp, 14h
+exit:
+	pop     edi
+	pop     esi
+	ret
+Cast_SGO_to_CInventoryBox endp
+
+Cast_SGO_to_CActor proc ; ecx - argument, eax - result
+	push    esi
+	push    edi
+	push    edx
+	
+	mov     esi, ecx
+	push    edi
+	mov     edi, [esi+4]
+	test    edi, edi
+	jz      short lab1
+	call    CGameObject__lua_game_object
+lab1:
+	mov     ecx, [esi+4]
+	xor     eax, eax
+	test    ecx, ecx
+	jz      short exit
+	mov     eax, [ecx]
+	mov     edx, [eax+80h]
+	call    edx
+exit:
+	pop     edx
+	pop     edi
+	pop     esi
+	ret
+Cast_SGO_to_CActor endp
+
+GetGameSP proc ; no args, eax - result
+	push    ecx
+	push    edx
+	
+	mov     ecx, ds:g_pGameLevel
+	mov     edx, [ecx]
+	mov     ecx, [edx+148h]
+	mov     eax, [ecx]
+	mov     edx, [eax+18h]
+	call    edx
+	mov     eax, [eax+2Ch]
+	test    eax, eax
+	jz      exit
+	push    0               ; a5
+	push    offset off_1054F0E8 ; a4
+	push    offset off_1054F0CC ; a3
+	push    0               ; a2
+	push    eax             ; a1
+	call    __RTDynamicCast
+	add     esp, 14h
+exit:
+	pop     edx
+	pop     ecx
+	retn
+GetGameSP endp
+
+
+Cast_SGO_to_CInventoryOwner proc  ; ecx - argument, eax - result
+	push    esi
+	push    edi
+	push    edx
+
+	mov     esi, ecx
+	mov     edi, [esi+4]
+	test    edi, edi
+	jz      short lab1
+	call    CGameObject__lua_game_object
+lab1:
+	mov     ecx, [esi+4]
+	test    ecx, ecx
+	jz      short exit
+	mov     eax, [ecx]
+	mov     edx, [eax+70h]
+	call    edx
+exit:
+	pop     edx
+	pop     edi
+	pop     esi
+	ret
+Cast_SGO_to_CInventoryOwner endp
+
+CScriptGameObject__item_in_inv_box proc
+index   = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	;---
+	;eax == id
+	;mov     eax, [ebp+index]
+	;call    GetClientObjectByID
+	;jmp exit
+	;--------------------------
+	call    Cast_SGO_to_CInventoryBox  ; ecx - argument, eax - result
+	test    eax, eax
+	jz      short fail_exit
+	;mov     esi, eax 
+	; здесь в eax - CInventoryBox
+	mov     ecx, [eax+16Ch] ; items.begin
+	mov     eax, [eax+170h] ; items.end
+	sub     eax, ecx
+	sar     eax, 1        ; eax = items.size()
+	mov     edi, [ebp+index]
+	cmp     eax, edi
+	jbe     short fail_exit
+	shl     edi, 1
+	xor     eax, eax
+	mov     ax, word ptr [ecx+edi] ;
+	;eax == id
+	call    GetClientObjectByID
+	;test    eax, eax
+	;jz      fail_exit
+	;mov     edi, eax
+	;call    CGameObject__lua_game_object
+	jmp     exit
+fail_exit:
+	xor     eax, eax
+exit:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__item_in_inv_box endp
+
+
+GetClientObjectByID proc
+	push    ecx
+	push    edi
+	
+	push    eax
+	call    get_object_by_id
+	add     esp, 4
+	
+	pop     edi
+	pop     ecx
+	retn
+GetClientObjectByID endp
+
+CScriptGameObject__InvBoxCount proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	;---
+	call    Cast_SGO_to_CInventoryBox  ; ecx - argument, eax - result
+	test    eax, eax
+	jz      short fail_exit
+	;---
+	mov     ecx, [eax+16Ch] ; items.begin
+	mov     eax, [eax+170h] ; items.end
+	sub     eax, ecx
+	sar     eax, 1        ; eax = items.size()
+	jmp     exit
+fail_exit:
+	xor     eax, eax
+exit:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__InvBoxCount endp
+
+Cast_SGO_to_CInventoryItem proc
+	push    esi
+	push    edi
+	push    edx
+
+	mov     esi, ecx
+	mov     edi, [esi+4]
+	test    edi, edi
+	jz      short lab1
+	call    CGameObject__lua_game_object
+lab1:
+	mov     ecx, [esi+4]
+	test    ecx, ecx
+	jz      short exit
+	mov     eax, [ecx]
+	mov     edx, [eax+74h]
+	call    edx
+exit:
+	pop     edx
+	pop     edi
+	pop     esi
+	ret
+Cast_SGO_to_CInventoryItem endp
+
+CScriptGameObject__GetWeght proc
+	push    ebp
+	mov     ebp, esp
+	push    ecx
+	push    eax
+	
+	call    Cast_SGO_to_CInventoryItem
+	
+	mov     ecx, eax
+	
+	mov     eax, [ecx]
+	mov     eax, [eax+90h]
+	call    eax
+
+	pop     eax
+	pop     ecx
+	pop     ebp
+	retn
+CScriptGameObject__GetWeght endp
