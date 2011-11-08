@@ -24,7 +24,13 @@
 0x10356481 8 ; part2: mov ebx,10h; nop; nop; nop;
 0x10355D85 5 ; jmp addr_10355D9B ; skip annoying msg "sv destroy object ..."
 0x103B8DEB 5 ; jmp addr_103B8DFF ; skip annoying msg "[16-9] get_xml_name for ..."
+0x1004C3D2 5 ; jmp release_fix
+0x101477AF 6 ; отключение проверки при выкидывании из ящиков
+0x102042FD 6 ; активировать 8-й слот
+0x1026C525 5 ; jmp car_fix
+0x103FB34F 5 ; jmp cuiwindow_fix
 
+;0x10272746 8 ; попытка фикса вылезания из машины
 
 ;0x102065B7 9 ; jmp loc_1020663C_return_true ; фикс инвентаря часть 1
 ;0x1020432D 5 ; jmp CInventory__CInventory_fix ; фикс инвентаря часть 2

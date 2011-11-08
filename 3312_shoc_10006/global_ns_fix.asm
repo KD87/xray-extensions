@@ -1,6 +1,5 @@
 include global_ns_reg_macro.asm
 ;===============| расширение регистрации глобального пространства имЄн |=======
-ALIGN_8
 global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	; здесь делаем то, что вырезали
 	call    error_log_register
@@ -9,6 +8,12 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	add     esp, 0Ch
     push    offset my_log_fun
     push    offset alog1 ; "log1"
+	push    [ebp+8h]
+    call    error_log_register
+	; регистраци€ функции крэша игры с выводом причины в лог
+	add     esp, 0Ch
+    push    offset msg_and_fail
+    push    offset aFail ; "fail"
 	push    [ebp+8h]
     call    error_log_register
 	; регистраци€ функции "bind_to_dik"
@@ -20,6 +25,18 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	; регистраци€ функции "set_extensions_flags"
 	push    offset set_extensions_flags
 	push    offset aSet_extensions_flags  ; "set_extensions_flags"
+	push    [ebp+8h]
+	call    bit_and_register
+	add     esp, 0Ch
+	; функци€ установки глобальных флагов актора
+	push    offset set_actor_flags
+	push    offset aSet_actor_flags  ; "set_actor_flags"
+	push    [ebp+8h]
+	call    bit_and_register
+	add     esp, 0Ch
+	; функци€ получени€ глобальных флагов актора
+	push    offset get_actor_flags
+	push    offset aGet_actor_flags  ; "get_actor_flags"
 	push    [ebp+8h]
 	call    bit_and_register
 	add     esp, 0Ch
@@ -48,26 +65,21 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	; идЄм обратно
 	jmp back_from_global_space_ext
 
-ALIGN_8
+aFail   db "fail", 0
 alog1   db "log1", 0
-ALIGN_8
 alog2   db "log2", 0
-ALIGN_8
 aFlush1 db "flush1", 0
-ALIGN_8
 aBind_to_dik db "bind_to_dik", 0
-ALIGN_8
 aSet_extensions_flags  db "set_extensions_flags", 0
-ALIGN_8
 aGet_extensions_flags  db "get_extensions_flags", 0
+aSet_actor_flags  db "set_actor_flags",0
+aGet_actor_flags  db "get_actor_flags",0
 
-ALIGN_8
 my_flush proc near
 	call    ds:[FlushLog]
 	retn
 my_flush endp
 
-ALIGN_8
 my_log2 proc near
 	sub   esp, 8
 	fld     cs:[value1]
@@ -78,14 +90,10 @@ my_log2 proc near
 	retn
 my_log2 endp
 
-ALIGN_8
 format_str db "qwerty %e", 0
-ALIGN_8
 value1 REAL4  1.23456e12
-ALIGN_8
 value2   dd 12345678h
 
-ALIGN_8
 my_log_fun      proc near
 	push    ebp
 	mov     ebp, esp
@@ -98,13 +106,10 @@ my_log_fun      proc near
 	retn
 my_log_fun      endp
 
-ALIGN_8
 aF_4 db "%f", 0
-ALIGN_8
 aS_4 db "%s", 0
 
 
-ALIGN_8
 bind_to_dik proc near
 
 _action_id      = dword ptr  4
@@ -137,10 +142,8 @@ arg_out_of_range: ; аргумент вне допустимого диапазона
 	retn
 bind_to_dik endp
 
-ALIGN_8
 extensions_flags dd 0
 
-ALIGN_8
 set_extensions_flags proc near
 _flags      = dword ptr  4
 	mov     eax, [esp+_flags]
@@ -148,17 +151,18 @@ _flags      = dword ptr  4
 	retn
 set_extensions_flags endp
 
-ALIGN_8
 get_extensions_flags proc near
 _flags      = dword ptr  4
 	mov     eax, [extensions_flags]
 	retn
 get_extensions_flags endp
 
+g_int_argument_0 dword 0
+
 SetIntArg0 proc
 int_arg = dword ptr  4
 	mov     eax, [esp+int_arg]
-	mov     g_shift_argument, eax
+	mov     g_int_argument_0, eax
 	retn
 SetIntArg0 endp
 
@@ -167,3 +171,39 @@ IsPdaMenuShown proc
 	mov eax, 1
 	retn
 IsPdaMenuShown endp
+
+msg_and_fail proc near
+	push    ebp
+	mov     ebp, esp
+	
+	mov     eax, [ebp+8]
+	push    eax
+	;push    offset aS_4     ; "%s"
+	;call    ds:[Msg] 
+	;add     esp, 8
+	mov     ecx, ds:Debug ; this
+	push    offset ignore_always
+	push    offset aEmpty ; "xrServer::Process_event_ownership"
+	push    0h             ; line
+	push    offset aEmpty ; "E:\\stalker\\sources\\trunk\\xr_3da\\xrGame\\"...
+	push    eax ; "e_parent"
+	call    ds:xrDebug__fail
+
+	pop     ebp
+	retn
+msg_and_fail endp
+ignore_always db 1
+aEmpty db 0
+
+set_actor_flags proc near
+_flags      = dword ptr  4
+	mov     eax, [esp+_flags]
+	mov     psActorFlags, eax
+	retn
+set_actor_flags endp
+
+get_actor_flags proc near
+_flags      = dword ptr  4
+	mov     eax, [psActorFlags]
+	retn
+get_actor_flags endp
