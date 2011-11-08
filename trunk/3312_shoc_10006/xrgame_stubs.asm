@@ -1,6 +1,137 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+; фикс класса окна
+;.text:103FA04C CUIWindow__script_register proc near
+
+;.text:103FB325                 xor     eax, eax
+;.text:103FB327                 push    eax                                        ; 0
+;.text:103FB328                 mov     eax, offset sub_103F8A90                   ; sub
+;.text:103FB32D                 push    eax
+;.text:103FB32E                 push    offset aResetppmode ; "ResetPPMode"        ; sub name
+;.text:103FB333                 push    ecx                                        ; scope
+;.text:103FB334                 xor     eax, eax
+;.text:103FB336                 push    eax                                        ; 0
+;.text:103FB337                 mov     eax, offset sub_103F8A60
+;.text:103FB33C                 push    eax                                        ; sub
+;.text:103FB33D                 push    offset aSetppmode ; "SetPPMode"
+;.text:103FB342                 push    esi                                        ; sub name
+;.text:103FB343                 call    sub_103FB7F3
+;.text:103FB348                 pop     ecx
+;.text:103FB349                 push    eax
+;.text:103FB34A                 call    sub_103FB7F3
+org 103FB34Fh - shift
+	jmp cuiwindow_fix
+;.text:103FB34F                 push    ecx
+;.text:103FB350                 mov     ecx, esp
+;.text:103FB352                 push    eax
+;.text:103FB353                 call    edi ; luabind::scope::scope(scope::scope const &) ; luabind::scope::scope(scope::scope const &)
+org 103FB355h - shift
+back_from_cuiwindow_fix:
+;.text:103FB355                 push    ecx
+
+org 103FB7F3h - shift
+register_CUIWindow__SetPPMode:
+
+org 104014F8h - shift
+CUIWindow_DetachChild:
+
+org 101F0DE0h - shift
+script_death_callback:
+
+
+;.text:1026C3F0 CCar__CarExplode proc near
+
+;.text:1026C525 loc_1026C525:
+org 1026C525h - shift
+	jmp car_fix
+;.text:1026C525                 mov     al, [edi+2B2h]
+org 1026C52Bh - shift
+back_from_car_fix:
+;.text:1026C52B                 test    al, 1
+;.text:1026C52D                 lea     esi, [edi+28Ch]
+
+
+
+; попытка фикса кривого вылезания из машины
+;.text:10272746                 movss   xmm4, ds:float_1045ADD4__3_0
+org 10272746h - shift
+	movss   xmm4, ds:float_car_exit_distance
+;.text:1027274E                 mulss   xmm1, xmm4
+
+;10272746
+;1027274E 
+
+org 1021C5D0h - shift
+CWeapon__UpdateHUDAddonsVisibility:
+
+org 1014DD20h - shift
+register__critically_wounded: ; функция регистрации метода game_object с прототипом bool fun(void)
+
+; активировать слот детекторов (8-й)
+org 102042FDh - shift
+	nop ; 6 байт размер инструкции mov [eax+89h], bl (10204303 - 102042FD)
+	nop
+	nop
+	nop
+	nop
+	nop
+;.text:102042FD                 mov     [eax+89h], bl ; <== 6 байт
+;.text:10204303                 add     eax, 80h
+
+
+org 101E3830h - shift
+CEntityCondition__BleedingSpeed:
+org 101E2EB0h - shift
+CEntityCondition__ChangeBleeding:
+
+; миниправка для снятия ограничения на выкидывание из ящиков
+;.text:10147750 CScriptGameObject__DropItem proc near
+;...
+;.text:101477AA                 cmp     [esp+2020h+var_2014], 0
+org 101477AFh - shift
+	nop ; 6 байт размер инструкции jz (101477B5 - 101477AF)
+	nop
+	nop
+	nop
+	nop
+	nop
+;.text:101477AF                 jz      loc_1014783E ; <== проверка хозяина, убираем
+;.text:101477B5                 test    eax, eax
+;.text:101477B7                 jz      loc_1014783E ; <== проверка предмета, оставляем
+;.text:101477BD                 mov     edi, [esi+4]
+;.text:101477C0                 test    edi, edi
+;.text:101477C2                 jz      short loc_101477C9
+;.text:101477C4                 call    CGameObject__lua_game_object
+
+
+
+org 1014D140h - shift
+register__get_best_item: ; функция регистрации метода game_object с прототипом game_object* fun(void)
+
+;.text:1004C3C0 ; void __cdecl CALifeSimulator__release(int self, int object, bool)
+;.text:1004C3C0
+;.text:1004C3C0                 mov     eax, 2014h
+;.text:1004C3C5                 call    __alloca_probe
+;.text:1004C3CA                 push    esi
+;.text:1004C3CB                 mov     esi, [esp+2018h+object]
+org 1004C3D2h - shift
+	jmp release_fix
+;.text:1004C3D2                 test    esi, esi
+;.text:1004C3D4                 jnz     short loc_1004C3DA
+;.text:1004C3D6                 xor     eax, eax
+;org 1004C3D8h - shift
+;back_from_release_fix:
+;.text:1004C3D8                 jmp     short loc_1004C3E3
+;.text:1004C3DA ; ---------------------------------------------------------------------------
+;.text:1004C3DA
+org 1004C3DAh - shift
+loc_1004C3DA:
+;.text:1004C3DA loc_1004C3DA:                           ; CODE XREF: CALifeSimulator__release+14j
+;.text:1004C3DA                 mov     eax, [esi]
+
+
+
 ;.text:103B8CC0 ui_core__get_xml_name proc near     
 
 ;.text:103B8DE8                 mov     [eax+4], dl
@@ -117,7 +248,7 @@ org 10011380h - shift
 xr_vector_u16___push_back: ; запись идентификатора предмета в список предметов инвентарного ящика
 
 org 1042BF40h - shift
-CUIGameSP__StartCarBody:
+CUIGameSP__StartCarBody: ;(int this<eax>, int pOurInv <stack>, int pBox <stack>)
 
 org 1014C760h - shift
 register__run_talk_dialog: ; функция регистрации метода game_object спрототипом void fun(game_object*)
@@ -1085,6 +1216,41 @@ CCC_Float___CCC_Float dd ?
 org 10560640h - shift
 g_fHudAdjustValue dd ?                  
 
+; для приведения класса аптечки
+org 10557248h - shift
+off_10557248    dd ?
+; для приведения антирада
+org 10557214h - shift
+off_10557214  dd ?
+; для приведения костюма
+org 1054F094h - shift
+off_1054F094 dd ?
+
+; Scope
+org 10556C58h - shift
+off_10556C58 dd ?
+;Silencer
+org 10556C70h - shift
+off_10556C70 dd ?
+;GrenadeLauncher
+org 10556C88h - shift
+off_10556C88 dd ?
+;script zone
+org 1054F064h - shift
+off_1054F064 dd ?
+; projector
+org 1054F5E8h - shift
+off_1054F5E8 dd ?
+; trader
+org 1054D518h - shift
+off_1054D518 dd ?
+; food item
+org 1055578Ch - shift
+off_1055578C dd ?
+; car
+org 1054F080h - shift
+??_R0?AVCCar@@@8 dd ?
+
 ; заглушки для функции преобразования SGO в CInventoryBox
 
 org 1054F0B0h - shift
@@ -1110,3 +1276,28 @@ org 10458A9Ch - shift
 CObject__setVisible dd ?
 org 10458AA8h - shift
 CObject__setEnabled dd ?
+
+; для функции вылета
+org 10458B00h - shift
+Debug dd ?
+org 10458DD0h - shift
+xrDebug__fail dd ?
+
+; для регистрации глобальных функций
+org 10458EC0h - shift
+??0scope@luabind@@QAE@V?$auto_ptr@Uregistration@detail@luabind@@@std@@@Z dd ?
+org 10458FB4h - shift
+??0scope@luabind@@QAE@ABU01@@Z dd ?
+org 10458F9Ch - shift
+??1scope@luabind@@QAE@XZ dd ?
+
+; для регистрации метода game_object с прототипом vector* fun(string*)
+org 1015C7E0h - shift
+sub_1015C7E0:
+org 1015C880h - shift
+sub_1015C880:
+org 1015C8E0h - shift
+sub_1015C8E0:
+
+org 105602D8h - shift
+psActorFlags    dd ?

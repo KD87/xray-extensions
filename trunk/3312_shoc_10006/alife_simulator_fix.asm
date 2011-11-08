@@ -59,3 +59,23 @@ CALifeSimulator__TeleportObject endp
 parent_id_fmt db "parent_id=%d",0
 game_vertex_id_fmt  db "game_vertex_id=%d",0
 level_vertex_id_fmt  db "level_vertex_id=%d",0
+
+
+release_fix proc
+	; делаем то, что вырезали
+	test    esi, esi
+	; если указатель не нулевой, то идём обратно
+	jnz     loc_1004C3DA
+	; иначе крашим игру
+	mov     ecx, ds:Debug ; this
+	push    offset ignore_always
+	push    offset aCALifeSimulator__release 
+	push    666             ; line
+	push    offset aHZ ; 
+	push    offset aObjectNotDefined ; 
+	call    ds:xrDebug__fail
+aHZ db "deep deep in space",0
+release_fix endp
+ignore_always1 db 0
+aCALifeSimulator__release db "CALifeSimulator__release",0
+aObjectNotDefined db "Object to release is a zero pointer",0

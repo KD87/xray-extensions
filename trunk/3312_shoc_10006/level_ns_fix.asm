@@ -2,9 +2,19 @@
 level_ns_extension_1:
 	call    get_snd_volume_register ; делаем то, что вырезали
 ;------------< регистрируем функцию получения объекта, на который смотрим >------
-	push    eax
-	call    get_target_obj_register
+	;push    eax
+	;call    get_target_obj_register
+	;pop     ecx
 	pop     ecx
+	pop     ecx
+	mov     eax, esp
+	push    offset GetTargetObject
+	push    offset aGet_target_obj ; "get_target_obj"
+	push    eax
+	call    register__ns__go__void ; регистрируем функцию с прототипом как у   object_by_id
+	
+	
+	
 ;------------< регистрируем функцию получения расстояния до объекта, на который смотрим >------
 	pop     ecx
 	pop     ecx
@@ -17,7 +27,6 @@ level_ns_extension_1:
 	jmp back_to_level_ns_ext_1
 	
 aGet_target_dist db "get_target_dist", 0
-aGet_target_obj  db "get_target_obj", 0
 
 level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "call esi", сколько добавляли функций
 ; делаем то, что вырезали
@@ -27,8 +36,8 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	call    esi ; luabind::scope::operator,(luabind::scope) ; luabind::scope::operator,(luabind::scope)
 ; добавляем своё
 	; для get_target_obj не требуется ?
-;	mov     ecx, eax
-;	call    esi
+	mov     ecx, eax
+	call    esi
 	; для get_target_dist
 	mov     ecx, eax
 	call    esi
@@ -96,3 +105,61 @@ arg_0           = dword ptr  8
 	mov     dword ptr [esi+0Ch], offset GetTargetObject
 	jmp     loc_101AF661
 get_target_obj_register endp
+
+aGet_target_obj  db "get_target_obj", 0
+
+
+register__ns__go__void proc near
+var_8           = dword ptr -8
+var_4           = byte ptr -4
+arg_0           = dword ptr  8
+arg_4           = dword ptr  0Ch
+arg_8           = dword ptr  10h
+	
+	push    ebp
+	mov     ebp, esp
+	push    ecx
+	push    ecx
+	mov     ecx, ds:?Memory@@3VxrMemory@@A ; xrMemory Memory
+	push    esi
+	push    14h
+	call    ds:?mem_alloc@xrMemory@@QAEPAXI@Z ; xrMemory::mem_alloc(uint)
+	mov     esi, eax
+	test    esi, esi
+	jz      short lab1
+	mov     ecx, esi
+	call    ds:??0registration@detail@luabind@@QAE@XZ ; luabind::detail::registration::registration(void)
+	mov     eax, [ebp+arg_4]
+	mov     [esi+8], eax
+	mov     eax, [ebp+arg_8]
+	mov     dword ptr [esi], offset off_10481E80
+	mov     [esi+0Ch], eax
+	jmp     short lab2
+lab1:
+	xor     esi, esi
+lab2:
+	and     [ebp+var_8], 0
+	push    ecx
+	mov     eax, esp
+	lea     ecx, [ebp+var_4]
+	mov     [eax], esi
+	call    ds:??0scope@luabind@@QAE@V?$auto_ptr@Uregistration@detail@luabind@@@std@@@Z ; luabind::scope::scope(std::auto_ptr<luabind::detail::registration>)
+	mov     ecx, [ebp+arg_0]
+	push    eax
+	call    ds:??0scope@luabind@@QAE@ABU01@@Z ; luabind::scope::scope(scope::scope const &)
+	lea     ecx, [ebp+var_4]
+	call    ds:??1scope@luabind@@QAE@XZ ; luabind::scope::~scope(void)
+	mov     ecx, [ebp+var_8]
+	test    ecx, ecx
+	jz      short lab3
+	mov     eax, [ecx]
+	push    1
+	call    dword ptr [eax]
+	
+lab3:
+	mov     eax, [ebp+arg_0]
+	pop     esi
+	leave
+	retn
+register__ns__go__void endp
+	

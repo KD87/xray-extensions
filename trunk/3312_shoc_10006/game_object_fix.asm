@@ -1,6 +1,8 @@
+include game_object_castings.asm
 include game_object_reg_macro.asm
+
 REGISTER_GO__INT register_item_on_belt, "item_on_belt"
-REGISTER_GO__INT register_item_in_ruck, "item_on_ruck"
+REGISTER_GO__INT register_item_in_ruck, "item_in_ruck"
 
 REGISTER_BOOL__GO register_is_on_belt, "is_on_belt"
 REGISTER_BOOL__GO register_is_in_ruck, "is_in_ruck" ; ------
@@ -17,14 +19,39 @@ REGISTER_BOOL__GO register_can_move_to_belt, "can_move_to_belt" ; --
 
 REGISTER_FLOAT__INT register_get_actor_float, "get_actor_float"
 REGISTER_VOID__VECTOR_FLOAT_INT register_set_actor_float, "set_actor_float"
-
+;---
+REGISTER_FLOAT__INT             register_get_game_object_float,      "get_go_float"
+REGISTER_VOID__VECTOR_FLOAT_INT register_set_game_object_float,      "set_go_float"
+REGISTER_INT__STRING_INT        register_get_game_object_int,        "get_go_int"
+REGISTER_VOID__INT_INT          register_set_game_object_int,        "set_go_int"
+REGISTER_INT__STRING_INT        register_get_game_object_int16,      "get_go_int16"
+REGISTER_VOID__INT_INT          register_set_game_object_int16,      "set_go_int16"
+REGISTER_INT__STRING_INT        register_set_game_object_shared_str, "set_go_shared_str"
+;--
+REGISTER_FLOAT__INT             register_get_inventory_item_float,      "get_inventory_item_float"
+REGISTER_VOID__VECTOR_FLOAT_INT register_set_inventory_item_float,      "set_inventory_item_float"
+REGISTER_INT__STRING_INT        register_get_inventory_item_int,        "get_inventory_item_int"
+REGISTER_VOID__INT_INT          register_set_inventory_item_int,        "set_inventory_item_int"
+REGISTER_INT__STRING_INT        register_get_inventory_item_int16,      "get_inventory_item_int16"
+REGISTER_VOID__INT_INT          register_set_inventory_item_int16,      "set_inventory_item_int16"
+REGISTER_INT__STRING_INT        register_set_inventory_item_shared_str, "set_inventory_item_shared_str"
+;--
 REGISTER_INT__STRING_INT register_get_actor_int, "get_actor_int"
+REGISTER_INT__STRING_INT register_get_actor_int16, "get_actor_int16"
+
 REGISTER_INT__STRING_INT register_get_wpn_gl_int, "get_wpn_gl_int"
 REGISTER_INT__STRING_INT register_get_wpn_int, "get_wpn_int"
+; -- to del
+REGISTER_INT__STRING_INT register_get_holder_int, "get_holder_int"
+;
 REGISTER_VOID__INT_INT register_set_wpn_int, "set_wpn_int"
 
 REGISTER_INT__STRING_INT register_get_wpn_bone_id, "get_wpn_bone_id"
+;REGISTER_INT__STRING_INT register_get_wpn_hud_bone_id, "get_wpn_hud_bone_id"
+
+REGISTER_INT__STRING_INT register_get_hud_bone_id, "get_hud_bone_id"
 REGISTER_INT__STRING_INT register_set_wpn_bone_visible, "set_wpn_bone_visible"
+REGISTER_INT__STRING_INT register_set_hud_bone_visible, "set_hud_bone_visible"
 REGISTER_INT__STRING_INT register_get_wpn_bone_visible, "get_wpn_bone_visible"
 
 REGISTER_FLOAT__INT register_get_wpn_float, "get_wpn_float"
@@ -34,26 +61,18 @@ REGISTER_FLOAT__INT register_get_custom_monster_float, "get_custom_monster_float
 REGISTER_INT__STRING_INT register_get_custom_monster_int, "get_custom_monster_int"
 
 REGISTER_INT__STRING_INT register_set_actor_shared_str, "set_actor_shared_str"
+REGISTER_INT__STRING_INT register_set_wpn_shared_str, "set_wpn_shared_str"
 
 REGISTER_GO__INT register_item_in_inv_box, "object_from_inv_box"
+
+REGISTER_VECTOR__STRING register_get_hud_bone_pos, "get_hud_bone_pos"
 
 game_object_fix proc
 ; делаем то, что вырезали 
 	call    enable_vision_register
 ; добавляем своё
 	; регистрируем функцию разрешения колбеков на нажатия и мышь
-	mov     ecx, eax
-	mov     byte ptr [esp+58h-38h], bl
-	mov     eax, [esp+58h-38h]
-	push    eax
-	mov     byte ptr [esp+5Ch-40h], bl
-	mov     edx, [esp+5Ch-40h]
-	push    edx
-	push    offset aEnable_Input_Extensions ; "enable_input_extensions"
-	lea     eax, [esp+64h-48h]
-	mov     ebx, ecx
-	mov     [esp+64h-48h], offset enable_input_extensions
-	call    enable_vision_register
+	PERFORM_EXPORT_VOID__BOOL enable_input_extensions, "enable_input_extensions"
 	; регистрируем функцию получения топлива у машины
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetFuel, "get_fuel"
 	; регистрируем функцию получения потребления топлива у машины
@@ -69,11 +88,11 @@ game_object_fix proc
 	; регистрируем функцию получения предмета из рюкзака по номеру
 	PERFORM_EXPORT_GO__INT register_item_in_ruck, CScriptGameObject__item_in_ruck
 	; регистрируем функцию получения количества предметов на поясе
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__BeltCount, "belt_count"
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__BeltCount, "belt_count"
 	; регистрируем функцию получения количества предметов в рюкзаке
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__RuckCount, "ruck_count"
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__RuckCount, "ruck_count"
 	; регистрируем функцию получения количества слотов
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__SlotCount, "slot_number"
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__SlotCount, "slot_number"
 	; регистрируем функцию перемещения предмета предмета в рюкзак
 	PERFORM_EXPORT_BOOL__GO register_move_to_ruck, CScriptGameObject__MoveToRuck
 	; регистрируем функцию перемещения предмета предмета на пояс
@@ -93,61 +112,59 @@ game_object_fix proc
 	; регистрируем функцию получения предмета из инвентарного ящика по номеру
 	PERFORM_EXPORT_GO__INT register_item_in_inv_box, CScriptGameObject__item_in_inv_box
 	; test get_id
-	mov     ecx, eax
-	mov     byte ptr [esp+58h-38h], bl
-	mov     eax, [esp+58h-38h]
-	push    eax
-	mov     byte ptr [esp+5Ch-40h], bl
-	mov     edx, [esp+5Ch-40h]
-	push    edx
-	push    offset aGet_id ; "get_id"
-	lea     eax, [esp+64h-48h]
-	mov     ebx, ecx
-	mov     [esp+64h-48h], offset CScriptGameObject__GetID
-	call    register_general_goodwill
+	PERFORM_EXPORT_INT__VOID CScriptGameObject__GetID, "get_id"
 	; регистрируем функцию установки коэффициента спринта для актора
-	;mov     ecx, eax
-	;mov     byte ptr [esp+58h-38h], bl
-	;mov     eax, [esp+58h-38h]
-	;push    eax
-	;mov     byte ptr [esp+5Ch-40h], bl
-	;mov     edx, [esp+5Ch-40h]
-	;push    edx
-	;push    offset aSet_sprint_factor ; "set_sprint_factor"
-	;lea     eax, [esp+64h-48h]
-	;mov     ebx, ecx
-	;mov     [esp+64h-48h], offset CScriptGameObject__SetSprintFactor
-	;call    register__remove_sound
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetSprintFactor, "set_sprint_factor"
-
 	; регистрируем функцию получения коэффициента спринта для актора
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetSprintFactor, "get_sprint_factor"
 	; регистрируем функцию получения состояния актора
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__ActorBodyState, "actor_body_state"
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__ActorBodyState, "actor_body_state"
 
+	;--
+	PERFORM_EXPORT_FLOAT__INT             register_get_game_object_float,      CScriptGameObject__GetGameObjectFloat
+	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_game_object_float,      CScriptGameObject__SetGameObjectFloat
+	PERFORM_EXPORT_INT__STRING_INT        register_get_game_object_int,        CScriptGameObject__GetGameObjectInt
+	PERFORM_EXPORT_VOID__INT_INT          register_set_game_object_int,        CScriptGameObject__SetGameObjectInt
+	PERFORM_EXPORT_INT__STRING_INT        register_get_game_object_int16,      CScriptGameObject__GetGameObjectInt16
+	PERFORM_EXPORT_VOID__INT_INT          register_set_game_object_int16,      CScriptGameObject__SetGameObjectInt16
+	PERFORM_EXPORT_INT__STRING_INT        register_set_game_object_shared_str, CScriptGameObject__SetGameObjectSharedStr
+	
+	PERFORM_EXPORT_STRING__VOID      CScriptGameObject__GetGameObjectSharedStr, "get_go_shared_str"
+	;--
+	PERFORM_EXPORT_FLOAT__INT             register_get_inventory_item_float,      CScriptGameObject__GetInventoryItemFloat
+	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_inventory_item_float,      CScriptGameObject__SetInventoryItemFloat
+	PERFORM_EXPORT_INT__STRING_INT        register_get_inventory_item_int,        CScriptGameObject__GetInventoryItemInt
+	PERFORM_EXPORT_VOID__INT_INT          register_set_inventory_item_int,        CScriptGameObject__SetInventoryItemInt
+	PERFORM_EXPORT_INT__STRING_INT        register_get_inventory_item_int16,      CScriptGameObject__GetInventoryItemInt16
+	PERFORM_EXPORT_VOID__INT_INT          register_set_inventory_item_int16,      CScriptGameObject__SetInventoryItemInt16
+	PERFORM_EXPORT_INT__STRING_INT        register_set_inventory_item_shared_str, CScriptGameObject__SetInventoryItemSharedStr
+	
+	PERFORM_EXPORT_STRING__VOID      CScriptGameObject__GetInventoryItemSharedStr, "get_inventory_item_shared_str"
+	;--
 	PERFORM_EXPORT_FLOAT__INT register_get_actor_float, CScriptGameObject__GetActorFloat
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_actor_float, CScriptGameObject__SetActorFloat
 	PERFORM_EXPORT_INT__STRING_INT register_get_actor_int, CScriptGameObject__GetActorInt
+	PERFORM_EXPORT_INT__STRING_INT register_get_actor_int16, CScriptGameObject__GetActorInt16
 
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_gl_int, CScriptGameObject__GetWeaponGLInt
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_int, CScriptGameObject__GetWeaponInt
 	PERFORM_EXPORT_VOID__INT_INT register_set_wpn_int, CScriptGameObject__SetWeaponInt
 	
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_bone_id, CScriptGameObject__GetWeaponBoneID
+	;PERFORM_EXPORT_INT__STRING_INT register_get_wpn_hud_bone_id, CScriptGameObject__GetWeaponHudBoneID
+	
+	PERFORM_EXPORT_INT__STRING_INT register_get_hud_bone_id, CScriptGameObject__GetHudBoneID
+	
 	PERFORM_EXPORT_INT__STRING_INT register_set_wpn_bone_visible, CScriptGameObject__SetWeaponBoneVisible
+	PERFORM_EXPORT_INT__STRING_INT register_set_hud_bone_visible, CScriptGameObject__SetHudBoneVisible
+	
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_bone_visible, CScriptGameObject__GetWeaponBoneVisible
 	
 	PERFORM_EXPORT_FLOAT__INT register_get_wpn_float, CScriptGameObject__GetWeaponFloat
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_wpn_float, CScriptGameObject__SetWeaponFloat
 	
-	; регистрируем функцию проверки на тип "инвентарный предмет"
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__IsInventoryItem, "is_inventory_item"
-	; регистрируем функцию проверки на тип "ствол с подствольником"
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__IsWeaponGL, "is_weapon_gl"
-	; регистрируем функцию проверки на тип "ствол"
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__IsWeapon, "is_weapon"
-	; регистрируем функцию проверки на тип "actor"
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__IsActor, "is_actor"
+	
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__IsGameObject, "is_game_object"
 
 	; регистрируем функцию получения FOV актора
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetCameraFOV, "get_camera_fov"
@@ -161,35 +178,67 @@ game_object_fix proc
 	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetActorSharedStr, "get_actor_shared_str"
 	PERFORM_EXPORT_INT__STRING_INT register_set_actor_shared_str, CScriptGameObject__SetActorSharedStr
 	
+	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetWpnSharedStr, "get_wpn_shared_str"
+	PERFORM_EXPORT_INT__STRING_INT register_set_wpn_shared_str, CScriptGameObject__SetWpnSharedStr
+	
 	PERFORM_EXPORT_VOID__STRING CScriptGameObject__SetActorVisual, "set_actor_visual"
 	
 	PERFORM_EXPORT_VOID__GO CScriptGameObject__OpenInventoryBox, "open_inventory_box"
 	; регистрируем функцию получения количества предметов в ящике
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__InvBoxCount, "inv_box_count"
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__InvBoxCount, "inv_box_count"
 	; получение инвентарного веса
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetWeght, "get_weight"
-
+	; получение владельца машины, как game_object
+	PERFORM_EXPORT_GO__VOID	CScriptGameObject__GetHolderOwner, "get_holder_owner"
+	PERFORM_EXPORT_INT__STRING_INT register_get_holder_int, CScriptGameObject__GetHolderInt
+	; получение скорости кровотечения
+	;PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetBleedingSpeed, "get_bleeding_speed"
+	; изменение скорости кровотечения
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__ChangeBleedingSpeed, "heal_wounds"
+	
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetGameObject,        "is_game_object"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsCar,                "is_car"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetCarShift,          "get_car_shift"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsHolder,             "is_holder"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsEntityAlive,        "is_entity_alive"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsInventoryItem,      "is_inventory_item"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsInventoryOwner,     "is_inventory_owner"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActor,              "is_actor"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsCustomMonster,      "is_custom_monster"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeapon,             "is_weapon"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponGL,           "is_weapon_gl"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__CInventoryBox,        "is_inventory_box"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsMedkit,             "is_medkit"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsEatableItem,        "is_eatable_item"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsAntirad,            "is_antirad"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsOutfit,             "is_outfit"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsScope,              "is_scope"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsSilencer,           "is_silencer"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsGrenadeLauncher,    "is_grenade_launcher"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponMagazined,    "is_weapon_magazined"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsSpaceRestrictor,    "is_space_restrictor"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsStalker,            "is_stalker"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsCustomZone,         "is_anomaly"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsBaseMonster,        "is_monster"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsExplosive,          "is_explosive"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsScriptZone,         "is_script_zone"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsProjector,          "is_projector"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsTrader,             "is_trader"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsHudItem,            "is_hud_item"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsFoodItem,           "is_food_item"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsArtefact,           "is_artefact"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsAmmo,               "is_ammo"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsMissile,            "is_missile"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsPhysicsShellHolder, "is_physics_shell_holder"
+	
+	PERFORM_EXPORT_VECTOR__STRING register_get_hud_bone_pos, CScriptGameObject__hud_bone_position
+	
 	; идём обратно
 	jmp back_from_game_object_fix
 game_object_fix endp
 
-aEnable_Input_Extensions db "enable_input_extensions", 0
-; aGet_fuel db "get_fuel", 0
-; aSet_fuel db "set_fuel", 0
-; aGet_fuel_consumption db "get_fuel_consumption", 0
-; aSet_fuel_consumption db "set_fuel_consumption", 0
-; aGet_fuel_tank db "get_fuel_tank", 0
-; aBelt_count db "belt_count", 0
-; aRuck_count db "ruck_count", 0
-; aSlot_count db "slot_number", 0
-; aGet_inventory_weight db "get_inventory_weight", 0
-aGet_id db "get_id", 0
-aSet_sprint_factor db "set_sprint_factor", 0
-
-ALIGN_8
 input_extensions_enabled dd 0
 
-ALIGN_8
 enable_input_extensions    proc near               ; DATA XREF: script_register_game_object2+51Fo
 arg_0           = byte ptr  8
 	mov eax, [ebp+4]
@@ -626,6 +675,7 @@ exit2:
 	pop     ebp
 	retn    4
 CScriptGameObject__IsOnBelt_old endp
+
 
 CScriptGameObject__GetID proc
 arg_0           = dword ptr  8
@@ -1349,52 +1399,23 @@ exit:
 	retn    8
 CScriptGameObject__GetActorInt endp
 
-CScriptGameObject__IsInventoryItem proc
-	push    esi
-	mov     esi, ecx
-	push    edi
+CScriptGameObject__GetActorInt16 proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    [ebp + pos]
+	push    [ebp + pos]
+	call    CScriptGameObject__GetActorInt
+	and     eax, 0FFFFh
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetActorInt16 endp
 
-	mov     edi, [esi+4]
-	test    edi, edi
-	jz      lab1
-	call    CGameObject__lua_game_object
-lab1:
-	mov     ecx, [esi+4]
-	test    ecx, ecx
-	jz      exit_fail
-	mov     eax, [ecx]
-	mov     edx, [eax+74h]
-	call    edx
-	test    eax, eax
-	jz      exit_fail
-exit_fail:
-	pop     edi
-	pop     esi
-	retn
-CScriptGameObject__IsInventoryItem endp
-
-CScriptGameObject__IsWeaponGL proc
-	push    esi
-
-	call CScriptGameObject__IsInventoryItem
-	test    eax, eax
-	jz      exit_fail
-	; это CInventoryItem
-	xor     esi, esi
-	push    esi             ; 0
-	push    offset off_10556CC8 ; a4
-	push    offset off_10538CDC ; a3
-	push    esi             ; 0
-	push    eax             ; inventory_item
-	call    __RTDynamicCast
-	add     esp, 14h
-	test    eax, eax
-	jz      exit_fail
-	; это CWeaponMagazinedWGrenade
-exit_fail:
-	pop     esi
-	retn
-CScriptGameObject__IsWeaponGL endp
 
 CScriptGameObject__GetWeaponGLInt proc
 stub  = dword ptr  8
@@ -1432,46 +1453,6 @@ dbg_msg db "arg=%d", 0
 
 is_wpn_msg1 db "is_wpn_msg1: %x", 0
 is_wpn_msg2 db "is_wpn_msg2: %x", 0
-
-CScriptGameObject__IsWeapon proc
-	push    esi
-	mov     esi, ecx
-	push    edi
-	mov     edi, [esi+4]
-	test    edi, edi
-	jz      lab1
-	;
-	;pusha
-	;push    ecx
-	;push    offset is_wpn_msg1
-	;call    Msg
-	;pop     eax
-	;pop     eax	
-	;popa
-	;
-	call    CGameObject__lua_game_object
-	;
-	;pusha
-	;push    eax
-	;push    offset is_wpn_msg2
-	;call    Msg
-	;pop     eax
-	;pop     eax	
-	;popa
-	;
-lab1:
-	mov     ecx, [esi+4]
-	test    ecx, ecx
-	jz      short exit_fail
-	mov     eax, [ecx]
-	mov     edx, [eax+0A8h]
-	call    edx
-	test    eax, eax
-exit_fail:
-	pop     edi
-	pop     esi
-	retn
-CScriptGameObject__IsWeapon endp
 
 CScriptGameObject__GetWeaponInt proc
 stub  = dword ptr  8
@@ -1529,6 +1510,99 @@ exit:
 	retn    08h
 CScriptGameObject__SetWeaponInt endp
 
+
+
+CScriptGameObject__GetHudBoneID proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	call    CScriptGameObject__IsHudItem
+	
+	mov     eax, [eax+16] ; eax == m_pHUD
+	movzx   ecx, byte ptr [eax+4]
+	test    ecx, ecx
+	jnz     exit_fail
+	
+	mov     eax, [eax+48h]
+	mov     ecx, [eax+8]    ; ecx == visual
+	test    ecx, ecx
+	jz      exit_fail
+	
+	mov     eax, [ecx]
+	mov     eax, [eax+18h]
+	call    eax             ; pHudVisual = smart_cast<CKinematics*>(m_pHUD->Visual());
+	test    eax, eax
+	jz      exit_fail
+
+	push    [ebp + bone_name] ; offset aWpn_scope ; "wpn_scope"
+	mov     ecx, eax
+	call    ds:CKinematics__LL_BoneID
+	
+	jmp     exit
+exit_fail:
+	mov     eax, -2
+exit:
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetHudBoneID endp
+
+CScriptGameObject__SetHudBoneVisible proc
+bone_name = dword ptr 8
+visible   = dword ptr 0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    esi
+
+	call    CScriptGameObject__IsHudItem
+	
+	mov     eax, [eax+16] ; eax == m_pHUD
+	movzx   ecx, byte ptr [eax+4]
+	test    ecx, ecx
+	jnz     exit_fail
+	
+	mov     eax, [eax+48h]
+	mov     ecx, [eax+8]    ; ecx == visual
+	test    ecx, ecx
+	jz      exit_fail
+	
+	mov     eax, [ecx]
+	mov     eax, [eax+18h]
+	call    eax             ; pHudVisual = smart_cast<CKinematics*>(m_pHUD->Visual());
+	test    eax, eax
+	jz      exit_fail
+	mov     esi, eax
+
+	push    [ebp + bone_name] 
+	mov     ecx, eax ; pHudVisual
+	call    ds:CKinematics__LL_BoneID
+	
+	push    1
+	push    [ebp + visible]
+	push    eax ; bone_id
+	mov     ecx, esi ; pHudVisual
+	call    ds:CKinematics__LL_SetBoneVisible
+	mov     ecx, esi
+	call    ds:CKinematics__CalculateBones_Invalidate
+
+	jmp     exit
+exit_fail:
+	mov     eax, -2
+exit:
+	
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__SetHudBoneVisible endp
+
+
 CScriptGameObject__GetWeaponBoneID proc
 bone_name = dword ptr 8
 stub      = dword ptr 0Ch
@@ -1544,19 +1618,25 @@ stub      = dword ptr 0Ch
 	test    eax, eax
 	jz      short exit_fail
 	;---
-	mov     ecx, [eax+168h]
-	test    ecx, ecx
+	;jmp exit
+	mov     eax, [eax+168h]
+	test    eax, eax
 	jz      short exit_fail
-	mov     eax, [ecx]
-	mov     edx, [eax+18h]
-	call    edx
+	mov     eax, [eax]
+	mov     eax, [eax+18h]
+	call    eax
+	;push [ebp + bone_name]
+	;call msg
+	;pop ecx
 	
-	mov     esi, eax ; esi = visual
-	mov     ecx, esi ; this == visual
-	mov     eax, [ebp + bone_name]
-	push    eax
+	;mov     esi, eax ; esi = visual
+	;mov     ecx, esi ; this == visual
+	;mov     eax, [ebp + bone_name]
+	;push    eax
+	push    [ebp + bone_name]
+	mov     ecx, eax
 	call    ds:CKinematics__LL_BoneID
-	movzx   ecx, ax
+	movzx   eax, ax
 	jmp     exit
 exit_fail:
 	mov     eax, -1
@@ -1754,28 +1834,6 @@ value = dword ptr  04h
 	retn    4
 CScriptGameObject__SetCameraFOV endp
 
-
-CScriptGameObject__IsCustomMonster proc
-	push    esi
-	mov     esi, ecx
-	push    edi
-	mov     edi, [esi+4]
-	test    edi, edi
-	jz      lab1
-	call    CGameObject__lua_game_object
-lab1:
-	mov     ecx, [esi+4]
-	test    ecx, ecx
-	jz      short exit_fail
-	mov     eax, [ecx]
-	mov     edx, [eax+9Ch]
-	call    edx
-exit_fail:
-	pop     edi
-	pop     esi
-	retn
-CScriptGameObject__IsCustomMonster endp
-
 CScriptGameObject__GetCustomMonsterFloat proc
 pos   = dword ptr  8
 	push    ebp
@@ -1884,27 +1942,6 @@ sarg   = dword ptr  8
 	retn    4
 CScriptGameObject__TestStr endp
 
-CScriptGameObject__IsActor proc
-	push    esi
-	mov     esi, ecx
-	push    edi
-	mov     edi, [esi+4]
-	test    edi, edi
-	jz      lab1
-	call    CGameObject__lua_game_object
-lab1:
-	mov     ecx, [esi+4]
-	test    ecx, ecx
-	jz      short exit_fail
-	mov     eax, [ecx]
-	mov     edx, [eax+80h]
-	call    edx
-exit_fail:
-	pop     edi
-	pop     esi
-	retn
-CScriptGameObject__IsActor endp
-
 CScriptGameObject__GetTestStr proc
 	push    ebp
 	mov     ebp, esp
@@ -1930,14 +1967,75 @@ exit:
 	retn
 CScriptGameObject__GetTestStr endp
 
-;CScriptGameObject__SetShiftArgument proc
-;sarg   = dword ptr  4
-;	mov     eax, [esp + sarg]
-;	mov     [g_shift_argument], eax
-;	retn    4
-;CScriptGameObject__SetShiftArgument endp
+CScriptGameObject__GetWpnSharedStr proc
+	;===========================
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push ecx
+	push esi
+	
+	call    CScriptGameObject__IsWeapon
+	test    eax, eax
+	jnz     lab1
+	push    offset a_msg_argument0_not_set
+	call    Msg
+	pop     eax
+	jmp     short exit_fail
+lab1:
 
-g_shift_argument dword 0
+	mov     ecx, g_int_argument_0
+	test    ecx, ecx
+	jz      exit_fail
+	mov     eax, [eax + ecx]
+	test    eax, eax
+	jz      short exit_fail
+	lea     eax, [eax+0Ch]
+	;add     eax, 0Ch
+	;PRINT "it's work"
+	xor     ecx, ecx
+	mov     g_int_argument_0, ecx
+	jmp exit
+exit_fail:
+	xor     eax, eax
+exit:
+	pop esi
+	pop ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetWpnSharedStr endp
+
+CScriptGameObject__SetWpnSharedStr proc
+str_arg   = dword ptr  8
+shift_arg = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	push    ebx
+	push    ecx
+	push    edx
+
+	call    CScriptGameObject__IsWeapon
+	test    eax, eax
+	jz      exit_fail
+	
+	
+	mov  ebx, eax
+	add  ebx, [ebp+shift_arg]
+	mov  eax, [ebp+str_arg]
+	call set_shared_str; ebx = (shared_str*)   eax = (char*)
+exit_fail:	
+	pop     edx
+	pop     ecx
+	pop     ebx
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__SetWpnSharedStr endp
 
 CScriptGameObject__GetActorSharedStr proc
 	push    ebp
@@ -1954,7 +2052,7 @@ CScriptGameObject__GetActorSharedStr proc
 	jmp     short exit_fail
 lab1:
 	;---
-	mov     ecx, g_shift_argument
+	mov     ecx, g_int_argument_0
 	test    ecx, ecx
 	jz      exit_fail
 	mov     eax, [eax + ecx]
@@ -1963,7 +2061,7 @@ lab1:
 	add     eax, 0Ch
 	;---
 	xor     ecx, ecx
-	mov     g_shift_argument, ecx
+	mov     g_int_argument_0, ecx
 	jmp     exit
 exit_fail:
 	xor     eax, eax
@@ -1975,19 +2073,6 @@ exit:
 CScriptGameObject__GetActorSharedStr endp
 a_msg_argument0_not_set db "!!Hidden argument #0 is not defined!", 0
 
-
-PRINT MACRO msg_txt:REQ
-LOCAL lab1_
-LOCAL a_msg
-	jmp     lab1_
-a_msg db msg_txt, 0
-lab1_:
-	pusha
-	push    offset a_msg
-	call    Msg
-	add     esp, 04h
-	popa
-ENDM
 
 CScriptGameObject__SetActorSharedStr proc
 str_arg   = dword ptr  8
@@ -2078,12 +2163,11 @@ SGO_inv_box = dword ptr  8
 	test    eax, eax
 	jz      exit
 	mov     edi, eax ; hud
-	;
 	mov     ecx, [ebp+SGO_inv_box]
-	call    Cast_SGO_to_CInventoryBox
+	call    CScriptGameObject__CInventoryBox
 	push    eax
 	mov     ecx, esi
-	call    Cast_SGO_to_CInventoryOwner
+	call    CScriptGameObject__IsInventoryOwner
 	push    eax
 
 	mov     eax, edi
@@ -2096,60 +2180,6 @@ exit:
 	pop     ebp
 	retn    4
 CScriptGameObject__OpenInventoryBox endp
-
-
-Cast_SGO_to_CInventoryBox proc  ; ecx - argument, eax - result
-	push    esi
-	push    edi
-
-	mov     esi, ecx
-	mov     edi, [esi+4]
-	test    edi, edi
-	jz      short lab1
-	call    CGameObject__lua_game_object
-lab1:
-	mov     esi, [esi+4]
-	xor     eax, eax
-	test    esi, esi
-	jz      short exit
-	push    0               ; a5
-	push    offset off_1054F0B0 ; a4
-	push    offset ??_R0?AVCGameObject@@@8 ; a3
-	push    0               ; a2
-	push    esi             ; a1
-	call    __RTDynamicCast
-	add     esp, 14h
-exit:
-	pop     edi
-	pop     esi
-	ret
-Cast_SGO_to_CInventoryBox endp
-
-Cast_SGO_to_CActor proc ; ecx - argument, eax - result
-	push    esi
-	push    edi
-	push    edx
-	
-	mov     esi, ecx
-	push    edi
-	mov     edi, [esi+4]
-	test    edi, edi
-	jz      short lab1
-	call    CGameObject__lua_game_object
-lab1:
-	mov     ecx, [esi+4]
-	xor     eax, eax
-	test    ecx, ecx
-	jz      short exit
-	mov     eax, [ecx]
-	mov     edx, [eax+80h]
-	call    edx
-exit:
-	pop     edx
-	pop     edi
-	pop     esi
-	ret
-Cast_SGO_to_CActor endp
 
 GetGameSP proc ; no args, eax - result
 	push    ecx
@@ -2177,31 +2207,6 @@ exit:
 	retn
 GetGameSP endp
 
-
-Cast_SGO_to_CInventoryOwner proc  ; ecx - argument, eax - result
-	push    esi
-	push    edi
-	push    edx
-
-	mov     esi, ecx
-	mov     edi, [esi+4]
-	test    edi, edi
-	jz      short lab1
-	call    CGameObject__lua_game_object
-lab1:
-	mov     ecx, [esi+4]
-	test    ecx, ecx
-	jz      short exit
-	mov     eax, [ecx]
-	mov     edx, [eax+70h]
-	call    edx
-exit:
-	pop     edx
-	pop     edi
-	pop     esi
-	ret
-Cast_SGO_to_CInventoryOwner endp
-
 CScriptGameObject__item_in_inv_box proc
 index   = dword ptr  8
 	push    ebp
@@ -2215,7 +2220,7 @@ index   = dword ptr  8
 	;call    GetClientObjectByID
 	;jmp exit
 	;--------------------------
-	call    Cast_SGO_to_CInventoryBox  ; ecx - argument, eax - result
+	call    CScriptGameObject__CInventoryBox  ; ecx - argument, eax - result
 	test    eax, eax
 	jz      short fail_exit
 	;mov     esi, eax 
@@ -2268,7 +2273,7 @@ CScriptGameObject__InvBoxCount proc
 	push    esi
 	push    edi
 	;---
-	call    Cast_SGO_to_CInventoryBox  ; ecx - argument, eax - result
+	call    CScriptGameObject__CInventoryBox  ; ecx - argument, eax - result
 	test    eax, eax
 	jz      short fail_exit
 	;---
@@ -2287,37 +2292,13 @@ exit:
 	retn
 CScriptGameObject__InvBoxCount endp
 
-Cast_SGO_to_CInventoryItem proc
-	push    esi
-	push    edi
-	push    edx
-
-	mov     esi, ecx
-	mov     edi, [esi+4]
-	test    edi, edi
-	jz      short lab1
-	call    CGameObject__lua_game_object
-lab1:
-	mov     ecx, [esi+4]
-	test    ecx, ecx
-	jz      short exit
-	mov     eax, [ecx]
-	mov     edx, [eax+74h]
-	call    edx
-exit:
-	pop     edx
-	pop     edi
-	pop     esi
-	ret
-Cast_SGO_to_CInventoryItem endp
-
 CScriptGameObject__GetWeght proc
 	push    ebp
 	mov     ebp, esp
 	push    ecx
 	push    eax
 	
-	call    Cast_SGO_to_CInventoryItem
+	call    CScriptGameObject__IsInventoryItem
 	
 	mov     ecx, eax
 	
@@ -2330,3 +2311,845 @@ CScriptGameObject__GetWeght proc
 	pop     ebp
 	retn
 CScriptGameObject__GetWeght endp
+
+
+CScriptGameObject__GetHolderOwner proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	;---
+	call    CScriptGameObject__IsHolder
+	test    eax, eax
+	jz      short fail_exit
+	
+	mov     edi, [eax+4]
+	test    edi, edi
+	jz      short fail_exit
+	call    CGameObject__lua_game_object
+	jmp     exit
+fail_exit:
+	xor     eax, eax
+exit:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetHolderOwner endp
+
+CScriptGameObject__GetHolderInt proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push ecx
+	
+	call    CScriptGameObject__IsHolder
+	test    eax, eax
+	jz      short exit_fail
+	;---
+	mov     ecx, [ebp + pos]
+	mov     eax, [eax + ecx]
+	;---
+	jmp     exit
+exit_fail:
+	xor     eax, eax
+exit:
+	pop ecx
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetHolderInt endp
+
+CScriptGameObject__IsGameObject proc
+	mov     eax, [ecx+4]
+	retn
+CScriptGameObject__IsGameObject endp
+
+CScriptGameObject__GetGOSharedStr proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push ecx
+	
+	call    CScriptGameObject__IsActor
+	test    eax, eax
+	jnz     lab1
+	push    offset a_msg_argument0_not_set
+	call    Msg
+	pop     eax
+	jmp     short exit_fail
+lab1:
+	;---
+	mov     ecx, g_int_argument_0
+	test    ecx, ecx
+	jz      exit_fail
+	mov     eax, [eax + ecx]
+	test    eax, eax
+	jz      short exit_fail
+	add     eax, 0Ch
+	;---
+	xor     ecx, ecx
+	mov     g_int_argument_0, ecx
+	jmp     exit
+exit_fail:
+	xor     eax, eax
+exit:
+	pop ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetGOSharedStr endp
+;a_msg_argument0_not_set db "!!Hidden argument #0 is not defined!", 0
+
+
+CScriptGameObject__SetGOSharedStr proc
+str_arg   = dword ptr  8
+shift_arg = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	push    ebx
+	push    ecx
+	push    edx
+
+	call    CScriptGameObject__IsActor
+	test    eax, eax
+	jz      exit_fail
+	
+	
+	mov  ebx, eax
+	add  ebx, [ebp+shift_arg]
+	mov  eax, [ebp+str_arg]
+	call set_shared_str; ebx = (shared_str*)   eax = (char*)
+exit_fail:	
+	pop     edx
+	pop     ecx
+	pop     ebx
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__SetGOSharedStr endp
+
+CScriptGameObject__GetBleedingSpeed proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	push    esi
+
+	call    CScriptGameObject__IsEntityAlive
+	test    eax, eax
+	jz      exit_fail
+	mov     esi, [eax+220h]
+	call    CEntityCondition__BleedingSpeed
+	movss   [buf1], xmm0
+	fld     dword ptr [buf1]
+	jmp     exit
+exit_fail:
+	fldz
+exit:
+	pop     esi
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn
+buf1 dd ?
+CScriptGameObject__GetBleedingSpeed endp
+
+CScriptGameObject__ChangeBleedingSpeed proc
+bleeding_delta = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	push    eax
+	push    edi
+	
+	call    CScriptGameObject__IsEntityAlive
+	test    eax, eax
+	jz      exit_fail
+	mov     edi, [eax+220h]
+	mov     eax, [ebp+bleeding_delta]
+	push    eax
+	call    CEntityCondition__ChangeBleeding
+exit_fail:
+	
+	pop     edi
+	pop     eax
+	pop     ebp
+	retn    4
+CScriptGameObject__ChangeBleedingSpeed endp
+
+
+
+CScriptGameObject__hud_bone_position_ proc
+var_10          = dword ptr -10h
+var_C           = dword ptr -0Ch
+var_8           = dword ptr -8
+result          = dword ptr  8
+bone_name       = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	sub     esp, 44h
+	push    ebx
+	push    esi
+	push    edi
+	
+	mov     esi, [ebp+bone_name] ; esi == bone_name
+	mov     ebx, ecx ; ebx == this == CScriptGameObject
+	
+	mov     eax, [ebx+4]    ; eax == object
+	mov     ecx, [eax+90h]  ; ecx == visual
+	test    ecx, ecx        ; if (visual != 0) goto lab4
+	jnz     short lab4
+	xor     eax, eax
+	push    esi
+	mov     ecx, eax
+	call    ds:CKinematics__LL_BoneID
+	movzx   esi, ax
+	jmp     short lab5
+; ---------------------------------------------------------------------------
+
+lab4:
+	mov     eax, [ecx]
+	mov     edx, [eax+18h]
+	call    edx
+	push    esi
+	mov     ecx, eax
+	call    ds:CKinematics__LL_BoneID
+	movzx   esi, ax
+	jmp     short lab5
+; ---------------------------------------------------------------------------
+lab2:
+	mov     eax, [ebx+4]
+	mov     ecx, [eax+90h]
+	test    ecx, ecx
+	jnz     short lab7
+	xor     eax, eax
+	jmp     short lab8
+; ---------------------------------------------------------------------------
+lab7:
+	mov     eax, [ecx]
+	mov     edx, [eax+18h]
+	call    edx
+
+lab8:
+	movzx   esi, word ptr [eax+8Ch] ; CKinematics::root_bone_id
+
+lab5:
+	mov     eax, [ebx+4]
+	mov     ecx, [eax+90h]
+	test    ecx, ecx
+	jnz     short lab10
+	xor     eax, eax
+	jmp     short lab11
+; ---------------------------------------------------------------------------
+lab10:
+	mov     eax, [ecx]
+	mov     edx, [eax+18h]
+	call    edx
+lab11:
+	; eax == smart_cast<CKinematics*>(object().Visual())
+	; esi == bone_id
+	; ebx == CScriptGameObject
+	mov     edi, [ebx+4]
+	movzx   ecx, si
+	lea     esi, [ecx+ecx*4]
+	shl     esi, 5
+	add     esi, [eax+84h]
+
+	mov     eax, [ebx+4]
+	movss   xmm0, dword ptr [esi+38h]
+	movss   xmm1, dword ptr [esi+34h]
+	movss   xmm3, dword ptr [eax+70h]
+	movss   xmm4, dword ptr [eax+60h]
+	movss   xmm2, dword ptr [esi+30h]
+	mulss   xmm3, xmm0
+	mulss   xmm4, xmm1
+	addss   xmm3, xmm4
+	movss   xmm4, dword ptr [eax+50h]
+	mulss   xmm4, xmm2
+	addss   xmm3, xmm4
+	addss   xmm3, dword ptr [eax+80h]
+	movss   xmm4, dword ptr [eax+54h]
+	movss   [esp+50h+var_10], xmm3
+	movss   xmm3, dword ptr [eax+74h]
+	mov     ecx, [esp+50h+var_10]
+	mulss   xmm3, xmm0
+	mulss   xmm4, xmm2
+	addss   xmm3, xmm4
+	movss   xmm4, dword ptr [eax+64h]
+	mulss   xmm4, xmm1
+	addss   xmm3, xmm4
+	addss   xmm3, dword ptr [eax+84h]
+	movss   [esp+50h+var_C], xmm3
+	movss   xmm3, dword ptr [eax+78h]
+	mov     edx, [esp+50h+var_C]
+	mulss   xmm3, xmm0
+	movss   xmm0, dword ptr [eax+58h]
+	mulss   xmm0, xmm2
+	addss   xmm3, xmm0
+	movss   xmm0, dword ptr [eax+68h]
+	mulss   xmm0, xmm1
+	addss   xmm3, xmm0
+	addss   xmm3, dword ptr [eax+88h]
+	mov     eax, [ebp+result]
+	mov     [eax], ecx ; result[0]
+	movss   [esp+4Ch+var_8], xmm3
+	mov     ecx, [esp+4Ch+var_8]
+	mov     [eax+4], edx ; result[1]
+	mov     [eax+8], ecx ; result[2]
+	
+	pop     edi
+	pop     esi
+	pop     ebx
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__hud_bone_position_ endp
+
+CScriptGameObject__bone_position proc near
+result          = dword ptr  8
+bone_name       = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	push    ebx
+	push    esi
+	push    edi
+	
+	mov     ebx, [ecx+4] ; ebx == this == object
+	
+	mov     ecx, [ebx+90h]  ; ecx == visual == this для следующего вызова
+	
+	mov     eax, [ecx]
+	mov     eax, [eax+18h]
+	call    eax ; eax == smart_cast<CKinematics*>(object().Visual())
+	; eax = kinematics
+	mov     edi, eax ; сохраняем kinematics
+	
+	push    [ebp+bone_name]
+	mov     ecx, eax
+	call    ds:CKinematics__LL_BoneID ; eax = kinematics.LL_BoneID(bone_name)
+	movzx   ecx, ax ; ecx == bone_id
+	
+	; 
+	; ecx == bone_id
+	; ebx == object
+	lea     esi, [ecx+ecx*4]
+	shl     esi, 5
+	add     esi, [edi+84h]   ; esi == bone_instance
+
+	mov     eax, [ebp+result]
+
+	movss   xmm0, dword ptr [esi+38h] ; xmm0 = v3
+	movss   xmm1, dword ptr [esi+34h] ; xmm1 = v2
+	movss   xmm2, dword ptr [esi+30h] ; xmm2 = v1
+	
+	movss   xmm3, dword ptr [ebx+70h] ; xmm3 = x31
+	movss   xmm4, dword ptr [ebx+60h] ; xmm4 = x21
+	mulss   xmm3, xmm0                ; xmm3 = x31 * v3
+	mulss   xmm4, xmm1                ; xmm4 = x21 * v2
+	addss   xmm3, xmm4                ; xmm3 = x31 * v3 + x21 * v2
+	movss   xmm4, dword ptr [ebx+50h] ; xform[1][1]
+	mulss   xmm4, xmm2                ; xmm4 = x11 * v1
+	addss   xmm3, xmm4                ; xmm3 = x31 * v3 + x21 * v2 + x11 * v1
+	addss   xmm3, dword ptr [ebx+80h] ; x41 ; xmm3 = x31 * v3 + x21 * v2 + x11 * v1 + x41
+	movss   xmm4, dword ptr [ebx+54h] ; x12 ;
+	
+	movss   dword ptr [eax], xmm3
+	
+	movss   xmm3, dword ptr [ebx+74h] ; xmm3 = x32
+	mulss   xmm3, xmm0                ; xmm3 = x32 * v3
+	mulss   xmm4, xmm2                ; xmm4 = x12 * v1
+	addss   xmm3, xmm4                ; xmm3 = x12 * v1 + x32 * v3
+	movss   xmm4, dword ptr [ebx+64h] ; xmm4 = x22
+	mulss   xmm4, xmm1                ; xmm4 = x22 * v2
+	addss   xmm3, xmm4                ; xmm3 = x12 * v1 + x32 * v3 + x22 * v2
+	addss   xmm3, dword ptr [ebx+84h] ; xmm3 = x12 * v1 + x32 * v3 + x22 * v2 + x42 * 1
+	
+	movss   dword ptr [eax + 4], xmm3
+	
+	movss   xmm3, dword ptr [ebx+78h] ; xmm3 = x33
+	mulss   xmm3, xmm0                ; xmm3 = x33 * v3
+	movss   xmm0, dword ptr [ebx+58h] ; xmm0 = x13
+	mulss   xmm0, xmm2                ; xmm0 = x13 * v1
+	addss   xmm3, xmm0                ; xmm3 = x13 * v1 + x33 * v3
+	movss   xmm0, dword ptr [ebx+68h] ; xmm0 = x23
+	mulss   xmm0, xmm1                ; xmm0 = x23 * v2
+	addss   xmm3, xmm0                ; xmm3 = x13 * v1 + x33 * v3 + x23 * v2
+	addss   xmm3, dword ptr [ebx+88h] ; xmm3 = x13 * v1 + x23 * v2 + x33 * v3 + x43 * 1
+	
+	movss   dword ptr [eax + 8], xmm3
+	
+	pop     edi
+	pop     esi
+	pop     ebx
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__bone_position endp
+
+
+;	test    ecx, ecx
+;	jz      exit_fail
+	
+;	mov     eax, [ecx]
+;	mov     eax, [eax+18h]
+;	call    eax             ; pHudVisual = smart_cast<CKinematics*>(m_pHUD->Visual());
+
+
+
+CScriptGameObject__hud_bone_position proc near
+result          = dword ptr  8
+bone_name       = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	push    ebx
+	push    esi
+	push    edi
+	
+	
+	call    CScriptGameObject__IsHudItem
+	mov     ebx, eax
+	
+	mov     eax, [eax+16] ; eax == m_pHUD
+	movzx   ecx, byte ptr [eax+4]
+	test    ecx, ecx
+	jnz     exit_fail
+	
+	mov     eax, [eax+48h]
+	mov     ecx, [eax+8]    ; ecx == visual
+
+	;mov     ebx, [ecx+4] ; ebx == this == object
+	
+	;mov     ecx, [ebx+90h]  ; ecx == visual == this для следующего вызова
+	
+	mov     eax, [ecx]
+	mov     eax, [eax+18h]
+	call    eax ; eax == smart_cast<CKinematics*>(object().Visual())
+	; eax = kinematics
+	mov     edi, eax ; сохраняем kinematics
+	
+	push    [ebp+bone_name]
+	mov     ecx, eax
+	call    ds:CKinematics__LL_BoneID ; eax = kinematics.LL_BoneID(bone_name)
+	movzx   ecx, ax ; ecx == bone_id
+	
+	; 
+	; ecx == bone_id
+	; ebx == object
+	lea     esi, [ecx+ecx*4]
+	shl     esi, 5
+	add     esi, [edi+84h]   ; esi == bone_instance
+
+	mov     eax, [ebp+result]
+
+	movss   xmm0, dword ptr [esi+38h] ; xmm0 = v3
+	movss   xmm1, dword ptr [esi+34h] ; xmm1 = v2
+	movss   xmm2, dword ptr [esi+30h] ; xmm2 = v1
+	
+	movss   xmm3, dword ptr [ebx+70h] ; xmm3 = x31
+	movss   xmm4, dword ptr [ebx+60h] ; xmm4 = x21
+	mulss   xmm3, xmm0                ; xmm3 = x31 * v3
+	mulss   xmm4, xmm1                ; xmm4 = x21 * v2
+	addss   xmm3, xmm4                ; xmm3 = x31 * v3 + x21 * v2
+	movss   xmm4, dword ptr [ebx+50h] ; xform[1][1]
+	mulss   xmm4, xmm2                ; xmm4 = x11 * v1
+	addss   xmm3, xmm4                ; xmm3 = x31 * v3 + x21 * v2 + x11 * v1
+	addss   xmm3, dword ptr [ebx+80h] ; x41 ; xmm3 = x31 * v3 + x21 * v2 + x11 * v1 + x41
+	movss   xmm4, dword ptr [ebx+54h] ; x12 ;
+	
+	movss   dword ptr [eax], xmm3
+	
+	movss   xmm3, dword ptr [ebx+74h] ; xmm3 = x32
+	mulss   xmm3, xmm0                ; xmm3 = x32 * v3
+	mulss   xmm4, xmm2                ; xmm4 = x12 * v1
+	addss   xmm3, xmm4                ; xmm3 = x12 * v1 + x32 * v3
+	movss   xmm4, dword ptr [ebx+64h] ; xmm4 = x22
+	mulss   xmm4, xmm1                ; xmm4 = x22 * v2
+	addss   xmm3, xmm4                ; xmm3 = x12 * v1 + x32 * v3 + x22 * v2
+	addss   xmm3, dword ptr [ebx+84h] ; xmm3 = x12 * v1 + x32 * v3 + x22 * v2 + x42 * 1
+	
+	movss   dword ptr [eax + 4], xmm3
+	
+	movss   xmm3, dword ptr [ebx+78h] ; xmm3 = x33
+	mulss   xmm3, xmm0                ; xmm3 = x33 * v3
+	movss   xmm0, dword ptr [ebx+58h] ; xmm0 = x13
+	mulss   xmm0, xmm2                ; xmm0 = x13 * v1
+	addss   xmm3, xmm0                ; xmm3 = x13 * v1 + x33 * v3
+	movss   xmm0, dword ptr [ebx+68h] ; xmm0 = x23
+	mulss   xmm0, xmm1                ; xmm0 = x23 * v2
+	addss   xmm3, xmm0                ; xmm3 = x13 * v1 + x33 * v3 + x23 * v2
+	addss   xmm3, dword ptr [ebx+88h] ; xmm3 = x13 * v1 + x23 * v2 + x33 * v3 + x43 * 1
+	
+	movss   dword ptr [eax + 8], xmm3
+exit_fail:
+	mov     eax, [ebp+result]
+
+	pop     edi
+	pop     esi
+	pop     ebx
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__hud_bone_position endp
+
+; ------------------- GameObject access function ----------------
+CScriptGameObject__GetGameObjectFloat proc
+pos__ = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+
+	mov     ecx, [ecx+4]
+	mov     eax, [ebp + pos__]
+	fld     dword ptr [eax+ecx]
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__GetGameObjectFloat endp
+
+CScriptGameObject__SetGameObjectFloat proc
+stub  = dword ptr  8
+value = dword ptr  0Ch
+pos   = dword ptr  10h
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+
+	mov     ecx, [ecx+4]
+	mov     eax, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], edx
+
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    0Ch
+CScriptGameObject__SetGameObjectFloat endp
+
+
+CScriptGameObject__GetGameObjectInt proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	
+	mov     ecx, [ecx+4]
+	mov     eax, [ebp + pos]
+	mov     eax, [eax + ecx]
+
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetGameObjectInt endp
+
+CScriptGameObject__SetGameObjectInt proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	mov     ecx, [ecx+4]
+	mov     eax, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], edx
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetGameObjectInt endp
+
+CScriptGameObject__SetGameObjectInt16 proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	mov     ecx, [ecx+4]
+	mov     eax, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], dx
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetGameObjectInt16 endp
+
+CScriptGameObject__GetGameObjectInt16 proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    [ebp + pos]
+	push    [ebp + pos]
+	call    CScriptGameObject__GetGameObjectInt
+	and     eax, 0FFFFh
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetGameObjectInt16 endp
+
+CScriptGameObject__GetGameObjectSharedStr proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push ecx
+	
+	mov     eax, [ecx+4]
+	test    eax, eax
+	jnz     lab1
+	push    offset a_msg_argument0_not_set
+	call    Msg
+	pop     eax
+	jmp     short exit_fail
+lab1:
+	;---
+	mov     ecx, g_int_argument_0
+	test    ecx, ecx
+	jz      exit_fail
+	mov     eax, [eax + ecx]
+	test    eax, eax
+	jz      short exit_fail
+	add     eax, 0Ch
+	;---
+	xor     ecx, ecx
+	mov     g_int_argument_0, ecx
+	jmp     exit
+exit_fail:
+	xor     eax, eax
+exit:
+	pop ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetGameObjectSharedStr endp
+
+
+CScriptGameObject__SetGameObjectSharedStr proc
+str_arg   = dword ptr  8
+shift_arg = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	push    ebx
+	push    ecx
+	push    edx
+
+	mov     eax, [ecx+4]
+	test    eax, eax
+	jz      exit_fail
+	
+	
+	mov  ebx, eax
+	add  ebx, [ebp+shift_arg]
+	mov  eax, [ebp+str_arg]
+	call set_shared_str; ebx = (shared_str*)   eax = (char*)
+exit_fail:	
+	pop     edx
+	pop     ecx
+	pop     ebx
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__SetGameObjectSharedStr endp
+
+
+; --------------------- CInventoryItem  access function
+CScriptGameObject__GetInventoryItemFloat proc
+pos__ = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+
+	call    CScriptGameObject__IsInventoryItem
+	mov     ecx, [ebp + pos__]
+	fld     dword ptr [eax+ecx]
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__GetInventoryItemFloat endp
+
+CScriptGameObject__SetInventoryItemFloat proc
+stub  = dword ptr  8
+value = dword ptr  0Ch
+pos   = dword ptr  10h
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+
+	call    CScriptGameObject__IsInventoryItem
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], edx
+
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    0Ch
+CScriptGameObject__SetInventoryItemFloat endp
+
+
+CScriptGameObject__GetInventoryItemInt proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	
+	call    CScriptGameObject__IsInventoryItem
+	mov     ecx, [ebp + pos]
+	mov     eax, [eax + ecx]
+
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetInventoryItemInt endp
+
+CScriptGameObject__SetInventoryItemInt proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	call    CScriptGameObject__IsInventoryItem
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], edx
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetInventoryItemInt endp
+
+CScriptGameObject__SetInventoryItemInt16 proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	call    CScriptGameObject__IsInventoryItem
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], dx
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetInventoryItemInt16 endp
+
+CScriptGameObject__GetInventoryItemInt16 proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    [ebp + pos]
+	push    [ebp + pos]
+	call    CScriptGameObject__GetInventoryItemInt
+	and     eax, 0FFFFh
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetInventoryItemInt16 endp
+
+CScriptGameObject__GetInventoryItemSharedStr proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push ecx
+	
+	call    CScriptGameObject__IsInventoryItem
+	test    eax, eax
+	jnz     lab1
+	push    offset a_msg_argument0_not_set
+	call    Msg
+	pop     eax
+	jmp     short exit_fail
+lab1:
+	;---
+	mov     ecx, g_int_argument_0
+	test    ecx, ecx
+	jz      exit_fail
+	mov     eax, [eax + ecx]
+	test    eax, eax
+	jz      short exit_fail
+	add     eax, 0Ch
+	;---
+	xor     ecx, ecx
+	mov     g_int_argument_0, ecx
+	jmp     exit
+exit_fail:
+	xor     eax, eax
+exit:
+	pop ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetInventoryItemSharedStr endp
+
+
+CScriptGameObject__SetInventoryItemSharedStr proc
+str_arg   = dword ptr  8
+shift_arg = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	push    ebx
+	push    ecx
+	push    edx
+
+	call    CScriptGameObject__IsInventoryItem
+	test    eax, eax
+	jz      exit_fail
+	
+	
+	mov  ebx, eax
+	add  ebx, [ebp+shift_arg]
+	mov  eax, [ebp+str_arg]
+	call set_shared_str; ebx = (shared_str*)   eax = (char*)
+exit_fail:	
+	pop     edx
+	pop     ecx
+	pop     ebx
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__SetInventoryItemSharedStr endp
