@@ -178,6 +178,7 @@ ENDM
 
 REGISTER_BOOL__GO MACRO register_fun_name:REQ, fun_name:REQ
 LOCAL script_function_name
+ALIGN_8
 register_fun_name proc near
 
 var_48 = dword ptr -48h
@@ -259,6 +260,7 @@ ENDM
 
 REGISTER_GO__INT MACRO register_fun_name:REQ, fun_name:REQ
 LOCAL script_function_name
+ALIGN_8
 register_fun_name proc near
 
 var_48          = dword ptr -48h
@@ -339,6 +341,7 @@ ENDM
 
 REGISTER_FLOAT__INT___WRONG MACRO register_fun_name:REQ, fun_name:REQ
 LOCAL script_function_name
+ALIGN_8
 register_fun_name proc near
 
 var_48          = dword ptr -48h
@@ -421,6 +424,7 @@ ENDM
 
 REGISTER_FLOAT__INT MACRO register_fun_name:REQ, fun_name:REQ
 LOCAL script_function_name
+ALIGN_8
 register_fun_name proc near
 
 var_48          = dword ptr -48h
@@ -500,6 +504,7 @@ ENDM
 
 REGISTER_VOID__VECTOR_FLOAT_INT MACRO register_fun_name:REQ, fun_name:REQ
 LOCAL script_function_name
+ALIGN_8
 register_fun_name proc near
 
 var_48          = dword ptr -48h
@@ -586,6 +591,7 @@ ENDM
 
 REGISTER_INT__STRING_INT MACRO register_fun_name:REQ, fun_name:REQ
 LOCAL script_function_name
+ALIGN_8
 register_fun_name proc near
 
 var_48          = dword ptr -48h
@@ -673,6 +679,7 @@ ENDM
 
 REGISTER_VOID__INT_INT MACRO register_fun_name:REQ, fun_name:REQ
 LOCAL script_function_name
+ALIGN_8
 register_fun_name proc near
 
 var_48          = dword ptr -48h
@@ -801,6 +808,7 @@ ENDM
 
 REGISTER_VECTOR__STRING MACRO register_fun_name:REQ, fun_name:REQ
 LOCAL script_function_name
+ALIGN_8
 register_fun_name proc near
 
 var_48          = dword ptr -48h
