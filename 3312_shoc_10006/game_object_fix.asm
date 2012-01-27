@@ -1,4 +1,3 @@
-include game_object_castings.asm
 include game_object_reg_macro.asm
 
 REGISTER_GO__INT register_item_on_belt, "item_on_belt"
@@ -67,10 +66,12 @@ REGISTER_GO__INT register_item_in_inv_box, "object_from_inv_box"
 
 REGISTER_VECTOR__STRING register_get_hud_bone_pos, "get_hud_bone_pos"
 
+ALIGN_8
 game_object_fix proc
 ; делаем то, что вырезали 
 	call    enable_vision_register
 ; добавляем своё
+	PRINT "game_object_fix"
 	; регистрируем функцию разрешения колбеков на нажатия и мышь
 	PERFORM_EXPORT_VOID__BOOL enable_input_extensions, "enable_input_extensions"
 	; регистрируем функцию получения топлива у машины
@@ -196,9 +197,10 @@ game_object_fix proc
 	; изменение скорости кровотечения
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__ChangeBleedingSpeed, "heal_wounds"
 	
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetCarShift,          "get_car_shift"
+	
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetGameObject,        "is_game_object"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsCar,                "is_car"
-	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetCarShift,          "get_car_shift"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsHolder,             "is_holder"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsEntityAlive,        "is_entity_alive"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsInventoryItem,      "is_inventory_item"
@@ -207,7 +209,9 @@ game_object_fix proc
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsCustomMonster,      "is_custom_monster"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeapon,             "is_weapon"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponGL,           "is_weapon_gl"
-	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__CInventoryBox,        "is_inventory_box"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsInventoryBox,       "is_inventory_box"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__CInventoryBox,       "is_inventory_box1"
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__CInventoryBox,       "cast_inventory_box"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsMedkit,             "is_medkit"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsEatableItem,        "is_eatable_item"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsAntirad,            "is_antirad"
@@ -1425,7 +1429,7 @@ pos   = dword ptr  0Ch
 	and     esp, 0FFFFFFF8h
 	push ecx
 	
-	call    CScriptGameObject__IsWeaponGL
+	call    CScriptGameObject__CWeaponGL
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -1462,7 +1466,7 @@ pos   = dword ptr  0Ch
 	and     esp, 0FFFFFFF8h
 	push ecx
 	
-	call    CScriptGameObject__IsWeapon
+	call    CScriptGameObject__CWeapon
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -1492,7 +1496,7 @@ value = dword ptr  0Ch
 	push    ecx
 	
 	
-	call    CScriptGameObject__IsWeapon
+	call    CScriptGameObject__CWeapon
 	test    eax, eax
 	jz      short exit
 
@@ -1519,7 +1523,7 @@ pos   = dword ptr  0Ch
 	mov     ebp, esp
 	and     esp, 0FFFFFFF8h
 
-	call    CScriptGameObject__IsHudItem
+	call    CScriptGameObject__CHudItem
 	
 	mov     eax, [eax+16] ; eax == m_pHUD
 	movzx   ecx, byte ptr [eax+4]
@@ -1560,7 +1564,7 @@ visible   = dword ptr 0Ch
 	
 	push    esi
 
-	call    CScriptGameObject__IsHudItem
+	call    CScriptGameObject__CHudItem
 	
 	mov     eax, [eax+16] ; eax == m_pHUD
 	movzx   ecx, byte ptr [eax+4]
@@ -1614,7 +1618,7 @@ stub      = dword ptr 0Ch
 	push    edx
 	push    esi
 	
-	call    CScriptGameObject__IsWeapon
+	call    CScriptGameObject__CWeapon
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -1663,7 +1667,7 @@ visible   = dword ptr 0Ch
 	push    edx
 	push    esi
 	
-	call    CScriptGameObject__IsWeapon
+	call    CScriptGameObject__CWeapon
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -1729,7 +1733,7 @@ visible   = dword ptr 0Ch
 	push    edx
 	push    esi
 	
-	call    CScriptGameObject__IsWeapon
+	call    CScriptGameObject__CWeapon
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -1773,7 +1777,7 @@ pos   = dword ptr  8
 	push eax
 	push ecx
 	
-	call    CScriptGameObject__IsWeapon
+	call    CScriptGameObject__CWeapon
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -1804,7 +1808,7 @@ pos   = dword ptr  10h
 	push    ecx
 	push    edx
 
-	call    CScriptGameObject__IsWeapon
+	call    CScriptGameObject__CWeapon
 	test    eax, eax
 	jz      short exit_fail
 	
@@ -1842,7 +1846,7 @@ pos   = dword ptr  8
 	push eax
 	push ecx
 	
-	call    CScriptGameObject__IsCustomMonster
+	call    CScriptGameObject__CCustomMonster
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -1868,7 +1872,7 @@ pos   = dword ptr  0Ch
 	and     esp, 0FFFFFFF8h
 	push ecx
 	
-	call    CScriptGameObject__IsCustomMonster
+	call    CScriptGameObject__CCustomMonster
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -1948,7 +1952,7 @@ CScriptGameObject__GetTestStr proc
 	and     esp, 0FFFFFFF8h
 	push ecx
 	
-	call    CScriptGameObject__IsActor
+	call    CScriptGameObject__CActor
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -1975,7 +1979,7 @@ CScriptGameObject__GetWpnSharedStr proc
 	push ecx
 	push esi
 	
-	call    CScriptGameObject__IsWeapon
+	call    CScriptGameObject__CWeapon
 	test    eax, eax
 	jnz     lab1
 	push    offset a_msg_argument0_not_set
@@ -2018,7 +2022,7 @@ shift_arg = dword ptr  0Ch
 	push    ecx
 	push    edx
 
-	call    CScriptGameObject__IsWeapon
+	call    CScriptGameObject__CWeapon
 	test    eax, eax
 	jz      exit_fail
 	
@@ -2043,7 +2047,7 @@ CScriptGameObject__GetActorSharedStr proc
 	and     esp, 0FFFFFFF8h
 	push ecx
 	
-	call    CScriptGameObject__IsActor
+	call    CScriptGameObject__CActor
 	test    eax, eax
 	jnz     lab1
 	push    offset a_msg_argument0_not_set
@@ -2086,7 +2090,7 @@ shift_arg = dword ptr  0Ch
 	push    ecx
 	push    edx
 
-	call    CScriptGameObject__IsActor
+	call    CScriptGameObject__CActor
 	test    eax, eax
 	jz      exit_fail
 	
@@ -2121,7 +2125,7 @@ str_arg   = dword ptr  8
 	push    ebx
 	push    ecx
 	
-	call    CScriptGameObject__IsActor
+	call    CScriptGameObject__CActor
 	test    eax, eax
 	jz      exit_fail
 	mov     esi, eax
@@ -2167,7 +2171,7 @@ SGO_inv_box = dword ptr  8
 	call    CScriptGameObject__CInventoryBox
 	push    eax
 	mov     ecx, esi
-	call    CScriptGameObject__IsInventoryOwner
+	call    CScriptGameObject__CInventoryOwner
 	push    eax
 
 	mov     eax, edi
@@ -2298,7 +2302,7 @@ CScriptGameObject__GetWeght proc
 	push    ecx
 	push    eax
 	
-	call    CScriptGameObject__IsInventoryItem
+	call    CScriptGameObject__CInventoryItem
 	
 	mov     ecx, eax
 	
@@ -2320,7 +2324,7 @@ CScriptGameObject__GetHolderOwner proc
 	push    esi
 	push    edi
 	;---
-	call    CScriptGameObject__IsHolder
+	call    CScriptGameObject__CHolder
 	test    eax, eax
 	jz      short fail_exit
 	
@@ -2347,7 +2351,7 @@ pos   = dword ptr  0Ch
 	and     esp, 0FFFFFFF8h
 	push ecx
 	
-	call    CScriptGameObject__IsHolder
+	call    CScriptGameObject__CHolder
 	test    eax, eax
 	jz      short exit_fail
 	;---
@@ -2375,7 +2379,7 @@ CScriptGameObject__GetGOSharedStr proc
 	and     esp, 0FFFFFFF8h
 	push ecx
 	
-	call    CScriptGameObject__IsActor
+	call    CScriptGameObject__CActor
 	test    eax, eax
 	jnz     lab1
 	push    offset a_msg_argument0_not_set
@@ -2418,7 +2422,7 @@ shift_arg = dword ptr  0Ch
 	push    ecx
 	push    edx
 
-	call    CScriptGameObject__IsActor
+	call    CScriptGameObject__CActor
 	test    eax, eax
 	jz      exit_fail
 	
@@ -2444,7 +2448,7 @@ CScriptGameObject__GetBleedingSpeed proc
 	push    eax
 	push    esi
 
-	call    CScriptGameObject__IsEntityAlive
+	call    CScriptGameObject__CEntityAlive
 	test    eax, eax
 	jz      exit_fail
 	mov     esi, [eax+220h]
@@ -2470,7 +2474,7 @@ bleeding_delta = dword ptr  8
 	push    eax
 	push    edi
 	
-	call    CScriptGameObject__IsEntityAlive
+	call    CScriptGameObject__CEntityAlive
 	test    eax, eax
 	jz      exit_fail
 	mov     edi, [eax+220h]
@@ -2723,7 +2727,7 @@ bone_name       = dword ptr  0Ch
 	push    edi
 	
 	
-	call    CScriptGameObject__IsHudItem
+	call    CScriptGameObject__CHudItem
 	mov     ebx, eax
 	
 	mov     eax, [eax+16] ; eax == m_pHUD
@@ -2988,7 +2992,7 @@ pos__ = dword ptr  8
 	push    ebp
 	mov     ebp, esp
 
-	call    CScriptGameObject__IsInventoryItem
+	call    CScriptGameObject__CInventoryItem
 	mov     ecx, [ebp + pos__]
 	fld     dword ptr [eax+ecx]
 	
@@ -3006,7 +3010,7 @@ pos   = dword ptr  10h
 	mov     ebp, esp
 	push    edx
 
-	call    CScriptGameObject__IsInventoryItem
+	call    CScriptGameObject__CInventoryItem
 	mov     ecx, [ebp + pos]
 	mov     edx, [ebp + value]
 	mov    [eax+ecx], edx
@@ -3024,7 +3028,7 @@ pos   = dword ptr  0Ch
 	push    ebp
 	mov     ebp, esp
 	
-	call    CScriptGameObject__IsInventoryItem
+	call    CScriptGameObject__CInventoryItem
 	mov     ecx, [ebp + pos]
 	mov     eax, [eax + ecx]
 
@@ -3040,7 +3044,7 @@ value = dword ptr  0Ch
 	mov     ebp, esp
 	push    edx
 	;---
-	call    CScriptGameObject__IsInventoryItem
+	call    CScriptGameObject__CInventoryItem
 	mov     ecx, [ebp + pos]
 	mov     edx, [ebp + value]
 	mov    [eax+ecx], edx
@@ -3059,7 +3063,7 @@ value = dword ptr  0Ch
 	mov     ebp, esp
 	push    edx
 	;---
-	call    CScriptGameObject__IsInventoryItem
+	call    CScriptGameObject__CInventoryItem
 	mov     ecx, [ebp + pos]
 	mov     edx, [ebp + value]
 	mov    [eax+ecx], dx
@@ -3093,7 +3097,7 @@ CScriptGameObject__GetInventoryItemSharedStr proc
 	and     esp, 0FFFFFFF8h
 	push ecx
 	
-	call    CScriptGameObject__IsInventoryItem
+	call    CScriptGameObject__CInventoryItem
 	test    eax, eax
 	jnz     lab1
 	push    offset a_msg_argument0_not_set
@@ -3135,7 +3139,7 @@ shift_arg = dword ptr  0Ch
 	push    ecx
 	push    edx
 
-	call    CScriptGameObject__IsInventoryItem
+	call    CScriptGameObject__CInventoryItem
 	test    eax, eax
 	jz      exit_fail
 	
@@ -3153,3 +3157,4 @@ exit_fail:
 	pop     ebp
 	retn    8
 CScriptGameObject__SetInventoryItemSharedStr endp
+

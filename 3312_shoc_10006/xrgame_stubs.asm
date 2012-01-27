@@ -1,6 +1,107 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+
+;.text:10412EB0 CUIScrollView__ScrollToBegin proc near
+org 10412EB0h - shift
+jmp scroll_vew_fix
+;.text:10412EB0                 push    ecx
+;.text:10412EB1                 push    esi
+;.text:10412EB2                 push    edi
+;.text:10412EB3                 mov     edi, ecx
+org 10412EB5h - shift
+back_from_scroll_vew_fix:
+;.text:10412EB5                 test    byte ptr [edi+8Ch], 2
+;.text:10412EBC                 jz      short loc_10412EC8
+;.text:10412EBE                 mov     eax, [edi]
+;.text:10412EC0                 mov     edx, [eax+88h]
+;.text:10412EC6                 call    edx
+
+
+
+org 1013A56Ch - shift
+register__matrix_div_number:
+
+
+;.text:1013967D CScriptFmatrix__script_register proc near ; CODE XREF: sub_1019000A+10p
+
+;.text:101398A9                 call    sub_1013A439
+;.text:101398AE                 mov     ecx, eax
+;.text:101398B0                 xor     eax, eax
+;.text:101398B2                 lea     edi, [ebp+var_14]
+;.text:101398B5                 stosb
+;.text:101398B6                 push    [ebp+var_14]
+;.text:101398B9                 lea     edi, [ebp+var_10]
+;.text:101398BC                 stosb
+;.text:101398BD                 push    [ebp+var_10]
+;.text:101398C0                 lea     eax, [ebp+var_C]
+;.text:101398C3                 push    eax
+;.text:101398C4                 push    esi
+;.text:101398C5                 push    ecx
+;.text:101398C6                 mov     [ebp+var_C], offset sub_10139BCE
+org 101398CDh - shift
+jmp matrix_fix
+;.text:101398CD                 call    sub_1013A56C
+org 101398D2h - shift
+back_from_matrix_fix:
+;.text:101398D2                 push    [ebp+var_18]
+;.text:101398D5                 mov     [ebp+var_14], offset sub_10139660
+;.text:101398DC                 push    offset sub_10139BEA
+;.text:101398E1                 push    offset aSetxyzi ; "setXYZi"
+
+
+org 10451920h - shift
+__allmul:
+
+org 102C6B6Fh - shift
+sub_102C6B6F:
+org 102C708Ah - shift
+sub_102C708A:
+org 102C70E1h - shift
+sub_102C70E1:
+org 102C6D23h - shift
+sub_102C6D23:
+org 102C716Dh - shift
+sub_102C716D:
+org 102C718Ch - shift
+sub_102C718C:
+org 1028E480h - shift
+sub_1028E480:
+
+org 102C54FFh - shift
+register__CTime__setHMS: ; регистрация метода класса CTime с прототипом    void fun(int, int, int)
+
+; фикс класса CTime
+;.text:102C4617                 call    sub_102C4C84
+;.text:102C461C                 mov     ecx, eax
+;.text:102C461E                 xor     eax, eax
+;.text:102C4620                 lea     edi, [ebp+var_8]
+;.text:102C4623                 stosb
+;.text:102C4624                 push    [ebp+var_8]
+;.text:102C4627                 lea     edi, [ebp+var_18]
+;.text:102C462A                 stosb
+;.text:102C462B                 push    [ebp+var_18]
+;.text:102C462E                 lea     eax, [ebp+var_10]
+;.text:102C4631                 push    ecx
+org 102C4632h - shift
+	jmp ctime_fix
+;.text:102C4632                 call    register__CTime__setHMS
+org 102C4637h - shift
+back_from_ctime_fix:
+;.text:102C4637                 mov     ecx, eax
+;.text:102C4639                 xor     eax, eax
+;.text:102C463B                 lea     edi, [ebp+var_8]
+;.text:102C463E                 stosb
+;.text:102C463F                 push    [ebp+var_8]
+;.text:102C4642                 lea     edi, [ebp+var_18]
+;.text:102C4645                 stosb
+;.text:102C4646                 push    [ebp+var_18]
+;.text:102C4649                 lea     eax, [ebp+var_10]
+;.text:102C464C                 push    ecx
+;.text:102C464D                 mov     [ebp+var_10], offset sub_102C8FC0
+;.text:102C4654                 call    register__CTime__setHMSms
+
+
 ; фикс класса окна
 ;.text:103FA04C CUIWindow__script_register proc near
 
@@ -1301,3 +1402,28 @@ sub_1015C8E0:
 
 org 105602D8h - shift
 psActorFlags    dd ?
+
+org 10458478h - shift
+CCameraManager__GetPPEffector dd ?
+org 10458864h - shift
+CCameraManager__GetCamEffector dd ?
+
+
+; для регистрации методов класса matrix
+org 10458F38h - shift
+??0overload_rep_base@detail@luabind@@QAE@XZ dd ?
+org 10002EB5h - shift
+sub_10002EB5:
+org 1054EF78h - shift
+off_1054EF78:
+org 10002FA2h - shift
+sub_10002FA2:
+org 1013A9EFh - shift
+sub_1013A9EF:
+org 1013AA34h - shift
+sub_1013AA34:
+
+org 1013AB16h - shift
+sub_1013AB16:
+org 1013AB7Dh - shift
+sub_1013AB7D:

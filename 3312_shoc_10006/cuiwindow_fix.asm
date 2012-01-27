@@ -27,3 +27,22 @@ UIWindow__DetachFromParent proc
 exit:
 	retn
 UIWindow__DetachFromParent endp
+
+
+g_counter_just_for_show dd 0
+scroll_vew_fix proc
+
+	pusha
+	mov eax, dword ptr[g_counter_just_for_show]
+	PRINT_UINT "cntr=%d", eax
+	inc eax
+	mov dword ptr[g_counter_just_for_show], eax
+	popa
+	; делаем то, что вырезали 
+	push    ecx
+	push    esi
+	push    edi
+	mov     edi, ecx
+	; идём обратно
+	jmp back_from_scroll_vew_fix
+scroll_vew_fix endp

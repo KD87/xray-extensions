@@ -29,6 +29,11 @@
 0x102042FD 6 ; активировать 8-й слот
 0x1026C525 5 ; jmp car_fix
 0x103FB34F 5 ; jmp cuiwindow_fix
+0x102C4632 5 ; jmp ctime_fix
+0x101398CD 5 ; jmp matrix_fix
+
+;0x10412EB0 5 ; jmp scroll_vew_fix
+
 
 ;0x10272746 8 ; попытка фикса вылезания из машины
 
