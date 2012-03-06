@@ -27,5 +27,19 @@ lab1:
 	add     esp, 0Ch
 ENDM
 
+GLOBAL_NS_PERFORM_EXPORT__VOID__PCHAR MACRO fun_to_export:REQ, fun_name_str:REQ
+LOCAL lab1
+LOCAL fun_name
+LOCAL var1
+	jmp     lab1
+fun_name db fun_name_str, 0
+var1 dd 0
+lab1:
+	add     esp, 0Ch
+    push    offset fun_to_export
+    push    offset fun_name
+	push    [ebp+8h]
+    call    error_log_register
+ENDM
 
 

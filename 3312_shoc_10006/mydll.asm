@@ -4,15 +4,13 @@
 .model flat,  C
 
 include addr.inc
-
-_CODE segment public 'CODE' use32
+_CODE segment public 'CODE' use32 ;ALIGN(0)
 	assume cs:_CODE
 	assume ds:_CODE
 ; заглушка для линковшика
 LibMain proc STDCALL instance:DWORD,reason:DWORD,unused:DWORD 
     ret
 LibMain ENDP
-
 ; вставки из целевой либы
 include xrgame_stubs.asm
 
@@ -47,6 +45,25 @@ lab1_:
 	popa
 ENDM
 
+PRINT_FLOAT MACRO fmt_txt:REQ, val:REQ
+LOCAL lab1_
+LOCAL a_msg
+LOCAL value1
+	jmp     lab1_
+a_msg db fmt_txt, 0
+value1 dd ?
+lab1_:
+	pusha
+	mov     [value1], val
+	sub     esp, 8
+	fld     [value1]
+	fstp    QWORD ptr [esp]
+	push    offset a_msg
+	call    Msg
+	add     esp, 0Ch
+	
+	popa
+ENDM
 
 ; позиция в том месте, где в целевой DLL начинается наша секция
 org sec1_sec2_dist
@@ -69,6 +86,10 @@ include car_fix.asm
 include cuiwindow_fix.asm
 include ctime_fix.asm
 include matrix_fix.asm
+include monster_movement_manager_fix.asm
+include alife_smart_terrain_task_fix.asm
+include debug_fixes.asm
+include cuitradewnd_fix.asm
 _CODE ENDS
 
 end LibMain

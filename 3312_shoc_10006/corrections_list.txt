@@ -31,9 +31,24 @@
 0x103FB34F 5 ; jmp cuiwindow_fix
 0x102C4632 5 ; jmp ctime_fix
 0x101398CD 5 ; jmp matrix_fix
+0x1045E73C 6 ; фикс имени функции speed
+0x103C911D 5 ; тестовое слежение за закрытием диалога разговора
+;0x10054AD7 7 ; фикс оффлайнового движения неписей
+;0x1005568F 5 ; jmp mmm_fix
+
+0x10146D00 5 ; jmp disable_info_portion_fix
+
+0x103BE8C0 5 ; jmp CUITradeWnd__CanMoveToOther_fix
+0x10221D75 12 ; блокирование кривого движкового переключения гранат
+
+;0x103BF3D0 5 ; jmp CUITradeWnd__FillList_fix
+;0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix
+;0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2
+
 
 ;0x10412EB0 5 ; jmp scroll_vew_fix
 
+;0x10253E2B 40 ; searchlight__turn_on
 
 ;0x10272746 8 ; попытка фикса вылезания из машины
 

@@ -1,3 +1,36 @@
+PERFORM_EXPORT_VOID__VOID MACRO fun_to_export:REQ, fun_name_str:REQ
+LOCAL lab1
+LOCAL fun_name
+	jmp     lab1
+fun_name db fun_name_str, 0
+lab1:
+	xor     bl, bl
+	mov     byte ptr [esp+88h-64h], bl
+	mov     ecx, [esp+88h-64h]
+	push    ecx
+	mov     byte ptr [esp+8Ch-6Ch], bl
+	mov     edx, [esp+8Ch-6Ch]
+	push    edx
+	push    offset fun_name
+	push    eax
+	lea     eax, [esp+98h-74h]
+	mov     [esp+98h-74h], offset fun_to_export
+	;xor     bl, bl
+	;mov     ecx, eax
+	;mov     byte ptr [esp+58h-38h], bl
+	;mov     eax, [esp+58h-38h]
+	;push    eax
+	;mov     byte ptr [esp+5Ch-40h], bl
+	;mov     edx, [esp+5Ch-40h]
+	;push    edx
+	;push    offset fun_name
+	;lea     eax, [esp+64h-48h]
+	;mov     ebx, ecx
+	;mov     [esp+64h-48h], offset fun_to_export
+	call    register__void__void
+ENDM
+
+
 PERFORM_EXPORT_BOOL__VOID MACRO fun_to_export:REQ, fun_name_str:REQ
 LOCAL lab1
 LOCAL fun_name

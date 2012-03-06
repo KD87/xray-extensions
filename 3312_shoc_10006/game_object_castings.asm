@@ -166,6 +166,7 @@ MAKE_CASTING3 CScriptGameObject__CScope, off_10556C58
 MAKE_CASTING3 CScriptGameObject__CSilencer, off_10556C70
 MAKE_CASTING3 CScriptGameObject__CGrenadeLauncher, off_10556C88
 MAKE_CASTING3 CScriptGameObject__CFoodItem, off_1055578C
+MAKE_CASTING3 CScriptGameObject__CGrenade, off_105557A4
 
 MAKE_CASTING4 CScriptGameObject__CWeaponMagazined, 0A8h, 130h
 MAKE_CASTING4 CScriptGameObject__CEatableItem1, 74h, 11Ch  ; <== not working yet
@@ -210,6 +211,7 @@ MAKE_CHECK_FUN CScriptGameObject__IsEatableItem1	   , CScriptGameObject__CEatabl
 MAKE_CHECK_FUN CScriptGameObject__IsMissile			   , CScriptGameObject__CMissile
 MAKE_CHECK_FUN CScriptGameObject__IsHudItem			   , CScriptGameObject__CHudItem
 MAKE_CHECK_FUN CScriptGameObject__IsAmmo			   , CScriptGameObject__CAmmo
+MAKE_CHECK_FUN CScriptGameObject__IsGrenade            , CScriptGameObject__CGrenade
 
 ;	CEatableItem* CInventoryItem::cast_eatable_item();  108
 ;	CWeapon* CInventoryItem::cast_weapon();       112
