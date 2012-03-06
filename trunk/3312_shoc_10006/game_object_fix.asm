@@ -52,6 +52,8 @@ REGISTER_INT__STRING_INT register_get_hud_bone_id, "get_hud_bone_id"
 REGISTER_INT__STRING_INT register_set_wpn_bone_visible, "set_wpn_bone_visible"
 REGISTER_INT__STRING_INT register_set_hud_bone_visible, "set_hud_bone_visible"
 REGISTER_INT__STRING_INT register_get_wpn_bone_visible, "get_wpn_bone_visible"
+REGISTER_INT__STRING_INT register_get_bone_visible, "get_bone_visible"
+REGISTER_INT__STRING_INT register_set_bone_visible, "set_bone_visible"
 
 REGISTER_FLOAT__INT register_get_wpn_float, "get_wpn_float"
 REGISTER_VOID__VECTOR_FLOAT_INT register_set_wpn_float, "set_wpn_float"
@@ -160,6 +162,8 @@ game_object_fix proc
 	PERFORM_EXPORT_INT__STRING_INT register_set_hud_bone_visible, CScriptGameObject__SetHudBoneVisible
 	
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_bone_visible, CScriptGameObject__GetWeaponBoneVisible
+	PERFORM_EXPORT_INT__STRING_INT register_get_bone_visible, CScriptGameObject__GetBoneVisible
+	PERFORM_EXPORT_INT__STRING_INT register_set_bone_visible, CScriptGameObject__SetBoneVisible
 	
 	PERFORM_EXPORT_FLOAT__INT register_get_wpn_float, CScriptGameObject__GetWeaponFloat
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_wpn_float, CScriptGameObject__SetWeaponFloat
@@ -234,9 +238,14 @@ game_object_fix proc
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsAmmo,               "is_ammo"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsMissile,            "is_missile"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsPhysicsShellHolder, "is_physics_shell_holder"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsGrenade,            "is_grenade"
 	
 	PERFORM_EXPORT_VECTOR__STRING register_get_hud_bone_pos, CScriptGameObject__hud_bone_position
 	
+	PERFORM_EXPORT_VOID__VOID CScriptGameObject__ProjectorOn, "projector_on"
+	PERFORM_EXPORT_VOID__VOID CScriptGameObject__ProjectorOff, "projector_off"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__ProjectorIsOn, "projector_is_on"
+	PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SwitchProjector, "switch_projector"
 	; идём обратно
 	jmp back_from_game_object_fix
 game_object_fix endp
@@ -3158,3 +3167,258 @@ exit_fail:
 	retn    8
 CScriptGameObject__SetInventoryItemSharedStr endp
 
+CInventoryOwner__HasInfo proc ; не доделано!!!!!!!!!!!!!!!!
+	; eax - адрес строки
+	; 
+	push    ecx
+	mov     ecx, g_pStringContainer
+	mov     esi, esp
+	mov     dword ptr [esi], 0
+	mov     ecx, [ecx]
+	push    eax
+	call    str_container__dock
+	test    eax, eax
+	jz      short loc_10146FCE
+	add     dword ptr [eax], 1
+loc_10146FCE:
+	mov     ecx, [esi]
+	test    ecx, ecx
+	jz      short loc_10146FE4
+	add     dword ptr [ecx], 0FFFFFFFFh
+	mov     edx, [esi]
+	cmp     dword ptr [edx], 0
+	jnz     short loc_10146FE4
+	mov     dword ptr [esi], 0
+loc_10146FE4:
+	mov     [esi], eax
+	mov     eax, [edi]
+	mov     edx, [eax+8Ch]
+	mov     ecx, edi
+	call    edx
+	pop     edi
+	pop     esi
+	retn    4
+CInventoryOwner__HasInfo endp
+
+disable_info_portion_fix proc
+arg_0           = dword ptr  4
+	;PRINT "disable_info_portion_fix. start"
+	;
+	mov     eax, [esp+arg_0]
+	
+	push    ecx
+	push    edi
+	push    esi
+	;PRINT_UINT "disable_info_portion_fix. s=%s", eax
+	push    eax
+	call    CScriptGameObject__HasInfo
+	and     eax, 0FFh
+	;PRINT_UINT "disable_info_portion_fix. dis=%d", eax
+	pop     esi
+	pop     edi
+	pop     ecx
+	
+	test    eax, eax ; если инфопорция есть, то будем забирать. Продолжаем как обычно
+	jnz     just_continue
+	;а иначе, просто выходим из функции, поскольку делать нечего
+	;PRINT "disable_info_portion_fix. do nothing"
+	xor     al, al
+	;pop     edi
+	;pop     esi
+	retn    4
+just_continue:
+	; делаем то, что вырезали
+	push    esi
+	mov     esi, ecx
+	push    edi
+	mov     edi, [esi+4]
+	test    edi, edi
+	; идём обратно
+	jmp back_from_disable_info_portion_fix
+disable_info_portion_fix endp
+
+CScriptGameObject__ProjectorOn proc
+	push    esi
+	call    CScriptGameObject__CProjector
+	test    eax, eax
+	jz      exit
+	mov     esi, eax
+	call    CProjector__TurnOn
+exit:
+	pop     esi
+	retn
+CScriptGameObject__ProjectorOn endp
+
+CScriptGameObject__ProjectorOff proc
+	push    esi
+	call    CScriptGameObject__CProjector
+	test    eax, eax
+	jz      exit
+	mov     esi, eax
+	call    CProjector__TurnOff
+exit:
+	pop     esi
+	retn
+CScriptGameObject__ProjectorOff endp
+
+CScriptGameObject__ProjectorIsOn proc
+	push    esi
+	call    CScriptGameObject__CProjector
+	test    eax, eax
+	jz      exit
+	mov     ecx, [eax+1C8h]
+	mov     eax, [ecx]
+	mov     eax, [eax+8]
+	call    eax
+	test    al, al
+	jz      exit
+	mov     eax, 1
+exit:
+	pop     esi
+	retn
+CScriptGameObject__ProjectorIsOn endp
+
+CScriptGameObject__SwitchProjector proc
+arg_0 = byte ptr  8
+	push    ebp
+	mov     ebp, esp
+	push    esi
+	
+	call    CScriptGameObject__CProjector
+	test    eax, eax
+	jz      exit
+	mov     esi, eax
+	xor     eax, eax
+	mov     al, [ebp+arg_0]
+	test    eax, eax
+	jz      turn_off
+	call    CProjector__TurnOn
+	jmp     exit
+turn_off:
+	call    CProjector__TurnOff
+exit:
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SwitchProjector endp
+
+
+
+
+
+
+CGameObject__kinematic proc ; eax = this - CGameObject
+	mov     ecx, [eax+90h]
+	test    ecx, ecx
+	jz     exit_no_visual
+	mov     eax, [ecx]
+	mov     eax, [eax+18h]
+	call    eax
+	jmp     exit
+exit_no_visual:
+	xor     eax, eax
+exit:
+	retn
+CGameObject__kinematic endp ; eax = kinematics
+
+CScriptGameObject__SetBoneVisible proc
+bone_name = dword ptr 8
+visible   = dword ptr 0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    ecx
+	push    edx
+	push    esi
+	
+	mov     eax, [ecx+4]
+	test    eax, eax
+	jz      exit_fail
+	call    CGameObject__kinematic
+	
+	mov     esi, eax ; esi = visual
+	mov     ecx, esi ; this == visual
+	mov     eax, [ebp + bone_name]
+	push    eax
+	call    ds:CKinematics__LL_BoneID
+	movzx   ecx, ax
+
+	;push    eax ; bone_id
+	;call    ds:CKinematics__LL_GetBoneVisible
+	;test    eax, eax
+
+	push    1
+	mov     eax, [ebp + visible]
+	push    eax
+	push    ecx ; bone_id
+	mov     ecx, esi
+	call    ds:CKinematics__LL_SetBoneVisible
+
+	mov     ecx, esi
+	call    ds:CKinematics__CalculateBones_Invalidate
+	
+	mov     ecx, esi
+	mov     eax, [ecx]
+	mov     edx, [eax+40h]
+	push    0
+	call    edx
+
+
+	
+	;---
+	mov     eax, 1 ; success
+	jmp     exit
+exit_fail:
+	xor     eax, eax ; fail
+exit:
+	pop     esi
+	pop     edx
+	pop     ecx
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__SetBoneVisible endp
+
+CScriptGameObject__GetBoneVisible proc
+bone_name = dword ptr 8
+visible   = dword ptr 0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    ecx
+	push    edx
+	push    esi
+	
+	mov     eax, [ecx+4]
+	test    eax, eax
+	jz      exit_fail
+	call    CGameObject__kinematic
+	test    eax, eax
+	jz      exit_fail
+	;---
+	mov     esi, eax ; esi = visual
+	mov     ecx, esi ; this == visual
+	mov     eax, [ebp + bone_name]
+	push    eax
+	call    ds:CKinematics__LL_BoneID
+	movzx   eax, ax
+
+	push    eax ; bone_id
+	mov     ecx, esi
+	call    ds:CKinematics__LL_GetBoneVisible
+	jmp     exit
+exit_fail:
+	mov     eax, 0
+exit:
+	pop     esi
+	pop     edx
+	pop     ecx
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetBoneVisible endp

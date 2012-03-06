@@ -7,6 +7,8 @@ global_space_ext2: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	pop     ecx
 	; добавл€ем свой код
 	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetGameTime, "set_game_time"
+	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetFloatArgs12, "set_float_args_12"
+	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetFloatArgs34, "set_float_args_34"
 	; идЄм обратно
 	jmp back_from_global_space_ext2
 ;
@@ -16,6 +18,8 @@ global_space_ext2_additional:
 	GLOBAL_NS_SCOPE_ADD
 	GLOBAL_NS_SCOPE_ADD
 	; добавл€ем свой код
+	GLOBAL_NS_SCOPE_ADD
+	GLOBAL_NS_SCOPE_ADD
 	GLOBAL_NS_SCOPE_ADD
 	; идЄм обратно
 	jmp back_from_global_space_ext2_additional
@@ -47,3 +51,34 @@ time_factor = dword ptr 0Ch
 	pop     ebp
 	retn
 SetGameTime endp
+
+g_float_arg1 dd 0.0
+g_float_arg2 dd 0.0
+g_float_arg3 dd 0.0
+g_float_arg4 dd 0.0
+
+stub_test dd 9 dup(0)
+
+SetFloatArgs12 proc
+arg1 = dword ptr 4h
+arg2 = dword ptr 8h
+	mov eax, [esp+arg1]
+PRINT_FLOAT "arg1=%f", eax
+	mov [g_float_arg1], eax
+	mov eax, [esp+arg2]
+PRINT_FLOAT "arg2=%f", eax
+	mov [g_float_arg2], eax
+	retn
+SetFloatArgs12 endp
+
+SetFloatArgs34 proc
+arg3 = dword ptr 4h
+arg4 = dword ptr 8h
+	mov eax, [esp+arg3]
+PRINT_FLOAT "arg3=%f", eax
+	mov [g_float_arg3], eax
+	mov eax, [esp+arg4]
+PRINT_FLOAT "arg4=%f", eax
+	mov [g_float_arg4], eax
+	retn
+SetFloatArgs34 endp

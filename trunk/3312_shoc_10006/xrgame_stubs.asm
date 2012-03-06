@@ -1,6 +1,233 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+org 101AC95Ah - shift
+	jmp CLevel__g_sv_Spawn_fix2
+;.text:101AC95A                 pop     edi
+;.text:101AC95B                 pop     esi
+;.text:101AC95C                 pop     ebp
+;.text:101AC95D                 add     esp, 2014h
+;.text:101AC963                 retn    4
+
+
+
+org 104584ACh - shift
+CObjectList__Create dd ?
+; отладочная врезка в CLevel::g_sv_Spawn
+org 101AC832h - shift
+	jmp CLevel__g_sv_Spawn_fix
+;.text:101AC832                 lea     edi, [ebx+54h]
+;.text:101AC835                 push    eax
+;.text:101AC836                 mov     ecx, edi
+;.text:101AC838                 call    ds:?Create@CObjectList@@QAEPAVCObject@@PBD@Z ; CObjectList::Create(char const *)
+org 101AC83Eh - shift
+back_from_CLevel__g_sv_Spawn_fix:
+;.text:101AC83E                 mov     esi, eax
+
+
+;.text:10253E2B                 push    1
+org 10253E2Bh - shift
+	push    0
+	call    edx
+	pop     edi
+	retn
+
+
+
+;.text:10221D6A                 jz      short loc_10221D75
+org 10221D6Ch - shift
+CGrenade__Action_exit:
+;.text:10221D6C                 pop     esi
+;.text:10221D6D                 pop     ebp
+;.text:10221D6E                 pop     ebx
+;.text:10221D6F                 add     esp, 0Ch
+;.text:10221D72                 retn    8
+;.text:10221D75 loc_10221D75:                           ; CODE XREF: CGrenade__Action+2Aj
+org 10221D75h - shift
+	mov eax, 1
+	jmp CGrenade__Action_exit
+;.text:10221D75                 test    bl, 1
+
+
+
+
+org 103BE8C0h - shift
+CUITradeWnd__CanMoveToOther:
+
+; модификация механизма фильтрации предметов для торговли. 
+; Добавляем дополнительную проверку флажка
+
+;.text:103BE8C0 ; bool __usercall CUITradeWnd__CanMoveToOther<eax>(int this<eax>, int item<ebx>)
+;.text:103BE8C0 CUITradeWnd__CanMoveToOther proc near   ; CODE XREF: sub_103BE980+1Bp
+org 103BE8C0h - shift
+jmp CUITradeWnd__CanMoveToOther_fix
+;.text:103BE8C0                 sub     esp, 1Ch
+;.text:103BE8C3                 push    esi
+;.text:103BE8C4                 mov     esi, eax
+;.text:103BE8C6                 mov     eax, [esi+5Ch]
+org 103BE8C9h - shift
+back_from_CUITradeWnd__CanMoveToOther_fix:
+;.text:103BE8C9                 push    edi
+;.text:103BE8CA                 add     eax, 0EF0h      ; a1
+;.text:103BE8CF                 call    CUITradeWnd__CalcItemsWeight
+;.text:103BE8D4                 mov     eax, [esi+5Ch]
+;.text:103BE8D7                 add     eax, 0FA0h      ; a1
+;.text:103BE8DC                 movss   [esp+24h+var_8], xmm0
+;.text:103BE8E2                 call    CUITradeWnd__CalcItemsWeight
+;.text:103BE8E7                 mov     eax, [ebx]
+;.text:103BE8E9                 mov     edx, [eax+90h]
+;.text:103BE8EF                 mov     ecx, ebx
+
+
+
+;.text:103BF3B0 CUITradeWnd__FillList proc near
+;.text:103BF3B0 this_           = dword ptr  4
+;.text:103BF3B0 a4              = dword ptr  8
+;.text:103BF3B0 do_colorize     = byte ptr  0Ch
+;.text:103BF3B0
+;.text:103BF3B0                 push    ebx
+;.text:103BF3B1                 push    ebp
+;.text:103BF3B2                 mov     ebp, [eax+8]
+;.text:103BF3B5                 push    esi
+;.text:103BF3B6                 mov     esi, [eax+4]
+;.text:103BF3B9                 cmp     esi, ebp
+;.text:103BF3BB                 push    edi
+;.text:103BF3BC                 jz      short loc_103BF406
+;.text:103BF3BE                 mov     edi, edi
+;.text:103BF3C0
+;.text:103BF3C0 loc_103BF3C0:                           ; CODE XREF: CUITradeWnd__FillList+54j
+;.text:103BF3C0                 mov     eax, [esi]
+;.text:103BF3C2                 call    create_cell_item
+;.text:103BF3C7                 cmp     [esp+10h+do_colorize], 0
+;.text:103BF3CC                 mov     edi, eax
+;.text:103BF3CE                 jz      short loc_103BF3F0
+org 103BF3D0h - shift
+jmp CUITradeWnd__FillList_fix
+;.text:103BF3D0                 mov     ebx, [esi]      ; a2
+;.text:103BF3D2                 mov     eax, [esp+10h+this_] ; this
+;.text:103BF3D6                 call    CUITradeWnd__CanMoveToOther
+;.text:103BF3DB                 test    al, al
+org 103BF3DDh - shift
+back_from_CUITradeWnd__FillList_fix:
+;.text:103BF3DD                 jnz     short loc_103BF3F0
+;.text:103BF3DF                 mov     eax, [edi]
+;.text:103BF3E1                 mov     edx, [eax+90h]
+;.text:103BF3E7                 push    0FFFF6464h
+;.text:103BF3EC                 mov     ecx, edi
+;.text:103BF3EE                 call    edx
+;.text:103BF3F0
+;.text:103BF3F0 loc_103BF3F0:                           ; CODE XREF: CUITradeWnd__FillList+1Ej
+;.text:103BF3F0                                         ; CUITradeWnd__FillList+2Dj
+;.text:103BF3F0                 mov     ecx, [esp+10h+a4]
+;.text:103BF3F4                 mov     eax, [ecx]
+;.text:103BF3F6                 mov     edx, [eax+90h]
+;.text:103BF3FC                 push    edi
+;.text:103BF3FD                 call    edx
+;.text:103BF3FF                 add     esi, 4
+;.text:103BF402                 cmp     esi, ebp
+;.text:103BF404                 jnz     short loc_103BF3C0
+;.text:103BF406
+;.text:103BF406 loc_103BF406:                           ; CODE XREF: CUITradeWnd__FillList+Cj
+;.text:103BF406                 pop     edi
+;.text:103BF407                 pop     esi
+;.text:103BF408                 pop     ebp
+;.text:103BF409                 pop     ebx
+;.text:103BF40A                 retn    0Ch
+;.text:103BF40A CUITradeWnd__FillList endp
+
+
+
+org 1014CAE0h - shift
+register__void__void:
+
+org 10253E00h - shift
+CProjector__TurnOn: ; this = esi
+
+org 10253E70h - shift
+CProjector__TurnOff: ; this = esi
+
+;.text:10146D00 CScriptGameObject__DisableInfoPortion proc near
+;.text:10146D00 arg_0           = dword ptr  4
+org 10146D00h - shift
+	jmp disable_info_portion_fix
+;.text:10146D00                 push    esi
+;.text:10146D01                 mov     esi, ecx
+;.text:10146D03                 push    edi
+;.text:10146D04                 mov     edi, [esi+4]
+;.text:10146D07                 test    edi, edi
+org 10146D09h - shift
+back_from_disable_info_portion_fix:
+;.text:10146D09                 jz      short loc_10146D10
+;.text:10146D0B                 call    CGameObject__lua_game_object
+
+
+
+org 10146F80h - shift
+CScriptGameObject__HasInfo:
+
+;.text:103C9110 CUITalkDialogWnd__Hide proc near        ; DATA XREF: .rdata:104C3640o
+;.text:103C9110                 push    esi
+;.text:103C9111                 push    offset aUi_talk_hide ; "ui_talk_hide"
+;.text:103C9116                 mov     esi, ecx
+;.text:103C9118                 call    InventoryUtilities__SendInfoToActor
+org 103C911Dh - shift
+jmp CUITalkDialogWnd__Hide_test
+;.text:103C911D                 mov     eax, [esi]
+;.text:103C911F                 mov     edx, [eax+74h]
+;.text:103C9122                 add     esp, 4
+;.text:103C9125                 push    0
+;.text:103C9127                 mov     ecx, esi
+;.text:103C9129                 mov     byte ptr [esi+4], 0
+;.text:103C912D                 call    edx
+;.text:103C912F                 mov     byte ptr [esi+56h], 0
+;.text:103C9133                 pop     esi
+;.text:103C9134                 retn
+;.text:103C9134 CUITalkDialogWnd__Hide endp
+
+
+
+
+
+org 10055B6Ch - shift
+register__MMM_bool__void:
+
+;.text:1005568A                 call    register__MMM_bool__void
+org 1005568Fh - shift
+	jmp mmm_fix
+;.text:1005568F                 mov     ecx, eax
+;.text:10055691                 xor     eax, eax
+;.text:10055693                 lea     edi, [ebp+var_10]
+;.text:10055696                 stosb
+org 10055697h - shift
+back_from_mmm_fix:
+;.text:10055697                 push    [ebp+var_10]
+
+
+
+
+; попытка восстановить оффлайновое перемещение неписей
+; было
+;.text:10054AD7                 mov     dword ptr [eax+0Ch], 3
+;.text:10054ADE                 mov     esi, [edi+0Ch]
+; стало
+org 10054AD7h - shift ; вставить патч 7 байт
+	nop ; 7
+	nop ; 8
+	nop ; 9
+	nop ; A
+	nop ; B
+	nop ; C
+	nop ; D
+
+
+; исправление идиотской опечатки в имени функции CALifeMonsterDetailPathManager:speed
+; в оригинале на конце стоит символ табуляции, из-за чего её невозможно использовать
+; было
+;.rdata:1045E73C aSpeed          db 'speed',9,0
+; стало
+org 1045E73Ch - shift
+aSpeed          db 'speed',0 ; внести в патч 6 байт
+
 
 ;.text:10412EB0 CUIScrollView__ScrollToBegin proc near
 org 10412EB0h - shift
@@ -1326,7 +1553,9 @@ off_10557214  dd ?
 ; для приведения костюма
 org 1054F094h - shift
 off_1054F094 dd ?
-
+; для приведения гранаты
+org 105557A4h - shift
+off_105557A4 dd ?
 ; Scope
 org 10556C58h - shift
 off_10556C58 dd ?

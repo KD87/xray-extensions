@@ -5,47 +5,54 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	call    error_log_register
 	; добавл€ем свой код
 	; регистраци€ функции вывода в лог, вместо нерабочей "log"
-	add     esp, 0Ch
-    push    offset my_log_fun
-    push    offset alog1 ; "log1"
-	push    [ebp+8h]
-    call    error_log_register
+	GLOBAL_NS_PERFORM_EXPORT__VOID__PCHAR my_log_fun, "log1"
+	;add     esp, 0Ch
+    ;push    offset my_log_fun
+    ;push    offset alog1 ; "log1"
+	;push    [ebp+8h]
+    ;call    error_log_register
 	; регистраци€ функции крэша игры с выводом причины в лог
-	add     esp, 0Ch
-    push    offset msg_and_fail
-    push    offset aFail ; "fail"
-	push    [ebp+8h]
-    call    error_log_register
+	GLOBAL_NS_PERFORM_EXPORT__VOID__PCHAR msg_and_fail, "fail"
+	;add     esp, 0Ch
+    ;push    offset msg_and_fail
+    ;push    offset aFail ; "fail"
+	;push    [ebp+8h]
+    ;call    error_log_register
 	; регистраци€ функции "bind_to_dik"
-	push    offset bind_to_dik
-	push    offset aBind_to_dik  ; "bind_to_dik"
-	push    [ebp+8h]
-	call    bit_and_register
-	add     esp, 0Ch
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT bind_to_dik, "bind_to_dik"
+	;push    offset bind_to_dik
+	;push    offset aBind_to_dik  ; "bind_to_dik"
+	;push    [ebp+8h]
+	;call    bit_and_register
+	;add     esp, 0Ch
 	; регистраци€ функции "set_extensions_flags"
-	push    offset set_extensions_flags
-	push    offset aSet_extensions_flags  ; "set_extensions_flags"
-	push    [ebp+8h]
-	call    bit_and_register
-	add     esp, 0Ch
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT set_extensions_flags, "set_extensions_flags"
+	;push    offset set_extensions_flags
+	;push    offset aSet_extensions_flags  ; "set_extensions_flags"
+	;push    [ebp+8h]
+	;call    bit_and_register
+	;add     esp, 0Ch
 	; функци€ установки глобальных флагов актора
-	push    offset set_actor_flags
-	push    offset aSet_actor_flags  ; "set_actor_flags"
-	push    [ebp+8h]
-	call    bit_and_register
-	add     esp, 0Ch
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT set_actor_flags, "set_actor_flags"
+	;push    offset set_actor_flags
+	;push    offset aSet_actor_flags  ; "set_actor_flags"
+	;push    [ebp+8h]
+	;call    bit_and_register
+	;add     esp, 0Ch
 	; функци€ получени€ глобальных флагов актора
-	push    offset get_actor_flags
-	push    offset aGet_actor_flags  ; "get_actor_flags"
-	push    [ebp+8h]
-	call    bit_and_register
-	add     esp, 0Ch
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT get_actor_flags, "get_actor_flags"
+	;push    offset get_actor_flags
+	;push    offset aGet_actor_flags  ; "get_actor_flags"
+	;push    [ebp+8h]
+	;call    bit_and_register
+	;add     esp, 0Ch
 	; регистраци€ функции "get_extensions_flags"
-	push    offset get_extensions_flags
-	push    offset aGet_extensions_flags  ; "get_extensions_flags"
-	push    [ebp+8h]
-	call    bit_and_register
-	add     esp, 0Ch
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT get_extensions_flags, "get_extensions_flags"
+	;push    offset get_extensions_flags
+	;push    offset aGet_extensions_flags  ; "get_extensions_flags"
+	;push    [ebp+8h]
+	;call    bit_and_register
+	;add     esp, 0Ch
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg0, "set_int_arg0"
 	;GLOBAL_NS_PERFORM_EXPORT__BOOL__VOID IsPdaMenuShown, "is_pda_shown"
 	; ; регистраци€ функции "flush1", вместо нерабочей "flush"
@@ -62,6 +69,8 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
      ; push    offset alog2   ; "log2"
      ; push    esi
      ; call    flush_register
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetTradeFiltrationOn, "set_trade_filtration_on"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetTradeFiltrationOff, "set_trade_filtration_off"
 	; идЄм обратно
 	jmp back_from_global_space_ext
 
@@ -207,3 +216,17 @@ _flags      = dword ptr  4
 	mov     eax, [psActorFlags]
 	retn
 get_actor_flags endp
+
+ALIGN 8
+g_trade_filtration_active dd 0
+
+SetTradeFiltrationOn proc
+	mov [g_trade_filtration_active], 1
+	retn
+SetTradeFiltrationOn endp
+
+SetTradeFiltrationOff proc
+	mov [g_trade_filtration_active], 0
+	retn
+SetTradeFiltrationOff endp
+
