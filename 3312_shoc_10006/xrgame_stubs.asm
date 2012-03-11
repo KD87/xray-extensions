@@ -1287,6 +1287,23 @@ CScriptGameObject__get_car:
 
 
 
+org 103DF710h - shift
+ch_info_get_from_id:
+
+org 103C0D87h - shift
+	jmp cui_pda_fix_map
+	
+org 103C0E1Fh - shift
+back_from_cui_pda_fix:
+
+org 103BFF69h - shift
+back_from_pda_contact:
+
+org 103BFF64h - shift
+	jmp call_pda_contact_callback
+	
+org 103E35D0h - shift
+SendInfoToActor:
 
 ;===================| Секция .idata  |=========================================
 ; Ищутся по именам в окне Names IDA
