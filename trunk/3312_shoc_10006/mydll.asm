@@ -90,6 +90,9 @@ include monster_movement_manager_fix.asm
 include alife_smart_terrain_task_fix.asm
 include debug_fixes.asm
 include cuitradewnd_fix.asm
+include actor_input_fix_pda.asm
+include cuipdawnd_fix.asm
+
 _CODE ENDS
 
 end LibMain
