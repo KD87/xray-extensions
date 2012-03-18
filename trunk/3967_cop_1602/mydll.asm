@@ -27,7 +27,7 @@ include console_fix.asm
 include pda_fix.asm
 include car_fix.asm
 include level_input_fix.asm
-
+include cuilistbox_fix.asm
 _CODE ENDS
 
 end LibMain

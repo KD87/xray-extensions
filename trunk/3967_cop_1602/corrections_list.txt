@@ -11,3 +11,5 @@
 0x10278B8A 10 CActor__use_Vehicle_part ; возможность ездить на машинках
 0x101C9835 2 CScriptGameObject__UnloadMagazine_part ; при вызове game_object:unload_magazine() в инвентарь выкладываются заряженные в оружие патроны
 0x10237545 5 ; jmp level_input_fix
+0x104AEA5C 5 ; jmp cuilistbox_fix1
+0x104AEAF3 5 ; jmp cuilistbox_fix2
