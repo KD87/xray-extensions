@@ -2,6 +2,43 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+org 104AFD90h - shift
+CurrentGameUI:
+
+org 1043DF30h - shift
+CDialogHolder__TopInputReceiver:
+
+org 10499B50h - shift
+CUIScrollView__GetItem:
+org 104AE24Dh - shift
+register__cuilistbox__CUIWindows__UINT:
+
+;.text:104AEA4E                 xor     eax, eax
+;.text:104AEA50                 push    eax
+;.text:104AEA51                 mov     eax, offset CUIScrollView__GetItem
+;.text:104AEA56                 push    eax
+;.text:104AEA57                 push    offset aGetitem ; "GetItem"
+org 104AEA5Ch - shift
+	jmp cuilistbox_fix1
+;.text:104AEA5C                 xor     eax, eax
+;.text:104AEA5E                 push    eax
+;.text:104AEA5F                 mov     eax, offset sub_104A7B90
+org 104AEA64h - shift
+back_from_cuilistbox_fix1:
+;.text:104AEA64                 push    eax
+;.text:104AEA65                 push    offset aGetitembyindex ; "GetItemByIndex"
+
+
+org 104AEAF3h - shift
+	jmp cuilistbox_fix2
+;.text:104AEAF3                 call    sub_104AE24D
+;.text:104AEAF8                 mov     ecx, eax
+org 104AEAFAh - shift
+back_from_cuilistbox_fix2:
+;.text:104AEAFA                 call    sub_104ADB26
+
+
+
 org 100490C0h - shift
 script_hit_callback:
 
