@@ -71,5 +71,9 @@
 ;0x100138F0 5 ;	jmp CHitMemoryManager__add3_fix
 ;0x101A6DC0 5 ; jmp call_mouse_move_callback
 
+;rus_phantom
 0x103BFF64 5 ; jmp call_pda_contact_callback
 0x103C0D87 5 ; jmp cui_pda_fix_map
+
+;SkyLoader
+0x103BF3D6 5 ;jmp CUITradeWnd__FillList_colorize ;заливка предметов в окне торговли
