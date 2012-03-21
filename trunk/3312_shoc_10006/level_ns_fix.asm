@@ -24,6 +24,36 @@ level_ns_extension_1:
 	push    eax
 	call    get_snd_volume_register ; регистрируем функцию с прототипом как у   get_snd_volume
 ;--------------------------------------
+
+;------------< регистрируем функцию получения активности эффекта камеры по айди >------
+	pop     ecx
+	pop     ecx
+	mov     eax, esp
+	push    offset GetCamEffector
+	push    offset aHas_cam_effector ; "has_cam_effector"
+	push    eax
+	call    register__ns__int__int
+;--------------------------------------
+
+;------------< регистрируем функцию получения активности pp эффекта по айди >------
+	pop     ecx
+	pop     ecx
+	mov     eax, esp
+	push    offset GetPpEffector
+	push    offset aHas_pp_effector ; "has_pp_effector"
+	push    eax
+	call    register__ns__int__int
+;--------------------------------------
+
+;------------< регистрируем функцию получения активности элементов худа >------
+	pop     ecx
+	pop     ecx
+	mov     eax, esp
+	push    offset HasIndicators
+	push    offset aHas_indicators ; "has_indicators"
+	push    eax
+	call    register__ns__bool__void
+;--------------------------------------
 	jmp back_to_level_ns_ext_1
 	
 aGet_target_dist db "get_target_dist", 0
@@ -39,6 +69,15 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	mov     ecx, eax
 	call    esi
 	; для get_target_dist
+	mov     ecx, eax
+	call    esi
+	; для has_cam_effector
+	mov     ecx, eax
+	call    esi
+	; для has_pp_effector
+	mov     ecx, eax
+	call    esi
+	; для has_indicators
 	mov     ecx, eax
 	call    esi
 ; идём обратно
@@ -83,6 +122,53 @@ return_value:
 	retn
 GetTargetObject endp
 
+GetCamEffector proc
+id 		= dword ptr  4
+
+	mov     edx, [esp+id]
+	and     edx, 0FFFFh
+	mov     ecx, g_Actor
+	mov     ecx, [ecx+554h]
+	push    edx
+	call    ds:CCameraManager__GetCamEffector
+	test    eax, eax
+	jnz	short exit
+	xor	al, al
+	retn
+exit:
+	mov	al, 1
+	retn
+GetCamEffector endp
+
+GetPpEffector proc
+id 		= dword ptr  4
+
+	mov     ecx, g_Actor
+	mov     edx, [esp+id]
+	mov     ecx, [ecx+554h]
+	push    edx
+	call    ds:CCameraManager__GetPPEffector
+	test    eax, eax
+	jnz	short exit
+	xor	al, al
+	retn
+exit:
+	mov	al, 1
+	retn
+GetPpEffector endp
+
+HasIndicators proc
+	mov     ecx, ds:g_pGameLevel
+	mov     edx, [ecx]
+	mov     ecx, [edx+148h]
+	mov     eax, [ecx]
+	mov     edx, [eax+18h]
+	call    edx
+	cmp	byte ptr [eax+30h], 0
+	setnz   al
+	retn
+HasIndicators endp
+
 get_target_obj_register proc
 var_8           = dword ptr -8
 var_4           = byte ptr -4
@@ -107,7 +193,9 @@ arg_0           = dword ptr  8
 get_target_obj_register endp
 
 aGet_target_obj  db "get_target_obj", 0
-
+aHas_cam_effector  db "has_cam_effector", 0
+aHas_pp_effector  db "has_pp_effector", 0
+aHas_indicators  db "has_indicators", 0
 
 register__ns__go__void proc near
 var_8           = dword ptr -8

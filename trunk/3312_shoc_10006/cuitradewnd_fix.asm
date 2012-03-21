@@ -89,3 +89,33 @@ lab1:
 	; идём обратно
 	jmp     back_from_CUITradeWnd__FillList_fix
 CUITradeWnd__FillList_fix endp
+
+CUITradeWnd__FillList_colorize proc
+	;делаем то, что вырезали
+	call    sub_0_103BE8C0
+	;добавляем свое
+	test    al, al
+	jnz     short lab1
+	mov     eax, [edi]
+	mov     edx, [eax+90h]
+	push    0FFFF6464h
+	mov     ecx, edi
+	call    edx ;оригинальная красная заливка
+	jmp	short skip
+lab1:
+	mov     eax, [esi]
+	mov     eax, [eax+98h]
+	sub     eax, 1
+	jz      short lab3
+	sub     eax, 1
+	jnz     short skip
+lab3:
+	mov     eax, [edi]
+	mov     edx, [eax+90h]
+	push    0FF007C00h
+	mov     ecx, edi
+	call    edx ;зеленая заливка из билдов
+skip:
+	;возвращаемся
+	jmp	back_to_CUITradeWnd__FillList_colorize
+CUITradeWnd__FillList_colorize endp

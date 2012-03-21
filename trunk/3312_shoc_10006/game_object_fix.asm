@@ -122,7 +122,8 @@ game_object_fix proc
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetSprintFactor, "get_sprint_factor"
 	; регистрируем функцию получения состояния актора
 	PERFORM_EXPORT_UINT__VOID CScriptGameObject__ActorBodyState, "actor_body_state"
-
+	; регистрируем функцию получения видимости актора
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetActorVisible, "get_actor_visible"
 	;--
 	PERFORM_EXPORT_FLOAT__INT             register_get_game_object_float,      CScriptGameObject__GetGameObjectFloat
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_game_object_float,      CScriptGameObject__SetGameObjectFloat
@@ -1265,14 +1266,50 @@ exit2:
 CScriptGameObject__GetSprintFactor endp
 
 CScriptGameObject__ActorBodyState proc
-	; получаем актора
-	mov     eax, [ecx+4] ; m_object
-	mov     eax, [eax]
-	mov     eax, [eax+80h]
-	call    eax
-	mov     eax, [eax+554h]
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push	ecx
+	
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	;---------------
+	mov     eax, [eax+1428]
+	jmp     exit_ok
+exit_fail:
+	xor     eax, eax
+exit_ok:
+	pop	ecx
+	mov     esp, ebp
+	pop     ebp
 	retn
 CScriptGameObject__ActorBodyState endp
+
+CScriptGameObject__GetActorVisible proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push	ecx
+	
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_no
+	;------
+	push	eax
+	call    ds:CObject__getVisible
+	test	eax, eax
+	jz	short exit_no
+	mov	al, 1
+	jmp     short exit
+exit_no:
+	xor     al, al
+exit:
+	pop	ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetActorVisible endp
 
 CScriptGameObject__GetActorFloat proc
 pos__ = dword ptr  8

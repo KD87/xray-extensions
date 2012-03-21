@@ -1621,6 +1621,8 @@ org 10458870h - shift
 CObject__H_SetParent dd ?
 org 10458A9Ch - shift
 CObject__setVisible dd ?
+org 104586B0h - shift
+CObject__getVisible dword ?
 org 10458AA8h - shift
 CObject__setEnabled dd ?
 
@@ -1673,3 +1675,20 @@ org 1013AB16h - shift
 sub_1013AB16:
 org 1013AB7Dh - shift
 sub_1013AB7D:
+
+;для заливки предметов при торговле
+org 103BF3D6h - shift
+	jmp	CUITradeWnd__FillList_colorize
+
+org 103BF3F0h - shift
+back_to_CUITradeWnd__FillList_colorize:
+
+org 103BE8C0h - shift
+sub_0_103BE8C0:
+
+;для новых методов в пространстве имен level
+org 10190CF7h - shift
+register__ns__int__int:
+
+org 10173415h - shift
+register__ns__bool__void:
