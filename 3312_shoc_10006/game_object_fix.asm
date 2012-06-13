@@ -124,6 +124,19 @@ game_object_fix proc
 	PERFORM_EXPORT_UINT__VOID CScriptGameObject__ActorBodyState, "actor_body_state"
 	; регистрируем функцию получения видимости актора
 	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetActorVisible, "get_actor_visible"
+	
+	; регистрируем функцию получения max weight
+	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetActorMaxWeight, "get_actor_max_weight"
+	; регистрируем функцию получения max walk weight
+	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetActorMaxWalkWeight, "get_actor_max_walk_weight"
+	; регистрируем функцию установки max weight
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetActorMaxWeight, "set_actor_max_weight"
+	; регистрируем функцию установки max walk weight
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetActorMaxWalkWeight, "set_actor_max_walk_weight"
+	; регистрируем функцию получения take distance
+	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetActorTakeDist, "get_actor_take_dist"
+	; регистрируем функцию установки take distance
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetActorTakeDist, "set_actor_take_dist"
 	;--
 	PERFORM_EXPORT_FLOAT__INT             register_get_game_object_float,      CScriptGameObject__GetGameObjectFloat
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_game_object_float,      CScriptGameObject__SetGameObjectFloat
@@ -1362,6 +1375,167 @@ fbuf dword 123.456
 a_fail_msg db "fail", 0
 a_xxx_msg db "arg=%d", 0
 CScriptGameObject__GetActorFloat endp
+
+
+CScriptGameObject__GetActorTakeDist proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	
+	mov     eax, g_Actor
+	test    eax, eax ; eax = actor
+	jz      short exit_fail
+	
+	mov		ecx, [eax+298h]
+	fld     dword ptr [ecx+74h]
+	jmp     exit2
+exit_fail:
+	fldz
+exit2:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetActorTakeDist endp
+
+CScriptGameObject__SetActorTakeDist proc
+argv = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	mov     esi, ecx
+	push    edi
+	
+	mov     eax, g_Actor
+	test    eax, eax ; eax = actor
+	jz      short exit
+
+
+	;---
+	mov     ecx, [ebp + argv]
+	mov		eax, [eax+298h]
+	mov    [eax+74h], ecx
+	jmp     exit
+exit:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetActorTakeDist endp
+
+
+
+CScriptGameObject__GetActorMaxWeight proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	
+	mov     eax, g_Actor
+	test    eax, eax ; eax = actor
+	jz      short exit_fail
+	
+	mov		ecx, [eax+298h]
+	fld     dword ptr [ecx+68h]
+	jmp     exit2
+exit_fail:
+	fldz
+exit2:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetActorMaxWeight endp
+
+CScriptGameObject__SetActorMaxWeight proc
+argv = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	mov     esi, ecx
+	push    edi
+	
+	mov     eax, g_Actor
+	test    eax, eax ; eax = actor
+	jz      short exit
+
+
+	;---
+	mov     ecx, [ebp + argv]
+	mov		eax, [eax+298h]
+	mov    [eax+68h], ecx
+	jmp     exit
+exit:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetActorMaxWeight endp
+
+
+CScriptGameObject__GetActorMaxWalkWeight proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	
+	; получаем актора
+	mov     eax, g_Actor
+	test    eax, eax ; eax = actor
+	jz      short exit_fail
+	
+	mov		ecx, [eax+93Ch]
+	fld     dword ptr [ecx+138h]
+	jmp     exit2
+exit_fail:
+	fldz
+exit2:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetActorMaxWalkWeight endp
+
+
+CScriptGameObject__SetActorMaxWalkWeight proc
+argv = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	mov     esi, ecx
+	push    edi
+	
+	mov     eax, g_Actor
+	test    eax, eax ; eax = actor
+	jz      short exit
+
+
+	;---
+	mov     ecx, [ebp + argv]
+	mov		eax, [eax+93Ch]
+	mov    [eax+138h], ecx
+	jmp     exit
+exit:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetActorMaxWalkWeight endp
+
+
 
 CScriptGameObject__SetActorFloat proc
 stub  = dword ptr  8
