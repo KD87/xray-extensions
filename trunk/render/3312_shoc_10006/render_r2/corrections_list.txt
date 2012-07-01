@@ -1,0 +1,15 @@
+;дальность отрисовки травы
+0x10023D7A 9 cache_initialize_1 
+0x10023D85 6 cache_initialize_2 
+0x1002414C 6 cache_update_1 
+0x100241A9 9 cache_update_2 
+0x1002422E 6 cache_update_3
+0x1002428B 6 cache_update_4
+0x10024276 9 cache_update_5
+0x10023E2A 7 cache_task_1
+0x10022F2E 6 cache_upvism_1
+0x10022F3E 6 cache_upvism_2
+0x10022A53 9 cache_upvism_3
+
+;тень травы
+0x10027997 6 ; jmp sun_details_1_fix
