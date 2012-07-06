@@ -1,0 +1,64 @@
+;=====================================
+;=====ÄÀËÜÍÎÑÒÜ ÎÒĞÈÑÎÂÊÈ ÒĞÀÂÛ=======
+;=====================================
+0x10023D7A 5 cache_initialize_1 
+0x10023D85 5 cache_initialize_2 
+0x10024144 5 cache_update_1 
+0x100241A9 5 cache_update_2 
+0x1002422E 5 cache_update_3
+0x1002428B 5 cache_update_4
+0x10023E2A 5 cache_task_1
+0x10022F2E 5 cache_upvism_1
+0x10022F3E 5 cache_upvism_2
+0x10022A53 5 cache_upvism_3
+0x10024121 5 update_30h_1
+0x10024130 5 update_30h_2
+0x10024173 5 update_30h_3
+0x100241FA 5 update_30h_4
+0x10024254 5 update_30h_5
+0x10024276 5 update_30h_6
+0x10023D8D 5 cache_init_4
+0x10023DA5 5 cache_init_5
+0x10024420 5 cache_upd_6
+0x1002444A 5 cache_upd_7
+0x10023DD4 5 cache_init_C4_1
+0x10024201 5 cache_upd_C4_2
+0x10024260 5 cache_upd_C4_3
+0x1002229E 5 const_960_1
+0x100224E1 5 const_960_2
+0x1002223F 5 cache_level1_length
+0x10024197 5 red_cl1_line_size_minus
+0x1002421C 5 cache_size_w_o_last_line_minus
+0x100242A6 5 cache_length
+0x10023DF0 5 four_lines_length_in_cache
+0x10022BC7 5 vis
+0x10022BED 5 circle
+;test
+0x10002D42 5 con_comm
+;îáğàáîò÷èê
+0x10007607 5 calculate_stuff
+;ñìåùåíèÿ
+0x10023D57 5 offset_1
+0x10024077 5 offset_3
+0x100240FE 5 offset_4
+0x1002416B 5 offset_5
+0x100241F2 5 offset_6
+0x10024245 5 offset_7
+0x100242F6 5 offset_8
+0x10024306 5 offset_9
+0x10024323 5 offset_10
+0x100243BD 5 offset_11
+0x100243CB 5 offset_12
+0x100243E0 5 offset_13
+0x100243FE 5 offset_14
+0x10022A76 5 offset_15
+
+;=====================================
+;==========ÏËÎÒÍÎÑÒÜ ÒĞÀÂÛ============
+;=====================================
+0x10001752 5
+
+;=====================================
+;=============ÒÅÍÜ ÒĞÀÂÛ==============
+;=====================================
+0x10027997 6 ; jmp sun_details_1_fix
