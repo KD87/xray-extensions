@@ -18,6 +18,9 @@ REGISTER_BOOL__GO register_can_move_to_belt, "can_move_to_belt" ; --
 
 REGISTER_FLOAT__INT register_get_actor_float, "get_actor_float"
 REGISTER_VOID__VECTOR_FLOAT_INT register_set_actor_float, "set_actor_float"
+
+REGISTER_FLOAT__INT register_get_actor_condition_float, "get_actor_condition_float"
+REGISTER_VOID__VECTOR_FLOAT_INT register_set_actor_condition_float, "set_actor_condition_float"
 ;---
 REGISTER_FLOAT__INT             register_get_game_object_float,      "get_go_float"
 REGISTER_VOID__VECTOR_FLOAT_INT register_set_game_object_float,      "set_go_float"
@@ -160,6 +163,8 @@ game_object_fix proc
 	;--
 	PERFORM_EXPORT_FLOAT__INT register_get_actor_float, CScriptGameObject__GetActorFloat
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_actor_float, CScriptGameObject__SetActorFloat
+	PERFORM_EXPORT_FLOAT__INT register_get_actor_condition_float, CScriptGameObject__GetActorConditionFloat
+	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_actor_condition_float, CScriptGameObject__SetActorConditionFloat
 	PERFORM_EXPORT_INT__STRING_INT register_get_actor_int, CScriptGameObject__GetActorInt
 	PERFORM_EXPORT_INT__STRING_INT register_get_actor_int16, CScriptGameObject__GetActorInt16
 
@@ -1376,6 +1381,47 @@ a_fail_msg db "fail", 0
 a_xxx_msg db "arg=%d", 0
 CScriptGameObject__GetActorFloat endp
 
+CScriptGameObject__GetActorConditionFloat proc
+pos__ = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	;sub     esp, 40h
+	push    esi
+	mov     esi, ecx
+	push    edi
+	
+	mov     edi, [esi+4]
+	test    edi, edi
+	jz      short lab1
+	call    CGameObject__lua_game_object
+
+lab1:
+	mov     ecx, [esi+4]
+	test    ecx, ecx
+	jz      short exit_fail
+	mov     eax, [ecx]
+	mov     edx, [eax+80h]
+	call    edx
+	test    eax, eax
+	jz      short exit_fail
+
+
+	;---
+	mov     ecx, [ebp + pos__]	;take offest
+	mov		eax, [eax + 93Ch]		;take CActorCondition
+	fld     dword ptr [eax+ecx]
+	jmp     exit
+exit_fail:
+	fldz
+exit:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__GetActorConditionFloat endp
+
 
 CScriptGameObject__GetActorTakeDist proc
 	push    ebp
@@ -1583,6 +1629,54 @@ exit_fail:
 	pop     ebp
 	retn    0Ch
 CScriptGameObject__SetActorFloat endp
+
+CScriptGameObject__SetActorConditionFloat proc
+stub  = dword ptr  8
+value = dword ptr  0Ch
+pos   = dword ptr  10h
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	mov     esi, ecx
+	push    edi
+
+	push    eax
+	push    ecx
+	push    edx
+
+	
+	mov     edi, [esi+4]
+	test    edi, edi
+	jz      short lab1
+	call    CGameObject__lua_game_object
+
+lab1:
+	mov     ecx, [esi+4]
+	test    ecx, ecx
+	jz      short exit_fail
+	mov     eax, [ecx]
+	mov     edx, [eax+80h]
+	call    edx
+	test    eax, eax
+	jz      short exit_fail
+
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov		eax, [eax + 93Ch]		;take CActorCondition
+	mov    [eax+ecx], edx
+exit_fail:
+	pop     edx
+	pop     ecx
+	pop     eax
+	
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    0Ch
+CScriptGameObject__SetActorConditionFloat endp
 
 
 CScriptGameObject__GetActorInt proc
