@@ -112,17 +112,18 @@ flush_register:
 
 ; Функция CScriptEngine::script_register
 ; ищем по ссылке на строку "error_log"
+
+;.text:1022398C                 push    esi
+;.text:1022398D                 call    sub_102225BB
+;.text:10223992                 push    offset sub_102214A0
 ;.text:10223997                 push    offset aError_log ; "error_log"
 ;.text:1022399C                 push    esi
-org 1022398Dh - shift
+org 1022399Dh - shift
 	jmp global_space_ext ; врезка с инструкцией перехода - 5 байт
-;.text:1022399D                 call    sub_10222902; error_log register
-org 10223992h - shift
+;.text:1022399D                 call    sub_10222902; error_log_register
+org 102239A2h - shift
 back_to_global_space_ext:
 ;.text:102239A2                 lea     eax, [ebp+var_1]
-;.text:102239A5                 push    eax
-;.text:102239A6                 push    offset nullsub_1
-;.text:102239AB                 push    offset aFlush   ; "flush"
 
 
 ;--------------< Регистрации пространства имён level >-------------------------
