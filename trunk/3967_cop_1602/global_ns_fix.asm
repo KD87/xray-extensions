@@ -10,19 +10,20 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
     call    error_log_register
 	add     esp, 0Ch
 	; регистраци€ функции "flush1", вместо нерабочей "flush"
-     lea     eax, [ebp-1]
-     push    eax
-     push    offset my_flush
-     push    offset aFlush1   ; "flush1"
-     push    esi
-     call    flush_register
+    lea     eax, [ebp-1]
+    push    eax
+    push    offset my_flush
+    push    offset aFlush1   ; "flush1"
+    push    esi
+    call    flush_register
+	add     esp, 10h
 	; регистраци€ тестовой функции "log2"
-     lea     eax, [ebp-1]
-     push    eax
-     push    offset my_log2
-     push    offset alog2   ; "log2"
-     push    esi
-     call    flush_register
+     ;lea     eax, [ebp-1]
+     ;push    eax
+     ;push    offset my_log2
+     ;push    offset alog2   ; "log2"
+     ;push    esi
+     ;call    flush_register
 	; идЄм обратно
 	jmp back_to_global_space_ext
 
