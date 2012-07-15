@@ -140,6 +140,8 @@ game_object_fix proc
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetActorTakeDist, "get_actor_take_dist"
 	; регистрируем функцию установки take distance
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetActorTakeDist, "set_actor_take_dist"
+	; регистрируем функцию для получения specific_character
+	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetSpecificProfile, "specific_character"
 	;--
 	PERFORM_EXPORT_FLOAT__INT             register_get_game_object_float,      CScriptGameObject__GetGameObjectFloat
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_game_object_float,      CScriptGameObject__SetGameObjectFloat
@@ -3298,6 +3300,35 @@ exit_fail:
 	pop     ebp
 	retn    8
 CScriptGameObject__SetGameObjectSharedStr endp
+
+CScriptGameObject__GetSpecificProfile proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push 	edx
+	push 	ecx
+	
+	;input: ecx - CScriptGameObject
+	call	CScriptGameObject__ID			;get id
+	;output: eax - game id (uint)
+	
+	push 	eax
+	;input: eax - game id (uint)
+	call 	ch_info_get_from_id				;get CSE_ALifeTraderAbstract by id
+	;output: eax - CSE_ALifeTraderAbstract
+	
+	mov 	eax, [eax+3Ch]
+	add		eax, 0Ch
+	
+	xor     ecx, ecx
+	mov     g_int_argument_0, ecx
+	
+	pop 	ecx
+	pop 	edx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetSpecificProfile endp
 
 
 ; --------------------- CInventoryItem  access function

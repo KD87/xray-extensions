@@ -1305,6 +1305,18 @@ org 103BFF64h - shift
 org 103E35D0h - shift
 SendInfoToActor:
 
+;rus_phantom
+;Каллбек для строки и uint. На всякий пожарный. Не проверено
+org 10265740h - shift
+script_char_uint_callback:
+
+;
+org 1013F2F0h - shift
+CScriptGameObject__ID:
+
+
+
+
 ;===================| Секция .idata  |=========================================
 ; Ищутся по именам в окне Names IDA
 org 10458DA8h - shift
