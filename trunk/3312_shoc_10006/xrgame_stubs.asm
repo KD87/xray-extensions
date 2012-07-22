@@ -1292,7 +1292,13 @@ ch_info_get_from_id:
 
 org 103C0D87h - shift
 	jmp cui_pda_fix_map
-	
+
+org 103F0D90h - shift
+CUIStatic__AdjustHeightToText:
+
+org 103F0DE0h - shift
+CUIStatic__AdjustWeigthToText:
+
 org 103C0E1Fh - shift
 back_from_cui_pda_fix:
 
@@ -1314,6 +1320,11 @@ script_char_uint_callback:
 org 1013F2F0h - shift
 CScriptGameObject__ID:
 
+org 103E5C6Eh - shift
+	jmp cuistatic_xml_add
+	
+org 103E5C73h - shift
+back_from_cuistatic_xml_add:
 
 
 

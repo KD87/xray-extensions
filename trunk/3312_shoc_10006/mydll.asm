@@ -92,6 +92,7 @@ include debug_fixes.asm
 include cuitradewnd_fix.asm
 include actor_input_fix_pda.asm
 include cuipdawnd_fix.asm
+include cuistatic_add.asm
 
 _CODE ENDS
 
