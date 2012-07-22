@@ -74,6 +74,7 @@
 ;rus_phantom
 0x103BFF64 5 ; jmp call_pda_contact_callback
 0x103C0D87 5 ; jmp cui_pda_fix_map
+0x103E5C6E 5 ; jmp to xml AdjustHeightToText and AdjustWeigthToText
 
 ;SkyLoader
 0x103BF3D6 5 ;jmp CUITradeWnd__FillList_colorize ;заливка предметов в окне торговли
