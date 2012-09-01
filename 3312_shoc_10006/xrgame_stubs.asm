@@ -1,6 +1,216 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+
+org 1025828Ah - shift
+	jmp CCustomZone__feel_touch_contact_dbg_fix
+;.text:1025828A                 mov     edx, [esi]
+;.text:1025828C                 mov     eax, [edx+0E0h]
+;.text:10258292                 mov     ecx, esi
+;.text:10258294                 call    eax
+org 10258296h - shift
+back_from_CCustomZone__feel_touch_contact_dbg_fix:
+;.text:10258296                 test    al, al
+
+
+
+
+org 104760D4h - shift
+	dd offset CAI_Stalker__IsVisibleForZones
+
+org 1014E3C0h - shift
+register_go_void__vector:
+
+org 1014D600h - shift
+register__set_character_rank:
+
+;104A067C                 dd offset nullsub_1     ; CGameObject::Hit
+org 104A067Ch - shift
+dd offset Projector__Hit     ; CGameObject::Hit
+
+; CInventoryItem::CInventoryItem
+; заменяем инициализацию неиспользуемого m_nameComplex на создание нашего блока памяти
+;.text:10209219                 mov     [esi+90h], edi
+org 1020921Fh - shift
+	jmp CInventoryItem_constructor_fix
+;.text:1020921F                 mov     [esi+94h], edi
+org 10209225h - shift
+back_from_CInventoryItem_constructor_fix:
+;.text:10209225                 mov     [esi+0ACh], edi
+
+
+
+; CInventoryItem_destructor
+; заменяем удаление неиспользуемого m_nameComplex на удаление нашего блока памяти
+org 102094A8h - shift
+	jmp CInventoryItem_destructor_fix
+;.text:102094A8                 mov     eax, [edi+94h]
+;.text:102094AE                 cmp     eax, ebx
+;.text:102094B0                 jz      short loc_102094C5
+;.text:102094B2                 add     dword ptr [eax], 0FFFFFFFFh
+;.text:102094B5                 mov     ecx, [edi+94h]
+;.text:102094BB                 cmp     [ecx], ebx
+;.text:102094BD                 jnz     short loc_102094C5
+;.text:102094BF                 mov     [edi+94h], ebx
+org 102094C5h - shift
+back_from_CInventoryItem_destructor_fix:
+;.text:102094C5 loc_102094C5:                           ; CODE XREF: CInventoryItem_destructor+170j
+
+
+
+org 102178A0h - shift
+CShootingObject__Light_Render:
+;.text:1021846A                 push    eax
+;.text:1021846B                 call    CShootingObject__Light_Render
+org 1021846Bh - shift
+	jmp CShootingObject__RenderLight_dbg_fix2
+back_from_CShootingObject__RenderLight_dbg_fix2:
+;.text:10218470
+
+
+
+
+org 101B02FDh - shift
+register_level__float__str_int_bool_str:
+
+; тестовый фикс CWeapon__UpdateFireDependencies_internal
+;.text:102196BE                 mov     eax, [ebx+298h] ; eax = hud
+;.text:102196C4                 mov     edx, [eax+48h]
+org 102196C7h - shift
+	jmp CWeapon__UpdateFireDependencies_internal_dbg_fix2
+;.text:102196C7                 movzx   ecx, word ptr [edx+0Ch] ; ecx = fire_bone
+;.text:102196CB                 movss   xmm0, dword ptr [edx+14h]
+org 102196D0h - shift
+back_from_CWeapon__UpdateFireDependencies_internal_dbg_fix2:
+;.text:102196D0                 movss   xmm1, dword ptr [edx+10h]
+
+
+
+org 10219650h - shift
+CWeapon__UpdateFireDependencies_internal:
+
+
+
+org 102C8E60h - shift
+__game_time: ; возвращает 64-х разрядное время - eax, edx соответственно младший и старший разряды
+
+org 101E30A1h - shift
+	jmp CEntityCondition__UpdateConditionTime_dbg_fix2
+;.text:101E30A1                 mov     [esi+0C8h], eax
+;.text:101E30A7                 mov     [esi+0CCh], edx
+org 101E30ADh - shift
+back_from_CEntityCondition__UpdateConditionTime_dbg_fix2:
+;.text:101E30AD                 pop     ebx
+
+
+
+
+org 101E3046h - shift
+	jmp CEntityCondition__UpdateConditionTime_dbg_fix
+;.text:101E3046                 mov     [esi+0C8h], eax
+;.text:101E304C                 mov     [esi+0CCh], edx
+org 101E3052h - shift
+back_from_CEntityCondition__UpdateConditionTime_dbg_fix:
+;.text:101E3052                 fchs
+;.text:101E3054                 faddp   st(1), st
+
+
+org 101E2FC0h - shift
+CEntityCondition__UpdateConditionTime:
+org 101E2F40h - shift
+CEntityCondition__UpdateWounds:
+
+org 10004990h - shift
+xr_new_CAI_Space_:
+org 10196130h - shift
+CAI_Space__init:
+org 10051560h - shift
+CALifeTimeManager__game_time:
+
+org 102A0AA0h - shift
+game_GameState__SetEnvironmentGameTimeFactor:
+org 102A0940h - shift
+game_GameState__SetGameTimeFactor:
+org 1028E320h - shift
+generate_time:
+
+
+;.text:1010102A sub_1010102A    proc near               ; DATA XREF: .rdata:10529E28o
+;.text:1010102A                 mov     eax, [ebp-14h]
+;.text:1010102D                 mov     ecx, [eax+0F4h]
+org 10101033h - shift
+	mov     eax, [ecx+0A8h] ; правка для вывода имени непися вместо имени визуала при вылете
+; добавить в список правок строку: 0x10101033 6 ; mov     eax, [ecx+0A8h]
+;.text:10101033                 mov     eax, [ecx+0B0h]
+;.text:10101039                 test    eax, eax
+; там же изменение строки
+;.text:1010104E                 push    eax
+org 1010104Fh - shift
+	push    offset aErrorInStalker_new
+; добавить в список правок строку: 0x1010104F 5 ; push    offset aErrorInStalker_new
+;.text:1010104F                 push    offset aErrorInStalker ; "! error in stalker with visual %s"
+;.text:10101054                 call    ds:?Msg@@YAXPBDZZ ; Msg(char const *,...)
+
+
+
+
+org 101AF7EDh - shift
+register__ns__set_snd_volume:
+
+org 103F8C40h - shift
+CUIWindow__Update:
+
+org 10068158h - shift
+;	jmp CALifeSimulatorBase__register_object_debug_fix
+;.text:10068158                   mov     word ptr [esp+20h+var_8], ax
+;.text:1006815D                   mov     eax, [edx+14h]
+org 10068160h - shift
+;back_from_CALifeSimulatorBase__register_object_debug_fix:
+;.text:10068160                   lea     ecx, [esp+20h+var_10]
+;.text:10068164                   push    ecx
+
+
+
+org 102134C0h - shift
+story_objects_find:
+org 1006CA70h - shift
+story_objects_add:
+
+org 100681C6h - shift
+;	call    CALifeStoryRegistry__add
+;.text:100681C6                   call    CALifeStoryRegistry__add
+;.text:100681CB                   mov     eax, [edi]
+
+
+; регистрация sid в базе данных игры
+org 1006C9E0h - shift
+CALifeStoryRegistry__add: ; аргументы в стеке: this, story_id, object
+
+;функция получения серверного объекта по id, аргументы в стеке: 1 - alife_simulator, 2 - id
+; стек чистит вызывающая функция
+org 1004BD50h - shift
+object_by_id: 
+
+org 1014BE70h - shift
+register__float_rw_property:
+
+;.text:1014A7B0                   mov     byte ptr [esp+88h+var_74], bl
+;.text:1014A7B4                   mov     eax, [esp+88h+var_74]
+;.text:1014A7B8                   push    eax
+;.text:1014A7B9                   push    offset CScriptGameObject__SetHealth
+;.text:1014A7BE                   push    offset aHealth_0 ; "health"
+;.text:1014A7C3                   mov     edx, offset CScriptGameObject__GetHealth
+;.text:1014A7C8                   mov     edi, ebp
+org 1014A7CAh - shift
+	jmp game_object_fix2
+;.text:1014A7CA                   call    register__float_rw_property
+org 1014A7CFh - shift
+back_from_game_object_fix2:
+;.text:1014A7CF                   mov     byte ptr [esp+88h+var_74], bl
+
+
+
+
 org 101AC95Ah - shift
 	jmp CLevel__g_sv_Spawn_fix2
 ;.text:101AC95A                 pop     edi
@@ -1526,10 +1736,14 @@ g_hud    dword ? ; class CCustomHUD * g_hud
 ; level.get_target_obj()
 ;-------------------------------------------------------------
 org 10458B04h - shift
-?Memory@@3VxrMemory@@A	dword	?
+;?Memory@@3VxrMemory@@A	dword	?
+Memory	dword	?
 
 org 10458DFCh - shift
-?mem_alloc@xrMemory@@QAEPAXI@Z	dword	?
+;?mem_alloc@xrMemory@@QAEPAXI@Z	dword	?
+xrMemory__mem_alloc	dword	?
+org 10458AFCh - shift
+xrMemory__mem_free dd ?
 
 org 10458EB4h - shift
 ??0registration@detail@luabind@@QAE@XZ	dword	?
@@ -1567,6 +1781,12 @@ CCC_Integer__CCC_Integer dd ?
 
 org 10458814h - shift
 CCC_Integer___CCC_Integer dd ?
+
+org 10458818h - shift
+CCC_Mask__CCC_Mask dd ?
+
+org 1045881Ch - shift
+CCC_Mask___CCC_Mask dd ?
 
 org 1056063Ch - shift
 g_bHudAdjustMode dd ?
@@ -1699,6 +1919,15 @@ sub_1013AB16:
 org 1013AB7Dh - shift
 sub_1013AB7D:
 
+; для регистрации метода game_object, возвращающего script_ini
+org 10150F20h - shift
+sub_10150F20:
+org 1015B3E0h - shift
+sub_1015B3E0:
+
+
+
+
 ;для заливки предметов при торговле
 org 103BF3D6h - shift
 	jmp	CUITradeWnd__FillList_colorize
@@ -1715,3 +1944,59 @@ register__ns__int__int:
 
 org 10173415h - shift
 register__ns__bool__void:
+
+org 10560864h - shift
+g_fTimeFactor dd ?
+
+org 105602B0h - shift
+g_ai_space dd ?
+
+org 104589F8h - shift
+Device dd ?
+
+org 10458FC0h - shift
+IPureClient__timeServer_Async dd ?
+
+; для функции регистрации метода go void fun(string, bool)
+org 1014EE70h - shift
+sub_1014EE70:
+org 1014EF60h - shift
+sub_1014EF60:
+org 1014EFC0h - shift
+sub_1014EFC0:
+
+org 10458AE0h - shift
+CKinematicsAnimated__ID_Cycle dd ?
+
+org 104586D0h - shift
+CKinematicsAnimated__PlayCycle dd ?
+
+org 10458B3Ch - shift
+Log_vector3 dd ?
+org 10458B9Ch - shift
+Log_float dd ?
+
+; для регистрации transform_tiny
+org 1013A86Ch - shift
+sub_1013A86C:
+org 1013AA47h - shift
+sub_1013AA47:
+org 1013AA53h - shift
+sub_1013AA53:
+
+; IRender_Light
+org 104588D4h - shift
+resptr_base_IRender_Light____dec dd ? ; 
+
+org 10151720h - shift
+sub_10151720:
+org 101517C0h - shift
+sub_101517C0:
+org 10151820h - shift
+sub_10151820:
+
+org 104584D4h - shift
+Render dd ?
+
+org 104518A2h - shift
+memset: ; dd ? ; void *__cdecl memset(void *Dst, int Val, size_t Size)
