@@ -1,6 +1,13 @@
 sun_details_1_fix proc near 
+	;r2_sun flag
+	test    byte ptr ps_r2_ls_flags, 1
+	jz	short clear
+
+	;r2_sun_details flag
 	test    byte ptr ps_r2_ls_flags, 8
 	jnz	short is_on
+
+clear:
 	mov     ecx, [ebp+8]
 	mov     esi, [ebp+4]
 	cmp     esi, ecx
@@ -22,6 +29,7 @@ sun_details_1_fix proc near
 	call    ds:memmove_s
 	add     esp, 10h
 
+	jmp	short exit
 is_on:
 	lea     ecx, [esp+94h]
 	mov     eax, [ecx]
