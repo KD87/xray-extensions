@@ -1,0 +1,1 @@
+aErrorInStalker_new db "! visual's error in stalker with name %s"

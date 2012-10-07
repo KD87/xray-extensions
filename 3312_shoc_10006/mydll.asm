@@ -68,6 +68,8 @@ ENDM
 ; позиция в том месте, где в целевой DLL начинается наша секция
 org sec1_sec2_dist
 
+include types.asm
+
 include actor_input_fix.asm
 include global_ns_fix.asm
 include global_ns_fix2.asm
@@ -93,6 +95,9 @@ include cuitradewnd_fix.asm
 include actor_input_fix_pda.asm
 include cuipdawnd_fix.asm
 include cuistatic_add.asm
+include misc.asm
+include inventory_item_fix.asm
+include projector_fix.asm
 
 _CODE ENDS
 

@@ -2,6 +2,8 @@
 0x10149CA2 5 ; jmp global_space_ext2
 0x10149D24 5 ; jmp global_space_ext2_additional
 0x10155D87 5 ; jmp game_object_fix
+0x1014A7CA 5 ; jmp game_object_fix2 ; вторая часть, под свойства
+
 0x101A6E50 5 ; jmp call_key_press_callback
 0x101A71F0 5 ; jmp call_key_release_callback
 0x101A7330 5 ; jmp call_key_hold_callback
@@ -42,15 +44,27 @@
 0x10221D75 12 ; блокирование кривого движкового переключения гранат
 
 ;0x103BF3D0 5 ; jmp CUITradeWnd__FillList_fix
-;0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix
-;0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2
+0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix
+0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2
 
+;0x1020921F 5 ; jmp CInventoryItem_constructor_fix
+;0x102094A8 5 ; jmp CInventoryItem_destructor_fix
+0x104A067C 4 ; замена пустого виртуального метода Projector::Hit на наш
 
+0x104760D4 4 ; CAI_Stalker__IsVisibleForZones
+
+;0x101E3046 5 ; 	jmp CEntityCondition__UpdateConditionTime_dbg_fix - отладка
+;0x101E30A1 5 ; 	jmp CEntityCondition__UpdateConditionTime_dbg_fix2 - отладка
+;0x102196C7 5 ; jmp CWeapon__UpdateFireDependencies_internal_dbg_fix2 - отладка
+;0x1021846B 5 ; 	jmp CShootingObject__RenderLight_dbg_fix2 - отладка
 ;0x10412EB0 5 ; jmp scroll_vew_fix
 
 ;0x10253E2B 40 ; searchlight__turn_on
 
 ;0x10272746 8 ; попытка фикса вылезания из машины
+;0x100681C6 5 ;	call    CALifeStoryRegistry__add - экспериментальные отладочные фиксы
+;0x10068158 5 ; 	jmp CALifeSimulatorBase__register_object_debug_fix - аналогично
+;0x1025828A 5 ; jmp CCustomZone__feel_touch_contact_dbg_fix
 
 ;0x102065B7 9 ; jmp loc_1020663C_return_true ; фикс инвентаря часть 1
 ;0x1020432D 5 ; jmp CInventory__CInventory_fix ; фикс инвентаря часть 2
@@ -77,4 +91,4 @@
 0x103E5C6E 5 ; jmp to xml AdjustHeightToText and AdjustWeigthToText
 
 ;SkyLoader
-0x103BF3D6 5 ;jmp CUITradeWnd__FillList_colorize ;заливка предметов в окне торговли
+;0x103BF3D6 5 ;jmp CUITradeWnd__FillList_colorize ;заливка предметов в окне торговли
