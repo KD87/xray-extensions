@@ -54,6 +54,12 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	;call    bit_and_register
 	;add     esp, 0Ch
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg0, "set_int_arg0"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg1, "set_int_arg1"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg2, "set_int_arg2"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg3, "set_int_arg3"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg4, "set_int_arg4"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg5, "set_int_arg5"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetIntArg6, "set_int_arg6"
 	;GLOBAL_NS_PERFORM_EXPORT__BOOL__VOID IsPdaMenuShown, "is_pda_shown"
 	; ; регистраци€ функции "flush1", вместо нерабочей "flush"
      ; lea     eax, [ebp-1]
@@ -71,6 +77,13 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
      ; call    flush_register
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetTradeFiltrationOn, "set_trade_filtration_on"
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetTradeFiltrationOff, "set_trade_filtration_off"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SumArgs, "sum_args"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SubArgs, "sub_args"
+	
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT GetGoodwill, "GetGoodwill"
+	
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT DelayedInventoryUpdate, "update_inventory_window"
+	
 	; идЄм обратно
 	jmp back_from_global_space_ext
 
@@ -166,15 +179,28 @@ _flags      = dword ptr  4
 	retn
 get_extensions_flags endp
 
-g_int_argument_0 dword 0
+;g_int_argument_0 dword 0
+;g_int_argument_1 dword 0
+;g_int_argument_2 dword 0
+;g_int_argument_3 dword 0
+;g_int_argument_4 dword 0
+;g_int_argument_5 dword 0
 
-SetIntArg0 proc
-int_arg = dword ptr  4
-	mov     eax, [esp+int_arg]
-	mov     g_int_argument_0, eax
-	retn
-SetIntArg0 endp
+;SetIntArg0 proc
+;int_arg = dword ptr  4
+;	mov     eax, [esp+int_arg]
+;	mov     g_int_argument_0, eax
+;	retn
+;SetIntArg0 endp
 
+
+SET_INT_ARG_N 0
+SET_INT_ARG_N 1
+SET_INT_ARG_N 2
+SET_INT_ARG_N 3
+SET_INT_ARG_N 4
+SET_INT_ARG_N 5
+SET_INT_ARG_N 6
 
 IsPdaMenuShown proc
 	mov eax, 1
@@ -229,4 +255,55 @@ SetTradeFiltrationOff proc
 	mov [g_trade_filtration_active], 0
 	retn
 SetTradeFiltrationOff endp
+
+SumArgs proc
+arg2 = dword ptr 8
+arg1 = dword ptr 4
+	mov     eax, [esp+arg1]
+	add     eax, [esp+arg2]
+	retn
+SumArgs endp
+
+SubArgs proc
+arg2 = dword ptr 8
+arg1 = dword ptr 4
+	mov     eax, [esp+arg1]
+	sub     eax, [esp+arg2]
+	retn
+SubArgs endp
+
+
+GetGoodwill proc
+for_who  = dword ptr 08h
+to_who   = dword ptr 0Ch
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	mov     eax, [ebp + to_who]
+	push    eax
+	mov     eax, [ebp + for_who]
+	push    eax
+	call    RELATION_REGISTRY__GetGoodwill
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn
+GetGoodwill endp
+
+DelayedInventoryUpdate proc
+	pusha
+	call    GetGameSP
+	test    eax, eax
+	jz      exit
+	mov     eax,[eax+3Ch] ; InventoryMenu
+	test    eax, eax
+	jz      exit
+	mov     byte ptr [eax+64h], 1 ; m_b_need_reinit = true
+exit:	
+	popa
+	retn
+DelayedInventoryUpdate endp
 

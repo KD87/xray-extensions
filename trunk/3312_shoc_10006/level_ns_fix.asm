@@ -1,3 +1,4 @@
+include level_ns_reg_macros.asm
 ;===============| расширение регистрации пространства имён level |=============
 level_ns_extension_1:
 	call    get_snd_volume_register ; делаем то, что вырезали
@@ -53,6 +54,12 @@ level_ns_extension_1:
 	push    offset aHas_indicators ; "has_indicators"
 	push    eax
 	call    register__ns__bool__void
+;--< установка степени дождливости >---
+PERFORM_EXPORT_LEVEL__VOID__FLOAT set_rain_factor, "set_rain_factor"
+PERFORM_EXPORT_LEVEL__INT__INT advance_game_time, "advance_game_time"
+PERFORM_EXPORT_LEVEL__FLOAT__VOID get_float_result00, "get_float_res00"
+PERFORM_EXPORT_LEVEL__FLOAT__STR_INT_BOOL_STR get_memory_float, "get_memory_float"
+PERFORM_EXPORT_LEVEL__INT__INT get_memory_int, "get_memory_int"
 ;--------------------------------------
 	jmp back_to_level_ns_ext_1
 	
@@ -80,6 +87,22 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	; для has_indicators
 	mov     ecx, eax
 	call    esi
+	; для set_rain_factor
+	mov     ecx, eax
+	call    esi
+	; для advance_game_time
+	mov     ecx, eax
+	call    esi
+	; для get_float_result00
+	mov     ecx, eax
+	call    esi
+	; для get_memory_float
+	mov     ecx, eax
+	call    esi
+	; для get_memory_int
+	mov     ecx, eax
+	call    esi
+	
 ; идём обратно
 	jmp back_to_level_ns_ext_2
 
@@ -177,10 +200,10 @@ arg_0           = dword ptr  8
 	mov     ebp, esp
 	push    ecx
 	push    ecx
-	mov     ecx, ds:?Memory@@3VxrMemory@@A ; xrMemory Memory
+	mov     ecx, ds:Memory
 	push    esi
 	push    14h
-	call    ds:?mem_alloc@xrMemory@@QAEPAXI@Z ; xrMemory::mem_alloc(uint)
+	call    ds:xrMemory__mem_alloc ; xrMemory::mem_alloc(uint)
 	mov     esi, eax
 	test    esi, esi
 	jz      loc_101AF65F
@@ -208,10 +231,10 @@ arg_8           = dword ptr  10h
 	mov     ebp, esp
 	push    ecx
 	push    ecx
-	mov     ecx, ds:?Memory@@3VxrMemory@@A ; xrMemory Memory
+	mov     ecx, ds:Memory
 	push    esi
 	push    14h
-	call    ds:?mem_alloc@xrMemory@@QAEPAXI@Z ; xrMemory::mem_alloc(uint)
+	call    ds:xrMemory__mem_alloc ; xrMemory::mem_alloc(uint)
 	mov     esi, eax
 	test    esi, esi
 	jz      short lab1
@@ -251,3 +274,167 @@ lab3:
 	retn
 register__ns__go__void endp
 	
+set_rain_factor proc near
+rain_factor = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	mov     eax, ds:g_pGamePersistent
+	mov     eax, [eax]
+	mov     eax, [eax+46Ch]
+	mov     edx, [ebp+rain_factor]
+	mov     dword ptr [eax+1CCh], edx
+	;PRINT
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn
+set_rain_factor endp
+
+advance_game_time proc
+additional_time = dword ptr 8
+	push    ebp
+	mov     ebp, esp
+	mov     eax, ds:g_pGameLevel
+	mov     eax, [eax]
+	mov     eax, [eax+45F4h]
+	mov     ecx, [eax+108D4h]
+	mov     eax, [ebp + additional_time]
+	push    ecx
+	push    eax
+	call    game_sv_Single__AdvanceGameTime
+	
+	pop     ecx
+	call    game_GameState__UpdateTime
+	mov     esp, ebp
+	pop     ebp
+	retn
+advance_game_time endp
+
+game_sv_Single__AdvanceGameTime proc near
+additional_time = dword ptr 8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	cmp     g_ai_space, 0
+	push    esi
+	push    edi
+	
+	mov     esi, ecx
+	jnz     short ai_space_exists
+	call    xr_new_CAI_Space_
+	mov     ecx, eax
+	mov     g_ai_space, eax
+	call    CAI_Space__init
+ai_space_exists:
+	mov     eax, g_ai_space
+	mov     eax, [eax+18h]
+	test    eax, eax
+	jz      short exit
+	mov     ecx, [eax+0Ch]
+	mov     edx, [ecx+4]
+	cmp     byte ptr [edx+eax+40h], 0
+	jz      short exit
+	mov     esi, [esi+120h]
+	mov     eax, [esi+0Ch]
+	mov     ecx, [eax+4]
+	mov     edi, [ecx+esi+18h]
+	call    CALifeTimeManager__game_time
+	;PRINT_UINT "eax=%x", eax
+	;PRINT_UINT "edx=%x", edx
+	add     eax, [ebp + additional_time]
+	jnc     no_carry
+	inc     edx
+no_carry:
+	mov     [edi+8], eax
+	mov     [edi+0Ch], edx
+	mov     edx, ds:Device
+	mov     eax, [edx+204h]
+	mov     [edi+18h], eax
+	
+	pop     edi
+exit:
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+game_sv_Single__AdvanceGameTime endp
+
+
+game_GameState__UpdateTime proc near
+	push    esi
+	mov     eax, ds:g_pGameLevel
+	mov     eax, [eax]
+	mov     esi, [eax+45D0h] ; esi = game
+	;dbg
+	mov     eax, [esi+70h]
+	mov     edx, [esi+74h]
+	;PRINT_UINT "eax1=%x", eax
+	;PRINT_UINT "edx1=%x", edx
+	;dbg
+	call    __game_time
+	;PRINT_UINT "eax=%x", eax
+	;PRINT_UINT "edx=%x", edx
+	mov     [esi+70h], eax
+	mov     [esi+74h], edx
+	;PRINT "1"
+	mov     eax, ds:g_pGameLevel
+	;PRINT "2"
+	mov     eax, [eax]
+	;PRINT "3"
+	lea     ecx, [eax+160h]
+	;PRINT "4"
+	call    ds:IPureClient__timeServer_Async
+	;PRINT "tsasync"
+	mov     [esi+68h], eax
+	mov     dword ptr [esi+6Ch], 0
+	
+	pop     esi
+	retn
+game_GameState__UpdateTime endp
+
+g_float_res00 dd 0.0
+
+get_float_result00 proc
+	fld     dword ptr [g_float_res00]
+	retn
+get_float_result00 endp
+
+get_memory_float proc
+;var_4           = byte ptr -4
+arg0 = dword ptr 8
+arg1 = dword ptr 0Ch
+arg2 = byte ptr 0Fh
+arg3 = dword ptr 14h
+	push    ebp
+	mov     ebp, esp
+	;and     esp, 0FFFFFFF8h
+	
+	;mov eax, [ebp+arg0]
+	;PRINT_UINT "arg0=%s", eax
+	mov eax, [ebp+arg1]
+	;PRINT_UINT "flt_addr=%x", eax
+	fld dword ptr [eax]
+	mov  eax, dword ptr [eax]
+	;PRINT_FLOAT "flt_val=%f", eax
+	;PRINT_UINT "arg1=%d", eax
+	;xor eax, eax
+	;movzx eax, [ebp+arg2]
+	;PRINT_UINT "arg2=%d", eax
+	;mov eax, [ebp+arg3]
+	;PRINT_UINT "arg3=%s", eax
+	;fldz
+
+	mov     esp, ebp
+	pop     ebp
+	retn    
+get_memory_float endp
+
+get_memory_int proc
+addr_ = dword ptr  4
+	mov     eax, [esp+addr_]
+	;PRINT_UINT "int_addr=%x", eax
+	mov     eax, [eax]
+	;PRINT_UINT "int_val=%x", eax
+	retn
+get_memory_int endp

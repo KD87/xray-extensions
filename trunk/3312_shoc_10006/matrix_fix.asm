@@ -1,6 +1,8 @@
 include matrix_reg_macro.asm
 
 REGISTER__MATRIX__PMATR_PMATR register__matrix__mul43, "mul_43"
+REGISTER__MATRIX__PMATR__PVECTOR_PVECTOR_PVECTOR_PVECTOR register__matrix__transform_tiny_2args, "transform_tiny"
+REGISTER__MATRIX__PMATR__PVECTOR_PVECTOR_PVECTOR_PVECTOR register__matrix__transform_tiny_1arg, "transform_tiny1"
 
 matrix_fix proc
 	; делаем вырезанное
@@ -9,6 +11,8 @@ matrix_fix proc
 PERFORM_EXPORT__MATRIX__PMATR__FLOAT matrix__set_xform, "set_xform"
 PERFORM_EXPORT__MATRIX__PMATR__FLOAT matrix__transpose, "transpose"
 PERFORM_EXPORT__MATRIX__PMATR_PMATR register__matrix__mul43, matrix__mul_43
+PERFORM_EXPORT__MATRIX__PMATR__PVECTOR_PVECTOR_PVECTOR_PVECTOR register__matrix__transform_tiny_2args, matrix__transform_tiny_2args
+PERFORM_EXPORT__MATRIX__PMATR__PVECTOR_PVECTOR_PVECTOR_PVECTOR register__matrix__transform_tiny_1arg, matrix__transform_tiny_1arg
 	; идём обратно
 	jmp back_from_matrix_fix
 matrix_fix endp
@@ -97,6 +101,9 @@ ALIGN_8
 matrix__mul_43 proc
 	push        ebp  
 	mov         ebp,esp  
+	push edx
+	push esi
+	
 	mov         edx,dword ptr [ebp+8]  
 	fld         dword ptr [edx]  
 	push        esi  
@@ -219,6 +226,9 @@ matrix__mul_43 proc
 	fstp        dword ptr [eax+2Ch]  
 	fld1  
 	fstp        dword ptr [eax+3Ch]  
+	
+	pop esi
+	pop edx
 	pop         ebp  
 	ret         8  
 matrix__mul_43 endp	
@@ -650,3 +660,174 @@ matrix__transpose proc near
 	retn    4
 matrix__transpose endp
 
+matrix_transform_tiny_2args_internal proc
+arg_v_res = dword ptr  8
+arg_v_inp = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    eax
+
+	mov     eax, [ebp+arg_v_res]
+	;PRINT_VECTOR "trint vres", eax
+	mov     esi, [ebp+arg_v_inp]
+	;PRINT_VECTOR "trint vinp", esi
+	;mov     edx, ecx ; this - transformaion matrix
+	;PRINT_MATRIX "trt this", ecx
+	ASSUME  ecx:PTR Matrix4x4
+	ASSUME  eax:PTR Vector3
+	ASSUME  esi:PTR Vector3
+
+	;res.x = m.i.x * v.x + m.k.x * v.z + m.j.x * v.y + m.c.x;
+	fld    [ecx].c_.x
+	fld    [ecx].i.x
+	fmul   [esi].x
+	faddp   st(1), st
+	fld    [ecx].k.x
+	fmul   [esi].z
+	faddp   st(1), st
+	fld    [ecx].j.x
+	fmul   [esi].y
+	faddp   st(1), st
+	fstp    [eax].x
+	;res.y = m.k.y * v.z + m.j.y * v.y + m.i.y * v.x + m.c.y;
+	fld    [ecx].c_.y
+	fld    [ecx].k.y
+	fmul   [esi].z
+	faddp   st(1), st
+	fld    [ecx].j.y
+	fmul   [esi].y
+	faddp   st(1), st
+	fld    [ecx].i.y
+	fmul   [esi].x
+	faddp   st(1), st
+	fstp    [eax].y
+	;res.z = m.k.z * v.z + m.j.z * v.y + m.i.z * v.x + m.c.z;
+	fld    [ecx].c_.z
+	fld    [ecx].k.z
+	fmul   [esi].z
+	faddp   st(1), st
+	fld    [ecx].j.z
+	fmul   [esi].y
+	faddp   st(1), st
+	fld    [ecx].i.z
+	fmul   [esi].x
+	faddp   st(1), st
+	fstp    [eax].z
+	
+	ASSUME  ecx:nothing
+	ASSUME  eax:nothing
+	ASSUME  esi:nothing
+	pop     eax
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+matrix_transform_tiny_2args_internal endp
+
+matrix__transform_tiny_2args proc
+arg_v_4_stub = dword ptr  14h
+arg_v_3_stub = dword ptr  10h
+arg_v_2      = dword ptr  0Ch
+arg_v_1      = dword ptr  8
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	mov     eax, [ebp+arg_v_2]
+	push    eax
+	;PRINT_VECTOR "trt v2", eax
+	mov     eax, [ebp+arg_v_1]
+	;PRINT_VECTOR "trt v1", eax
+	push    eax
+	;PRINT_MATRIX "trt this", ecx
+	call    matrix_transform_tiny_2args_internal
+	
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    16
+matrix__transform_tiny_2args endp
+
+matrix_transform_tiny_1arg_internal proc
+arg_v = dword ptr  8
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+
+	mov     eax, [ebp+arg_v]
+	ASSUME  ecx:PTR Matrix4x4
+	ASSUME  eax:PTR Vector3
+
+	;res.x = m.i.x * v.x + m.k.x * v.z + m.j.x * v.y + m.c.x;
+	fld    [ecx].c_.x
+	fld    [ecx].i.x
+	fmul   [eax].x
+	faddp   st(1), st
+	fld    [ecx].k.x
+	fmul   [eax].z
+	faddp   st(1), st
+	fld    [ecx].j.x
+	fmul   [eax].y
+	faddp   st(1), st
+	;res.y = m.k.y * v.z + m.j.y * v.y + m.i.y * v.x + m.c.y;
+	fld    [ecx].c_.y
+	fld    [ecx].k.y
+	fmul   [eax].z
+	faddp   st(1), st
+	fld    [ecx].j.y
+	fmul   [eax].y
+	faddp   st(1), st
+	fld    [ecx].i.y
+	fmul   [eax].x
+	faddp   st(1), st
+	;res.z = m.k.z * v.z + m.j.z * v.y + m.i.z * v.x + m.c.z;
+	fld    [ecx].c_.z
+	fld    [ecx].k.z
+	fmul   [eax].z
+	faddp   st(1), st
+	fld    [ecx].j.z
+	fmul   [eax].y
+	faddp   st(1), st
+	fld    [ecx].i.z
+	fmul   [eax].x
+	faddp   st(1), st
+	
+	fstp    [eax].z
+	fstp    [eax].y
+	fstp    [eax].x
+	
+	ASSUME  ecx:nothing
+	ASSUME  eax:nothing
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+matrix_transform_tiny_1arg_internal endp
+
+matrix__transform_tiny_1arg proc
+arg_v_4_stub = dword ptr  14h
+arg_v_3_stub = dword ptr  10h
+arg_v_2_stub = dword ptr  0Ch
+arg_v_1      = dword ptr  8
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	mov     eax, [ebp+arg_v_1]
+	;PRINT_VECTOR "trt v1", eax
+	push    eax
+	;PRINT_MATRIX "trt this", ecx
+	call    matrix_transform_tiny_1arg_internal
+	
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    16
+matrix__transform_tiny_1arg endp

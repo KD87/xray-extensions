@@ -5,6 +5,7 @@ cuiwindow_fix proc
 	pusha
 	; добавляем своё
 	PERFORM_EXPORT_CUIWND__VOID__VOID UIWindow__DetachFromParent, "DetachFromParent"
+	PERFORM_EXPORT_CUIWND__VOID__VOID CUIWindow__Update_virtualcall, "Update"
 	; восстанавливаем всё
 	popa
 	; делаем то, что вырезали 
@@ -46,3 +47,9 @@ scroll_vew_fix proc
 	; идём обратно
 	jmp back_from_scroll_vew_fix
 scroll_vew_fix endp
+
+CUIWindow__Update_virtualcall proc near
+	mov     eax, [ecx]
+	jmp     dword ptr [eax+10h]
+CUIWindow__Update_virtualcall endp
+

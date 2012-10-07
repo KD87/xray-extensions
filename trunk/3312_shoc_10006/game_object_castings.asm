@@ -93,14 +93,14 @@ LOCAL exit
 ALIGN_8
 casting_fun_name proc
 	mov     ecx, [ecx+4]
-	PRINT_UINT "obj=%x", ecx
+	;PRINT_UINT "obj=%x", ecx
 	test    ecx, ecx
 	mov     eax, ecx
 	jz      short exit
 	mov     eax, [ecx]
 	mov     eax, [eax+proc_offset1]
 	call    eax
-	PRINT_UINT "1st=%x", eax
+	;PRINT_UINT "1st=%x", eax
 	;
 	test    eax, eax
 	jz      short exit
@@ -108,7 +108,7 @@ casting_fun_name proc
 	mov     ecx, eax
 	mov     eax, [edx+proc_offset2]
 	call    eax
-	PRINT_UINT "2nd=%x", eax
+	;PRINT_UINT "2nd=%x", eax
 exit:
 	retn
 casting_fun_name endp

@@ -1,3 +1,13 @@
+SET_INT_ARG_N MACRO argnum:REQ
+g_int_argument_&argnum& dword ?
+SetIntArg&argnum& proc
+int_arg = dword ptr  4
+	mov     eax, [esp+int_arg]
+	mov     g_int_argument_&argnum&, eax
+	retn
+SetIntArg&argnum& endp
+ENDM
+
 GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT MACRO fun_to_export:REQ, fun_name_str:REQ
 LOCAL lab1
 LOCAL fun_name

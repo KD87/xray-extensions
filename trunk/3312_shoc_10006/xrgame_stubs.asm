@@ -2,6 +2,13 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+org 10213A90h - shift
+RELATION_REGISTRY__SetGoodwill:
+org 10213A40h - shift
+RELATION_REGISTRY__GetGoodwill:
+org 10213B10h - shift
+RELATION_REGISTRY__ChangeGoodwill:
+
 org 1025828Ah - shift
 	jmp CCustomZone__feel_touch_contact_dbg_fix
 ;.text:1025828A                 mov     edx, [esi]
@@ -1660,7 +1667,7 @@ sub_10255F80:
 org 1030E428h - shift 
 sub_1030E428:
 
-; необходимые заглушки для регистрации функции-метода game_object с прототипом void fun(int, int, int)
+; необходимые заглушки для регистрации функции-метода game_object с прототипом void fun(int, int)
 org 1015A230h - shift
 sub_1015A230:
 org 1015F0E0h - shift
@@ -1668,6 +1675,13 @@ sub_1015F0E0:
 org 1015A320h - shift
 sub_1015A320:
 
+; необходимые заглушки для регистрации функции-метода game_object с прототипом void fun(int, int, int)
+org 1015A380h - shift
+sub_1015A380:
+org 1015A4C0h - shift
+sub_1015A4C0:
+org 1015A520h - shift
+sub_1015A520:
 
 org 10458A44h - shift
 CKinematics__LL_BoneID dword ? ; функция получения номера кости по её имени
