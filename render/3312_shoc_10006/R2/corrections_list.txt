@@ -67,7 +67,7 @@
 0x10016582 5 ; jmp hud_shader_fix
 0x10006E14 5 ; jmp CRender_constructor_fix
 0x1000D1D4 5 ; jmp CRender__Render_hud_emissive_fix
-;0x1000D288 5 ; jmp CRender__render_forward_fix
+0x1000D27E 5 ; jmp CRender__render_forward_fix
 ;=====================================
 0x1002E77E 5 ; jmp light__light_fix
 0x1002FD43 5 ; jmp light__export_fix

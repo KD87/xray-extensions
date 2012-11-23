@@ -846,13 +846,17 @@ loc_1001A451:
 	jmp     ds:?set_xform_project@CBackend@@QAEXABU?$_matrix@M@@@Z ; CBackend::set_xform_project(_matrix<float> const &)
 R_dsgraph_structure__r_dsgraph_render_hud_sorted endp
 
-
 CRender__render_forward_fix proc
-	; делаем вырезанное
+	;
+	jz      loc_1000D28D
+	mov     eax, [ecx]
+	push    offset sorted_L1
+	push    eax
 	call    FixedMAP_float_R_dsgraph___MatrixItemS__recurseRL
+loc_1000D28D:
 	; добавляем своё
 	push    offset RI
 	call    R_dsgraph_structure__r_dsgraph_render_hud_sorted
 	; идём обратно
-	jmp     back_from_CRender__render_forward_fix
+	jmp back_from_CRender__render_forward_fix
 CRender__render_forward_fix endp
