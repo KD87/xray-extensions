@@ -13,16 +13,22 @@ con_comm:
 	call	_atexit									 ;_atexit
 	add		esp, 4	
 mark:
-	mov		ecx, ds:[CConsole__AddCommand]			;CConsole::AddCommand
+	mov		ecx, ds:[Console]			;CConsole::AddCommand
 	mov		ecx, [ecx]
 	push	offset ccc_int_obj
-	call	esi
+	call	ds:CConsole__AddCommand
+	;
+REGISTER_CC_FLAG ps_r2_ls_flags, 04000h, "r2_exp_donttest_uns"
+	;
+	; делаем вырезанное
 	pop		edi
 	pop		esi
 	pop		ebp
 	pop		ebx
 	add		esp, 18h
-	jmp		back_to_con_comm
+	retn
+	;обратно можно не возвращаться
+	;jmp		back_to_con_comm
 
 destructor proc near
 	mov		ecx, offset ccc_int_obj
@@ -31,3 +37,4 @@ destructor endp
 	
 value dd 31h	
 aDetail_radius db "r__detail_radius", 0		;название параметра
+

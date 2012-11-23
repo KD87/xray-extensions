@@ -62,3 +62,19 @@
 ;=============“≈Õ‹ “–¿¬€==============
 ;=====================================
 0x10027997 6 ; jmp sun_details_1_fix
+
+;=====================================
+0x10016582 5 ; jmp hud_shader_fix
+0x10006E14 5 ; jmp CRender_constructor_fix
+0x1000D1D4 5 ; jmp CRender__Render_hud_emissive_fix
+;0x1000D288 5 ; jmp CRender__render_forward_fix
+;=====================================
+0x1002E77E 5 ; jmp light__light_fix
+0x1002FD43 5 ; jmp light__export_fix
+0x100337F2 5 ; jmp CLight_Compute_XFORM_and_VIS__compute_xf_spot_fix
+
+0x10004BB6 5 ; 
+0x1002FD32 5 ; 
+0x100300D0 5 ; 
+0x100301BA 5 ; 
+0x1000ABB1 5 ; jmp      loc_1000AEB3
