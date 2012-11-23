@@ -2,6 +2,8 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+
+
 ; увеличиваем размер объекта light
 org 10004BB6h - shift
 push    278h ; вместо 270h - 5 байт
@@ -74,12 +76,20 @@ loc_1002FD4C:
 org 1002E6F0h - shift
 light__light:
 
-org 1000D288h - shift
+
+org 1000D27Eh - shift
 	jmp CRender__render_forward_fix
+;.text:1000D27E                 jz      short loc_1000D28D
+;.text:1000D280                 mov     eax, [ecx]
+;.text:1000D282                 push    offset sorted_L1
+;.text:1000D287                 push    eax
 ;.text:1000D288                 call    FixedMAP_float_R_dsgraph___MatrixItemS__recurseRL
+org 1000D28Dh - shift
 back_from_CRender__render_forward_fix:
-;.text:1000D28D
-;
+;.text:1000D28D loc_1000D28D:
+
+
+
 
 
 org 10018F40h - shift
