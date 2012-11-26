@@ -29,6 +29,7 @@ include hud_shader_fix.asm		; добавление самосвечения на худ
 include console_comm_reg_macro.asm
 include console_comm.asm
 include light_fix.asm
+include bloodmarks.asm
 	
 _code ENDS
 

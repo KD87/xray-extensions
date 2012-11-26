@@ -550,14 +550,6 @@ org 10069248h - shift
 CCC_Mask__CCC_Mask dd ?
 org 100692B8h - shift
 CCC_Mask___CCC_Mask dd ?
-;org 100692B0h - shift
-;CConsole__AddCommand     	  dword ?
-
-org 100896DCh - shift
-console_desc	dd ?		; бинарный флаг, отвечающий за инициализацию консольных параметров
-org 10089CF4h - shift
-ccc_int_obj	dd ?			; объект консольной команды типа CCC_Integer
-
 org 100692B0h - shift
 Console dd ?
 org 10069294h - shift
@@ -665,3 +657,12 @@ org 1006680Ah - shift
 	jmp	stencil_buffer_clear
 org 10066810h - shift
 back_to_stencil_buffer_clear:
+
+; bloodmarks
+org 1000D0B6h - shift
+	jmp	bloodmarks
+org 1000D0BCh - shift
+back_to_bloodmarks:
+
+org 10079480h - shift
+g_r dd 1
