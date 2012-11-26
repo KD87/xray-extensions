@@ -6,8 +6,7 @@ calculate_stuff:
 	push	ebx
 	push	edi
 	push	esi
-	mov		eax, [ccc_int_obj + 0Ch]
-	mov		eax, [eax]
+	mov		eax, det_rad_value
 ;rad
 	mov		rad, eax		; eax = 49, ebx = ???, edi = ???, esi = ???, 
 	mov 	ebx, eax		; eax = 49, ebx = 49, edi = ???, esi = ???, 
