@@ -21,13 +21,13 @@ org sec1_sec2_dist
 
 include misc.asm
 include types.asm
-include detail_radius_fix.asm
-include detail_density_fix.asm
+include detail_radius_fix.asm	; радиус отрисовки травы
+include detail_density_fix.asm	; плотность травы
+include sun_details_fix.asm		; тени травы
+include rt_position_fix.asm		; очистка rt_Position каждый кадр
+include hud_shader_fix.asm		; добавление самосвечения на худ
 include console_comm_reg_macro.asm
 include console_comm.asm
-include detail_constructor.asm
-include sun_details_fix.asm
-include hud_shader_fix.asm
 include light_fix.asm
 	
 _code ENDS
