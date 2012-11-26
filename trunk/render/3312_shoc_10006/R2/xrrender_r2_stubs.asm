@@ -654,3 +654,14 @@ org 10027997h - shift
 
 org 100279C6h - shift
 back_to_sun_details_1_fix:
+
+; rt_position fix
+org 1006679Dh - shift
+	jmp	rt_position_clear
+org 100667A3h - shift
+back_to_rt_position_clear:
+
+org 1006680Ah - shift
+	jmp	stencil_buffer_clear
+org 10066810h - shift
+back_to_stencil_buffer_clear:
