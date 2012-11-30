@@ -58,6 +58,7 @@ calculate_stuff:
 	fmul						;st0 = 2256.25
 	fst 	[visibility]
 	fild 	[dumb_const]		;st0 = 1, st1 = 2256.25
+	fsub	ST(1),ST			;st0 = 1, st1 = 2255.25
 	fdivr						;st0 = 0.000443
 	fst		[smooth_circle]		
 	
