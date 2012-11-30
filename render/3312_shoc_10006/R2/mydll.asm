@@ -26,10 +26,11 @@ include detail_density_fix.asm	; плотность травы
 include sun_details_fix.asm		; тени травы
 include rt_position_fix.asm		; очистка rt_Position каждый кадр
 include hud_shader_fix.asm		; добавление самосвечения на худ
-include console_comm_reg_macro.asm
-include console_comm.asm
-include light_fix.asm
-include bloodmarks.asm
+include console_comm_reg_macro.asm ; макросы для добавления консольных команд
+include console_comm.asm		; добавление консольных команд
+include light_fix.asm			; фикс виртуального радиуса ламп
+include bloodmarks.asm			; восстановление блудмарков
+include shader_defines.asm		; установка дефайнов для шейдеров
 	
 _code ENDS
 

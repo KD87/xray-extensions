@@ -66,3 +66,45 @@ skip:
 	push    offset cmd_obj
 	call    CConsole__AddCommand ; CConsole::AddCommand(IConsole_Command *)
 ENDM
+
+REGISTER_CC_FLOAT MACRO var_to_bind:REQ, command_name_str:REQ, low_bond:REQ, high_bond:REQ
+LOCAL lab1
+LOCAL flag_was_registered
+LOCAL command_name
+LOCAL cmd_obj
+LOCAL obj_destructor
+LOCAL skip
+LOCAL LB_
+LOCAL HB_
+	jmp     lab1
+LB_ dd low_bond
+HB_ dd high_bond
+flag_was_registered db 0
+command_name db command_name_str, 0
+cmd_obj  dd 24 DUP (0)
+obj_destructor:
+	mov     ecx, offset cmd_obj
+	jmp     ds:CCC_Float___CCC_Float ; CCC_Float::~CCC_Float(void)
+lab1:
+	test    flag_was_registered, 1
+	jnz     short skip
+	or      flag_was_registered, 1
+
+	mov     eax, [HB_]
+	push    eax
+	mov     eax, [LB_]
+	push    eax
+	
+	push    offset var_to_bind
+	push    offset command_name
+	mov     ecx, offset cmd_obj
+	call    ds:CCC_Float__CCC_Float 
+	push    offset obj_destructor ; void (__cdecl *)()
+	call    _atexit
+	add     esp, 4
+skip:
+	mov     edx, ds:Console ; CConsole * Console
+	mov     ecx, [edx]
+	push    offset cmd_obj
+	call    CConsole__AddCommand ; CConsole::AddCommand(IConsole_Command *)
+ENDM

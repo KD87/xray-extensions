@@ -550,6 +550,10 @@ org 10069248h - shift
 CCC_Mask__CCC_Mask dd ?
 org 100692B8h - shift
 CCC_Mask___CCC_Mask dd ?
+org 10069290h - shift
+CCC_Float__CCC_Float dd ?
+org 1006927Ch - shift
+CCC_Float___CCC_Float dd ?
 org 100692B0h - shift
 Console dd ?
 org 10069294h - shift
@@ -621,17 +625,12 @@ cache_task_last_offset	dd ?
 org 10089D88h - shift	
 cache_pool_offset	dd ?	
 
-
 org 10089D8Ch - shift	
 visibility	REAL4 ?
 org 10089D90h - shift	
 smooth_circle	REAL4 ?
 
-;org 10089C28h - shift
-;xCCC_Float_42 dd ?
-
 off dd offset det_dens_max_offset
-
 
 ; тени травы
 org 100690ECh - shift
@@ -666,3 +665,13 @@ back_to_bloodmarks:
 
 org 10079480h - shift
 g_r dd 1
+
+
+; дефайны шейдеров
+org 100059A2h - shift
+	nop
+	nop
+	jmp	shader_defines
+org 100059A9h - shift
+back_to_shader_defines:
+	
