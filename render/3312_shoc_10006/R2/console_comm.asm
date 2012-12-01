@@ -1,7 +1,6 @@
 con_comm:
 
 REGISTER_CC_INT det_rad_value, "r__detail_radius", 5, 4B0h
-REGISTER_CC_FLOAT sunshafts_exposure, "r2_sun_shafts_exposure", 0.0, 1.0
 REGISTER_CC_FLAG ps_r2_ls_flags, 04000h, "r2_exp_donttest_uns"
 REGISTER_CC_FLAG ps_r2_ls_flags, 10000h, "r2_bloodmarks"
 REGISTER_CC_FLAG ps_r2_ls_flags, 40000h, "r2_soft_water"

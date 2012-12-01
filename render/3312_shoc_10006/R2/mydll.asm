@@ -5,9 +5,9 @@
 
 include addr.inc
 
-_code segment byte public 'CODE' use32
-	assume cs:_code
-	assume ds:_code
+_CODE segment byte public 'CODE' use32
+	assume cs:_CODE
+	assume ds:_CODE
 ; заглушка для линковшика
 LibMain proc STDCALL instance:DWORD,reason:DWORD,unused:DWORD 
     ret
