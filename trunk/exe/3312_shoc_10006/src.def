@@ -1,0 +1,2 @@
+LIBRARY src
+ ; EXPORTS [your_exported_proc_name]
