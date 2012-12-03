@@ -30,6 +30,7 @@ include console_comm_reg_macro.asm ; макросы для добавления консольных команд
 include console_comm.asm		; добавление консольных команд
 include light_fix.asm			; фикс виртуального радиуса ламп
 include bloodmarks.asm			; восстановление блудмарков
+include shader_defines_macro.asm	; макросы для установки дефайнов для шейдеров
 include shader_defines.asm		; установка дефайнов для шейдеров
 	
 _code ENDS
