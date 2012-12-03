@@ -675,3 +675,5 @@ org 100059A2h - shift
 org 100059A9h - shift
 back_to_shader_defines:
 	
+org 100690CCh - shift
+__imp__sprintf dd ?

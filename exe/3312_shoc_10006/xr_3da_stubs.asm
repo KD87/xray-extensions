@@ -81,6 +81,8 @@ org 004C8FF7h - shift
 _atexit:
 org 00410620h - shift
 CCC_Float__CCC_Float:
+org 00410D00h - shift
+CCC_Integer__CCC_Integer:
 org 0050BBBCh - shift
 Console dd ?
 org 004B8070h - shift
@@ -95,6 +97,11 @@ org 0050E858h - shift
 xCCC_Integer dd ?
 org 004CC5CCh - shift
 Msg dd ?
-
-org 0043896Ch - shift
-	jmp test_weather
+org 004CC1F8h - shift
+__imp__sprintf_s dd ?
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; проверка режима зума для шейдеров
+org 00433639h - shift
+	jmp cobject_check
+org 0043363Fh - shift
+back_to_cobject_check:
