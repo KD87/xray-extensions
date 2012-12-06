@@ -16,30 +16,38 @@ ENDM
 
 REGISTER_DEFINE_INT MACRO var_to_bind:REQ, define_name_str:REQ
 LOCAL lab1
+LOCAL buf
 LOCAL define_name
 LOCAL define_exit
 LOCAL flag_was_registered
 	jmp     lab1
 define_name db define_name_str, 0
+buf dd 0
 lab1:
 	cmp		var_to_bind, 0
 	jz		short define_exit
-	push	eax
+	; сохраняем регистры. ecx - обязательно, его портит sprintf
 	push	ecx
 	push	edx
+	; подготовим аргументы для sprintf
 	mov     edx, var_to_bind
+	;lea     ecx, [esp+688h+c_smapsize]
+	lea     ecx, buf
+	; сконвертируем char в int
 	push    edx
-	lea     eax, [esp+690h+c_smapsize]
 	push    offset aD       ; "%d"
-	push    eax             ; char *
+	push    ecx             ; char *
 	call    ds:__imp__sprintf
-	lea     ecx, [esp+698h+c_smapsize]
-	mov     [esp+esi*8+698h+defines], offset define_name
-	mov     [esp+esi*8+698h+var_604], ecx
+	; устанавливаем дефайн
+	;lea     ecx, [esp+694h+c_smapsize]
+	lea     ecx, buf
+	mov     [esp+esi*8+694h+defines], offset define_name
+	mov     [esp+esi*8+694h+var_604], ecx;ecx
 	add     esp, 0Ch
+	; восстанавливаем содержимое регистров
 	pop		edx
 	pop		ecx
-	pop		eax
+	; инкрементируем индекс дефайна в массиве для следующей записи
 	add     esi, 1
 define_exit:
 ENDM

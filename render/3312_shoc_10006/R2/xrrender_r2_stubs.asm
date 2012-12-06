@@ -554,6 +554,12 @@ org 10069290h - shift
 CCC_Float__CCC_Float dd ?
 org 1006927Ch - shift
 CCC_Float___CCC_Float dd ?
+org 100692ACh - shift
+CCC_Token__CCC_Token dd ?
+org 10069298h - shift
+CCC_Token___CCC_Token dd ?
+org 10069D10h - shift 
+CCC_Preset dd ?
 org 100692B0h - shift
 Console dd ?
 org 10069294h - shift
