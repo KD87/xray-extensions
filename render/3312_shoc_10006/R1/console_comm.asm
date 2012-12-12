@@ -9,10 +9,10 @@ REGISTER_CC_TOKEN steep_parallax_token, "r2_steep_parallax", steep_parallax
 REGISTER_CC_TOKEN dynamic_dof_token, "r2_dof", dynamic_dof
 REGISTER_CC_TOKEN sunshafts_quality_token, "r2_sun_shafts", sunshafts_quality
 
-REGISTER_CC_FLAG ps_r2_ls_flags, 04000h, "r2_exp_donttest_uns"
-REGISTER_CC_FLAG ps_r2_ls_flags, 10000h, "r2_bloodmarks"
-REGISTER_CC_FLAG ps_r2_ls_flags, 40000h, "r2_soft_water"
-REGISTER_CC_FLAG ps_r2_ls_flags, 800000h, "r2_float32"
+REGISTER_CC_FLAG fake_flag, 04000h, "r2_exp_donttest_uns"
+REGISTER_CC_FLAG fake_flag, 10000h, "r2_bloodmarks"
+REGISTER_CC_FLAG fake_flag, 40000h, "r2_soft_water"
+REGISTER_CC_FLAG fake_flag, 800000h, "r2_float32"
 
 	; делаем вырезанное
 	pop		edi
@@ -68,3 +68,4 @@ ssao_token STRUCT
 ssao_token ENDS
 
 ssao_mode_token ssao_token <>
+fake_flag dd 0

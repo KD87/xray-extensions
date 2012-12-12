@@ -2014,3 +2014,22 @@ Render dd ?
 
 org 104518A2h - shift
 memset: ; dd ? ; void *__cdecl memset(void *Dst, int Val, size_t Size)
+
+org 10205D71h - shift
+	jmp CInventory__Get
+org 10205D79h - shift
+back_to_CInventory__Get:
+
+org 1021C266h - shift
+	jmp CWeapon__GetCurrentAmmo
+org 1021C2BAh - shift
+CWeapon__GetCurrentAmmo_not_inventory_owner:
+org 1021C26Ch - shift
+CWeapon__GetCurrentAmmo_not_ammo_on_belt:
+
+org 10221B93h - shift
+	call CInventory__Belt
+org 10206316h - shift
+	jmp get_grenade
+org 10206321h - shift
+back_to_get_grenade:

@@ -98,6 +98,7 @@ include cuistatic_add.asm
 include misc.asm
 include inventory_item_fix.asm
 include projector_fix.asm
+include ammo_on_belt_fix.asm
 
 _CODE ENDS
 

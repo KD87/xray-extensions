@@ -3,6 +3,10 @@ sun_details_1_fix proc near
 	test    byte ptr ps_r2_ls_flags, 1
 	jz	short clear
 
+	mov		ecx, bSUN
+	test	ecx, ecx
+	jz		short clear
+	
 	;r2_sun_details flag
 	test    byte ptr ps_r2_ls_flags, 8
 	jnz	short is_on
@@ -43,3 +47,12 @@ exit:
 	mov     [ebp+8], ebx
 	jmp     back_to_sun_details_1_fix
 sun_details_1_fix endp
+
+sun_check:
+	mov		eax,[ebp+54h]
+	mov		bSUN, eax
+	; делаем вырезанное
+	mov     eax, [ebx+504h]
+	jmp		back_to_sun_check
+	
+bSUN dd 0

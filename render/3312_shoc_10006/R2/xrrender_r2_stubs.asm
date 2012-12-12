@@ -641,14 +641,15 @@ off dd offset det_dens_max_offset
 ; тени травы
 org 100690ECh - shift
 memmove_s dword ?
-
+org 1000D1C9h - shift
+	jmp sun_check
+org 1000D1CFh - shift
+back_to_sun_check:
 org 10079774h - shift
 ps_r2_ls_flags    dd ?
-
 org 10027997h - shift
 	nop
 	jmp	sun_details_1_fix
-
 org 100279C6h - shift
 back_to_sun_details_1_fix:
 

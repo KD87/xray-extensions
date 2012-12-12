@@ -44,32 +44,6 @@ org 004CC5C8h - shift
 pSettings dd ?
 org 0050BB7Ch - shift
 g_GamePersistent dd ?
-
-; члены вектора из примера
-org 0050BEA0h - shift		
-	dword_50BEA0 dd ?
-org 0050BEA4h - shift		
-	dword_50BEA4 dd ?
-org 0050BEA8h - shift		
-	dword_50BEA8 dd ?
-	
-; массив констант R_constants
-org 0050C3D0h - shift		
-	unk_50C3D0 dd ?
-org 0050D3D4h - shift		
-	dword_50D3D4 dd ?
-org 0050D3D8h - shift		
-	dword_50D3D8 dd ?
-org 0050D3E0h - shift	
-	dword_50D3E0 dd ?
-org 0050D3F0h - shift	
-	unk_50D3F0 dd ?
-org 0050E3F4h - shift	
-	dword_50E3F4 dd ?
-org 0050E3F8h - shift
-	dword_50E3F8 dd ?
-org 0050E3F8h - shift
-	dword_50E400 dd ?
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; консольные команды
@@ -85,6 +59,8 @@ org 00410D00h - shift
 CCC_Integer__CCC_Integer:
 org 0050BBBCh - shift
 Console dd ?
+org 0050BC88h - shift
+Device dd ?
 org 004B8070h - shift
 CConsole__AddCommand:
 org 004B80A0h - shift
@@ -95,13 +71,36 @@ org 004B9E10h - shift
 sub_4B9E10:
 org 0050E858h - shift
 xCCC_Integer dd ?
-org 004CC5CCh - shift
+org 004CC420h - shift
 Msg dd ?
 org 004CC1F8h - shift
 __imp__sprintf_s dd ?
+	
+; массив констант R_constants
+org 0050D3D4h - shift		
+	dword_50D3D4 dd ?
+org 0050D3D8h - shift		
+	dword_50D3D8 dd ?
+org 0050E3F4h - shift	
+	dword_50E3F4 dd ?
+org 0050E3F8h - shift
+	dword_50E3F8 dd ?
+org 00404340h - shift
+R_constant_array__set:
+org 0050C3D0h - shift
+	RCache_constants_a_pixel dd ?
+org 0050D3E0h - shift
+	RCache_constants_a_pixel_b_dirty dd ?
+org 0050D3F0h - shift
+	RCache_constants_a_vertex dd ?
+org 0050E400h - shift
+	RCache_constants_a_vertex_b_dirty dd ?
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; проверка режима зума для шейдеров
 org 00433639h - shift
 	jmp cobject_check
 org 0043363Fh - shift
 back_to_cobject_check:
+
+org 0050BE84h - shift
+timer dd ?
