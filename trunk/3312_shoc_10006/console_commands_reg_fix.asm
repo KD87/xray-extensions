@@ -21,6 +21,7 @@ REGISTER_CC_FLAG g_test_flags, 20h, "test_flag_6"
 REGISTER_CC_FLAG g_test_flags, 40h, "test_flag_7"
 REGISTER_CC_FLAG g_test_flags, 80h, "test_flag_8"
 REGISTER_CC_INT2 g_test_flags, "test_flags", 0, 255
+;REGISTER_CC_FLAG g_ammo_on_belt, 1h, "g_ammunition_on_belt"
 
 	; делаем то, что вырезали, включая возврат из функции
 	pop     edi
@@ -32,3 +33,4 @@ add_console_commands_fix endp
 g_ftest dd 0.123
 g_itest dd 123
 g_test_flags dd 0
+g_ammo_on_belt dd 0
