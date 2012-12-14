@@ -16,6 +16,22 @@ org 4D8F24h - shift
 	x dd 0.0				; 369->0, координаты левого нижнего угла, x
 	y dd 0.0				; 257->0, координаты левого нижнего угла, y
 	
+; смена порядка отрисовки текста
+org 41302Ah - shift
+	jmp to_logo
+org 41399Bh - shift
+	jmp to_text
+org 4135F4h - shift
+	jmp to_end
+org 413610h - shift
+	jz text_rendering
+	
+org 4135FAh - shift
+logo_rendering:
+;org 413032h - shift
+org 413539h - shift
+text_rendering:
+	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; чтение архивов русской версии
 ; параметры декриптора базы данных
