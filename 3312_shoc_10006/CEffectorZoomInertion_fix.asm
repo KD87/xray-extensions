@@ -1,8 +1,8 @@
 CEffectorZoomInertion__Process_fix proc
-	mov eax, [CEffectorZoomInertion__Process]
+	mov eax, [g_CEffectorZoomInertion__Process]
 	test eax, eax
 	jz no_replacement
-	jmp [CEffectorZoomInertion__Process]
+	jmp [g_CEffectorZoomInertion__Process]
 no_replacement:
 	sub     esp, 0Ch
 	push    ebx

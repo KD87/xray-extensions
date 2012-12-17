@@ -309,37 +309,64 @@ exit:
 	retn
 DelayedInventoryUpdate endp
 
-ogse_lib_hinst dd 0
-aOGSE_lib_path db "extensions\\ogse.dll", 0
-aOGSE_lib_load_fail db "Fail to load 'ogse.dll' !!!", 0
-init_external_libs proc
-	mov     eax, [ogse_lib_hinst]
+LOAD_DLL MACRO module_name_str:REQ, g_lib_hinst:REQ
+LOCAL lab1
+LOCAL loaded
+LOCAL module_name
+	jmp     lab1
+module_name db module_name_str, 0
+lab1:
+	mov     eax, [g_lib_hinst]
 	test    eax, eax
 	jnz     loaded
-	push    offset aOGSE_lib_path
+	push    offset module_name
 	call    [LoadLibraryA]
 	test    eax, eax
 	jnz     loaded
-	push    offset aOGSE_lib_load_fail
+	; fail to load lib
+	mov     eax, offset module_name
+	PRINT_UINT "Fail to load library '%s'", eax
+	push    offset module_name
 	call    msg_and_fail
 	add     esp, 4
 	retn
 loaded:
-	PRINT "init_external_libs: done!"
-	push    offset aCEffectorZoomInertion__Process
-	push    eax             ; hModule
+	mov     [g_lib_hinst], eax
+	mov     edx, offset module_name
+	PRINT_UINT "Loaded: %s", edx
+ENDM
+
+GET_PROC_ADDR MACRO g_lib_hinst:REQ, fun_name_str:REQ, g_fun_addr:REQ
+LOCAL lab1
+LOCAL success
+LOCAL fun_name
+	jmp     lab1
+fun_name db fun_name_str, 0
+lab1:
+	push    offset fun_name
+	push    [g_lib_hinst]
 	call    [GetProcAddress]
 	test    eax, eax
 	jnz     success
-	PRINT   "can't get address of 'test_msg'"
-	jmp next1
-success:
-	mov [CEffectorZoomInertion__Process], eax
-next1:
+	; can't get address
+	mov     eax, offset fun_name
+	PRINT_UINT   "can't get address of '%s'", eax
+	push    offset fun_name
+	call    msg_and_fail
+	add     esp, 4
 	retn
+success:
+	mov [g_fun_addr], eax
+ENDM
 
-CEffectorZoomInertion__Process dd ?
-aCEffectorZoomInertion__Process db "CEffectorZoomInertion__Process",0
+g_ogse_lib_hinst dd 0
+g_CEffectorZoomInertion__Process dd ?
+	
+init_external_libs proc
 
+LOAD_DLL "extensions\\ogse.dll", g_ogse_lib_hinst
+GET_PROC_ADDR g_ogse_lib_hinst, "CEffectorZoomInertion__Process", g_CEffectorZoomInertion__Process
+	
+	retn
 init_external_libs endp
 
