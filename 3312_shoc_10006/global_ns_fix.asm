@@ -323,9 +323,9 @@ lab1:
 	call    [LoadLibraryA]
 	test    eax, eax
 	jnz     loaded
-	; fail to load lib
+	; failed to load lib
 	mov     eax, offset module_name
-	PRINT_UINT "Fail to load library '%s'", eax
+	PRINT_UINT "Failed to load library '%s'", eax
 	push    offset module_name
 	call    msg_and_fail
 	add     esp, 4
@@ -363,10 +363,9 @@ g_ogse_lib_hinst dd 0
 g_CEffectorZoomInertion__Process dd ?
 	
 init_external_libs proc
-
-LOAD_DLL "extensions\\ogse.dll", g_ogse_lib_hinst
-GET_PROC_ADDR g_ogse_lib_hinst, "CEffectorZoomInertion__Process", g_CEffectorZoomInertion__Process
-	
+	LOAD_DLL "extensions\ogse.dll", g_ogse_lib_hinst
+	GET_PROC_ADDR g_ogse_lib_hinst, "CEffectorZoomInertion__Process", g_CEffectorZoomInertion__Process
+	;
 	retn
 init_external_libs endp
 
