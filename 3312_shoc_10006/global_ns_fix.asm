@@ -84,6 +84,8 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT DelayedInventoryUpdate, "update_inventory_window"
 	
+	GLOBAL_NS_PERFORM_EXPORT__VOID__PCHAR init_external_libs, "init_external_libs"
+	
 	; идЄм обратно
 	jmp back_from_global_space_ext
 
@@ -306,4 +308,38 @@ exit:
 	popa
 	retn
 DelayedInventoryUpdate endp
+
+ogse_lib_hinst dd 0
+aOGSE_lib_path db "extensions\\ogse.dll", 0
+aOGSE_lib_load_fail db "Fail to load 'ogse.dll' !!!", 0
+init_external_libs proc
+	mov     eax, [ogse_lib_hinst]
+	test    eax, eax
+	jnz     loaded
+	push    offset aOGSE_lib_path
+	call    [LoadLibraryA]
+	test    eax, eax
+	jnz     loaded
+	push    offset aOGSE_lib_load_fail
+	call    msg_and_fail
+	add     esp, 4
+	retn
+loaded:
+	PRINT "init_external_libs: done!"
+	push    offset aCEffectorZoomInertion__Process
+	push    eax             ; hModule
+	call    [GetProcAddress]
+	test    eax, eax
+	jnz     success
+	PRINT   "can't get address of 'test_msg'"
+	jmp next1
+success:
+	mov [CEffectorZoomInertion__Process], eax
+next1:
+	retn
+
+CEffectorZoomInertion__Process dd ?
+aCEffectorZoomInertion__Process db "CEffectorZoomInertion__Process",0
+
+init_external_libs endp
 

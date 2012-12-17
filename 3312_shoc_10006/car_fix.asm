@@ -34,3 +34,23 @@ car_fix proc
 	jmp     back_from_car_fix
 
 car_fix endp
+
+g_marker db "marker_marker", 0
+car_panel_fix proc
+	mov     ecx, ds:g_pGameLevel
+	mov     edx, [ecx]
+	mov     ecx, [edx+148h]
+	mov     eax, [ecx]
+	mov     edx, [eax+18h]
+	call    edx
+	mov     eax, [eax+38h]
+	lea     ecx, [eax+0C74h]
+	mov     eax, [ecx]
+	mov     edx, [eax+7Ch]
+	;push    1
+	;mov     eax, [g_car_panel_visible]
+	push    [g_car_panel_visible]
+	;
+	call    edx
+	jmp     back_from_car_panel_fix
+car_panel_fix endp

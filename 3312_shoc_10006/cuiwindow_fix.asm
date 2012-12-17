@@ -6,6 +6,8 @@ cuiwindow_fix proc
 	; добавляем своё
 	PERFORM_EXPORT_CUIWND__VOID__VOID UIWindow__DetachFromParent, "DetachFromParent"
 	PERFORM_EXPORT_CUIWND__VOID__VOID CUIWindow__Update_virtualcall, "Update"
+	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetVPos, "GetVPos"
+	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetHPos, "GetHPos"
 	; восстанавливаем всё
 	popa
 	; делаем то, что вырезали 
@@ -53,3 +55,12 @@ CUIWindow__Update_virtualcall proc near
 	jmp     dword ptr [eax+10h]
 CUIWindow__Update_virtualcall endp
 
+CUIWindow__GetHPos proc
+	fld     dword ptr [ecx+5]
+	retn
+CUIWindow__GetHPos endp
+
+CUIWindow__GetVPos proc
+	fld     dword ptr [ecx+9]
+	retn
+CUIWindow__GetVPos endp

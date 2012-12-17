@@ -63,10 +63,10 @@ SetFloatArgs12 proc
 arg1 = dword ptr 4h
 arg2 = dword ptr 8h
 	mov eax, [esp+arg1]
-PRINT_FLOAT "arg1=%f", eax
+;PRINT_FLOAT "arg1=%f", eax
 	mov [g_float_arg1], eax
 	mov eax, [esp+arg2]
-PRINT_FLOAT "arg2=%f", eax
+;PRINT_FLOAT "arg2=%f", eax
 	mov [g_float_arg2], eax
 	retn
 SetFloatArgs12 endp
@@ -75,10 +75,10 @@ SetFloatArgs34 proc
 arg3 = dword ptr 4h
 arg4 = dword ptr 8h
 	mov eax, [esp+arg3]
-PRINT_FLOAT "arg3=%f", eax
+;PRINT_FLOAT "arg3=%f", eax
 	mov [g_float_arg3], eax
 	mov eax, [esp+arg4]
-PRINT_FLOAT "arg4=%f", eax
+;PRINT_FLOAT "arg4=%f", eax
 	mov [g_float_arg4], eax
 	retn
 SetFloatArgs34 endp

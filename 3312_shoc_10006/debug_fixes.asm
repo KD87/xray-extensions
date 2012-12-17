@@ -113,3 +113,100 @@ CCustomZone__feel_touch_contact_dbg_fix proc
 	;
 	jmp back_from_CCustomZone__feel_touch_contact_dbg_fix
 CCustomZone__feel_touch_contact_dbg_fix endp
+
+
+CGameGraph__distance_fix proc
+	call CGameGraph__distance_check
+	push eax
+	push ecx
+	push esi
+	and eax, 0FFFFh
+	PRINT_UINT "CGameGraph__distance: v1 = %d", eax
+	and esi, 0FFFFh
+	PRINT_UINT "CGameGraph__distance: v2 = %d", esi
+	pop esi
+	pop ecx
+	pop eax
+	;
+	mov     ecx, [ecx+38h]
+	movzx   eax, ax
+	;
+	jmp back_from_CGameGraph__distance_fix
+CGameGraph__distance_fix endp
+
+CALL_ACTOR_CALLBACK_INT_INT MACRO code:REQ, reg_arg1:REQ, reg_arg2:REQ
+	push edx
+	push ecx
+	push eax
+	push edi
+	
+	push    reg_arg2
+	push    reg_arg1
+	push    code
+	; получаем объект колбека
+	mov     ecx, g_Actor
+	call    CGameObject__callback ; eax = callback
+	push    eax ; callback
+	; вызываем
+	call    script_callback_int_int
+	;
+	pop edi
+	pop eax
+	pop ecx
+	pop edx
+ENDM
+
+CGameGraph__distance_check proc
+	push ecx
+	push edx
+	push esi
+	push eax
+	
+	;
+	mov     ecx, [ecx+38h]
+	movzx   eax, ax
+	movzx   edx, ax
+	imul    edx, 2Ah
+	mov     eax, [edx+ecx+20h]
+	add     edx, ecx
+	add     eax, ecx
+	movzx   ecx, byte ptr [edx+28h]
+	lea     ecx, [ecx+ecx*2]
+	lea     ecx, [eax+ecx*2]
+	cmp     eax, ecx
+	jz      fail
+loc_10056392:
+	cmp     [eax], si
+	jz      is_ok
+	add     eax, 6
+	cmp     eax, ecx
+	jnz     loc_10056392
+fail:
+	; восстанавливаем нужные нам регистры
+	pop eax
+	pop esi
+	; пишем их обратно в стек
+	push esi
+	push eax
+	;
+	PRINT "CGameGraph__distance failed!"
+	and eax, 0FFFFh
+	PRINT_UINT "g0 = %d", eax
+	and esi, 0FFFFh
+	PRINT_UINT "g1 = %d", esi
+	mov edx, [ebp] ; m_object
+	movzx edx, word ptr [edx + 54]
+	PRINT_UINT "object_id = %d", edx
+	shl eax, 16
+	or eax, esi
+	
+	CALL_ACTOR_CALLBACK_INT_INT 153, edx, eax
+	;
+is_ok:
+	pop eax
+	pop esi
+	pop edx
+	pop ecx
+	retn
+CGameGraph__distance_check endp
+

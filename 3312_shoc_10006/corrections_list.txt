@@ -20,16 +20,17 @@
 0x102862E0 5 ; jmp inventory_box_fix
 0x101AEF0F 5 ; level_ns_extension_1 ; get_target_dist, get_target_obj
 0x101AF1C1 8 ; level_ns_extension_2 ; get_target_dist, get_target_obj
-0x103561C9 5 ; jmp     addr_103561DD ; skip annoying msg "sv ownership id_parent ..."
-0x103561DD 8 ; part2: mov esi,10h; nop; nop; nop;
-0x1035646D 5 ; jmp     addr_10356481 ; skip annoying msg "sv reject. id_parent ..."
-0x10356481 8 ; part2: mov ebx,10h; nop; nop; nop;
-0x10355D85 5 ; jmp addr_10355D9B ; skip annoying msg "sv destroy object ..."
+;0x103561C9 5 ; jmp     addr_103561DD ; skip annoying msg "sv ownership id_parent ..."
+;0x103561DD 8 ; part2: mov esi,10h; nop; nop; nop;
+;0x1035646D 5 ; jmp     addr_10356481 ; skip annoying msg "sv reject. id_parent ..."
+;0x10356481 8 ; part2: mov ebx,10h; nop; nop; nop;
+;0x10355D85 5 ; jmp addr_10355D9B ; skip annoying msg "sv destroy object ..."
 0x103B8DEB 5 ; jmp addr_103B8DFF ; skip annoying msg "[16-9] get_xml_name for ..."
 0x1004C3D2 5 ; jmp release_fix
 0x101477AF 6 ; отключение проверки при выкидывании из ящиков
 0x102042FD 6 ; активировать 8-й слот
 0x1026C525 5 ; jmp car_fix
+0x10269391 5 ; jmp car_panel_fix ; врезка для управления видимостью панели машины
 0x103FB34F 5 ; jmp cuiwindow_fix
 0x102C4632 5 ; jmp ctime_fix
 0x101398CD 5 ; jmp matrix_fix
@@ -37,7 +38,10 @@
 0x103C911D 5 ; тестовое слежение за закрытием диалога разговора
 ;0x10054AD7 7 ; фикс оффлайнового движения неписей
 ;0x1005568F 5 ; jmp mmm_fix
+;0x1023CC8E 5 ;	jmp wpn_stat_mgun_fix ; попытка фикса станкового оружия
+;0x1023CBDA 5 ; jmp wpn_stat_mgun__upatecl_fix0
 
+;0x1023D870 5 ; 	jmp wpn_stat_mgun__cam_update_fix
 0x10146D00 5 ; jmp disable_info_portion_fix
 
 0x103BE8C0 5 ; jmp CUITradeWnd__CanMoveToOther_fix
@@ -52,6 +56,7 @@
 0x104A067C 4 ; замена пустого виртуального метода Projector::Hit на наш
 
 0x104760D4 4 ; CAI_Stalker__IsVisibleForZones
+0x10118C50h 5 ; jmp CAI_Stalker__feel_touch_new_fix
 
 ;0x101E3046 5 ; 	jmp CEntityCondition__UpdateConditionTime_dbg_fix - отладка
 ;0x101E30A1 5 ; 	jmp CEntityCondition__UpdateConditionTime_dbg_fix2 - отладка
@@ -65,6 +70,7 @@
 ;0x100681C6 5 ;	call    CALifeStoryRegistry__add - экспериментальные отладочные фиксы
 ;0x10068158 5 ; 	jmp CALifeSimulatorBase__register_object_debug_fix - аналогично
 ;0x1025828A 5 ; jmp CCustomZone__feel_touch_contact_dbg_fix
+;0x10056370 5  ;	jmp CGameGraph__distance_fix
 
 ;0x102065B7 9 ; jmp loc_1020663C_return_true ; фикс инвентаря часть 1
 ;0x1020432D 5 ; jmp CInventory__CInventory_fix ; фикс инвентаря часть 2
@@ -84,6 +90,14 @@
 
 ;0x100138F0 5 ;	jmp CHitMemoryManager__add3_fix
 ;0x101A6DC0 5 ; jmp call_mouse_move_callback
+
+0x101F267F 5 ; 	jmp CHangingLamp__net_Spawn_fix
+0x101E1180 5 ; 	jmp CEntityAlive__Hit_fix
+;0x101DFA30 5 ; 	jmp CEntity__Hit_fix
+;0x10015B4E 5 ;  убираем фейковый хит из менеджера памяти
+;0x101E1189 3 ; 	sub     esp, 50h ; 3 байта
+
+;0x1019FFA0 5 ; jmp [CEffectorZoomInertion__Process]
 
 ;rus_phantom
 0x103BFF64 5 ; jmp call_pda_contact_callback

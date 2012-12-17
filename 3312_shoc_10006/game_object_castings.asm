@@ -157,6 +157,7 @@ MAKE_CASTING2 CScriptGameObject__CScriptZone, off_1054F064
 MAKE_CASTING2 CScriptGameObject__CProjector, off_1054F5E8
 MAKE_CASTING2 CScriptGameObject__CTrader, off_1054D518
 MAKE_CASTING2 CScriptGameObject__CCar, ??_R0?AVCCar@@@8
+MAKE_CASTING2 CScriptGameObject__CHelicopter, off_1054F02C
 
 MAKE_CASTING3 CScriptGameObject__CWeaponGL, off_10556CC8
 MAKE_CASTING3 CScriptGameObject__CMedkit, off_10557248
@@ -198,6 +199,7 @@ MAKE_CHECK_FUN CScriptGameObject__IsScriptZone		   , CScriptGameObject__CScriptZ
 MAKE_CHECK_FUN CScriptGameObject__IsProjector		   , CScriptGameObject__CProjector
 MAKE_CHECK_FUN CScriptGameObject__IsTrader			   , CScriptGameObject__CTrader
 MAKE_CHECK_FUN CScriptGameObject__IsCar				   , CScriptGameObject__CCar
+MAKE_CHECK_FUN CScriptGameObject__IsHelicopter         , CScriptGameObject__CHelicopter
 MAKE_CHECK_FUN CScriptGameObject__IsWeaponGL		   , CScriptGameObject__CWeaponGL
 MAKE_CHECK_FUN CScriptGameObject__IsMedkit			   , CScriptGameObject__CMedkit
 MAKE_CHECK_FUN CScriptGameObject__IsAntirad			   , CScriptGameObject__CAntirad
