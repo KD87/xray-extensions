@@ -1,6 +1,240 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+;.text:1019FFA0 CEffectorZoomInertion__Process proc near
+org 1019FFA0h - shift
+	jmp CEffectorZoomInertion__Process_fix
+;.text:1019FFA0                 sub     esp, 0Ch
+;.text:1019FFA3                 push    ebx
+;.text:1019FFA4                 push    esi
+org 1019FFA5h - shift
+back_from_CEffectorZoomInertion__Process_fix:
+;.text:1019FFA5                 push    edi
+
+
+
+
+org 10458028h - shift
+LoadLibraryA dd ?
+org 1045802Ch - shift
+GetProcAddress dd ?
+org 1019FEB0h - shift
+CEffectorZoomInertion__CalcNextPoint:
+org 10074710h - shift
+vector3__lerp:
+;org 10001630h - shift
+;fabs:
+org 1001C190h - shift
+vector3__similar:
+org 1001A2F0h - shift
+vector3__add_vector:
+org 1001EBA0h - shift
+vector3__set:
+
+;.text:10056370 CGameGraph__distance proc near
+org 10056370h - shift
+	jmp CGameGraph__distance_fix
+;.text:10056370                 mov     ecx, [ecx+38h]
+;.text:10056373                 movzx   eax, ax
+org 10056376h - shift
+back_from_CGameGraph__distance_fix:
+;.text:10056376                 movzx   edx, ax
+;.text:10056379                 imul    edx, 2Ah
+;.text:1005637C                 mov     eax, [edx+ecx+20h]
+;.text:10056380                 add     edx, ecx
+;.text:10056382                 add     eax, ecx
+;.text:10056384                 movzx   ecx, byte ptr [edx+28h]
+;.text:10056388                 lea     ecx, [ecx+ecx*2]
+;.text:1005638B                 lea     ecx, [eax+ecx*2]
+;.text:1005638E                 cmp     eax, ecx
+;.text:10056390                 jz      short loc_1005639E
+;.text:10056392
+;.text:10056392 loc_10056392:                           ; CODE XREF: CGameGraph__distance+2Cj
+;.text:10056392                 cmp     [eax], si
+
+
+
+
+org 1053C500h - shift
+g_mt_config dd ?
+
+org 103FB79Dh - shift
+register_CUIWindow_float__void:
+
+; убираем фейковый хит
+org 10015B4Eh - shift
+	jmp loc_10015B66
+;.text:10015B4E                 jz      short loc_10015B66
+;.text:10015B50                 push    eax
+;.text:10015B51                 mov     eax, [esi+4]
+;.text:10015B54                 mov     ecx, [eax+328h]
+;.text:10015B5A                 mov     ebx, [ecx+0Ch]
+;.text:10015B5D                 call    CHitMemoryManager__add3
+;.text:10015B62                 mov     ebx, [esp+14h+arg_8]
+org 10015B66h - shift
+loc_10015B66:
+;.text:10015B66 loc_10015B66:
+
+
+
+
+;.text:101DFA30 CEntity__Hit    proc near
+org 101DFA30h - shift
+	jmp CEntity__Hit_fix
+;.text:101DFA30                 push    ebp
+;.text:101DFA31                 mov     ebp, esp
+;.text:101DFA33                 and     esp, 0FFFFFFF8h
+org 101DFA36h - shift
+back_from_CEntity__Hit_fix:
+;.text:101DFA36                 sub     esp, 54h
+
+
+
+org 10001530h - shift
+CDamageManager__HitScale:
+org 101DFA30h - shift
+CEntity__Hit:
+org 102155D0h - shift
+RELATION_REGISTRY__FightRegister:
+org 10214C70h - shift
+RELATION_REGISTRY__Action:
+org 1048A064h - shift
+off_1048A064 dd ?
+
+;.text:101E1180 CEntityAlive__Hit proc near             ; CODE XREF: sub_10073980+9j
+org 101E1180h - shift
+	jmp CEntityAlive__Hit_fix
+;.text:101E1180                 push    ebp
+;.text:101E1181                 mov     ebp, esp
+;.text:101E1183                 and     esp, 0FFFFFFF8h
+;.text:101E1186                 mov     edx, [ebp+arg_0]
+;org 101E1189h - shift
+;	sub     esp, 50h ; 3 байта
+;.text:101E1189                 sub     esp, 4Ch
+;.text:101E118C                 push    ebx
+;.text:101E118D                 push    esi
+;.text:101E118E                 push    edi
+;.text:101E118F                 mov     ebx, ecx
+;.text:101E1191                 mov     ecx, 12h
+;.text:101E1196                 mov     esi, edx
+;.text:101E1198                 lea     edi, [esp+58h+var_48]
+;.text:101E119C                 rep movsd
+;.text:101E119E                 cmp     [esp+58h+var_14], 9
+;.text:101E11A3                 jnz     short loc_101E11AD
+;.text:101E11A5                 mov     [esp+58h+var_14], 3
+;.text:101E11AD loc_101E11AD:
+;org 101E11ADh - shift
+;	jmp CEntityAlive__Hit_fix
+;.text:101E11AD                 movzx   ecx, byte ptr [edx+3Ch]
+;.text:101E11B1                 mov     eax, [ebx+220h]
+;org 101E11B7h - shift
+;back_from_CEntityAlive__Hit_fix:
+;.text:101E11B7                 push    ecx             ; float
+
+
+
+
+
+org 102ACF30h - shift
+game_cl_GameState__StartStopMenu:
+; заглушка для регистрация функции, возвращающей диалог
+org 10481F40h - shift
+off_10481F40 dd ?
+
+;CHangingLamp::net_Spawn
+; edi - cse_hanging_lamp
+; esi - lamp
+;.text:101F266C                 fld     dword ptr [edi+14Ch] ; range
+;.text:101F2672                 mov     ecx, [esi]
+;.text:101F2674                 mov     edx, [ecx]
+;.text:101F2676                 mov     eax, [edx+20h]
+;.text:101F2679                 push    ecx
+;.text:101F267A                 fstp    [esp+2Ch+var_2C]
+;.text:101F267D                 call    eax
+org 101F267Fh - shift
+	jmp CHangingLamp__net_Spawn_fix
+;.text:101F267F                 mov     ecx, [esi]
+;.text:101F2681                 mov     edx, [ecx]
+;.text:101F2683                 mov     edx, [edx+30h]
+org 101F2686h - shift
+back_from_CHangingLamp__net_Spawn_fix:
+;.text:101F2686                 lea     eax, [esp+28h+var_10]
+;.text:101F268A                 push    eax
+
+
+
+
+;.text:10118C50 CAI_Stalker__feel_touch_new proc near   ; DATA XREF: .rdata:10476428o
+org 10118C50h - shift
+	jmp CAI_Stalker__feel_touch_new_fix
+;.text:10118C50                 mov     eax, 2010h
+back_from_CAI_Stalker__feel_touch_new_fix:
+;.text:10118C55                 call    __alloca_probe
+;.text:10118C5A                 push    ebp
+
+
+
+;.text:1023D870 CWeaponStatMgun__cam_Update proc near
+org 1023D870h - shift
+	jmp wpn_stat_mgun__cam_update_fix
+;.text:1023D870                 push    ebp
+;.text:1023D871                 mov     ebp, esp
+;.text:1023D873                 and     esp, 0FFFFFFF8h
+;.text:1023D876                 sub     esp, 38h
+org 1023D879h - shift
+back_from_wpn_stat_mgun__cam_update_fix:
+;.text:1023D879                 xorps   xmm0, xmm0
+;.text:1023D87C                 push    esi
+
+
+
+; попытка фикса станкового оружия
+;.text:1023CBD0 CWeaponStatMgun__UpdateCL proc near
+;.text:1023CBD0                 push    ebx
+;.text:1023CBD1                 push    esi
+;.text:1023CBD2                 mov     ebx, ecx
+;.text:1023CBD4                 call    ds:__imp_?UpdateCL@CObject@@UAEXXZ ; CObject::UpdateCL(void)
+org 1023CBDAh - shift
+	jmp wpn_stat_mgun__upatecl_fix0
+;.text:1023CBDA                 lea     eax, [ebx+168h]
+
+
+;.text:1023CC8D                 pop     edi
+;.text:1023CC8E loc_1023CC8E:                           ; CODE XREF: CWeaponStatMgun__UpdateCL+2Fj
+org 1023CC8Eh - shift
+	jmp wpn_stat_mgun__upatecl_fix
+;.text:1023CC8E                 pop     esi
+;.text:1023CC8F                 pop     ebx
+;.text:1023CC90                 retn
+;back_from_wpn_stat_mgun_fix:
+;.text:1023CC90 CWeaponStatMgun__UpdateCL endp
+
+
+
+; врезка для управления видимостью панели машины
+;.text:1026938B                 mov     ecx, ds:g_pGameLevel
+org 10269391h - shift
+	jmp car_panel_fix
+;.text:10269391                 mov     edx, [ecx]
+;.text:10269393                 mov     ecx, [edx+148h]
+;.text:10269399                 mov     eax, [ecx]
+;.text:1026939B                 mov     edx, [eax+18h]
+;.text:1026939E                 call    edx
+;.text:102693A0                 mov     eax, [eax+38h]
+;.text:102693A3                 lea     ecx, [eax+0C74h]
+;.text:102693A9                 mov     eax, [ecx]
+;.text:102693AB                 mov     edx, [eax+7Ch]
+;.text:102693AE                 push    1
+;.text:102693B0                 call    edx
+org 102693B2h - shift
+back_from_car_panel_fix:
+;.text:102693B2                 mov     eax, ds:?g_pGameLevel@@3PAVIGame_Level@@A ; IGame_Level * g_pGameLevel
+
+
+
+
+org 101DF130h - shift
+CActor__attach_Vehicle: ; vehicle<eax>, int this<edi>
 
 org 10213A90h - shift
 RELATION_REGISTRY__SetGoodwill:
@@ -1854,6 +2088,9 @@ off_1055578C dd ?
 ; car
 org 1054F080h - shift
 ??_R0?AVCCar@@@8 dd ?
+; helicopter
+org 1054F02Ch - shift
+off_1054F02C dd ?
 
 ; заглушки для функции преобразования SGO в CInventoryBox
 
@@ -2014,6 +2251,9 @@ Render dd ?
 
 org 104518A2h - shift
 memset: ; dd ? ; void *__cdecl memset(void *Dst, int Val, size_t Size)
+
+org 1045871Ch - shift
+CObjectSpace__RayPick dd ?
 
 org 10205D71h - shift
 	jmp CInventory__Get

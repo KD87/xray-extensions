@@ -1,4 +1,8 @@
 include level_ns_reg_macros.asm
+
+;REGISTER_LEVEL__GO__INT register_get_ray_pick_dist, "get_ray_pick_dist", GetRayPickQueryRes
+;REGISTER_LEVEL__DLG__VOID register_get_inventory_wnd, "get_inventory_wnd", Level__GetInventoryWindow
+
 ;===============| расширение регистрации пространства имён level |=============
 level_ns_extension_1:
 	call    get_snd_volume_register ; делаем то, что вырезали
@@ -55,11 +59,21 @@ level_ns_extension_1:
 	push    eax
 	call    register__ns__bool__void
 ;--< установка степени дождливости >---
-PERFORM_EXPORT_LEVEL__VOID__FLOAT set_rain_factor, "set_rain_factor"
-PERFORM_EXPORT_LEVEL__INT__INT advance_game_time, "advance_game_time"
-PERFORM_EXPORT_LEVEL__FLOAT__VOID get_float_result00, "get_float_res00"
-PERFORM_EXPORT_LEVEL__FLOAT__STR_INT_BOOL_STR get_memory_float, "get_memory_float"
-PERFORM_EXPORT_LEVEL__INT__INT get_memory_int, "get_memory_int"
+PERFORM_EXPORT_LEVEL__VOID__FLOAT               set_rain_factor, "set_rain_factor"
+PERFORM_EXPORT_LEVEL__INT__INT                  advance_game_time, "advance_game_time"
+PERFORM_EXPORT_LEVEL__FLOAT__VOID               get_float_result00, "get_float_res00"
+PERFORM_EXPORT_LEVEL__FLOAT__STR_INT_BOOL_STR   get_memory_float, "get_memory_float"
+PERFORM_EXPORT_LEVEL__INT__INT                  get_memory_int, "get_memory_int"
+PERFORM_EXPORT_LEVEL__BOOL__VOID                PerformRayPickQuery, "perform_ray_pick_query"
+PERFORM_EXPORT_LEVEL__FLOAT__VOID               GetRayPickQueryRes, "get_ray_pick_dist"
+PERFORM_EXPORT_LEVEL__GO__INT                   GetRayPickQueryObj, "get_ray_pick_obj"
+PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetInventoryWindow, "get_inventory_wnd"
+PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetPDAWindow,       "get_pda_wnd"
+PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetTalkWindow,      "get_talk_wnd"
+PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetCarBodyWindow,   "get_car_body_wnd"
+
+
+;PRINT "all_registered"
 ;--------------------------------------
 	jmp back_to_level_ns_ext_1
 	
@@ -102,7 +116,27 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	; для get_memory_int
 	mov     ecx, eax
 	call    esi
-	
+	; для perform_ray_pick_query
+	mov     ecx, eax
+	call    esi
+	; для get_ray_pick_query_res
+	mov     ecx, eax
+	call    esi
+	; get_ray_pick_obj
+	mov     ecx, eax
+	call    esi
+	; get_inventory_wnd
+	mov     ecx, eax
+	call    esi
+	; get_pda_wnd
+	mov     ecx, eax
+	call    esi
+	; get_talk_wnd
+	mov     ecx, eax
+	call    esi
+	; get_car_body_wnd
+	mov     ecx, eax
+	call    esi
 ; идём обратно
 	jmp back_to_level_ns_ext_2
 
@@ -438,3 +472,90 @@ addr_ = dword ptr  4
 	;PRINT_UINT "int_val=%x", eax
 	retn
 get_memory_int endp
+
+rq_res collide__rq_result {0, 123.0, 0}
+;g_vector_arg_1 -- db.actor:set_vector_global_arg_1(v)
+;g_int_argument_1     -- set_int_arg0(n)
+;g_float_arg1   -- set_float_args_12(a,b)
+;g_object_arg_1 -- db.actor:set_object_arg_1(obj)
+
+
+PerformRayPickQuery proc
+	mov eax, offset g_vector_arg_1
+	;PRINT_VECTOR arg1, eax
+	mov eax, offset g_vector_arg_2
+	;PRINT_VECTOR arg1, eax
+	push    dword ptr [g_object_arg_1] ; CObject *O
+	push    offset rq_res ;  collide::rq_result &
+	
+	push    dword ptr [g_int_argument_1] ; collide::rq_target
+	push    dword ptr [g_float_arg1] ; float range
+	push    offset g_vector_arg_1 ;dir
+	push    offset g_vector_arg_2 ;start
+	mov     eax, ds:g_pGameLevel
+	mov     ecx, [eax]
+	add     ecx, 0CCh
+	call    ds:CObjectSpace__RayPick ;(_vector3<float> const &,_vector3<float> const &,float,collide::rq_target,collide::rq_result &,CObject *) ; правые идут первыми
+	retn
+PerformRayPickQuery endp
+
+GetRayPickQueryRes proc
+	fld rq_res.range
+	retn
+GetRayPickQueryRes endp
+
+GetRayPickQueryObj proc
+	push    edi
+	
+	mov     eax, [rq_res.O]
+	;PRINT_UINT "eax = %d", eax
+	test    eax, eax
+	jz      exit
+	mov     edi, eax
+	call    CGameObject__lua_game_object
+exit:
+
+	pop     edi
+	retn
+GetRayPickQueryObj endp
+
+
+Level__GetInventoryWindow proc
+	call    GetGameSP
+	test    eax, eax
+	jz      exit
+	mov     eax, [eax + 60]
+	;push    1
+	;push    eax
+	;call    game_cl_GameState__StartStopMenu
+exit:
+	;xor eax, eax
+	retn
+Level__GetInventoryWindow endp
+
+Level__GetPDAWindow proc
+	call    GetGameSP
+	test    eax, eax
+	jz      exit
+	mov     eax, [eax + 64]
+exit:
+	retn
+Level__GetPDAWindow endp
+
+Level__GetTalkWindow proc
+	call    GetGameSP
+	test    eax, eax
+	jz      exit
+	mov     eax, [eax + 68]
+exit:
+	retn
+Level__GetTalkWindow endp
+
+Level__GetCarBodyWindow proc
+	call    GetGameSP
+	test    eax, eax
+	jz      exit
+	mov     eax, [eax + 72]
+exit:
+	retn
+Level__GetCarBodyWindow endp

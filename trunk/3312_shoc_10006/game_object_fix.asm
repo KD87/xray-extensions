@@ -30,6 +30,20 @@ REGISTER_INT__STRING_INT        register_get_game_object_int16,      "get_go_int
 REGISTER_VOID__INT_INT          register_set_game_object_int16,      "set_go_int16"
 REGISTER_INT__STRING_INT        register_set_game_object_shared_str, "set_go_shared_str"
 
+REGISTER_FLOAT__INT             register_get_car_float,      "get_car_float"
+REGISTER_VOID__VECTOR_FLOAT_INT register_set_car_float,      "set_car_float"
+REGISTER_INT__STRING_INT        register_get_car_int,        "get_car_int"
+REGISTER_VOID__INT_INT          register_set_car_int,        "set_car_int"
+REGISTER_INT__STRING_INT        register_get_car_int16,      "get_car_int16"
+REGISTER_VOID__INT_INT          register_set_car_int16,      "set_car_int16"
+
+REGISTER_FLOAT__INT             register_get_memory_float,      "get_memory_float"
+REGISTER_VOID__VECTOR_FLOAT_INT register_set_memory_float,      "set_memory_float"
+REGISTER_INT__STRING_INT        register_get_memory_int,        "get_memory_int"
+REGISTER_VOID__INT_INT          register_set_memory_int,        "set_memory_int"
+REGISTER_INT__STRING_INT        register_get_memory_int16,      "get_memory_int16"
+REGISTER_VOID__INT_INT          register_set_memory_int16,      "set_memory_int16"
+
 REGISTER_INT__STRING_INT        register_save_hud_bone_float, "save_hud_bone_float"
 REGISTER_FLOAT__INT             register_get_hud_float, "get_hud_float"
 ;--
@@ -52,6 +66,7 @@ REGISTER_INT__STRING_INT register_get_holder_int, "get_holder_int"
 REGISTER_VOID__INT_INT register_set_wpn_int, "set_wpn_int"
 
 REGISTER_INT__STRING_INT register_get_wpn_bone_id, "get_wpn_bone_id"
+REGISTER_INT__STRING_INT register_get_bone_id, "get_bone_id"
 ;REGISTER_INT__STRING_INT register_get_wpn_hud_bone_id, "get_wpn_hud_bone_id"
 
 REGISTER_INT__STRING_INT register_get_hud_bone_id, "get_hud_bone_id"
@@ -85,9 +100,9 @@ game_object_fix proc
 ; делаем то, что вырезали 
 	call    enable_vision_register
 ; добавляем своё
-	PRINT "game_object_fix"
+	;PRINT "game_object_fix"
 	; регистрируем функцию разрешения колбеков на нажатия и мышь
-	PERFORM_EXPORT_VOID__BOOL enable_input_extensions, "enable_input_extensions"
+	;PERFORM_EXPORT_VOID__BOOL enable_input_extensions, "enable_input_extensions"
 	; регистрируем функцию получения топлива у машины
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetFuel, "get_fuel"
 	; регистрируем функцию получения потребления топлива у машины
@@ -159,6 +174,21 @@ game_object_fix proc
 	PERFORM_EXPORT_INT__STRING_INT        register_get_game_object_int16,      CScriptGameObject__GetGameObjectInt16
 	PERFORM_EXPORT_VOID__INT_INT          register_set_game_object_int16,      CScriptGameObject__SetGameObjectInt16
 	PERFORM_EXPORT_INT__STRING_INT        register_set_game_object_shared_str, CScriptGameObject__SetGameObjectSharedStr
+
+
+	PERFORM_EXPORT_FLOAT__INT             register_get_car_float,              CScriptGameObject__GetCarFloat
+	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_car_float,              CScriptGameObject__SetCarFloat
+	PERFORM_EXPORT_INT__STRING_INT        register_get_car_int,                CScriptGameObject__GetCarInt
+	PERFORM_EXPORT_VOID__INT_INT          register_set_car_int,                CScriptGameObject__SetCarInt
+	PERFORM_EXPORT_INT__STRING_INT        register_get_car_int16,              CScriptGameObject__GetCarInt16
+	PERFORM_EXPORT_VOID__INT_INT          register_set_car_int16,              CScriptGameObject__SetCarInt16
+
+	PERFORM_EXPORT_FLOAT__INT             register_get_memory_float,           CScriptGameObject__GetMemoryFloat
+	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_memory_float,           CScriptGameObject__SetMemoryFloat
+	PERFORM_EXPORT_INT__STRING_INT        register_get_memory_int,             CScriptGameObject__GetMemoryInt
+	PERFORM_EXPORT_VOID__INT_INT          register_set_memory_int,             CScriptGameObject__SetMemoryInt
+	PERFORM_EXPORT_INT__STRING_INT        register_get_memory_int16,           CScriptGameObject__GetMemoryInt16
+	PERFORM_EXPORT_VOID__INT_INT          register_set_memory_int16,           CScriptGameObject__SetMemoryInt16
 	
 	PERFORM_EXPORT_STRING__VOID      CScriptGameObject__GetGameObjectSharedStr, "get_go_shared_str"
 	;--
@@ -184,6 +214,8 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__INT_INT register_set_wpn_int, CScriptGameObject__SetWeaponInt
 	
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_bone_id, CScriptGameObject__GetWeaponBoneID
+	PERFORM_EXPORT_INT__STRING_INT register_get_bone_id, CScriptGameObject__GetBoneID
+	
 	;PERFORM_EXPORT_INT__STRING_INT register_get_wpn_hud_bone_id, CScriptGameObject__GetWeaponHudBoneID
 	
 	PERFORM_EXPORT_INT__STRING_INT register_get_hud_bone_id, CScriptGameObject__GetHudBoneID
@@ -236,6 +268,7 @@ game_object_fix proc
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetGameObject,        "is_game_object"
 	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetGameObject,        "cast_game_object"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsCar,                "is_car"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsHelicopter,         "is_helicopter"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsHolder,             "is_holder"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsEntityAlive,        "is_entity_alive"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsInventoryItem,      "is_inventory_item"
@@ -308,6 +341,19 @@ game_object_fix proc
 	;
 	PERFORM_EXPORT_VOID__INT_INT register_set_goodwill_by_id, CScriptGameObject__SetGoodwillByID
 	PERFORM_EXPORT_VOID__INT_INT register_change_goodwill_by_id, CScriptGameObject__ChangeGoodwillByID
+
+	PERFORM_EXPORT_VOID__GO CScriptGameObject__AttachVehicle, "attach_vehicle"
+	
+	PERFORM_EXPORT_VOID__BOOL CScriptGameObject__EnableCarPanel, "enable_car_panel"
+	
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg1, "set_vector_global_arg_1"
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg2, "set_vector_global_arg_2"
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg3, "set_vector_global_arg_3"
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg4, "set_vector_global_arg_4"
+
+	PERFORM_EXPORT_VOID__GO CScriptGameObject__SetGOArg1, "set_object_arg_1"
+	
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetHudItemState,             "get_hud_item_state"
 	
 	; идём обратно
 	jmp back_from_game_object_fix
@@ -321,15 +367,6 @@ game_object_fix2 proc
 	;идём обратно
 	jmp     back_from_game_object_fix2
 game_object_fix2 endp
-
-input_extensions_enabled dd 0
-
-enable_input_extensions    proc near               ; DATA XREF: script_register_game_object2+51Fo
-arg_0           = byte ptr  8
-	mov eax, [ebp+4]
-	mov [input_extensions_enabled], eax
-	retn 4
-enable_input_extensions    endp
 
 CScriptGameObject__GetFuel proc
 var_4 = dword ptr -4
@@ -1987,6 +2024,45 @@ exit:
 	retn    8
 CScriptGameObject__SetHudBoneVisible endp
 
+
+CScriptGameObject__GetBoneID proc
+bone_name = dword ptr 8
+stub      = dword ptr 0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    ecx
+	push    edx
+	push    esi
+	
+	mov     eax, [ecx+4]
+	test    eax, eax
+	jz      short exit_fail
+	;---
+	mov     eax, [eax+168h]
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax]
+	mov     eax, [eax+18h]
+	call    eax
+
+	push    [ebp + bone_name]
+	mov     ecx, eax
+	call    ds:CKinematics__LL_BoneID
+	movzx   eax, ax
+	jmp     exit
+exit_fail:
+	mov     eax, -1
+exit:
+	pop     esi
+	pop     edx
+	pop     ecx
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetBoneID endp
 
 CScriptGameObject__GetWeaponBoneID proc
 bone_name = dword ptr 8
@@ -4312,18 +4388,6 @@ CScriptGameObject__SetLight01Type endp
 ;light_set_active proc ; ecx = light_ref_addr, eax = 0/1 active
 ;light_destroy proc ; ecx = light_ref_addr
 
-CAI_Stalker__IsVisibleForZones proc
-	mov eax, [ecx+638h]
-	;PRINT_UINT "CAI_Stalker__IsVisibleForZones: flags=%x", eax
-	and     eax, 80000000h
-	jz      visible_
-	mov     al, 0
-	jmp     invisible_
-visible_:
-	mov     al, 1
-invisible_:
-	retn
-CAI_Stalker__IsVisibleForZones endp
 
 CScriptGameObject__InvalidateInventory proc
 	call    CScriptGameObject__CInventoryOwner
@@ -4391,3 +4455,413 @@ goodwill = dword ptr 10h
 	pop     ebp
 	retn    0Ch
 CScriptGameObject__ChangeGoodwillByID endp
+
+
+; --------------------- CCar  access function
+CScriptGameObject__GetCarFloat proc
+pos__ = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+
+	call    CScriptGameObject__CCar
+	mov     ecx, [ebp + pos__]
+	fld     dword ptr [eax+ecx]
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__GetCarFloat endp
+
+CScriptGameObject__SetCarFloat proc
+stub  = dword ptr  8
+value = dword ptr  0Ch
+pos   = dword ptr  10h
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+
+	call    CScriptGameObject__CCar
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], edx
+
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    0Ch
+CScriptGameObject__SetCarFloat endp
+
+
+CScriptGameObject__GetCarInt proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	
+	call    CScriptGameObject__CCar
+	mov     ecx, [ebp + pos]
+	mov     eax, [eax + ecx]
+
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetCarInt endp
+
+CScriptGameObject__SetCarInt proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	call    CScriptGameObject__CCar
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], edx
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetCarInt endp
+
+CScriptGameObject__SetCarInt16 proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	call    CScriptGameObject__CCar
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], dx
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetCarInt16 endp
+
+CScriptGameObject__GetCarInt16 proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    [ebp + pos]
+	push    [ebp + pos]
+	call    CScriptGameObject__CCar
+	mov     ecx, [ebp + pos]
+	mov     eax, [eax + ecx]
+	and     eax, 0FFFFh
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetCarInt16 endp
+
+;--------------------- memory access function
+CScriptGameObject__GetMemoryFloat proc
+pos__ = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+
+	mov     eax, [ebp + pos__]
+	fld     dword ptr [eax]
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__GetMemoryFloat endp
+
+CScriptGameObject__SetMemoryFloat proc
+stub  = dword ptr  8
+value = dword ptr  0Ch
+pos   = dword ptr  10h
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [ecx], edx
+
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    0Ch
+CScriptGameObject__SetMemoryFloat endp
+
+
+CScriptGameObject__GetMemoryInt proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	
+	mov     ecx, [ebp + pos]
+	mov     eax, [ecx]
+
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetMemoryInt endp
+
+CScriptGameObject__SetMemoryInt proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [ecx], edx
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetMemoryInt endp
+
+CScriptGameObject__SetMemoryInt16 proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [ecx], dx
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetMemoryInt16 endp
+
+CScriptGameObject__GetMemoryInt16 proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	mov     ecx, [ebp + pos]
+	xor     eax, eax
+	mov     ax, word ptr [ecx]
+	;and     eax, 0FFFFh
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetMemoryInt16 endp
+
+
+CScriptGameObject__AttachVehicle proc
+veh  = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	call    CScriptGameObject__CActor
+	; eax = actor
+	test    eax, eax
+	jz      exit
+	PRINT "is actor"
+	push    eax
+	
+	mov     ecx, [ebp + veh]
+	call    CScriptGameObject__CHolder
+	test    eax, eax
+	jz      exit
+	PRINT "is holder"
+	pop     edi
+	call    CActor__attach_Vehicle ; vehicle<eax>, int this<edi>
+exit:
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__AttachVehicle endp
+
+
+g_car_panel_visible dd 1
+
+CScriptGameObject__EnableCarPanel proc
+is_visible = byte ptr  8
+	push    ebp
+	mov     ebp, esp
+	xor     eax, eax
+	mov     al, [ebp+is_visible]
+	mov     [g_car_panel_visible], eax
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__EnableCarPanel endp
+
+g_vector_arg_1 Vector3 {0.0, 0.0, 0.0}
+g_vector_arg_2 Vector3 {0.0, 0.0, 0.0}
+g_vector_arg_3 Vector3 {0.0, 0.0, 0.0}
+g_vector_arg_4 Vector3 {0.0, 0.0, 0.0}
+
+CScriptGameObject__SetVectorGlobalArg1 proc
+val  = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	
+	mov     esi, dword ptr[ebp+val]
+	mov     edi, offset g_vector_arg_1
+	mov     eax, [esi]
+	mov     [edi], eax
+	mov     eax, [esi + 4] 
+	mov     [edi + 4], eax
+	mov     eax, [esi + 8]
+	mov     [edi + 8], eax
+	
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetVectorGlobalArg1 endp
+
+CScriptGameObject__SetVectorGlobalArg2 proc
+val  = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	
+	mov     esi, dword ptr[ebp+val]
+	mov     edi, offset g_vector_arg_2
+	mov     eax, [esi]
+	mov     [edi], eax
+	mov     eax, [esi + 4] 
+	mov     [edi + 4], eax
+	mov     eax, [esi + 8]
+	mov     [edi + 8], eax
+	
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetVectorGlobalArg2 endp
+
+CScriptGameObject__SetVectorGlobalArg3 proc
+val  = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	
+	mov     esi, dword ptr[ebp+val]
+	mov     edi, offset g_vector_arg_3
+	mov     eax, [esi]
+	mov     [edi], eax
+	mov     eax, [esi + 4] 
+	mov     [edi + 4], eax
+	mov     eax, [esi + 8]
+	mov     [edi + 8], eax
+	
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetVectorGlobalArg3 endp
+
+CScriptGameObject__SetVectorGlobalArg4 proc
+val  = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	push    edi
+	
+	mov     esi, dword ptr[ebp+val]
+	mov     edi, offset g_vector_arg_4
+	mov     eax, [esi]
+	mov     [edi], eax
+	mov     eax, [esi + 4] 
+	mov     [edi + 4], eax
+	mov     eax, [esi + 8]
+	mov     [edi + 8], eax
+	
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetVectorGlobalArg4 endp
+
+g_object_arg_1 dd ?
+
+CScriptGameObject__SetGOArg1 proc
+obj  = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	
+	mov     eax, dword ptr[ebp+val]
+	mov     [g_object_arg_1], eax
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetGOArg1 endp
+
+CScriptGameObject__GetHudItemState proc
+	push esi
+	;
+	mov     esi, [ecx + 4]
+	mov     eax, [esi+0B4h]   ; Parent
+	;PRINT_UINT "GetWpnState, parent=%x", eax
+	test    eax, eax
+	jz      cobject_exit
+
+	movzx   eax, word ptr [eax+0A4h]   ; parent id
+	;PRINT_UINT "GetWpnState, parent_id=%d", eax
+	test    eax, eax         ; id == actor_id == 0
+	jnz     cobject_exit
+	; parent == actor
+	;mov     ecx, esi
+	;mov     eax, [ecx] ; CObject::vftable
+	;mov     eax, [eax+0A8h]   ; cast_weapon
+	;call    eax            ; CGameObject::cast_weapon()
+	;test    eax, eax
+	;jz      cobject_exit
+	;mov eax, [eax+28Ch]
+	;PRINT "is_weapon"
+	mov     ecx, esi
+	mov     eax, [ecx] ; CObject::vftable
+	mov     eax, [eax+074h]   ; cast_inventory_item
+	call    eax            ; CGameObject::cast_inventory_item()
+	test    eax, eax
+	jz      cobject_exit
+	;PRINT "is_inventory_item"
+	mov     ecx, eax
+	mov     eax, [ecx] ; CInventoryItem::vftable
+	mov     eax, [eax+124h]   ; cast_hud_item
+	call    eax            ; CInventoryItem::cast_hud_item()
+	test    eax, eax
+	jz      cobject_exit
+	;PRINT "is_hud_item"
+	; eax = CWeapon
+	mov     eax, [eax+4]   ; m_state
+cobject_exit:
+	;
+	pop esi
+	retn
+CScriptGameObject__GetHudItemState endp
+;74h, 124h

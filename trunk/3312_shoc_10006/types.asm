@@ -1,3 +1,9 @@
+collide__rq_result struc
+O                  dd ? ; CObject *O;
+range              dd ? ;  float range;
+element            dd ? ;  int element;
+collide__rq_result ends
+
 Vector3         struc
 x               dd ?
 y               dd ?
@@ -14,6 +20,31 @@ _34_            dd ?
 c_              Vector3 <>
 _44_            dd ?
 Matrix4x4       ends
+
+SHit            struc ; (sizeof=0x48)
+Time            dd ? ; uint               ;00000000
+PACKET_TYPE     dw ? ; ushort             ;00000004
+DestID          dw ? ; ushort             ;00000006
+power           dd ? ; float              ;00000008
+dir_            Vector3 <>                ;0000000C
+who             dd ? ; CObject *who;      ;00000018
+whoID           dw ?                      ;0000001C
+weaponID        dw ?                      ;0000001E
+boneID          dw ?                      ;00000020
+p_in_bone_space Vector3 <>                ;00000022
+                db ? ; alighment (4)      ;0000002E
+                db ? ; alighment (4)      ;0000002F
+impulse         dd ? ; float              ;00000030
+hit_type        dd ? ; ALife::EHitType    ;00000034
+ap              dd ? ; float              ;00000038
+aim_bullet      db ? ; bool, 1 byte       ;0000003C
+                db ? ; alighment (4)      ;0000003D
+                db ? ; alighment (4)      ;0000003E
+                db ? ; alighment (4)      ;0000003F
+BulletID        dd ? ; uint               ;00000040
+SenderID        dd ? ; uint               ;00000044
+SHit            ends                      ;00000048
+
 
 g_value_aux dd ?
 

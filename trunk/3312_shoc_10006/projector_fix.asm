@@ -1,27 +1,3 @@
-SHit            struc ; (sizeof=0x48, standard type)
-Time            dd ?                                  ;00000000 
-PACKET_TYPE     dw ?                                  ;00000004 
-DestID          dw ?                                  ;00000006 
-power           dd ?                                  ;00000008 
-dir_            Vector3 <>                            ;0000000C 
-who             dd ?      ; offset                    ;00000018 
-whoID           dw ?                                  ;0000001C 
-weaponID        dw ?                                  ;0000001E 
-boneID          dw ?                                  ;00000020 
-p_in_bone_space Vector3 <>                            ;00000022 
-                db ? ; undefined                      ;0000002E 
-                db ? ; undefined                      ;0000002F 
-impulse         dd ?                                  ;00000030 
-hit_type        dd ? ; enum ALife::EHitType           ;00000034 
-ap              dd ?                                  ;00000038 
-aim_bullet      db ?                                  ;0000003C 
-                db ? ; undefined                      ;0000003D 
-                db ? ; undefined                      ;0000003E 
-                db ? ; undefined                      ;0000003F 
-BulletID        dd ?                                  ;00000040 
-SenderID        dd ?                                  ;00000044 
-SHit            ends                                  ;00000048 
-
 
 ; Hit(SHit* pHDS);
 Projector__Hit proc
