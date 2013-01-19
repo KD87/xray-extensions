@@ -133,12 +133,26 @@ org 1006935Ch - shift
 CBackend__set_Stencil dd ?
 org 10069360h - shift
 CBackend__set_ColorWriteEnable dd ?
+org 10069124h - shift
+CBackend__set_RT dd ?
+org 100693D0h - shift
+CBackend__set_ZB dd ?
 org 10055D60h - shift
 CRenderTarget__u_setrt:
 org 10069364h - shift
 ?_dec@?$resptr_base@VCRT@@@@IAEXXZ dd ?
 org 100692B4h - shift
 HW dd ?
+org 1006966Ch - shift
+Debug dd ?
+org 1006965Ch - shift
+xrDebug__error dd ?
+org 100693E8h - shift
+CResourceManager___CreateTexture dd ?
+org 100693F0h - shift
+resptr_base_CTexture____dec dd ?
+org 100693ECh - shift
+CTexture__surface_set dd ?
 
 org 100692E0h - shift
 RCache dd ?
@@ -654,15 +668,8 @@ org 100279C6h - shift
 back_to_sun_details_1_fix:
 
 ; rt_position fix
-org 1006679Dh - shift
+org 1006679Ch - shift
 	jmp	rt_position_clear
-org 100667A3h - shift
-back_to_rt_position_clear:
-
-org 1006680Ah - shift
-	jmp	stencil_buffer_clear
-org 10066810h - shift
-back_to_stencil_buffer_clear:
 
 ; bloodmarks
 org 1000D0B6h - shift
@@ -684,3 +691,104 @@ back_to_shader_defines:
 	
 org 100690CCh - shift
 __imp__sprintf dd ?
+org 100690D4h - shift
+__imp__strstr dd ?
+
+
+org 1006946Ch - shift
+IBlender__Compile dd ?
+org 10069470h - shift
+CBlender_Compile__r_Pass dd ?
+org 10069488h - shift
+CBlender_Compile__r_Sampler dd ?
+org 10069474h - shift
+CBlender_Compile__r_Sampler_clf dd ?
+org 10069494h - shift
+CBlender_Compile__r_Sampler_clw dd ?
+org 10069490h - shift
+CBlender_Compile__r_Sampler_rtf dd ?
+org 10069478h - shift
+CBlender_Compile__r_End dd ?
+org 1007AC5Ch - shift
+dword_1007AC5C dd 0
+org 1003AB50h - shift
+shared_str__shared_str:
+org 1003CE80h - shift
+uber_deffer:
+
+; регистраци€ семплеров в combine-шейдере
+org 1003ADEEh - shift
+	jmp combine_2_sampler_register
+org 1003ADF4h - shift
+back_to_combine_2_sampler_register:
+
+; добавление собственного блендера в CRenderTarget
+org 10069698h - shift
+_Memory dd ?
+org 1006969Ch - shift
+xrMemory__mem_alloc dd ?
+org 100696A0h - shift
+xrMemory__mem_free dd ?
+org 10069464h - shift
+IBlender__IBlender dd ?
+org 10069468h - shift
+IBlender___IBlender dd ?
+org 1006946Ch - shift
+IBlender__Compile dd ?
+org 1006BE98h - shift
+CBlender_combine__vfptr dd ?
+org 1006942Ch - shift
+resptrcode_shader__create dd ?
+org 10069404h - shift
+resptrcode_shader__create1 dd ?
+
+; смещени€ на функции
+org 10067D46h - shift
+IBlender__getName:
+org 10067D4Ch - shift
+IBlender__Save:
+org 10067D52h - shift
+IBlender__Load:
+org 1003ABE0h - shift
+CBlender_light_occq__canBeLMAPped:
+org 10067E90h - shift
+_D3DXCreateTexture:
+org 100566B0h - shift
+generate_jitter:
+
+; увеличим место под экземпл€р класса CRenderTarget:
+;0x180 - b_ikvision		- блендер класса CBlender_ikvision
+;0x184 - s_ikvision		- шейдер ик-видени€
+;0x188 - t_noise_hd_surf - указатель на объект типа  IDirect3DTexture9 - DirectX поверхность дл€ шума высокого разрешени€
+;0x188 - t_noise_hd - объект типа resptr_core<CTexture,resptrcode_texture> - текстура дл€ шума высокого разрешени€
+	; увеличение места под экземпл€р класса CRenderTarget в CRender::create()
+org 10004218h - shift
+push 190h		; 180h по умолчанию
+	; увеличение места под экземпл€р класса CRenderTarget в CRender::reset_end()
+org 10004773h - shift
+push 190h		; 180h по умолчанию
+	; инициализируем блендер и создаем шейдер на его основе
+org 100578C7h - shift
+	jmp	CRenderTarget_constructor
+org 100578CFh - shift
+back_to_CRenderTarget_constructor:
+	; добавл€ем переключение между шейдерами при рендере
+org 1006468Fh - shift
+	jmp	CRenderTarget_phase_combine_add
+org 10064694h - shift
+back_to_CRenderTarget_phase_combine_add:
+
+	; добавл€ем нойз-текстуру хорошего разрешени€
+org 10057871h - shift
+	jmp	noise_texture
+org 10057877h - shift
+back_to_noise_texture:
+
+; правильное положение солнца
+org 1006E564h - shift
+__real@bf400000 dd 0.0
+org 10030515h - shift
+	subss   xmm0, ds:__real@bf400000
+	
+org 1003048Ch - shift
+	movss   xmm3, ds:sun_far

@@ -110,3 +110,21 @@
 ;использование патронов на поясе
 ;0x10205D71 5
 ;0x1021C266 5
+;использование гранат на поясе
+;0x10221BFD 5
+;0x10221C2C 5
+;0x10205F1B 5
+;0x10222067 5
+
+;слоты
+0x103BA6AD 5 ;CUIInventoryWnd__Init__
+0x103BBD8D 5 ;CUIInventoryWnd__InitInventory__
+0x103BC590 5 ;CUIInventoryWnd__GetSlotList
+0x103BC5E0 5 ;CUIInventoryWnd__ClearAllLists
+0x10204311 5 ;CInventory__Init__ отключение худа слотов
+0x1042AA44 5 ;память под объект CInventory
+0x1042B8A8 5 ;память под объект CInventory
+0x10206C02 3 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
+0x10206C1F 5 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
+0x10206C35 6 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
+0x10206951 6 ;количество слотов в CInventory__SetSlotsBlocked

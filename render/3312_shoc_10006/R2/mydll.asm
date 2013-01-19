@@ -32,6 +32,10 @@ include light_fix.asm			; фикс виртуального радиуса ламп
 include bloodmarks.asm			; восстановление блудмарков
 include shader_defines_macro.asm	; макросы для установки дефайнов для шейдеров
 include shader_defines.asm		; установка дефайнов для шейдеров
+include	register_sampler_macro.asm	; макросы регистрации семплеров для шейдера
+include	register_sampler_combine.asm	; регистрация семплеров для s_combine
+include	ikvision_blender.asm		; блендер ик-видения
+include noise_texture.asm		; шумовая текстура высокого разрешения
 	
 _code ENDS
 

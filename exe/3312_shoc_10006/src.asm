@@ -19,14 +19,14 @@ include xr_3da_stubs.asm
 ; позиция в том месте, где в целевой DLL начинается наша секция
 org sec1_sec2_dist
 
-include empty.asm ; затычка для патчера
+;include empty.asm ; затычка для патчера
 include shaders_mapping_macro.asm
 include shaders_mapping.asm
 include console_comm_reg_macro.asm
 include console_comm.asm
 include zoom_check.asm
 include loadscreen_fix.asm
-;include weather_parameters.asm
+;include sun_position_fix.asm
 
 _code ENDS
 
