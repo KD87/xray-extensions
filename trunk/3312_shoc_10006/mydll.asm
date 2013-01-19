@@ -103,6 +103,7 @@ include weapon_stat_mgun_fix.asm
 include stalker_fix.asm
 include hanging_lamp_fix.asm
 include CEffectorZoomInertion_fix.asm
+include new_engine_slots.asm
 
 _CODE ENDS
 

@@ -9,6 +9,10 @@ REGISTER_DEFINE_INT soft_shadows, "SOFT_SHADOWS_QUALITY"
 REGISTER_DEFINE_INT steep_parallax, "STEEP_PARALLAX_QUALITY"
 REGISTER_DEFINE_INT dynamic_dof, "DDOF_QUALITY"
 
+REGISTER_DEFINE_FLAG dof_flags, 1, "USE_DYNAMIC_DDOF"
+REGISTER_DEFINE_FLAG dof_flags, 2, "USE_ZOOM_DDOF"
+REGISTER_DEFINE_FLAG dof_flags, 4, "USE_RELOAD_DDOF"
+
 	; делаем вырезанное
 	mov     ebx, [ebp+pFunctionName]
 	mov     [esp+esi*8+680h+defines], ecx

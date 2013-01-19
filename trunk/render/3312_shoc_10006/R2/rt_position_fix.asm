@@ -1,11 +1,89 @@
 rt_position_clear:
-	mov     esi, [ecx+10h]		; вместо стандартного pBaseRT очистим rt_Position
-	mov		ecx, [eax+3Ch]			
-	mov		ecx, [ecx+10h]
-	jmp		back_to_rt_position_clear
+	; новое
+	push	esi
+	push	edi
+	push	eax
+	mov     ecx, ds:HW
+	mov     edx, ds:Device
+	mov     esi, [ecx+10h]
+	mov     ecx, [eax+3Ch]
+	mov     ecx, [ecx+10h]
+	mov     edi, [edx+104h]
+	mov     edx, [edx+100h]
+	mov     [eax+4], edx
+	mov     [eax+8], edi
+;	mov     edx, [eax+40h]
+;	mov     edx, [edx+10h]	
+	push    0
+	push    ecx
+	mov     ecx, ds:RCache
+	call    ds:CBackend__set_RT
+	push    1
+	push	0
+;	push    edx
+	mov     ecx, ds:RCache
+	call    ds:CBackend__set_RT
+	mov     ecx, ds:RCache
+	push    2
+	push    0
+	call    ds:CBackend__set_RT
+	mov     ecx, ds:RCache
+	push    esi
+	call    ds:CBackend__set_ZB
+	fld1
+	mov     eax, ds:HW
+	mov     eax, [eax+8]
+	mov     ecx, [eax]
+	mov     edx, [ecx+0ACh]
+	push    0
+	push    ecx
+	fstp    dword ptr [esp]
+	push    0
+	push    1
+	push    0
+	push    0
+	push    eax
+	call    edx
+	pop		eax
+	; вырезанное
+	mov     ecx, ds:HW
+	mov     edx, ds:Device
+	mov     esi, [ecx+10h]
+	mov     ecx, [ecx+0Ch]
+	mov     edi, [edx+104h]
+	mov     edx, [edx+100h]
+	push    0
+	mov     [eax+4], edx
+	mov     [eax+8], edi
+	push    ecx
+	mov     ecx, ds:RCache
+	call    ds:CBackend__set_RT
+	mov     ecx, ds:RCache
+	push    1
+	push    0
+	call    ds:CBackend__set_RT
+	mov     ecx, ds:RCache
+	push    2
+	push    0
+	call    ds:CBackend__set_RT
+	mov     ecx, ds:RCache
+	push    esi
+	call    ds:CBackend__set_ZB
+	fld1
+	mov     eax, ds:HW
+	mov     eax, [eax+8]
+	mov     ecx, [eax]
+	mov     edx, [ecx+0ACh]
+	push    0
+	push    ecx
+	fstp    dword ptr [esp]
+	push    0
+	push    6
+	push    0
+	push    0
+	push    eax
+	call    edx
+	pop     edi
+	pop     esi
+	retn
 	
-stencil_buffer_clear:
-	push    0
-	push    7	; это флаг очистки буферов D3DClear: D3DCLEAR_STENCIL = 0x1, D3DCLEAR_TARGET = 0x2, D3DCLEAR_ZBUFFER = 0x4. В оригинале чистятся рендертаргет и Z-буфер, очистим также и стенсил-буфер.
-	push    0
-	jmp		back_to_stencil_buffer_clear

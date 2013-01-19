@@ -2255,11 +2255,11 @@ memset: ; dd ? ; void *__cdecl memset(void *Dst, int Val, size_t Size)
 org 1045871Ch - shift
 CObjectSpace__RayPick dd ?
 
+; ammo on belt
 org 10205D71h - shift
 	jmp CInventory__Get
 org 10205D79h - shift
 back_to_CInventory__Get:
-
 org 1021C266h - shift
 	jmp CWeapon__GetCurrentAmmo
 org 1021C2BAh - shift
@@ -2267,9 +2267,67 @@ CWeapon__GetCurrentAmmo_not_inventory_owner:
 org 1021C26Ch - shift
 CWeapon__GetCurrentAmmo_not_ammo_on_belt:
 
-org 10221B93h - shift
-	call CInventory__Belt
-org 10206316h - shift
-	jmp get_grenade
-org 10206321h - shift
-back_to_get_grenade:
+; grenades on belt
+org 10205C20h - shift
+CInventory__Same:
+org 10205D20h - shift
+CInventory__SameSlot:
+org 10221BFDh - shift
+	jmp CInventory__LookForGrenade
+org 10221C02h - shift
+back_to_CInventory__LookForGrenade:
+org 10221C2Ch - shift
+	jmp CInventory__LookForAnyGrenade
+org 10221C31h - shift
+back_to_CInventory__LookForAnyGrenade:
+org 10205F1Bh - shift
+	jmp grenade_counter_fix
+org 10205F21h - shift
+back_to_grenade_counter_fix:
+org 10222067h - shift
+	jmp grenade_counter_fix1
+org 1022206Fh - shift
+back_to_grenade_counter_fix1:
+
+;;; slots ;;;
+; funcs
+org 10418420h - shift	
+sub_10418420:
+org 103E6820h - shift	
+sub_103E6820:
+org 103BBB40h - shift	
+loc_103BBB40:
+org 10418330h - shift	
+sub_10418330:
+org 10418D70h - shift	
+sub_10418D70:
+	
+; new code
+org 103BA6ADh - shift
+	jmp CUIInventoryWnd__Init__
+org 103BA6B2h - shift
+back_to_CUIInventoryWnd__Init__:
+org 103BBD8Dh - shift
+	jmp CUIInventoryWnd__InitInventory__
+org 103BBD95h - shift
+back_toCUIInventoryWnd__InitInventory__:
+org 103BC590h - shift
+	jmp CUIInventoryWnd__GetSlotList
+org 103BC5E0h - shift
+	jmp CUIInventoryWnd__ClearAllLists
+org 10204311h - shift
+	jmp CInventory__Init__
+org 10204316h - shift
+back_to_CInventory__Init__:
+org 1042AA44h - shift
+	push    26F0h	; 26C4h+4*num_of_all_new_slots
+org 1042B8A8h - shift
+	push    26F0h	; 26C4h+4*num_of_all_new_slots
+org 10206C02h - shift
+	cmp     eax, 0Dh	; 0Bh + num_of_extra_slots
+org 10206C1Fh - shift
+	mov     esi, 0Dh	; 0Bh + num_of_extra_slots
+org 10206C35h - shift
+	lea     eax, [edx+0D0h]	; 0Bh + num_of_extra_slots
+org 10206951h - shift
+	cmp     edx, 0D0h	; 0Bh + num_of_extra_slots

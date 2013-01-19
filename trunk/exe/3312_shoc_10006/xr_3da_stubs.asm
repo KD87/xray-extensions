@@ -69,6 +69,8 @@ org 004B8022h - shift
 	
 org 004C8FF7h - shift	
 _atexit:
+org 004100D0h - shift
+CCC_Mask__CCC_Mask:
 org 00410620h - shift
 CCC_Float__CCC_Float:
 org 00410D00h - shift
@@ -87,8 +89,10 @@ org 004B9E10h - shift
 sub_4B9E10:
 org 0050E858h - shift
 xCCC_Integer dd ?
-org 004CC420h - shift
+org 004CC5CCh - shift
 Msg dd ?
+org 004CC420h - shift
+Log dd ?
 org 004CC1F8h - shift
 __imp__sprintf_s dd ?
 	
@@ -120,3 +124,10 @@ back_to_cobject_check:
 
 org 0050BE84h - shift
 timer dd ?
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; правильное положение солнца
+;org 00448933h - shift
+;	jmp sun_position_fix
+;org 0044893Bh - shift
+;back_to_sun_position_fix:
