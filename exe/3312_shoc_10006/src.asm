@@ -26,7 +26,7 @@ include console_comm_reg_macro.asm
 include console_comm.asm
 include zoom_check.asm
 include loadscreen_fix.asm
-;include sun_position_fix.asm
+include weather_parameters.asm
 
 _code ENDS
 

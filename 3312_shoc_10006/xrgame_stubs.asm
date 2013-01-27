@@ -2331,3 +2331,21 @@ org 10206C35h - shift
 	lea     eax, [edx+0D0h]	; 0Bh + num_of_extra_slots
 org 10206951h - shift
 	cmp     edx, 0D0h	; 0Bh + num_of_extra_slots
+	
+; учет предмета в шлемовом слоте при расчете хита актору
+org 101C9B80h - shift
+	jmp CActor__HitArtefactsOnBelt
+	
+; включение сетки под броней
+org 103BD9E0h - shift
+	jmp CUIWindow__Draw
+	
+org 103F8BE0h - shift
+CUIWindow__Draw:
+
+org 103BD592h - shift
+	pop eax
+	nop
+	nop
+	nop
+	nop

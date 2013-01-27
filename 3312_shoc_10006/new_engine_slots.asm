@@ -483,3 +483,110 @@ aDragdrop_torch db "dragdrop_torch", 0
 aDragdrop_helmet db "dragdrop_helmet", 0
 aDragdrop_nv db "dragdrop_nv", 0
 aDragdrop_biodetector db "dragdrop_biodetector", 0
+
+; заставляем движок учитывать предмет из шлемового слота при подсчете хита актору
+CActor__HitArtefactsOnBelt proc
+hit_power       = dword ptr  4
+hit_type        = dword ptr  8
+	sub     esp, 8
+	movss   xmm0, ds:pick_dist
+	push    esi
+	push    edi
+	mov     edi, ecx
+	mov     eax, [edi+298h]	; m_inventory
+	mov     esi, [eax+28h]	; m_belt
+	cmp     [eax+2Ch], esi
+	movss   dword ptr [esp+8h], xmm0
+	xorps   xmm0, xmm0
+	movss   dword ptr [esp+0Ch], xmm0
+	jz      short check_slot
+	push    ebx
+	mov     ebx, [esp+14h+hit_type]
+	push	eax
+	
+begin_iteration: 
+	mov     ecx, [esi]
+	test    ecx, ecx
+	jz      short next
+	mov     eax, [ecx]
+	mov     edx, [eax+12Ch]
+	call    edx
+	test    eax, eax
+	jz      short next
+	mov     edx, [eax]
+	mov     ecx, eax
+	mov     eax, [edx+98h]
+	call    eax
+	test    eax, eax
+	jz      short next
+	mov     edx, [eax+318h]
+	fld1
+	lea     ecx, [eax+318h]
+	mov     eax, [edx+8]
+	push    ebx
+	push    ecx
+	fstp    dword ptr [esp]
+	call    eax
+	fadd    dword ptr [esp+10h]
+	movss   xmm0, dword ptr [esp+14h]
+	addss   xmm0, ds:pick_dist
+	movss   dword ptr [esp+14h], xmm0
+	fstp    dword ptr [esp+10h]
+	
+next:
+	mov     ecx, [edi+298h]
+	add     esi, 4
+	cmp     [ecx+2Ch], esi
+	jnz     short begin_iteration
+	pop		eax
+	pop     ebx	
+	
+check_slot:
+	; получаем итем в слоте
+	mov		eax, [eax+38h]	; m_slots._Myfirst
+	mov		ecx, [eax+0A4h] ; item in slot #10 (CInventoryItem *)
+	test    ecx, ecx
+	jz      short exit
+	; кастуем в CGameObject
+	mov     eax, [ecx]
+	mov     edx, [eax+12Ch]
+	call    edx
+	test    eax, eax
+	jz      short exit
+	; кастуем в CArtefact
+	mov     edx, [eax]
+	mov     ecx, eax
+	mov     eax, [edx+98h]
+	call    eax
+	test    eax, eax
+	jz      short exit
+	; узнаем защиту от хита
+	mov     edx, [eax+318h]	; m_ArtefactHitImmunities
+	fld1
+	lea     ecx, [eax+318h]
+	mov     eax, [edx+8]
+	push	ebx
+	mov     ebx, [esp+14h+hit_type]	
+	push    ebx
+	push    ecx
+	fstp    dword ptr [esp]	; hit_power (всегда 1 почему-то)
+	call    eax	;AffectHit(power, hit_type)
+	pop		ebx
+	; подсчитываем хит
+	fadd    dword ptr [esp+8h]
+	movss   xmm0, dword ptr [esp+0Ch]
+	addss   xmm0, ds:pick_dist
+	movss   dword ptr [esp+0Ch], xmm0
+	fstp    dword ptr [esp+8h]
+
+exit:
+	fld     dword ptr [esp+8h]
+	pop     edi
+	fsub    dword ptr [esp+8h]
+	pop     esi
+	fmul    dword ptr [esp+8+hit_power]
+	add     esp, 8
+	retn    8
+CActor__HitArtefactsOnBelt endp
+
+pick_dist dd 1.0

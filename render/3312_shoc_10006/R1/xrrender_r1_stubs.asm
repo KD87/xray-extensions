@@ -390,3 +390,20 @@ org 10072550h - shift
 visibility	REAL4 ?
 org 10072554h - shift	
 smooth_circle	REAL4 ?
+
+;===========================================
+; r__geometry_lod
+;===========================================	
+org 100586F8h - shift
+	dd 3.0
+	
+;===========================================
+; MIPBIAS.
+;===========================================
+org 10001911h - shift
+	jmp mip_bias
+org 10001920h - shift
+back_to_mip_bias:
+
+org 1007238Ch - shift
+mipbias_obj dd ?

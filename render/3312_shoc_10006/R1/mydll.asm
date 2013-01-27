@@ -23,6 +23,7 @@ include console_comm_reg_macro.asm
 include console_comm.asm
 include detail_radius_fix.asm
 include detail_density_fix.asm
+include mip_bias_fix.asm
 	
 _CODE ENDS
 

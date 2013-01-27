@@ -792,3 +792,20 @@ org 10030515h - shift
 	
 org 1003048Ch - shift
 	movss   xmm3, ds:sun_far
+	
+;===========================================
+; r__geometry_lod
+;===========================================	
+org 1006E4C0h - shift
+	dd 3.0
+	
+;===========================================
+; MIPBIAS.
+;===========================================
+org 10001BFFh - shift
+	jmp mip_bias
+org 10001C0Eh - shift
+back_to_mip_bias:
+
+org 10089AF4h - shift
+mipbias_obj dd ?

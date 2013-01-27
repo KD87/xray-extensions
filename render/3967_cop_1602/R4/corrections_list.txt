@@ -1,19 +1,82 @@
 ;=====================================
 ;=====ÄÀËÜÍÎÑÒÜ ÎÒĞÈÑÎÂÊÈ ÒĞÀÂÛ=======
 ;=====================================
-0x1002B8A9 9 cache_initialize_1 
-0x1002B8B4 6 cache_initialize_2 
-0x1002BC5E 6 cache_update_1 
-0x1002BCBA 9 cache_update_2 
-0x1002BD40 6 cache_update_3
-0x1002BD9C 6 cache_update_4
-0x1002BD86 10 cache_update_5
-0x1002B958 7 cache_task_1
-0x1002AE33 6 cache_upvism_1
-0x1002AE43 6 cache_upvism_2
-0x1002A810 9 cache_upvism_3
+0x1002B8A9 5 cache_initialize_1 
+0x1002B8B4 5 cache_initialize_2 
+0x1002BC56 5 cache_update_1 
+0x1002BCBA 5 cache_update_2 
+0x1002BD40 5 cache_update_3
+0x1002BD9C 5 cache_update_4
+0x1002B958 5 cache_task_1
+0x1002AE33 5 cache_upvism_1
+0x1002AE43 5 cache_upvism_2
+0x1002A810 5 cache_upvism_3
+0x1002BC32 5 update_30h_1
+0x1002BC85 5 update_30h_3
+0x1002BD0B 5 update_30h_4
+0x1002BD64 5 update_30h_5
+0x1002BD86 5 update_30h_6
+0x1002B8BC 5 cache_init_4
+0x1002B8D4 5 cache_init_5
+0x1002BF30 5 cache_upd_6
+0x1002BF5A 5 cache_upd_7
+0x1002B904 5 cache_init_C4_1
+0x1002BD12 5 cache_upd_C4_2
+0x1002BD70 5 cache_upd_C4_3
+0x10029F8E 5 const_960_1
+0x1002A2C7 5 const_960_2
+0x10029F2F 5 cache_level1_length
+0x1002BCA8 5 red_cl1_line_size_minus
+0x1002BD2E 5 cache_size_w_o_last_line_minus
+0x1002BDB7 5 cache_length
+0x1002B920 5 four_lines_length_in_cache
+0x1002A979 5 vis
+0x1002A99F 5 circle
+;ğàñ÷åòû
+0x1001A9EB 5 calculate_stuff
+;ñìåùåíèÿ
+0x1002B887 5 offset_1
+0x1002BB8B 5 offset_3
+0x1002BC0F 5 offset_4
+0x1002BC7D 5 offset_5
+0x1002BD03 5 offset_6
+0x1002BD57 5 offset_7
+0x1002BE06 5 offset_8
+0x1002BE16 5 offset_9
+0x1002BE33 5 offset_10
+0x1002BECD 5 offset_11
+0x1002BEDB 5 offset_12
+0x1002BEF0 5 offset_13
+0x1002BF0E 5 offset_14
+0x1002A82A 5 offset_15
+
+;=====================================
+;=========ÊÎÍÑÎËÜÍÛÅ ÊÎÌÀÍÄÛ==========
+;=====================================
+0x1000412A 5
 
 ;=====================================
 ;==========ÏËÎÒÍÎÑÒÜ ÒĞÀÂÛ============
 ;=====================================
 0x10001EF5 5
+
+;=====================================
+;====ÄÀËÜÍÎÑÒÜ ÏÅĞÅÊËŞ×ÅÍÈß ËÎÄÎÂ=====
+;=====================================
+0x100E7754 4
+
+;=====================================
+;==========ÔÈÊÑ ÒÅÍÅÉ ÒĞÀÂÛ===========
+;=====================================
+;0x1001FF0A 5
+;0x1003056F 6
+
+;=====================================
+;=======ÔÈÊÑ ÄÂÈÆÅÍÈß ÑÎËÍÖÀ==========
+;=====================================
+0x100198D0 15
+
+;=====================================
+;========ÔÈÊÑ ÎÒĞÈÑÎÂÊÈ ÍÅÁÀ==========
+;=====================================
+0x100F2464 76

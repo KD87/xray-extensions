@@ -1,19 +1,82 @@
 ;=====================================
 ;=====ƒ¿À‹ÕŒ—“‹ Œ“–»—Œ¬ » “–¿¬€=======
 ;=====================================
-0x1002AA09 9 cache_initialize_1 
-0x1002AA14 6 cache_initialize_2 
-0x1002ADBE 6 cache_update_1 
-0x1002AE1A 9 cache_update_2 
-0x1002AEA0 6 cache_update_3
-0x1002AEFC 6 cache_update_4
-0x1002AEE6 10 cache_update_5
-0x1002AAB8 7 cache_task_1
-0x10029FF3 6 cache_upvism_1
-0x1002A003 6 cache_upvism_2
-0x100299D0 9 cache_upvism_3
+0x1002AA09 5 cache_initialize_1 
+0x1002AA14 5 cache_initialize_2 
+0x1002ADB6 5 cache_update_1 
+0x1002AE1A 5 cache_update_2 
+0x1002AEA0 5 cache_update_3
+0x1002AEFC 5 cache_update_4
+0x1002AAB8 5 cache_task_1
+0x10029FF3 5 cache_upvism_1
+0x1002A003 5 cache_upvism_2
+0x100299D0 5 cache_upvism_3
+0x1002AD92 5 update_30h_1
+0x1002ADE5 5 update_30h_3
+0x1002AE6B 5 update_30h_4
+0x1002AEC4 5 update_30h_5
+0x1002AEE6 5 update_30h_6
+0x1002AA1C 5 cache_init_4
+0x1002AA34 5 cache_init_5
+0x1002B090 5 cache_upd_6
+0x1002B0BA 5 cache_upd_7
+0x1002AA64 5 cache_init_C4_1
+0x1002AE72 5 cache_upd_C4_2
+0x1002AED0 5 cache_upd_C4_3
+0x1002914E 5 const_960_1
+0x10029487 5 const_960_2
+0x100290EF 5 cache_level1_length
+0x1002AE08 5 red_cl1_line_size_minus
+0x1002AE8E 5 cache_size_w_o_last_line_minus
+0x1002AF17 5 cache_length
+0x1002AA80 5 four_lines_length_in_cache
+0x10029B39 5 vis
+0x10029B5F 5 circle
+;‡Ò˜ÂÚ˚
+0x1001A8CB 5 calculate_stuff
+;ÒÏÂ˘ÂÌËˇ
+0x1002A9E7 5 offset_1
+0x1002ACEB 5 offset_3
+0x1002AD6F 5 offset_4
+0x1002ADDD 5 offset_5
+0x1002AE63 5 offset_6
+0x1002AEB7 5 offset_7
+0x1002AF66 5 offset_8
+0x1002AF76 5 offset_9
+0x1002AF93 5 offset_10
+0x1002B02D 5 offset_11
+0x1002B03B 5 offset_12
+0x1002B050 5 offset_13
+0x1002B06E 5 offset_14
+0x100299EA 5 offset_15
+
+;=====================================
+;========= ŒÕ—ŒÀ‹Õ€≈  ŒÃ¿Õƒ€==========
+;=====================================
+0x1000411A 5
 
 ;=====================================
 ;==========œÀŒ“ÕŒ—“‹ “–¿¬€============
 ;=====================================
 0x10001EE5 5
+
+;=====================================
+;====ƒ¿À‹ÕŒ—“‹ œ≈–≈ Àﬁ◊≈Õ»ﬂ ÀŒƒŒ¬=====
+;=====================================
+0x100DB144 4
+
+;=====================================
+;==========‘» — “≈Õ≈… “–¿¬€===========
+;=====================================
+;0x1001FE17 5
+;0x1002F67D 6
+
+;=====================================
+;=======‘» — ƒ¬»∆≈Õ»ﬂ —ŒÀÕ÷¿==========
+;=====================================
+0x10019730 15
+
+;=====================================
+;========‘» — Œ“–»—Œ¬ » Õ≈¡¿==========
+;=====================================
+0x100E5464 76
