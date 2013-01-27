@@ -128,3 +128,7 @@
 0x10206C1F 5 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
 0x10206C35 6 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
 0x10206951 6 ;количество слотов в CInventory__SetSlotsBlocked
+0x101C9B80 5 ;учет предмета в шлемовом слоте при расчете хита актору
+;включение сетки под броней в инвентаре
+0x103BD9E0 5 ;сетка под броней
+0x103BD592 5 ;сетка под броней

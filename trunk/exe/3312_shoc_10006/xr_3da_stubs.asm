@@ -56,6 +56,8 @@ org 0048DD30h - shift
 CBlender_Compile__r_Constant:
 org 004CC3F4h - shift
 CInifile__r_float dd ?
+org 004CC3E4h - shift
+CInifile__r_string dd ?
 org 004CC5C8h - shift
 pSettings dd ?
 org 0050BB7Ch - shift
@@ -91,7 +93,7 @@ org 0050E858h - shift
 xCCC_Integer dd ?
 org 004CC5CCh - shift
 Msg dd ?
-org 004CC420h - shift
+org 004CC59Ch - shift
 Log dd ?
 org 004CC1F8h - shift
 __imp__sprintf_s dd ?
@@ -126,8 +128,10 @@ org 0050BE84h - shift
 timer dd ?
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; правильное положение солнца
-;org 00448933h - shift
-;	jmp sun_position_fix
-;org 0044893Bh - shift
-;back_to_sun_position_fix:
+; погодные параметры
+org 00438965h - shift
+	jmp	switch_parameters
+org 0043896Ch - shift
+back_to_switch_parameters:	
+org 00509344h - shift
+drop_max_angle dd 0.17453294

@@ -57,7 +57,8 @@ ss_setup proc
 ; вычисление константы	
 
 	movss   xmm0, sunshafts_exposure	;x
-	xorps   xmm1, xmm1					;y
+;	movss   xmm1, sun_shafts_weather_defined					;y
+	xorps   xmm1, xmm1
 	xorps   xmm2, xmm2					;z
 	xorps   xmm3, xmm3					;w
 ; регистрация константы в системе 
@@ -153,6 +154,7 @@ mapping_exit:
 common_setup endp
 
 ; нужные константы
+sun_shafts_weather_defined dd 1.0
 dumb_one dd 1.0
 width_float dd 0
 height_float dd 0
