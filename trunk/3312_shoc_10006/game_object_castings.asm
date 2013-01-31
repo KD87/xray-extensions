@@ -168,9 +168,10 @@ MAKE_CASTING3 CScriptGameObject__CSilencer, off_10556C70
 MAKE_CASTING3 CScriptGameObject__CGrenadeLauncher, off_10556C88
 MAKE_CASTING3 CScriptGameObject__CFoodItem, off_1055578C
 MAKE_CASTING3 CScriptGameObject__CGrenade, off_105557A4
+MAKE_CASTING3 CScriptGameObject__CBottleItem, off_1055722C
 
 MAKE_CASTING4 CScriptGameObject__CWeaponMagazined, 0A8h, 130h
-MAKE_CASTING4 CScriptGameObject__CEatableItem1, 74h, 11Ch  ; <== not working yet
+MAKE_CASTING4 CScriptGameObject__CEatableItem,  74h, 114h  ; 
 MAKE_CASTING4 CScriptGameObject__CMissile,      74h, 120h  ;	CMissile* CInventoryItem::cast_missile();
 MAKE_CASTING4 CScriptGameObject__CHudItem,      74h, 124h  ;	CHudItem* CInventoryItem::cast_hud_item();
 MAKE_CASTING4 CScriptGameObject__CAmmo,         74h, 128h  ;	CWeaponAmmo* CInventoryItem::cast_weapon_ammo();
@@ -193,7 +194,7 @@ MAKE_CHECK_FUN CScriptGameObject__IsSpaceRestrictor	   , CScriptGameObject__CSpa
 
 MAKE_CHECK_FUN CScriptGameObject__IsHolder			   , CScriptGameObject__CHolder
 
-MAKE_CHECK_FUN CScriptGameObject__IsBaseMonster		   , CScriptGameObject__CBaseMonster ; <=================================
+MAKE_CHECK_FUN CScriptGameObject__IsBaseMonster		   , CScriptGameObject__CBaseMonster
 ;
 MAKE_CHECK_FUN CScriptGameObject__IsScriptZone		   , CScriptGameObject__CScriptZone
 MAKE_CHECK_FUN CScriptGameObject__IsProjector		   , CScriptGameObject__CProjector
@@ -209,11 +210,12 @@ MAKE_CHECK_FUN CScriptGameObject__IsSilencer		   , CScriptGameObject__CSilencer
 MAKE_CHECK_FUN CScriptGameObject__IsGrenadeLauncher	   , CScriptGameObject__CGrenadeLauncher
 MAKE_CHECK_FUN CScriptGameObject__IsFoodItem		   , CScriptGameObject__CFoodItem
 MAKE_CHECK_FUN CScriptGameObject__IsWeaponMagazined	   , CScriptGameObject__CWeaponMagazined
-MAKE_CHECK_FUN CScriptGameObject__IsEatableItem1	   , CScriptGameObject__CEatableItem1
+MAKE_CHECK_FUN CScriptGameObject__IsEatableItem 	   , CScriptGameObject__CEatableItem
 MAKE_CHECK_FUN CScriptGameObject__IsMissile			   , CScriptGameObject__CMissile
 MAKE_CHECK_FUN CScriptGameObject__IsHudItem			   , CScriptGameObject__CHudItem
 MAKE_CHECK_FUN CScriptGameObject__IsAmmo			   , CScriptGameObject__CAmmo
 MAKE_CHECK_FUN CScriptGameObject__IsGrenade            , CScriptGameObject__CGrenade
+MAKE_CHECK_FUN CScriptGameObject__IsBottleItem         , CScriptGameObject__CBottleItem
 
 ;	CEatableItem* CInventoryItem::cast_eatable_item();  108
 ;	CWeapon* CInventoryItem::cast_weapon();       112
@@ -243,280 +245,3 @@ CScriptGameObject__GetCarShift proc
 	retn
 CScriptGameObject__GetCarShift endp
 
-
-ALIGN_8
-CScriptGameObject__IsEatableItem proc ; не работает!!!!!!!!!!!!!!!!!!!!!
-	call    CScriptGameObject__CInventoryItem
-	test    eax, eax
-	jz      short exit_fail
-	mov     eax, [eax]
-	mov     edx, [eax+114h]
-	call    edx
-exit_fail:
-	pop     edi
-	pop     esi
-	retn
-CScriptGameObject__IsEatableItem endp
-
-
-; на входе CScriptGameObject
-;CScriptGameObject__IsEntityAlive proc
-;	push    esi
-;	mov     esi, ecx
-;	push    edi
-;	mov     edi, [esi+4]
-;	test    edi, edi
-;	jz      lab1
-;	call    CGameObject__lua_game_object
-;lab1:
-;	mov     ecx, [esi+4]
-;	test    ecx, ecx
-;	jz      short exit_fail
-;	mov     eax, [ecx]
-;	mov     edx, [eax+7Ch]
-;	call    edx
-;exit_fail:
-;	pop     edi
-;	pop     esi
-;	retn
-;CScriptGameObject__IsEntityAlive endp
-
-; CScriptGameObject__IsHolder proc
-	; push    esi
-	; mov     esi, ecx
-	; push    edi
-	; mov     edi, [esi+4]
-	; test    edi, edi
-	; jz      lab1
-	; call    CGameObject__lua_game_object
-; lab1:
-	; mov     ecx, [esi+4]
-	; test    ecx, ecx
-	; jz      short exit_fail
-	; mov     eax, [ecx]
-	; mov     edx, [eax+0B8h]
-	; call    edx
-	; test    eax, eax
-; exit_fail:
-	; pop     edi
-	; pop     esi
-	; retn
-; CScriptGameObject__IsHolder endp
-
-; Cast_SGO_to_CInventoryItem proc
-	; push    esi
-	; push    edi
-	; push    edx
-
-	; mov     esi, ecx
-	; mov     edi, [esi+4]
-	; test    edi, edi
-	; jz      short lab1
-	; call    CGameObject__lua_game_object
-; lab1:
-	; mov     ecx, [esi+4]
-	; test    ecx, ecx
-	; jz      short exit
-	; mov     eax, [ecx]
-	; mov     edx, [eax+74h]
-	; call    edx
-; exit:
-	; pop     edx
-	; pop     edi
-	; pop     esi
-	; ret
-; Cast_SGO_to_CInventoryItem endp
-
-; Cast_SGO_to_CInventoryOwner proc  ; ecx - argument, eax - result
-	; push    esi
-	; push    edi
-	; push    edx
-
-	; mov     esi, ecx
-	; mov     edi, [esi+4]
-	; test    edi, edi
-	; jz      short lab1
-	; call    CGameObject__lua_game_object
-; lab1:
-	; mov     ecx, [esi+4]
-	; test    ecx, ecx
-	; jz      short exit
-	; mov     eax, [ecx]
-	; mov     edx, [eax+70h]
-	; call    edx
-; exit:
-	; pop     edx
-	; pop     edi
-	; pop     esi
-	; ret
-; Cast_SGO_to_CInventoryOwner endp
-
-
-; Cast_SGO_to_CInventoryBox proc  ; ecx - argument, eax - result
-	; push    esi
-	; push    edi
-
-	; mov     esi, ecx
-	; mov     edi, [esi+4]
-	; test    edi, edi
-	; jz      short lab1
-	; call    CGameObject__lua_game_object
-; lab1:
-	; mov     esi, [esi+4]
-	; xor     eax, eax
-	; test    esi, esi
-	; jz      short exit
-	; push    0               ; a5
-	; push    offset off_1054F0B0 ; a4
-	; push    offset ??_R0?AVCGameObject@@@8 ; a3
-	; push    0               ; a2
-	; push    esi             ; a1
-	; call    __RTDynamicCast
-	; add     esp, 14h
-; exit:
-	; pop     edi
-	; pop     esi
-	; ret
-; Cast_SGO_to_CInventoryBox endp
-
-; Cast_SGO_to_CActor proc ; ecx - argument, eax - result
-	; push    esi
-	; push    edi
-	; push    edx
-	
-	; mov     esi, ecx
-	; push    edi
-	; mov     edi, [esi+4]
-	; test    edi, edi
-	; jz      short lab1
-	; call    CGameObject__lua_game_object
-; lab1:
-	; mov     ecx, [esi+4]
-	; xor     eax, eax
-	; test    ecx, ecx
-	; jz      short exit
-	; mov     eax, [ecx]
-	; mov     edx, [eax+80h]
-	; call    edx
-; exit:
-	; pop     edx
-	; pop     edi
-	; pop     esi
-	; ret
-; Cast_SGO_to_CActor endp
-
-
-; CScriptGameObject__IsActor proc
-	; push    esi
-	; mov     esi, ecx
-	; push    edi
-	; mov     edi, [esi+4]
-	; test    edi, edi
-	; jz      lab1
-	; call    CGameObject__lua_game_object
-; lab1:
-	; mov     ecx, [esi+4]
-	; test    ecx, ecx
-	; jz      short exit_fail
-	; mov     eax, [ecx]
-	; mov     edx, [eax+80h]
-	; call    edx
-; exit_fail:
-	; pop     edi
-	; pop     esi
-	; retn
-; CScriptGameObject__IsActor endp
-
-
-; CScriptGameObject__IsCustomMonster proc
-	; push    esi
-	; mov     esi, ecx
-	; push    edi
-	; mov     edi, [esi+4]
-	; test    edi, edi
-	; jz      lab1
-	; call    CGameObject__lua_game_object
-; lab1:
-	; mov     ecx, [esi+4]
-	; test    ecx, ecx
-	; jz      short exit_fail
-	; mov     eax, [ecx]
-	; mov     edx, [eax+9Ch]
-	; call    edx
-; exit_fail:
-	; pop     edi
-	; pop     esi
-	; retn
-; CScriptGameObject__IsCustomMonster endp
-
-
-; CScriptGameObject__IsWeapon proc
-	; push    esi
-	; mov     esi, ecx
-	; push    edi
-	; mov     edi, [esi+4]
-	; test    edi, edi
-	; jz      lab1
-	; ;
-	; call    CGameObject__lua_game_object
-	; ;
-; lab1:
-	; mov     ecx, [esi+4]
-	; test    ecx, ecx
-	; jz      short exit_fail
-	; mov     eax, [ecx]
-	; mov     edx, [eax+0A8h]
-	; call    edx
-	; test    eax, eax
-; exit_fail:
-	; pop     edi
-	; pop     esi
-	; retn
-; CScriptGameObject__IsWeapon endp
-
-; CScriptGameObject__IsInventoryItem proc
-	; push    esi
-	; mov     esi, ecx
-	; push    edi
-
-	; mov     edi, [esi+4]
-	; test    edi, edi
-	; jz      lab1
-	; call    CGameObject__lua_game_object
-; lab1:
-	; mov     ecx, [esi+4]
-	; test    ecx, ecx
-	; jz      exit_fail
-	; mov     eax, [ecx]
-	; mov     edx, [eax+74h]
-	; call    edx
-	; test    eax, eax
-	; jz      exit_fail
-; exit_fail:
-	; pop     edi
-	; pop     esi
-	; retn
-; CScriptGameObject__IsInventoryItem endp
-
-; CScriptGameObject__IsWeaponGL proc
-	; push    esi
-
-	; call CScriptGameObject__IsInventoryItem
-	; test    eax, eax
-	; jz      exit_fail
-	; ; это CInventoryItem
-	; xor     esi, esi
-	; push    esi             ; 0
-	; push    offset off_10556CC8 ; a4
-	; push    offset off_10538CDC ; a3
-	; push    esi             ; 0
-	; push    eax             ; inventory_item
-	; call    __RTDynamicCast
-	; add     esp, 14h
-	; test    eax, eax
-	; jz      exit_fail
-	; ; это CWeaponMagazinedWGrenade
-; exit_fail:
-	; pop     esi
-	; retn
-; CScriptGameObject__IsWeaponGL endp

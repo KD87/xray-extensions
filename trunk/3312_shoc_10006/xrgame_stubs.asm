@@ -1,6 +1,53 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+org 10458A70h - shift
+CCameraManager__Update0 dd ? ; public: void __thiscall CCameraManager::Update(_vector3<float> const &, _vector3<float> const &, _vector3<float> const &, float, float, float, uint)
+org 10458518h - shift
+CCameraManager__Update1 dd ? ; public: void __thiscall CCameraManager::Update(CCameraBase const *)
+
+;.text:1026F820 CCar__cam_Update proc near
+;...
+org 1026F96Eh - shift
+	jmp CCar__cam_Update_fix
+;.text:1026F96E                 mov     ecx, [esi+2DCh]
+;.text:1026F974                 mov     edx, ds:?g_pGameLevel@@3PAVIGame_Level@@A ; IGame_Level * g_pGameLevel
+;.text:1026F97A                 mov     eax, [edx]
+;.text:1026F97C                 push    ecx
+;.text:1026F97D                 mov     ecx, [eax+40h]
+;.text:1026F980                 call    ds:?Update@CCameraManager@@QAEXPBVCCameraBase@@@Z ; CCameraManager::Update(CCameraBase const *)
+;.text:1026F986                 pop     esi
+;.text:1026F987                 add     esp, 18h
+;.text:1026F98A                 retn    8
+;.text:1026F98A CCar__cam_Update endp
+
+
+; char __userpurge CInventory__Eat<al>(int item<ebx>, CInventory *this)
+; ...
+org 1020616Dh - shift
+	jmp CInventory__Eat_fix
+;.text:1020616D                 mov     edx, [edi]
+;.text:1020616F                 mov     eax, [edx+130h]
+org 10206175h - shift
+back_from_CInventory__Eat_fix:
+;.text:10206175                 push    esi
+;.text:10206176                 mov     ecx, edi
+;.text:10206178                 call    eax ; UseBy
+
+
+; фрагмент из CEntityCondition::ConditionHit
+; повторное умножение на коэффициент иммунитета от телепатического урона
+; нигде такого нет, поэтому убираем
+org 101E35ECh - shift
+	nop
+	nop
+	nop
+	nop
+;.text:101E35EC                 mulss   xmm1, xmm2
+;.text:101E35F0                 subss   xmm0, xmm1
+
+
+
 ;.text:1019FFA0 CEffectorZoomInertion__Process proc near
 org 1019FFA0h - shift
 	jmp CEffectorZoomInertion__Process_fix
@@ -1235,17 +1282,49 @@ org 10287828h - shift
 ;.text:10287828                 mulss   xmm0, ds:_1_fov
 ;.text:10287830                 mulss   xmm0, dword ptr [eax]
 
+org 1021B80Fh - shift
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+;.text:1021B80F                 push    edi             ; this
+;.text:1021B810                 call    CWeapon__UpdateHUDAddonsVisibility
+;.text:1021B815                 mov     edx, [edi+2C8h]
+
+
+
+
+;.text:1021C5D0 ; void __stdcall CWeapon__UpdateHUDAddonsVisibility(int this)
+;...
+;.text:1021C62C                 jz      loc_1021C82E
+org 1021C632h - shift
+	jmp UpdateHUDAddonsVisibility_fix
+;.text:1021C632                 push    ebx
+;.text:1021C633                 push    edi
+;.text:1021C634                 push    offset aWpn_scope ; "wpn_scope"
+;.text:1021C639                 mov     ecx, esi
+org 1021C63Bh - shift
+back_from_UpdateHUDAddonsVisibility_fix:
+;.text:1021C63B                 call    ds:?LL_BoneID@CKinematics@@QAEGPBD@Z ; CKinematics::LL_BoneID(char const *)
 
 
 
 
 ; фрагмент функции CWeapon__UpdateAddonsVisibility
-org 1021CA2Fh - shift
+org 1021CA22h - shift
 	jmp UpdateAddonsVisibility_fix
+;.text:1021CA22                 test    eax, eax
+;.text:1021CA24                 jz      short loc_1021CA2F
+;.text:1021CA26                 push    1
+;.text:1021CA28                 push    0
+;.text:1021CA2A                 push    ebx
+;.text:1021CA2B                 mov     ecx, esi
+;.text:1021CA2D                 call    ebp ; CKinematics::LL_SetBoneVisible(ushort,int,int) ; CKinematics::LL_SetBoneVisible(ushort,int,int)
+;.text:1021CA2F loc_1021CA2F:
 ;.text:1021CA2F                 mov     ecx, esi ; <== это было
 ;.text:1021CA31                 call    ds:?CalculateBones_Invalidate@CKinematics@@QAEXXZ ; CKinematics::CalculateBones_Invalidate(void)
-org 1021CA37h - shift
-back_from_UpdateAddonsVisibility_fix:
 ;.text:1021CA37                 mov     eax, [esi]
 ;.text:1021CA39                 mov     edx, [eax+40h]
 ;.text:1021CA3C                 push    0
@@ -2091,6 +2170,11 @@ org 1054F080h - shift
 ; helicopter
 org 1054F02Ch - shift
 off_1054F02C dd ?
+
+; для приведения CBottleItem
+org 1055722Ch - shift
+off_1055722C dd ?
+
 
 ; заглушки для функции преобразования SGO в CInventoryBox
 

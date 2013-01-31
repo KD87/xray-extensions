@@ -104,6 +104,7 @@ include stalker_fix.asm
 include hanging_lamp_fix.asm
 include CEffectorZoomInertion_fix.asm
 include new_engine_slots.asm
+include car_camera_fix.asm
 
 _CODE ENDS
 
