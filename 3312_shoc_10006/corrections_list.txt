@@ -80,13 +80,17 @@
 
 ;0x102D5B17 5 ; jmp time_fix_jmp_label
 
-
+;-------------- тест камеры машины
+0x1026F96E 5 ; 	jmp CCar__cam_Update_fix
+;-------------- end
 ;0x101DE76F 6 ; fdiv    ds:g_fov
 ;0x1023B20D 8 ; divss   xmm0, ds:g_fov
 ;0x1027401D 8 ; divss   xmm0, ds:g_fov
 ;0x10287828 8 ; divss   xmm0, ds:g_fov
 
-;0x1021CA2F 5 ; jmp UpdateAddonsVisibility_fix
+0x1021CA22 5 ; jmp UpdateAddonsVisibility_fix
+0x1021C632 5 ; jmp UpdateHUDAddonsVisibility_fix
+;0x1021B80F 6
 
 ;0x100138F0 5 ;	jmp CHitMemoryManager__add3_fix
 ;0x101A6DC0 5 ; jmp call_mouse_move_callback
@@ -96,8 +100,10 @@
 ;0x101DFA30 5 ; 	jmp CEntity__Hit_fix
 ;0x10015B4E 5 ;  убираем фейковый хит из менеджера памяти
 ;0x101E1189 3 ; 	sub     esp, 50h ; 3 байта
+0x101E35EC 4 ; убираем степень двойки иммунитета пси-хита
+0x1020616D 5 ; jmp CInventory__Eat_fix ; колбек на предиспользование
 
-;0x1019FFA0 5 ; jmp [CEffectorZoomInertion__Process]
+0x1019FFA0 5 ; jmp [CEffectorZoomInertion__Process]
 
 ;rus_phantom
 0x103BFF64 5 ; jmp call_pda_contact_callback
@@ -117,17 +123,17 @@
 ;0x10222067 5
 
 ;слоты
-0x103BA6AD 5 ;CUIInventoryWnd__Init__
-0x103BBD8D 5 ;CUIInventoryWnd__InitInventory__
-0x103BC590 5 ;CUIInventoryWnd__GetSlotList
-0x103BC5E0 5 ;CUIInventoryWnd__ClearAllLists
-0x10204311 5 ;CInventory__Init__ отключение худа слотов
-0x1042AA44 5 ;память под объект CInventory
-0x1042B8A8 5 ;память под объект CInventory
-0x10206C02 3 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
-0x10206C1F 5 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
-0x10206C35 6 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
-0x10206951 6 ;количество слотов в CInventory__SetSlotsBlocked
+;0x103BA6AD 5 ;CUIInventoryWnd__Init__
+;0x103BBD8D 5 ;CUIInventoryWnd__InitInventory__
+;0x103BC590 5 ;CUIInventoryWnd__GetSlotList
+;0x103BC5E0 5 ;CUIInventoryWnd__ClearAllLists
+;0x10204311 5 ;CInventory__Init__ отключение худа слотов
+;0x1042AA44 5 ;память под объект CInventory
+;0x1042B8A8 5 ;память под объект CInventory
+;0x10206C02 3 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
+;0x10206C1F 5 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
+;0x10206C35 6 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
+;0x10206951 6 ;количество слотов в CInventory__SetSlotsBlocked
 0x101C9B80 5 ;учет предмета в шлемовом слоте при расчете хита актору
 ;включение сетки под броней в инвентаре
 0x103BD9E0 5 ;сетка под броней

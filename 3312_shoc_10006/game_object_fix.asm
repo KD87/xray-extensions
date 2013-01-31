@@ -272,6 +272,7 @@ game_object_fix proc
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsHolder,             "is_holder"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsEntityAlive,        "is_entity_alive"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsInventoryItem,      "is_inventory_item"
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__CInventoryItem,       "cast_inventory_item"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsInventoryOwner,     "is_inventory_owner"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActor,              "is_actor"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsCustomMonster,      "is_custom_monster"
@@ -305,6 +306,8 @@ game_object_fix proc
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsMissile,            "is_missile"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsPhysicsShellHolder, "is_physics_shell_holder"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsGrenade,            "is_grenade"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsBottleItem,         "is_bottle_item"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsEatableItem,        "is_eatable_item"
 	
 	PERFORM_EXPORT_VECTOR__STRING register_get_hud_bone_pos, CScriptGameObject__hud_bone_position
 	
@@ -364,6 +367,8 @@ game_object_fix2 proc
 	call    register__float_rw_property
 	; делаем своё
 	PERFORM_EXPORT_PROPERTY__FLOAT_RW CScriptGameObject__GetSatiety, CScriptGameObject__ChangeSatiety, "satiety"
+	PERFORM_EXPORT_PROPERTY__FLOAT_RW CScriptGameObject__GetAlcohol, CScriptGameObject__ChangeAlcohol, "alcohol"
+	PERFORM_EXPORT_PROPERTY__FLOAT_RW CScriptGameObject__GetMaxPower, CScriptGameObject__ChangeMaxPower, "max_power"
 	;идём обратно
 	jmp     back_from_game_object_fix2
 game_object_fix2 endp
@@ -2595,7 +2600,8 @@ str_arg   = dword ptr  8
 	push    eax
 	call CActor__ChangeVisual ; ecx = CActor   stack = shared_str
 	;call CObject__cNameVisual_set ; ecx = CObject   eax = shared_str
-	
+	mov     eax, offset g_visual_shared_str
+	dec     dword ptr [eax]
 exit_fail:
 	
 	pop     ecx
@@ -3953,6 +3959,109 @@ exit:
 	pop     ebp
 	retn
 CScriptGameObject__GetVisualIni endp
+
+;;
+CScriptGameObject__GetMaxPower proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      not_actor
+	; eax == actor
+	mov     eax, [eax+93Ch] ; conditions
+	fld     dword ptr [eax+068h] ; max_power
+	jmp     exit
+not_actor:
+	fldz
+exit:	
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetMaxPower endp
+
+CScriptGameObject__ChangeMaxPower proc
+value           = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      exit
+	; eax == actor
+	mov     eax, [eax+93Ch] ; conditions
+	movss   xmm0, dword ptr [eax+068h] ; max_power
+	movss   xmm1, dword ptr [ebp+value] ; max_power change
+	addss   xmm0, xmm1
+	; clamp
+	movss   xmm1, dword ptr[float__1_0]
+	comiss  xmm0, xmm1
+	jbe     short lt_1_0
+	movss   xmm0, xmm1
+lt_1_0:
+	movss   dword ptr [eax+068h], xmm0
+exit:	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+ALIGN 8
+float__1_0:
+	dd 1.0
+CScriptGameObject__ChangeMaxPower endp
+
+;;
+CScriptGameObject__GetAlcohol proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      not_actor
+	; eax == actor
+	mov     eax, [eax+93Ch] ; conditions
+	fld     dword ptr [eax+0F8h] ; alcohol
+	jmp     exit
+not_actor:
+	fldz
+exit:	
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetAlcohol endp
+
+CScriptGameObject__ChangeAlcohol proc
+value           = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      exit
+	; eax == actor
+	mov     eax, [eax+93Ch] ; conditions
+	movss   xmm0, dword ptr [eax+0F8h] ; alcohol
+	movss   xmm1, dword ptr [ebp+value] ; alcohol change
+	addss   xmm0, xmm1
+	;
+	movss   xmm1, dword ptr[float__1_0]
+	comiss  xmm0, xmm1
+	jbe     short lt_1_0
+	movss   xmm0, xmm1
+lt_1_0:
+	movss   dword ptr [eax+0F8h], xmm0
+exit:	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+ALIGN 8
+float__1_0:
+	dd 1.0
+CScriptGameObject__ChangeAlcohol endp
+
 
 CScriptGameObject__GetSatiety proc
 	push    ebp
