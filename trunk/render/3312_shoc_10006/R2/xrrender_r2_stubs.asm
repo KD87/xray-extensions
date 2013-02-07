@@ -701,6 +701,8 @@ org 10069470h - shift
 CBlender_Compile__r_Pass dd ?
 org 10069488h - shift
 CBlender_Compile__r_Sampler dd ?
+org 1006948Ch - shift
+CBlender_Compile__r_Sampler1 dd ?
 org 10069474h - shift
 CBlender_Compile__r_Sampler_clf dd ?
 org 10069494h - shift
@@ -809,3 +811,9 @@ back_to_mip_bias:
 
 org 10089AF4h - shift
 mipbias_obj dd ?
+
+; регистрация семплеров в particle-шейдере
+org 1003CE19h - shift
+	jmp particle_sampler_register
+org 1003CE3Ah - shift
+back_to_particle_sampler_register:

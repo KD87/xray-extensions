@@ -19,6 +19,7 @@ REGISTER_CC_FLAG ps_r2_ls_flags, 04000h, "r2_exp_donttest_uns"
 REGISTER_CC_FLAG ps_r2_ls_flags, 10000h, "r2_bloodmarks"
 REGISTER_CC_FLAG ps_r2_ls_flags, 40000h, "r2_soft_water"
 REGISTER_CC_FLAG ps_r2_ls_flags, 80000h, "r2_soft_particles"
+REGISTER_CC_FLAG ps_r2_ls_flags, 100000h, "r2_color_grading"
 REGISTER_CC_FLAG ps_r2_ls_flags, 800000h, "r2_float32"
 
 	; делаем вырезанное

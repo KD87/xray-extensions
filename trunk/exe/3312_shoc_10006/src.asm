@@ -27,6 +27,7 @@ include console_comm.asm
 include zoom_check.asm
 include loadscreen_fix.asm
 include weather_parameters.asm
+include rain_timer.asm
 
 _code ENDS
 
