@@ -77,6 +77,8 @@ org 00410620h - shift
 CCC_Float__CCC_Float:
 org 00410D00h - shift
 CCC_Integer__CCC_Integer:
+org 00410960h - shift
+CCC_Vector3__CCC_Vector3:
 org 0050BBBCh - shift
 Console dd ?
 org 0050BC88h - shift
@@ -129,9 +131,51 @@ timer dd ?
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; погодные параметры
-org 00438965h - shift
-	jmp	switch_parameters
-org 0043896Ch - shift
-back_to_switch_parameters:	
-org 00509344h - shift
-drop_max_angle dd 0.17453294
+org 004CC590h - shift
+	Memory dd ?
+org 004CC598h - shift
+	xrMemory__mem_alloc dd ?
+org 004CC594h - shift
+	xrMemory__mem_free dd ?
+org 0050BB7Ch - shift
+	g_pGamePersistent dd ?
+org 004CC47Ch - shift
+	CInifile__r_fvector3 dd ?
+
+org 0043D424h - shift
+	jmp	envdescriptor_hack_load
+org 0043D44Eh - shift
+back_to_envdescriptor_hack_load:	
+org 00443538h - shift
+	jmp	envdescriptor_hack_rain_color_fix
+org 00443562h - shift
+back_to_envdescriptor_hack_rain_color_fix:	
+org 0043E1DEh - shift
+	jmp	descriptor_mixer_lerp
+org 0043E1F8h - shift
+back_to_descriptor_mixer_lerp:	
+org 0040D603h - shift
+	jmp	descriptor_copy_operator
+org 0040D615h - shift
+back_to_descriptor_copy_operator:	
+org 0040D312h - shift
+	jmp	envdescriptor_hack_destructor
+; угол падения капель
+org 00442E05h - shift
+	jmp rain_drop_angle
+org 00442E0Bh - shift
+back_to_rain_drop_angle:
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; таймер дождя
+org 0050BB78h - shift
+g_pGameLevel dd ?
+org 00442FA0h - shift
+CEffect_Rain__RayPick:
+
+org 00443480h - shift
+	jmp	CEffectsRain__Render_rain_timer
+org 004434C3h - shift
+back_to_CEffectsRain__Render_rain_timer:	
+org 00444811h - shift
+exit_CEffectsRain__Render:
