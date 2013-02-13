@@ -21,6 +21,8 @@ REGISTER_VOID__VECTOR_FLOAT_INT register_set_actor_float, "set_actor_float"
 
 REGISTER_FLOAT__INT register_get_actor_condition_float, "get_actor_condition_float"
 REGISTER_VOID__VECTOR_FLOAT_INT register_set_actor_condition_float, "set_actor_condition_float"
+
+REGISTER_INT__STRING_INT        register_get_actor_condition_int,        "get_actor_condition_int"
 ;---
 REGISTER_FLOAT__INT             register_get_game_object_float,      "get_go_float"
 REGISTER_VOID__VECTOR_FLOAT_INT register_set_game_object_float,      "set_go_float"
@@ -57,6 +59,7 @@ REGISTER_INT__STRING_INT        register_set_inventory_item_shared_str, "set_inv
 ;--
 REGISTER_INT__STRING_INT register_get_actor_int, "get_actor_int"
 REGISTER_INT__STRING_INT register_get_actor_int16, "get_actor_int16"
+REGISTER_VOID__INT_INT register_set_actor_int, "set_actor_int"
 
 REGISTER_INT__STRING_INT register_get_wpn_gl_int, "get_wpn_gl_int"
 REGISTER_INT__STRING_INT register_get_wpn_int, "get_wpn_int"
@@ -175,6 +178,8 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__INT_INT          register_set_game_object_int16,      CScriptGameObject__SetGameObjectInt16
 	PERFORM_EXPORT_INT__STRING_INT        register_set_game_object_shared_str, CScriptGameObject__SetGameObjectSharedStr
 
+	PERFORM_EXPORT_INT__STRING_INT        register_get_actor_condition_int,    CScriptGameObject__GetActorConditionInt
+
 
 	PERFORM_EXPORT_FLOAT__INT             register_get_car_float,              CScriptGameObject__GetCarFloat
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_car_float,              CScriptGameObject__SetCarFloat
@@ -208,6 +213,7 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_actor_condition_float, CScriptGameObject__SetActorConditionFloat
 	PERFORM_EXPORT_INT__STRING_INT register_get_actor_int, CScriptGameObject__GetActorInt
 	PERFORM_EXPORT_INT__STRING_INT register_get_actor_int16, CScriptGameObject__GetActorInt16
+	PERFORM_EXPORT_VOID__INT_INT register_set_actor_int, CScriptGameObject__SetActorInt
 
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_gl_int, CScriptGameObject__GetWeaponGLInt
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_int, CScriptGameObject__GetWeaponInt
@@ -1531,6 +1537,46 @@ exit:
 	retn    4
 CScriptGameObject__GetActorConditionFloat endp
 
+CScriptGameObject__GetActorConditionInt proc
+pos__ = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	;sub     esp, 40h
+	push    esi
+	mov     esi, ecx
+	push    edi
+	
+	mov     edi, [esi+4]
+	test    edi, edi
+	jz      short lab1
+	call    CGameObject__lua_game_object
+
+lab1:
+	mov     ecx, [esi+4]
+	test    ecx, ecx
+	jz      short exit_fail
+	mov     eax, [ecx]
+	mov     edx, [eax+80h]
+	call    edx
+	test    eax, eax
+	jz      short exit_fail
+
+
+	;---
+	mov     ecx, [ebp + pos__]	;take offest
+	mov		eax, [eax + 93Ch]		;take CActorCondition
+	mov     eax, dword ptr [eax+ecx]
+	jmp     exit
+exit_fail:
+	xor eax, eax
+exit:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__GetActorConditionInt endp
 
 CScriptGameObject__GetActorTakeDist proc
 	push    ebp
@@ -1825,6 +1871,35 @@ exit:
 	pop     ebp
 	retn    8
 CScriptGameObject__GetActorInt endp
+CScriptGameObject__SetActorInt proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	push    edx
+	push    ecx
+	
+	
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit
+
+	;---
+	mov     edx, [ebp + value]
+	mov     ecx, [ebp + pos]
+	mov     [eax + ecx], edx
+	;---
+exit:
+	pop     ecx
+	pop     edx
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetActorInt endp
 
 CScriptGameObject__GetActorInt16 proc
 stub  = dword ptr  8
