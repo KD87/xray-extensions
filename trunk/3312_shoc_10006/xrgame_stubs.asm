@@ -2372,6 +2372,10 @@ org 10222067h - shift
 	jmp grenade_counter_fix1
 org 1022206Fh - shift
 back_to_grenade_counter_fix1:
+org 10221C58h - shift
+push    1
+org 10221B93h - shift
+call    CInventory__Belt
 
 ;;; slots ;;;
 ; funcs
@@ -2433,3 +2437,15 @@ org 103BD592h - shift
 	nop
 	nop
 	nop
+
+;0x101C85CF 6 ;jmp CActor__Update_fix
+;0x104253D0 5 ;jz -> jmp
+
+org 101C85CFh - shift	
+	jmp CActor__Update_fix
+org 101C85D5h - shift
+back_from_CActor__Update_fix:
+org 104253D0h - shift
+	jmp CActor__Update_two_fix
+org 104253D5h - shift
+back_from_CActor__Update_two_fix:

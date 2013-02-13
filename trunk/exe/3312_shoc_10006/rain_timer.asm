@@ -107,7 +107,7 @@ no_rain:
 	; если нет дождя, проверяем таймер на случай, если дождь только что закончился
 	movss	xmm2, rain_timer
 	comiss	xmm1, xmm2
-	jnb		exit_CEffectsRain__Render
+	ja		exit_CEffectsRain__Render
 	; если таймер не нулевой, уменьшаем его значение на время, прошедшее с предыдущего кадра
 	fld		rain_timer
 	fld		timer
@@ -144,7 +144,7 @@ under_cover:
 	; если нет дождя, проверяем таймер на случай, если дождь только что закончился
 	movss	xmm2, rain_timer
 	comiss	xmm1, xmm2
-	jnb		exit_rain
+	ja		exit_rain
 	; если таймер не нулевой, уменьшаем его значение на время, прошедшее с предыдущего кадра
 	fld		rain_timer
 	fld		timer

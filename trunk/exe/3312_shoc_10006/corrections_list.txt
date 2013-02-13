@@ -44,6 +44,7 @@
 0x0043E1DE 5	; CEnvDescriptorMixer__lerp
 0x0040D603 5	; CEnvDescriptor__operator_
 0x00442E05 5	; CEffectRain__Born
+0x0040D426 5	; CEnvDescriptor__CEnvDescriptor
 
 ;============================================
 ;===============рюилеп днфдъ=================

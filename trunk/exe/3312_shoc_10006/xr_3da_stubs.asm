@@ -152,12 +152,16 @@ org 00443562h - shift
 back_to_envdescriptor_hack_rain_color_fix:	
 org 0043E1DEh - shift
 	jmp	descriptor_mixer_lerp
-org 0043E1F8h - shift
+org 0043E244h - shift
 back_to_descriptor_mixer_lerp:	
 org 0040D603h - shift
 	jmp	descriptor_copy_operator
 org 0040D615h - shift
 back_to_descriptor_copy_operator:	
+org 0040D426h - shift
+	jmp	descriptor_copy_constructor
+org 0040D438h - shift
+back_to_descriptor_copy_constructor:	
 org 0040D312h - shift
 	jmp	envdescriptor_hack_destructor
 ; угол падения капель
