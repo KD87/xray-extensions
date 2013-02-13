@@ -100,6 +100,8 @@ ss_setup proc
 	mov		eax, [eax+1D0h]
 	movss   xmm0, dword ptr [eax+0Ch]	;x
 	movss   xmm1, dword ptr [eax+10h]	;y
+;	xorps   xmm0, xmm0					;z
+;	xorps   xmm1, xmm1					;z
 	xorps   xmm2, xmm2					;z
 	xorps   xmm3, xmm3					;w
 ; регистрация константы в системе 
@@ -181,14 +183,14 @@ common_setup proc
 	movss   xmm1, height_float		;y
 	
 	fld1
-	fdiv	dword ptr [eax+100h]	;Device.dwWidth
+	fdiv	width_float				;Device.dwWidth
 	fstp	inv_width
 	movss   xmm2, inv_width			;z
 	
 	fld1
-	fdiv	dword ptr [eax+104h]	;Device.dwHeight
+	fdiv	height_float			;Device.dwHeight
 	fstp	inv_height
-	movss   xmm3, inv_height			;w
+	movss   xmm3, inv_height		;w
 
 ; регистрация константы в системе 
 REGISTER_CONSTANT_VECTOR

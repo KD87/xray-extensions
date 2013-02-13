@@ -179,15 +179,58 @@ descriptor_copy_operator:
 	mov     edx, [ebx+8h]
 	mov     [edi+8h], edx
 	; sun_shafts
-	fstp	dword ptr [ebx+0Ch]
-	fld		dword ptr [edi+0Ch]
+	fld		dword ptr [ebx+0Ch]
+	fstp	dword ptr [edi+0Ch]
 	; sun_shafts_density
-	fstp	dword ptr [ebx+10h]
-	fld		dword ptr [edi+10h]
+	fld		dword ptr [ebx+10h]
+	fstp	dword ptr [edi+10h]
 	; rain_max_drop_angle
-	fstp	dword ptr [ebx+14h]
-	fld		dword ptr [edi+14h]
+	fld		dword ptr [ebx+14h]
+	fstp	dword ptr [edi+14h]
 	pop		edi
 	pop		ebx
 	jmp back_to_descriptor_copy_operator
+
+; конструктор копирования для CEnvDescriptor
+;.text:0040D426                 mov     edx, [this+5Ch]
+;.text:0040D429                 mov     [eax+5Ch], edx
+;.text:0040D42C                 mov     edx, [this+60h]
+;.text:0040D42F                 mov     [eax+60h], edx
+;.text:0040D432                 mov     edx, [this+64h]
+;.text:0040D435                 mov     [eax+64h], edx
+descriptor_copy_constructor:
+	; выделим в памяти нужную область
+	push	eax
+	push	ecx
+	mov		ecx, ds:Memory
+	push	18h	; rain_color(0Ch) + sun_shafts(4) + sun_shafts_density(4) + rain_max_drop_angle(4)
+	call	ds:xrMemory__mem_alloc
+	mov		edx, eax
+	pop		ecx
+	pop		eax
+	mov		[eax+5Ch], edx
+	; rain_color
+	push	ebx
+	push	edi
+	mov		ebx, [eax+5Ch]
+	mov		edi, [ecx+5Ch]
+	mov     edx, [ebx]
+	mov     [edi], edx
+	mov     edx, [ebx+4h]
+	mov     [edi+4h], edx
+	mov     edx, [ebx+8h]
+	mov     [edi+8h], edx
+	; sun_shafts
+	fld		dword ptr [ebx+0Ch]
+	fstp	dword ptr [edi+0Ch]
+	; sun_shafts_density
+	fld		dword ptr [ebx+10h]
+	fstp	dword ptr [edi+10h]
+	; rain_max_drop_angle
+	fld		dword ptr [ebx+14h]
+	fstp	dword ptr [edi+14h]
+	pop		edi
+	pop		ebx
+	jmp back_to_descriptor_copy_constructor
+	
 radian dd 0.0174532925

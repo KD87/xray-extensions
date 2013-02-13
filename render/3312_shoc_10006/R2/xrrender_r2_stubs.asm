@@ -817,3 +817,21 @@ org 1003CE19h - shift
 	jmp particle_sampler_register
 org 1003CE3Ah - shift
 back_to_particle_sampler_register:
+
+; детальный бамп
+org 100690FCh - shift
+strcat_s dd ?
+org 1003D2B1h - shift
+	jmp add_detail_bump_sampler
+org 1003D2E7h - shift
+back_to_add_detail_bump_sampler:
+
+;org 1003BE03h - shift
+;	jmp add_jitter
+
+org 10069308h - shift
+g_pGameLevel dd ?
+org 1000BA1Dh - shift
+	jmp	actor_shadow_fix
+org 1000BA23h - shift
+back_to_actor_shadow_fix:	
