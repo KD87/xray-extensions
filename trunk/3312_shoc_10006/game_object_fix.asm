@@ -1538,7 +1538,8 @@ exit:
 CScriptGameObject__GetActorConditionFloat endp
 
 CScriptGameObject__GetActorConditionInt proc
-pos__ = dword ptr  8
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
 	push    ebp
 	mov     ebp, esp
 	and     esp, 0FFFFFFF8h
@@ -1575,7 +1576,7 @@ exit:
 	pop     esi
 	mov     esp, ebp
 	pop     ebp
-	retn    4
+	retn    8
 CScriptGameObject__GetActorConditionInt endp
 
 CScriptGameObject__GetActorTakeDist proc
