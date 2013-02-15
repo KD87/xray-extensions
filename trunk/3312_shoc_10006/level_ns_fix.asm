@@ -59,7 +59,7 @@ level_ns_extension_1:
 	push    eax
 	call    register__ns__bool__void
 ;--< установка степени дождливости >---
-PERFORM_EXPORT_LEVEL__VOID__FLOAT               set_rain_factor, "set_rain_factor"
+;PERFORM_EXPORT_LEVEL__VOID__FLOAT               set_rain_factor, "set_rain_factor"
 PERFORM_EXPORT_LEVEL__INT__INT                  advance_game_time, "advance_game_time"
 PERFORM_EXPORT_LEVEL__FLOAT__VOID               get_float_result00, "get_float_res00"
 PERFORM_EXPORT_LEVEL__FLOAT__STR_INT_BOOL_STR   get_memory_float, "get_memory_float"
@@ -67,6 +67,7 @@ PERFORM_EXPORT_LEVEL__INT__INT                  get_memory_int, "get_memory_int"
 PERFORM_EXPORT_LEVEL__BOOL__VOID                PerformRayPickQuery, "perform_ray_pick_query"
 PERFORM_EXPORT_LEVEL__FLOAT__VOID               GetRayPickQueryRes, "get_ray_pick_dist"
 PERFORM_EXPORT_LEVEL__GO__INT                   GetRayPickQueryObj, "get_ray_pick_obj"
+PERFORM_EXPORT_LEVEL__INT__INT                  GetRayPickQueryElement, "get_ray_pick_element"
 PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetInventoryWindow, "get_inventory_wnd"
 PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetPDAWindow,       "get_pda_wnd"
 PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetTalkWindow,      "get_talk_wnd"
@@ -102,8 +103,8 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	mov     ecx, eax
 	call    esi
 	; для set_rain_factor
-	mov     ecx, eax
-	call    esi
+	;mov     ecx, eax
+	;call    esi
 	; для advance_game_time
 	mov     ecx, eax
 	call    esi
@@ -123,6 +124,9 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	mov     ecx, eax
 	call    esi
 	; get_ray_pick_obj
+	mov     ecx, eax
+	call    esi
+	; get_ray_pick_element
 	mov     ecx, eax
 	call    esi
 	; get_inventory_wnd
@@ -355,7 +359,7 @@ additional_time = dword ptr 8
 	push    edi
 	
 	mov     esi, ecx
-	jnz     short ai_space_exists
+	jnz     ai_space_exists
 	call    xr_new_CAI_Space_
 	mov     ecx, eax
 	mov     g_ai_space, eax
@@ -364,18 +368,19 @@ ai_space_exists:
 	mov     eax, g_ai_space
 	mov     eax, [eax+18h]
 	test    eax, eax
-	jz      short exit
+	jz      exit
 	mov     ecx, [eax+0Ch]
 	mov     edx, [ecx+4]
 	cmp     byte ptr [edx+eax+40h], 0
-	jz      short exit
+	jz      exit
 	mov     esi, [esi+120h]
 	mov     eax, [esi+0Ch]
 	mov     ecx, [eax+4]
 	mov     edi, [ecx+esi+18h]
 	call    CALifeTimeManager__game_time
-	;PRINT_UINT "eax=%x", eax
-	;PRINT_UINT "edx=%x", edx
+	PRINT "CALifeTimeManager__game_time"
+	PRINT_UINT "eax=%x", eax
+	PRINT_UINT "edx=%x", edx
 	add     eax, [ebp + additional_time]
 	jnc     no_carry
 	inc     edx
@@ -519,6 +524,10 @@ exit:
 	retn
 GetRayPickQueryObj endp
 
+GetRayPickQueryElement proc
+	mov     eax, [rq_res.element]
+	retn
+GetRayPickQueryElement endp
 
 Level__GetInventoryWindow proc
 	call    GetGameSP

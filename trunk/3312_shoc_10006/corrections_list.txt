@@ -48,8 +48,9 @@
 0x10221D75 12 ; блокирование кривого движкового переключения гранат
 
 ;0x103BF3D0 5 ; jmp CUITradeWnd__FillList_fix
-0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix
-0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2
+
+;0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix ; отладочное сообщение о начале создания объекта
+;0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2 ; отладочное сообщение о завершении создания объекта
 
 ;0x1020921F 5 ; jmp CInventoryItem_constructor_fix
 ;0x102094A8 5 ; jmp CInventoryItem_destructor_fix
@@ -58,11 +59,16 @@
 0x104760D4 4 ; CAI_Stalker__IsVisibleForZones
 0x10118C50h 5 ; jmp CAI_Stalker__feel_touch_new_fix
 
-;0x101E3046 5 ; 	jmp CEntityCondition__UpdateConditionTime_dbg_fix - отладка
-;0x101E30A1 5 ; 	jmp CEntityCondition__UpdateConditionTime_dbg_fix2 - отладка
 ;0x102196C7 5 ; jmp CWeapon__UpdateFireDependencies_internal_dbg_fix2 - отладка
 ;0x1021846B 5 ; 	jmp CShootingObject__RenderLight_dbg_fix2 - отладка
 ;0x10412EB0 5 ; jmp scroll_vew_fix
+
+;0x101E2FC5 5 ; jmp CEntityCondition__UpdateConditionTime_dbg
+;0x102A0848 5 ; jmp game_GameState__GetGameTime_dbg_fix
+;0x102D5A00 5 ; jmp game_sv_Single__GetGameTime_dbg_fix
+;0x102A0900 5 ; jmp game_GameState__SetGameTimeFactor_dbg_fix
+;0x102A0940 5 ; jmp game_GameState__SetGameTimeFactor__INT64_float_dbg_fix
+0x102AC460 5 ; jmp game_cl_GameState__net_import_GameTime_dbg_fix
 
 ;0x10253E2B 40 ; searchlight__turn_on
 
