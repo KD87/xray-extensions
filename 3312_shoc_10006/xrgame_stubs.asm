@@ -1,6 +1,286 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+
+org 101A5430h - shift
+CLevel__SetEnvironmentGameTimeFactor:
+org 104587C8h - shift
+CEnvironment__Invalidate dd ?
+
+;.text:102AC460 game_cl_GameState__net_import_GameTime proc near
+;.text:102AC460
+;.text:102AC460 var_1C          = dword ptr -1Ch
+;.text:102AC460 var_C           = dword ptr -0Ch
+;.text:102AC460 var_8           = dword ptr -8
+;.text:102AC460 arg_0           = dword ptr  8
+;.text:102AC460
+org 102AC460h - shift
+	jmp game_cl_GameState__net_import_GameTime_fix
+;.text:102AC460                 push    ebp
+;.text:102AC461                 mov     ebp, esp
+;.text:102AC463                 and     esp, 0FFFFFFF8h
+;.text:102AC466                 sub     esp, 0Ch
+;.text:102AC469                 push    ebx
+;.text:102AC46A                 push    esi
+;.text:102AC46B                 mov     esi, [ebp+arg_0]
+;.text:102AC46E                 mov     eax, [esi+2004h]
+;.text:102AC474                 mov     ecx, [eax+esi]
+;.text:102AC477                 mov     edx, [eax+esi+4]
+;.text:102AC47B                 add     eax, 8
+;.text:102AC47E                 mov     [esi+2004h], eax
+;.text:102AC484                 push    edi
+;.text:102AC485                 mov     edi, [eax+esi]
+;.text:102AC488                 add     eax, 4
+;.text:102AC48B                 mov     [esi+2004h], eax
+;.text:102AC491                 mov     eax, ds:g_pGameLevel
+;.text:102AC496                 mov     [esp+18h+var_C], edi
+;.text:102AC49A                 mov     edi, [eax]
+;.text:102AC49C                 mov     edi, [edi+45D0h]
+;.text:102AC4A2                 mov     [edi+70h], ecx
+;.text:102AC4A5                 mov     [edi+74h], edx
+;.text:102AC4A8                 mov     eax, [eax]
+;.text:102AC4AA                 lea     ecx, [eax+160h]
+;.text:102AC4B0                 call    ds:IPureClient__timeServer_Async
+;.text:102AC4B6                 movss   xmm0, [esp+18h+var_C]
+;.text:102AC4BC                 mov     edx, ds:g_pGameLevel
+;.text:102AC4C2                 mov     [edi+68h], eax
+;.text:102AC4C5                 mov     dword ptr [edi+6Ch], 0
+;.text:102AC4CC                 movss   dword ptr [edi+78h], xmm0
+;.text:102AC4D1                 mov     eax, [esi+2004h]
+;.text:102AC4D7                 mov     ebx, [eax+esi]
+;.text:102AC4DA                 mov     edi, [eax+esi+4]
+;.text:102AC4DE                 add     eax, 8
+;.text:102AC4E1                 mov     [esi+2004h], eax
+;.text:102AC4E7                 mov     ecx, [eax+esi]
+;.text:102AC4EA                 add     eax, 4
+;.text:102AC4ED                 mov     [esi+2004h], eax
+;.text:102AC4F3                 mov     eax, [edx]
+;.text:102AC4F5                 mov     [esp+18h+var_C], ecx
+;.text:102AC4F9                 mov     ecx, [eax+45D0h]
+;.text:102AC4FF                 mov     eax, [ecx]
+;.text:102AC501                 mov     edx, [eax+28h]
+;.text:102AC504                 call    edx
+;.text:102AC506                 fld     [esp+18h+var_C]
+;.text:102AC50A                 push    ecx
+;.text:102AC50B                 fstp    [esp+1Ch+var_1C]
+;.text:102AC50E                 mov     [esp+1Ch+var_8], eax
+;.text:102AC512                 mov     eax, ds:g_pGameLevel
+;.text:102AC517                 mov     eax, [eax]
+;.text:102AC519                 push    edi
+;.text:102AC51A                 push    ebx
+;.text:102AC51B                 mov     esi, edx
+;.text:102AC51D                 call    sub_101A5430
+;.text:102AC522                 cmp     esi, edi
+;.text:102AC524                 jb      short loc_102AC542
+;.text:102AC526                 ja      short loc_102AC52E
+;.text:102AC528                 cmp     [esp+18h+var_8], ebx
+;.text:102AC52C                 jbe     short loc_102AC542
+;.text:102AC52E loc_102AC52E:
+;.text:102AC52E                 mov     ecx, ds:g_pGamePersistent
+;.text:102AC534                 mov     edx, [ecx]
+;.text:102AC536                 mov     ecx, [edx+46Ch]
+;.text:102AC53C                 call    ds:CEnvironment__Invalidate
+;.text:102AC542 loc_102AC542:
+;.text:102AC542                 pop     edi
+;.text:102AC543                 pop     esi
+;.text:102AC544                 pop     ebx
+;.text:102AC545                 mov     esp, ebp
+;.text:102AC547                 pop     ebp
+;.text:102AC548                 retn    4
+;.text:102AC548 game_cl_GameState__net_import_GameTime endp
+
+
+
+;.text:102A0940 game_GameState__SetGameTimeFactor__INT64_float proc near
+;.text:102A0940 arg_0           = dword ptr  4
+;.text:102A0940 arg_4           = dword ptr  8
+;.text:102A0940 arg_8           = dword ptr  0Ch
+org 102A0940h - shift
+	jmp game_GameState__SetGameTimeFactor__INT64_float_dbg_fix
+;.text:102A0940                 mov     eax, [esp+arg_0]
+;.text:102A0944                 mov     ecx, [esp+arg_4]
+;.text:102A0948                 mov     edx, ds:?g_pGameLevel@@3PAVIGame_Level@@A ; IGame_Level * g_pGameLevel
+;.text:102A094E                 mov     [esi+74h], ecx
+;.text:102A0951                 mov     [esi+70h], eax
+;.text:102A0954                 mov     eax, [edx]
+;.text:102A0956                 lea     ecx, [eax+160h]
+;.text:102A095C                 call    ds:?timeServer_Async@IPureClient@@QAEIXZ ; IPureClient::timeServer_Async(void)
+;.text:102A0962                 movss   xmm0, [esp+arg_8]
+;.text:102A0968                 mov     [esi+68h], eax
+;.text:102A096B                 mov     dword ptr [esi+6Ch], 0
+;.text:102A0972                 movss   dword ptr [esi+78h], xmm0
+;.text:102A0977                 retn    0Ch
+;.text:102A0977 game_GameState__SetGameTimeFactor__INT64_float endp
+
+
+
+;.text:102A0900 game_GameState__SetGameTimeFactor proc
+;.text:102A0900 arg_0           = dword ptr  4
+org 102A0900h - shift
+	jmp game_GameState__SetGameTimeFactor_dbg_fix
+;.text:102A0900                 push    esi
+;.text:102A0901                 mov     esi, ecx
+;.text:102A0903                 mov     eax, [esi]
+;.text:102A0905                 mov     edx, [eax+1Ch]
+;.text:102A0908                 call    edx
+;.text:102A090A                 mov     [esi+70h], eax
+;.text:102A090D                 mov     eax, ds:?g_pGameLevel@@3PAVIGame_Level@@A ; IGame_Level * g_pGameLevel
+;.text:102A0912                 mov     [esi+74h], edx
+;.text:102A0915                 mov     eax, [eax]
+;.text:102A0917                 lea     ecx, [eax+160h]
+;.text:102A091D                 call    ds:?timeServer_Async@IPureClient@@QAEIXZ ; IPureClient::timeServer_Async(void)
+;.text:102A0923                 movss   xmm0, [esp+4+arg_0]
+;.text:102A0929                 mov     [esi+68h], eax
+;.text:102A092C                 mov     dword ptr [esi+6Ch], 0
+;.text:102A0933                 movss   dword ptr [esi+78h], xmm0
+;.text:102A0938                 pop     esi
+;.text:102A0939                 retn    4
+;.text:102A0939 game_GameState__SetGameTimeFactor endp
+
+
+
+;.text:102D5A00 game_sv_Single__GetGameTime proc near   ; DATA XREF: .rdata:104B0160o
+org 102D5A00h - shift
+	jmp game_sv_Single__GetGameTime_dbg_fix
+;.text:102D5A00                 push    ebp
+;.text:102D5A01                 mov     ebp, esp
+;.text:102D5A03                 and     esp, 0FFFFFFF8h
+;.text:102D5A06                 cmp     g_ai_space, 0
+;.text:102D5A0D                 push    esi
+;.text:102D5A0E                 push    edi
+;.text:102D5A0F                 mov     esi, ecx
+;.text:102D5A11                 jnz     short loc_102D5A24
+;.text:102D5A13                 call    xr_new_CAI_Space_
+;.text:102D5A18                 mov     ecx, eax
+;.text:102D5A1A                 mov     g_ai_space, eax
+;.text:102D5A1F                 call    CAI_Space__init
+;.text:102D5A24
+;.text:102D5A24 loc_102D5A24:                           ; CODE XREF: game_sv_Single__GetGameTime+11j
+;.text:102D5A24                 mov     eax, g_ai_space
+;.text:102D5A29                 mov     eax, [eax+18h]
+;.text:102D5A2C                 test    eax, eax
+;.text:102D5A2E                 jz      short loc_102D5A4F
+;.text:102D5A30                 mov     ecx, [eax+0Ch]
+;.text:102D5A33                 mov     edx, [ecx+4]
+;.text:102D5A36                 cmp     byte ptr [edx+eax+40h], 0
+;.text:102D5A3B                 jz      short loc_102D5A4F
+;.text:102D5A3D                 mov     edx, [ecx+4]
+;.text:102D5A40                 mov     edi, [edx+eax+18h]
+;.text:102D5A44                 call    CALifeTimeManager__game_time
+;.text:102D5A49                 pop     edi
+;.text:102D5A4A                 pop     esi
+;.text:102D5A4B                 mov     esp, ebp
+;.text:102D5A4D                 pop     ebp
+;.text:102D5A4E                 retn
+;.text:102D5A4F ; ---------------------------------------------------------------------------
+;.text:102D5A4F
+;.text:102D5A4F loc_102D5A4F:                           ; CODE XREF: game_sv_Single__GetGameTime+2Ej
+;.text:102D5A4F                                         ; game_sv_Single__GetGameTime+3Bj
+;.text:102D5A4F                 mov     ecx, esi
+;.text:102D5A51                 call    game_GameState__GetGameTime
+;.text:102D5A56                 pop     edi
+;.text:102D5A57                 pop     esi
+;.text:102D5A58                 mov     esp, ebp
+;.text:102D5A5A                 pop     ebp
+;.text:102D5A5B                 retn
+;.text:102D5A5B game_sv_Single__GetGameTime endp
+
+
+org 102A0840h - shift
+game_GameState__GetGameTime:
+;.text:102A0840 game_GameState__GetGameTime proc near
+;.text:102A0840 var_8           = qword ptr -8
+;.text:102A0840
+;.text:102A0840                 sub     esp, 8
+;.text:102A0843                 mov     eax, ds:g_pGameLevel
+org 102A0848h - shift
+	jmp game_GameState__GetGameTime_dbg_fix
+;.text:102A0848                 mov     eax, [eax]
+;.text:102A084A                 push    esi
+;.text:102A084B                 mov     esi, ecx
+;.text:102A084D                 push    edi
+;.text:102A084E                 lea     ecx, [eax+160h]
+;.text:102A0854                 call    ds:?timeServer_Async@IPureClient@@QAEIXZ ; IPureClient::timeServer_Async(void)
+;.text:102A085A                 mov     ecx, eax
+;.text:102A085C                 xor     eax, eax
+;.text:102A085E                 sub     ecx, [esi+68h]
+;.text:102A0861                 sbb     eax, [esi+6Ch]
+;.text:102A0864                 mov     dword ptr [esp+10h+var_8], ecx
+;.text:102A0868                 mov     ecx, eax
+;.text:102A086A                 and     eax, 7FFFFFFFh
+;.text:102A086F                 mov     dword ptr [esp+10h+var_8+4], eax
+;.text:102A0873                 fild    [esp+10h+var_8]
+;.text:102A0877                 and     ecx, 80000000h
+;.text:102A087D                 mov     dword ptr [esp+10h+var_8+4], ecx
+;.text:102A0881                 mov     dword ptr [esp+10h+var_8], 0
+;.text:102A0889                 fild    [esp+10h+var_8]
+;.text:102A088D                 mov     ecx, 9Eh
+;.text:102A0892                 fchs
+;.text:102A0894                 faddp   st(1), st
+;.text:102A0896                 fmul    dword ptr [esi+78h]
+;.text:102A0899                 fstp    dword ptr [esp+10h+var_8]
+;.text:102A089D                 mov     edi, dword ptr [esp+10h+var_8]
+;.text:102A08A1                 mov     edx, edi
+;.text:102A08A3                 sar     edx, 17h
+;.text:102A08A6                 and     edx, 0FFh
+;.text:102A08AC                 sub     ecx, edx
+;.text:102A08AE                 mov     eax, edi
+;.text:102A08B0                 or      eax, 0FF800000h
+;.text:102A08B5                 shl     eax, 8
+;.text:102A08B8                 shr     eax, cl
+;.text:102A08BA                 sub     ecx, 60h
+;.text:102A08BD                 mov     edx, 1
+;.text:102A08C2                 shl     edx, cl
+;.text:102A08C4                 sub     edx, 1
+;.text:102A08C7                 sar     edx, 8
+;.text:102A08CA                 and     edx, edi
+;.text:102A08CC                 neg     edx
+;.text:102A08CE                 sbb     edx, edx
+;.text:102A08D0                 sar     edi, 1Fh
+;.text:102A08D3                 add     edx, 1
+;.text:102A08D6                 and     edx, edi
+;.text:102A08D8                 sub     eax, edx
+;.text:102A08DA                 add     ecx, 40h
+;.text:102A08DD                 sar     ecx, 1Fh
+;.text:102A08E0                 and     eax, ecx
+;.text:102A08E2                 xor     eax, edi
+;.text:102A08E4                 cdq
+;.text:102A08E5                 add     eax, [esi+70h]
+;.text:102A08E8                 pop     edi
+;.text:102A08E9                 adc     edx, [esi+74h]
+;.text:102A08EC                 pop     esi
+;.text:102A08ED                 add     esp, 8
+;.text:102A08F0                 retn
+;.text:102A08F0 game_GameState__GetGameTime endp
+
+
+
+;.text:101E2FC0 CEntityCondition__UpdateConditionTime proc near
+;.text:101E2FC0
+;.text:101E2FC0 var_C           = qword ptr -0Ch
+;.text:101E2FC0
+;.text:101E2FC0                 mov     eax, ds:?g_pGameLevel@@3PAVIGame_Level@@A ; IGame_Level * g_pGameLevel
+org 101E2FC5h - shift
+	jmp CEntityCondition__UpdateConditionTime_dbg
+;.text:101E2FC5                 mov     eax, [eax]
+;.text:101E2FC7                 mov     ecx, [eax+45D0h]
+;.text:101E2FCD                 sub     esp, 0Ch
+;.text:101E2FD0                 push    ebx
+;.text:101E2FD1                 mov     ebx, 1
+;.text:101E2FD6                 cmp     [ecx+10h], ebx
+;.text:101E2FD9                 push    edi
+;.text:101E2FDA                 jnz     short loc_101E2FE7
+;.text:101E2FDC                 mov     eax, ecx
+;.text:101E2FDE                 mov     edx, [eax]
+;.text:101E2FE0                 mov     eax, [edx+1Ch]
+;.text:101E2FE3                 call    eax
+;.text:101E2FE5                 jmp     short loc_101E2FF5
+
+org 10458FBCh - shift
+IPureClient__timeServer dd ?
+org 1045A260h - shift
+flt_1045A260    dd 0.001 
+
 org 10458A70h - shift
 CCameraManager__Update0 dd ? ; public: void __thiscall CCameraManager::Update(_vector3<float> const &, _vector3<float> const &, _vector3<float> const &, float, float, float, uint)
 org 10458518h - shift
@@ -381,27 +661,6 @@ CWeapon__UpdateFireDependencies_internal:
 
 org 102C8E60h - shift
 __game_time: ; возвращает 64-х разрядное время - eax, edx соответственно младший и старший разряды
-
-org 101E30A1h - shift
-	jmp CEntityCondition__UpdateConditionTime_dbg_fix2
-;.text:101E30A1                 mov     [esi+0C8h], eax
-;.text:101E30A7                 mov     [esi+0CCh], edx
-org 101E30ADh - shift
-back_from_CEntityCondition__UpdateConditionTime_dbg_fix2:
-;.text:101E30AD                 pop     ebx
-
-
-
-
-org 101E3046h - shift
-	jmp CEntityCondition__UpdateConditionTime_dbg_fix
-;.text:101E3046                 mov     [esi+0C8h], eax
-;.text:101E304C                 mov     [esi+0CCh], edx
-org 101E3052h - shift
-back_from_CEntityCondition__UpdateConditionTime_dbg_fix:
-;.text:101E3052                 fchs
-;.text:101E3054                 faddp   st(1), st
-
 
 org 101E2FC0h - shift
 CEntityCondition__UpdateConditionTime:

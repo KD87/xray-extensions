@@ -105,6 +105,7 @@ include hanging_lamp_fix.asm
 include CEffectorZoomInertion_fix.asm
 include new_engine_slots.asm
 include car_camera_fix.asm
+include game_cl_GameState_fix.asm
 include actor_shadow_fix.asm
 
 _CODE ENDS

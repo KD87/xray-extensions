@@ -85,6 +85,10 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT DelayedInventoryUpdate, "update_inventory_window"
 	
 	GLOBAL_NS_PERFORM_EXPORT__VOID__PCHAR init_external_libs, "init_external_libs"
+
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT print_level_time, "print_level_time"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT print_alife_time, "print_alife_time"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT set_ignore_game_state, "set_ignore_game_state_update"
 	
 	; идЄм обратно
 	jmp back_from_global_space_ext
@@ -308,6 +312,44 @@ exit:
 	popa
 	retn
 DelayedInventoryUpdate endp
+
+print_level_time proc
+	mov     eax, ds:g_pGameLevel
+	mov     eax, [eax]
+	mov     ecx, [eax+45D0h]
+	mov     eax, ecx
+	mov     edx, [eax]
+	mov     eax, [edx+1Ch]
+	call    eax
+	PRINT "print_level_time"
+	PRINT_UINT "eax=%x", eax
+	PRINT_UINT "edx=%x", edx
+	retn
+print_level_time endp
+
+print_alife_time proc
+	push edx
+	push edi
+	
+	mov     eax, g_ai_space
+	mov     eax, [eax+18h]
+	mov     ecx, [eax+0Ch]
+	mov     edx, [ecx+4]
+	mov     edi, [edx+eax+18h]
+	call    CALifeTimeManager__game_time
+	PRINT "print_alife_time"
+	PRINT_UINT "eax=%x", eax
+	PRINT_UINT "edx=%x", edx
+
+	pop edi
+	pop edx
+	retn
+print_alife_time endp
+
+set_ignore_game_state proc
+	mov [g_ignore_game_state_update], 1
+	retn
+set_ignore_game_state endp
 
 LOAD_DLL MACRO module_name_str:REQ, g_lib_hinst:REQ
 LOCAL lab1
