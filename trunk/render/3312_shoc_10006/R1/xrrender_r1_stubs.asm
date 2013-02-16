@@ -407,3 +407,17 @@ back_to_mip_bias:
 
 org 1007238Ch - shift
 mipbias_obj dd ?
+	
+;===========================================
+; BLOODMARKS
+;===========================================
+org 100620D8h - shift
+g_r dd 1
+org 100621E8h - shift
+ps_r2_ls_flags dd ?
+org 10026D80h - shift
+CWallmarksEngine__Render:
+org 10004BFDh - shift
+	jmp bloodmarks
+org 10004C02h - shift
+back_to_bloodmarks:

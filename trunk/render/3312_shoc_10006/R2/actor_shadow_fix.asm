@@ -8,7 +8,6 @@ actor_shadow_fix:
 	mov     eax, [edx+0Ch]
 	call    eax
 	pop		eax
-	; делаем вырезанное
 	mov     eax, [eax+148h]
 	mov     edx, [eax]
 	mov     ecx, eax

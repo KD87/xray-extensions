@@ -812,23 +812,30 @@ back_to_mip_bias:
 org 10089AF4h - shift
 mipbias_obj dd ?
 
-; регистрация семплеров в particle-шейдере
+;===========================================
+; регистрация семплеров в CBlender_Particle
+;===========================================
 org 1003CE19h - shift
 	jmp particle_sampler_register
 org 1003CE3Ah - shift
 back_to_particle_sampler_register:
 
+;===========================================
 ; детальный бамп
-org 100690FCh - shift
-strcat_s dd ?
-org 1003D2B1h - shift
-	jmp add_detail_bump_sampler
-org 1003D2E7h - shift
-back_to_add_detail_bump_sampler:
+;===========================================
+;org 100690FCh - shift
+;strcat_s dd ?
+;org 1003D2B1h - shift
+;	jmp add_detail_bump_sampler
+;org 1003D2E7h - shift
+;back_to_add_detail_bump_sampler:
 
 ;org 1003BE03h - shift
 ;	jmp add_jitter
 
+;===========================================
+; тень от ГГ на R2
+;===========================================
 org 10069308h - shift
 g_pGameLevel dd ?
 org 1000BA1Dh - shift

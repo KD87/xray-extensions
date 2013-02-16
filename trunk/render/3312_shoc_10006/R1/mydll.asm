@@ -24,6 +24,7 @@ include console_comm.asm
 include detail_radius_fix.asm
 include detail_density_fix.asm
 include mip_bias_fix.asm
+include bloodmarks.asm
 	
 _CODE ENDS
 
