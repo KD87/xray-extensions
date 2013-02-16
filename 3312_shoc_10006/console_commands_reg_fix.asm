@@ -21,7 +21,7 @@ REGISTER_CC_FLAG g_test_flags, 20h, "test_flag_6"
 REGISTER_CC_FLAG g_test_flags, 40h, "test_flag_7"
 REGISTER_CC_FLAG g_test_flags, 80h, "test_flag_8"
 REGISTER_CC_INT2 g_test_flags, "test_flags", 0, 255
-;REGISTER_CC_FLAG g_ammo_on_belt, 1h, "g_ammunition_on_belt"
+REGISTER_CC_FLAG g_ammo_on_belt, 1h, "g_ammunition_on_belt"
 
 REGISTER_CC_FLAG g_mt_config, 001h, "mt_cnf_0"
 REGISTER_CC_FLAG g_mt_config, 002h, "mt_cnf_1"

@@ -16,7 +16,7 @@ REGISTER_CC_FLAG dof_flags, 4, "r2_reload_dof"
 REGISTER_CC_FLAG posteffect_flags, 1, "r2_ikvision"
 
 REGISTER_CC_FLAG ps_r2_ls_flags, 04000h, "r2_exp_donttest_uns"
-REGISTER_CC_FLAG ps_r2_ls_flags, 10000h, "r2_bloodmarks"
+REGISTER_CC_FLAG ps_r2_ls_flags, 10000h, "r__bloodmarks"
 REGISTER_CC_FLAG ps_r2_ls_flags, 40000h, "r2_soft_water"
 REGISTER_CC_FLAG ps_r2_ls_flags, 80000h, "r2_soft_particles"
 REGISTER_CC_FLAG ps_r2_ls_flags, 100000h, "r2_color_grading"

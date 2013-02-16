@@ -2697,14 +2697,14 @@ org 103BD592h - shift
 	nop
 	nop
 
-;0x101C85CF 6 ;jmp CActor__Update_fix
-;0x104253D0 5 ;jz -> jmp
-
+; тень от ГГ на R2
+org 101DEE40h - shift	
+sub_101DEE40:
 org 101C85CFh - shift	
 	jmp CActor__Update_fix
 org 101C85D5h - shift
 back_from_CActor__Update_fix:
-org 104253D0h - shift
+org 104253C8h - shift
 	jmp CActor__Update_two_fix
-org 104253D5h - shift
+org 104253D0h - shift
 back_from_CActor__Update_two_fix:
