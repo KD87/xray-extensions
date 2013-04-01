@@ -20,6 +20,7 @@ include xr_3da_stubs.asm
 org sec1_sec2_dist
 
 ;include empty.asm ; затычка для патчера
+include misc.asm
 include shaders_mapping_macro.asm
 include shaders_mapping.asm
 include console_comm_reg_macro.asm
@@ -28,6 +29,9 @@ include zoom_check.asm
 include loadscreen_fix.asm
 include weather_parameters.asm
 include rain_timer.asm
+include debug_fixes.asm
+include load_ogse.asm
+include envdescriptor_fix.asm
 
 _code ENDS
 
