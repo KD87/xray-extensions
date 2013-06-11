@@ -33,7 +33,7 @@ REGISTER_CC_FLAG g_mt_config, 040h, "mt_cnf_6"
 REGISTER_CC_FLAG g_mt_config, 080h, "mt_cnf_7"
 REGISTER_CC_FLAG g_mt_config, 100h, "mt_cnf_8"
 REGISTER_CC_INT2 g_mt_config, "mt_cnf", 0, 0FFFFFFFFh
-
+REGISTER_CC_FLAG g_mouse_wheel_sc, 1h, "mouse_wheel_slot_changing"
 
 	; делаем то, что вырезали, включая возврат из функции
 	pop     edi
@@ -46,3 +46,4 @@ g_ftest dd 0.123
 g_itest dd 123
 g_test_flags dd 0
 g_ammo_on_belt dd 0
+g_mouse_wheel_sc dd 1

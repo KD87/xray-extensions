@@ -150,3 +150,15 @@
 
 ;тень ГГ на R2
 0x101C85CF 6 ;jmp CActor__Update_fix
+
+;kstn
+;Перекл. на болт + откл/вкл колеса мышки для переключения м/у слотами
+0x101DEEA0 7 ; jmp CActor__OnNextWeaponSlot
+0x101DEF40 7 ; jmp CActor__OnPrevWeaponSlot
+
+;Инверсия колеса мышки для смены оружия
+0x101DE3F2 6 ; CActor__IR_OnMouseWheel
+0x101DE400 6 ; CActor__IR_OnMouseWheel
+
+;Коллбэк актора на выделение предмета в инвентаре
+0x103E1B28 5 ; jmp CUIItemInfo__InitItem_EXT_CHUNK

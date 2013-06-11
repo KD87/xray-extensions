@@ -2708,3 +2708,45 @@ org 104253C8h - shift
 	jmp CActor__Update_two_fix
 org 104253D0h - shift
 back_from_CActor__Update_two_fix:
+
+;-------------------------------------------------------------
+; Переключение на болт вращением колеса мышки
+; Отключение/включение колеса мышки для переключения между слотами:
+; 0 - нож,
+; 1 - пистолет,
+; 2 - автомат,
+; 3 - граната,
+; 4 - бинокль,
+; 5 - болт
+;-------------------------------------------------------------
+org 101DEEA0h - shift	; 7 bytes
+	jmp		CActor__OnNextWeaponSlot
+	nop
+	nop
+	
+org 101DEF40h - shift	; 7 bytes
+	jmp		CActor__OnPrevWeaponSlot
+	nop
+	nop
+	
+;-------------------------------------------------------
+; Инверсия колеса мышки для смены оружия
+;-------------------------------------------------------
+; CActor__IR_OnMouseWheel
+org 101DE3F2h - shift
+	mov     eax, [edx+2ACh]
+
+; CActor__IR_OnMouseWheel
+org 101DE400h - shift
+	mov     eax, [edx+2A8h]
+	
+;-------------------------------------------------------
+; Коллбэк актора на выделение предмета (CInventoryItem)
+; в инвентаре актора, ящике, трупе, окне торговли
+;-------------------------------------------------------
+	
+org 103E1B28h - shift	; 5 bytes
+	jmp		CUIItemInfo__InitItem_EXT_CHUNK
+	
+org 103E1B2Dh - shift
+CUIItemInfo__InitItem_EXT_CHUNK_OUT:
