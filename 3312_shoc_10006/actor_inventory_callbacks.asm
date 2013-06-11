@@ -111,3 +111,21 @@ exit:
 	retn    4
 	; обратно идти не надо
 on_slot_callback endp
+
+CUIItemInfo__InitItem_EXT_CHUNK proc
+	mov     edi, [ebx+0D4h]               ; CGameObject *this<edi>
+	call    CGameObject__lua_game_object
+	push    eax
+	push    133
+	mov     ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback
+
+;	Вырезанное:
+	mov     eax, [esi+70h]
+	test    eax, eax
+
+;	Возврат:
+	jmp     CUIItemInfo__InitItem_EXT_CHUNK_OUT
+CUIItemInfo__InitItem_EXT_CHUNK endp
