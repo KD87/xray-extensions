@@ -90,7 +90,7 @@ loc_102AC52E:
 	mov     ecx, ds:g_pGamePersistent
 	mov     edx, [ecx]
 	mov     ecx, [edx+46Ch]
-	call    ds:CEnvironment__Invalidate
+	;call    ds:CEnvironment__Invalidate
 loc_102AC542:
 	pop     edi
 	pop     esi

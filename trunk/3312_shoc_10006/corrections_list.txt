@@ -49,8 +49,8 @@
 
 ;0x103BF3D0 5 ; jmp CUITradeWnd__FillList_fix
 
-;0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix ; отладочное сообщение о начале создания объекта
-;0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2 ; отладочное сообщение о завершении создания объекта
+0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix ; отладочное сообщение о начале создания объекта
+0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2 ; отладочное сообщение о завершении создания объекта
 
 ;0x1020921F 5 ; jmp CInventoryItem_constructor_fix
 ;0x102094A8 5 ; jmp CInventoryItem_destructor_fix
@@ -162,3 +162,16 @@
 
 ;Коллбэк актора на выделение предмета в инвентаре
 0x103E1B28 5 ; jmp CUIItemInfo__InitItem_EXT_CHUNK
+
+; добавляем метод установки выбранного элемента в CUIListWnd
+0x10420423 5 ; jmp CUIListWnd__script_register_fix
+; поддержка русского языка в поле ввода
+0x103F5F3A 5 ; jmp CUICustomEdit_fix
+0x103F4B21 5 ; jmp CUICustomEdit__KeyPressed_fix
+0x103F4CCD 5 ; jmp CUICustomEdit__KeyPressed_fix_1
+0x103F4CE6 5 ; jmp CUICustomEdit__KeyPressed_fix_2
+0x103F4CFF 5 ; jmp CUICustomEdit__KeyPressed_fix_3
+0x103F4D15 5 ; jmp CUICustomEdit__KeyPressed_fix_4
+0x103F4D60 5 ; jmp CUICustomEdit__KeyPressed_fix_5
+0x103F4D79 5 ; jmp CUICustomEdit__KeyPressed_fix_6
+0x103F4D47 5 ; jmp CUICustomEdit__KeyPressed_fix_7

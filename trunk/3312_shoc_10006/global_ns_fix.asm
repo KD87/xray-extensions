@@ -89,6 +89,15 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT print_level_time, "print_level_time"
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT print_alife_time, "print_alife_time"
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT set_ignore_game_state, "set_ignore_game_state_update"
+
+	; скриншот
+	GLOBAL_NS_PERFORM_EXPORT__VOID__PCHAR take_screenshot0, "screenshot0"
+	GLOBAL_NS_PERFORM_EXPORT__VOID__PCHAR take_screenshot1, "screenshot1"
+	GLOBAL_NS_PERFORM_EXPORT__VOID__PCHAR take_screenshot2, "screenshot2"
+	GLOBAL_NS_PERFORM_EXPORT__VOID__PCHAR take_screenshot3, "screenshot3"
+
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT set_input_language, "set_input_language"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT get_input_language, "get_input_language"
 	
 	; идЄм обратно
 	jmp back_from_global_space_ext
@@ -412,3 +421,97 @@ init_external_libs proc
 	retn
 init_external_libs endp
 
+take_screenshot0 proc
+fname  = dword ptr 08h
+	push    ebp
+	mov     ebp, esp
+	mov     eax, [ebp+fname]
+	push    eax
+	push    0 ; code: 0 - normal, 1 - cubemap, 2 - save, 3 - levelmap
+	
+	mov     eax, ds:Render
+	mov     ecx, [eax]
+	mov     edx, [ecx]
+	mov     eax, [edx+0D0h]
+	call    eax
+
+	pop     ebp
+	retn
+take_screenshot0 endp
+
+take_screenshot1 proc
+fname  = dword ptr 08h
+	push    ebp
+	mov     ebp, esp
+	mov     eax, [ebp+fname]
+	push    eax
+	push    1 ; code: 0 - normal, 1 - cubemap, 2 - save, 3 - levelmap
+	
+	mov     eax, ds:Render
+	mov     ecx, [eax]
+	mov     edx, [ecx]
+	mov     eax, [edx+0D0h]
+	call    eax
+
+	pop     ebp
+	retn
+take_screenshot1 endp
+
+take_screenshot2 proc
+fname  = dword ptr 08h
+	push    ebp
+	mov     ebp, esp
+	mov     eax, [ebp+fname]
+	push    eax
+	push    2 ; code: 0 - normal, 1 - cubemap, 2 - save, 3 - levelmap
+	
+	mov     eax, ds:Render
+	mov     ecx, [eax]
+	mov     edx, [ecx]
+	mov     eax, [edx+0D0h]
+	call    eax
+
+	pop     ebp
+	retn
+take_screenshot2 endp
+
+take_screenshot3 proc
+fname  = dword ptr 08h
+	push    ebp
+	mov     ebp, esp
+	mov     eax, [ebp+fname]
+	push    eax
+	push    3 ; code: 0 - normal, 1 - cubemap, 2 - save, 3 - levelmap
+	
+	mov     eax, ds:Render
+	mov     ecx, [eax]
+	mov     edx, [ecx]
+	mov     eax, [edx+0D0h]
+	call    eax
+
+	pop     ebp
+	retn
+take_screenshot3 endp
+
+set_input_language proc
+lang      = dword ptr  4
+	mov     eax, [esp+lang]
+	mov     g_input_language, eax
+	retn
+set_input_language endp
+
+get_input_language proc
+	mov     eax, [g_input_language]
+	retn
+get_input_language endp
+
+rescan_pathes proc
+	push ecx
+	push eax
+	mov     ecx, ds:xr_FS
+	mov     ecx, [ecx]
+	call    [CLocatorAPI__rescan_pathes]
+	pop eax
+	pop ecx
+	retn
+rescan_pathes endp
