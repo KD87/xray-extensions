@@ -1,6 +1,205 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+org 10458D98h - shift 
+xr_FS dd ? ; ; class CLocatorAPI * xr_FS
+org 10458C68h - shift
+CLocatorAPI__rescan_pathes dd ?
+
+; обработка ввода символов 'х' и 'ъ'
+;.text:103F4CCD loc_103F4CCD:                           ; CODE XREF: CUICustomEdit__KeyPressed+139j
+org 103F4CCDh - shift
+	jmp CUICustomEdit__KeyPressed_fix_1
+;.text:103F4CCD                 mov     bl, [ebp+0E9h]  ; jumptable 103F4C09 case 14
+;.text:103F4CD3                 neg     bl
+;.text:103F4CD5                 sbb     bl, bl
+;.text:103F4CD7                 and     bl, 20h
+;.text:103F4CDA                 add     bl, 5Bh
+org 103F4CDDh - shift
+back_from_CUICustomEdit__KeyPressed_fix_1:
+;.text:103F4CDD                 mov     byte ptr [esp+18h+var_C], bl
+;.text:103F4CE1                 jmp     loc_103F4B42
+
+;.text:103F4CE6 loc_103F4CE6:                           ; CODE XREF: CUICustomEdit__KeyPressed+139j
+org 103F4CE6h - shift
+	jmp CUICustomEdit__KeyPressed_fix_2
+;.text:103F4CE6                 mov     bl, [ebp+0E9h]  ; jumptable 103F4C09 case 15
+;.text:103F4CEC                 neg     bl
+;.text:103F4CEE                 sbb     bl, bl
+;.text:103F4CF0                 and     bl, 20h
+;.text:103F4CF3                 add     bl, 5Dh
+org 103F4CF6h - shift
+back_from_CUICustomEdit__KeyPressed_fix_2:
+;.text:103F4CF6                 mov     byte ptr [esp+18h+var_C], bl
+;.text:103F4CFA                 jmp     loc_103F4B42
+
+; 'ж'
+;.text:103F4CFF loc_103F4CFF:                           ; CODE XREF: CUICustomEdit__KeyPressed+139j
+org 103F4CFFh - shift
+	jmp CUICustomEdit__KeyPressed_fix_3
+;.text:103F4CFF                 cmp     byte ptr [ebp+0E9h], 0 ; jumptable 103F4C09 case 27
+;.text:103F4D06                 setz    bl
+;.text:103F4D09                 add     bl, 3Ah
+org 103F4D0Ch - shift
+back_from_CUICustomEdit__KeyPressed_fix_3:
+;.text:103F4D0C                 mov     byte ptr [esp+18h+var_C], bl
+;.text:103F4D10                 jmp     loc_103F4B42
+
+;'эЭ'
+;.text:103F4D15 loc_103F4D15:                           ; CODE XREF: CUICustomEdit__KeyPressed+139j
+org 103F4D15h - shift
+	jmp CUICustomEdit__KeyPressed_fix_4
+;.text:103F4D15                 mov     bl, [ebp+0E9h]  ; jumptable 103F4C09 case 28
+;.text:103F4D1B                 neg     bl
+;.text:103F4D1D                 sbb     bl, bl
+;.text:103F4D1F                 and     bl, 0FBh
+;.text:103F4D22                 add     bl, 27h
+org 103F4D25h - shift
+back_from_CUICustomEdit__KeyPressed_fix_4:
+;.text:103F4D25                 mov     byte ptr [esp+18h+var_C], bl
+;.text:103F4D29                 jmp     loc_103F4B42
+
+; 'бБ'
+;.text:103F4D60 loc_103F4D60:                           ; CODE XREF: CUICustomEdit__KeyPressed+139j
+org 103F4D60h - shift
+	jmp CUICustomEdit__KeyPressed_fix_5
+;.text:103F4D60                 mov     bl, [ebp+0E9h]  ; jumptable 103F4C09 case 39
+;.text:103F4D66                 neg     bl
+;.text:103F4D68                 sbb     bl, bl
+;.text:103F4D6A                 and     bl, 10h
+;.text:103F4D6D                 add     bl, 2Ch
+org 103F4D70h - shift
+back_from_CUICustomEdit__KeyPressed_fix_5:
+;.text:103F4D70                 mov     byte ptr [esp+18h+var_C], bl
+;.text:103F4D74                 jmp     loc_103F4B42
+
+; 'юЮ'
+;.text:103F4D79 loc_103F4D79:                           ; CODE XREF: CUICustomEdit__KeyPressed+139j
+org 103F4D79h - shift
+	jmp CUICustomEdit__KeyPressed_fix_6
+;.text:103F4D79                 mov     bl, [ebp+0E9h]  ; jumptable 103F4C09 case 40
+;.text:103F4D7F                 neg     bl
+;.text:103F4D81                 sbb     bl, bl
+;.text:103F4D83                 and     bl, 10h
+;.text:103F4D86                 add     bl, 2Eh
+org 103F4D89h - shift
+back_from_CUICustomEdit__KeyPressed_fix_6:
+;.text:103F4D89                 mov     byte ptr [esp+18h+var_C], bl
+;.text:103F4D8D                 jmp     loc_103F4B42
+
+; '.,'
+;.text:103F4D47 loc_103F4D47:                           ; CODE XREF: CUICustomEdit__KeyPressed+139j
+org 103F4D47h - shift
+	jmp CUICustomEdit__KeyPressed_fix_7
+;.text:103F4D47                 mov     bl, [ebp+0E9h]  ; jumptable 103F4C09 case 41
+;.text:103F4D4D                 neg     bl
+;.text:103F4D4F                 sbb     bl, bl
+;.text:103F4D51                 and     bl, 10h
+;.text:103F4D54                 add     bl, 2Fh
+org 103F4D57h - shift
+back_from_CUICustomEdit__KeyPressed_fix_7:
+;.text:103F4D57                 mov     byte ptr [esp+18h+var_C], bl
+;.text:103F4D5B                 jmp     loc_103F4B42
+
+
+
+org 103F5320h - shift
+gs_DIK2CHR_find:
+org 10560904h - shift
+dword_10560904 dd ?
+
+
+;.text:103F4AD0 CUICustomEdit__KeyPressed proc near     ; CODE XREF: sub_103F4A60+25p
+;.text:103F4B15                 lea     esi, [esp+1Ch+var_8]
+;.text:103F4B19                 lea     edi, [esp+1Ch+var_4]
+;.text:103F4B1D                 mov     [esp+1Ch+var_8], eax
+org 103F4B21h - shift
+	jmp CUICustomEdit__KeyPressed_fix
+;.text:103F4B21                 call    gs_DIK2CHR_find
+;.text:103F4B26                 mov     eax, [eax]
+;.text:103F4B28                 cmp     dword_10560904, eax
+;.text:103F4B2E                 pop     edi
+;.text:103F4B2F                 jz      short loc_103F4B42
+;.text:103F4B31                 movzx   ecx, byte ptr [eax+10h]
+;.text:103F4B35                 push    ecx
+;.text:103F4B36                 mov     ecx, ebp
+org 103F4B38h - shift
+back_from_CUICustomEdit__KeyPressed_fix:
+;.text:103F4B38                 call    CUICustomEdit__AddLetter
+org 103F4B42h - shift
+loc_103F4B42:
+
+
+; регистрация CUICustomEdit
+;.text:103F5F01                 mov     [ebp+var_14], offset sub_102E1219
+;.text:103F5F08                 call    sub_103F680B
+;.text:103F5F0D                 push    offset sub_1000A069
+;.text:103F5F12                 push    offset aSettextposy ; "SetTextPosY"
+;.text:103F5F17                 push    offset sub_104014EE
+;.text:103F5F1C                 mov     ecx, offset sub_103F5310
+;.text:103F5F21                 mov     [ebp+var_18], ecx
+;.text:103F5F24                 push    offset aSettextposx ; "SetTextPosX"
+;.text:103F5F29                 xor     ecx, ecx
+;.text:103F5F2B                 push    eax
+;.text:103F5F2C                 mov     [ebp+var_14], ecx
+;.text:103F5F2F                 call    sub_103F5FB8
+;.text:103F5F34                 push    eax
+;.text:103F5F35                 call    sub_103F5FB8
+org 103F5F3Ah - shift
+	jmp CUICustomEdit_fix
+;.text:103F5F3A                 mov     ecx, eax
+;.text:103F5F3C                 xor     eax, eax
+;.text:103F5F3E                 lea     edi, [ebp+var_C]
+org 103F5F41h - shift
+back_from_CUICustomEdit_fix:
+;.text:103F5F41                 stosb
+
+
+
+
+org 104207F6h - shift
+sub_104207F6: ; функция регистрации метода класса CUIListWnd с прототипом void CUIListWnd::fun(int);
+
+; CUIListWnd::script_register
+;.text:104203EB                 mov     ecx, offset sub_1041F980
+;.text:104203F0                 push    ecx
+;.text:104203F1                 push    offset aIsscrollbarena ; "IsScrollBarEnabled"
+
+;.text:104203F6                 push    ecx
+;.text:104203F7                 xor     ecx, ecx
+;.text:104203F9                 push    ecx
+;.text:104203FA                 mov     ecx, offset sub_1041F6F0
+;.text:104203FF                 push    ecx
+;.text:10420400                 push    offset aEnablescrollba ; "EnableScrollBar"
+
+;.text:10420405                 push    ecx
+;.text:10420406                 xor     ecx, ecx
+;.text:10420408                 push    ecx
+;.text:10420409                 mov     ecx, offset sub_1041ED30
+;.text:1042040E                 push    ecx
+;.text:1042040F                 push    offset aRemoveall ; "RemoveAll"
+
+;.text:10420414                 push    ecx
+;.text:10420415                 xor     ecx, ecx
+;.text:10420417                 push    ecx
+;.text:10420418                 mov     ecx, offset sub_1041EB50
+;.text:1042041D                 push    ecx
+;.text:1042041E                 push    offset aRemoveitem ; "RemoveItem"
+
+org 10420423h - shift
+	jmp CUIListWnd__script_register_fix
+;.text:10420423                 push    eax
+;.text:10420424                 call    sub_104207F6
+;.text:10420429                 pop     ecx
+org 1042042Ah - shift
+back_from_CUIListWnd__script_register_fix:
+;.text:1042042A                 push    eax
+;.text:1042042B                 call    sub_10420821
+;.text:10420430                 pop     ecx
+
+;.text:10420431                 push    eax
+
+
 
 org 101A5430h - shift
 CLevel__SetEnvironmentGameTimeFactor:
