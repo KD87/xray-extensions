@@ -359,6 +359,8 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg2, "set_vector_global_arg_2"
 	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg3, "set_vector_global_arg_3"
 	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg4, "set_vector_global_arg_4"
+	
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetActorDirectionEx, "set_actor_direction_ex"
 
 	PERFORM_EXPORT_VOID__GO CScriptGameObject__SetGOArg1, "set_object_arg_1"
 	
@@ -5050,3 +5052,56 @@ cobject_exit:
 	retn
 CScriptGameObject__GetHudItemState endp
 ;74h, 124h
+
+CScriptGameObject__SetActorDirectionEx proc
+dir_vector  = dword ptr  8
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    esi
+	mov     esi, ecx
+	push    edi
+	mov     edi, [esi+4]
+	test    edi, edi
+	jz      short lab1
+	call    CGameObject__lua_game_object
+lab1:
+	mov     ecx, [esi+4]
+	test    ecx, ecx
+	jz      short exit_fail
+	mov     eax, [ecx]
+	mov     edx, [eax+80h]
+	call    edx
+	test    eax, eax
+	jz      short exit_fail
+	mov     ecx, [eax+530h]
+	mov     eax, [eax+ecx*4+524h]
+	mov     edx, [eax]
+	mov     ecx, eax
+
+;	sub     esp, 0Ch
+;	fldz
+;	fst     [esp+14h+var_C]
+;	fstp    [esp+14h+var_10]
+;	fld     [ebp+dir]
+;	fstp    [esp+14h+var_14]
+
+	mov     eax, [ebp + dir_vector]
+	push    [eax+8]
+	push    [eax+4]
+	push    [eax+0]
+
+	mov     eax, [edx+1Ch]
+	call    eax
+
+	jmp exit
+exit_fail:
+	PRINT "fail to set actor direction!"
+exit:
+	pop     edi
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetActorDirectionEx endp
