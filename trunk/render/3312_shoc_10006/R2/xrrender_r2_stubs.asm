@@ -823,15 +823,12 @@ back_to_particle_sampler_register:
 ;===========================================
 ; детальный бамп
 ;===========================================
-;org 100690FCh - shift
-;strcat_s dd ?
-;org 1003D2B1h - shift
-;	jmp add_detail_bump_sampler
-;org 1003D2E7h - shift
-;back_to_add_detail_bump_sampler:
-
-;org 1003BE03h - shift
-;	jmp add_jitter
+org 100690FCh - shift
+strcat_s dd ?
+org 1003D2B1h - shift
+	jmp add_detail_bump_sampler
+org 1003D2E7h - shift
+back_to_add_detail_bump_sampler:
 
 ;===========================================
 ; тень от ГГ на R2
