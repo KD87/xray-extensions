@@ -1,0 +1,56 @@
+;=====================================
+;=====ØÅÉÄÅĞ ÑÀÌÎÑÂÅ×ÅÍÈß ÍÀ ÕÓÄÅ=====
+;=====================================
+;0x10016582 5 ; jmp hud_shader_fix
+;0x10006E14 5 ; jmp CRender_constructor_fix
+;0x1000D1D4 5 ; jmp CRender__Render_hud_emissive_fix
+;0x1000D27E 5 ; jmp CRender__render_forward_fix
+
+;=====================================
+;=======ÂÈĞÒÓÀËÜÍÛÉ ĞÀÄÈÓÑ ËÀÌÏ=======
+;=====================================
+0x1002E77E 5 ; jmp light__light_fix
+0x1002FD43 5 ; jmp light__export_fix
+0x100337F2 5 ; jmp CLight_Compute_XFORM_and_VIS__compute_xf_spot_fix
+
+0x10004BB6 5 ; 
+0x1002FD32 5 ; 
+0x100300D0 5 ; 
+0x100301BA 5 ; 
+0x1000ABB1 5 ; jmp      loc_1000AEB3
+
+;===========================================
+; òåíü îò ÃÃ íà R2
+;===========================================
+0x1000BA1D 5 ; òåíü
+
+;============================================
+;============ÎÒËÀÄÎ×ÍÛÅ ÏĞÀÂÊÈ===============
+;============================================
+;0x004387D0 5 ; jmp CEnvironment__SetWeather_fix
+
+;============================================
+;============ÈÌÏÎĞÒ ÈÇ OGSE.DLL==============
+;============================================
+0x100163BD 5
+0x10062AE0 5	; CRenderTarget::phase_combine()
+0x100567E0 5	; CRenderTarget::CRenderTarget()
+0x10057940 5	; CRenderTarget::~CRenderTarget()
+0x10003B30 5	; CRender::create()
+0x100046C5 5	; CRender::reset_end()
+0x10001630 5	; xrRender_initconsole()
+0x100073E0 5	; CRender::level_Load()
+0x10007860 11	; CRender::level_Unload()
+0x100231C0 5	; CDetailManager::MT_CALC()
+0x10022F90 5	; CDetailManager::Render()
+0x10004DD0 5	; CRender::Add_SkeletonWallmark()
+0x10004D90 5	; CRender::Add_SkeletonWallmark() (intrusive_ptr)
+0x100303B0 5	; CLight_DB::Update()
+0x10005760 5	; CRender::shader_compile()
+0x1003CE80 5	; uber_deffer()
+0x1006679C 5	; CRenderTarget::phase_scene_prepare()
+0x10006E80 5	; CRender::blender_create()
+0x10007190 5	; CRender::blender_destroy()
+0x1005E6A0 5	; CRenderTarget::accum_spot()
+;hack to prevent full loading R2 in R1-mode
+0x10002DC9 5	; dllmain hack

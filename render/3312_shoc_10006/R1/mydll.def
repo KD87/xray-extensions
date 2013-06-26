@@ -1,2 +1,0 @@
-LIBRARY mydll
- ; EXPORTS [your_exported_proc_name]
