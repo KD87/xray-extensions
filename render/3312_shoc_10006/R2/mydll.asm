@@ -38,9 +38,7 @@ include	register_sampler_particle.asm	; регистрация семплеров для CBlender_Parti
 include	ikvision_blender.asm		; блендер ик-видения
 include noise_texture.asm		; шумовая текстура высокого разрешения
 include mip_bias_fix.asm
-;include detail_bump.asm
-;include jitter.asm
-;include render_methods.asm
+include detail_bump.asm
 include actor_shadow_fix.asm
 
 _code ENDS
