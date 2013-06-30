@@ -524,6 +524,15 @@ org 10023E2Ah - shift
 org 10023E31h - shift
 back_to_cache_task_1:
 
+; фикс мигания травы
+
+org 100229DCh - shift
+	jmp	detail_blink_fix
+org 100229F6h - shift
+back_from_detail_blink_fix:
+org 1007A988h - shift
+RImplementation dd ?
+
 ;===========================================
 ; ПЛОТНОСТЬ ТРАВЫ.
 ;===========================================
