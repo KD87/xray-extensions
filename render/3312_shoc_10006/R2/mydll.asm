@@ -42,6 +42,7 @@ include detail_bump.asm
 include actor_shadow_fix.asm
 include smap_size_macro.asm
 include new_smap_sizes.asm
+include detail_blink_fix.asm
 
 _code ENDS
 
