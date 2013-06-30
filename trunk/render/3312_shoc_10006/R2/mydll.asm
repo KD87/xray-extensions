@@ -40,6 +40,8 @@ include noise_texture.asm		; шумовая текстура высокого разрешения
 include mip_bias_fix.asm
 include detail_bump.asm
 include actor_shadow_fix.asm
+include smap_size_macro.asm
+include new_smap_sizes.asm
 
 _code ENDS
 

@@ -839,3 +839,13 @@ org 1000BA1Dh - shift
 	jmp	actor_shadow_fix
 org 1000BA23h - shift
 back_to_actor_shadow_fix:	
+
+;===========================================
+; ƒополнительные разрешени€ карты теней
+;===========================================
+org 10003F43h - shift
+	jmp	new_smap_sizes
+org 10003F48h - shift
+back_from_new_smap_sizes:
+org 1006964Ch - shift
+Core dd ?
