@@ -28,6 +28,8 @@ include load_ogse.asm
 include envdescriptor_fix.asm
 include imports_for_render.asm
 include override_methods.asm
+include console_comm_reg_macro.asm
+include console_comm.asm
 
 _code ENDS
 

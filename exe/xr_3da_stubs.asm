@@ -242,6 +242,63 @@ trivial_encryptor__m_table_seed dd 1329436h
 org 00411308h - shift
 	mov     dword ptr [ebp-4], 800h ; 7 байт
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; консольные команды
+
+org 004B8022h - shift
+	jmp con_comm
+	
+org 004C8FF7h - shift	
+_atexit:
+org 004100D0h - shift
+CCC_Mask__CCC_Mask:
+org 00410620h - shift
+CCC_Float__CCC_Float:
+org 00410D00h - shift
+CCC_Integer__CCC_Integer:
+org 00410960h - shift
+CCC_Vector3__CCC_Vector3:
+org 0050BBBCh - shift
+Console dd ?
+org 0050BC88h - shift
+Device dd ?
+org 004B8070h - shift
+CConsole__AddCommand:
+org 004B80A0h - shift
+CConcole__RemoveCommand:
+org 004D2550h - shift
+IConsole_Command___vftable dd ?
+org 004B9E10h - shift
+sub_4B9E10:
+org 0050E858h - shift
+xCCC_Integer dd ?
+org 004CC5CCh - shift
+Msg dd ?
+org 004CC59Ch - shift
+Log dd ?
+org 004CC1F8h - shift
+__imp__sprintf_s dd ?
+	
+; массив констант R_constants
+org 0050D3D4h - shift		
+	dword_50D3D4 dd ?
+org 0050D3D8h - shift		
+	dword_50D3D8 dd ?
+org 0050E3F4h - shift	
+	dword_50E3F4 dd ?
+org 0050E3F8h - shift
+	dword_50E3F8 dd ?
+org 00404340h - shift
+R_constant_array__set:
+org 0050C3D0h - shift
+	RCache_constants_a_pixel dd ?
+org 0050D3E0h - shift
+	RCache_constants_a_pixel_b_dirty dd ?
+org 0050D3F0h - shift
+	RCache_constants_a_vertex dd ?
+org 0050E400h - shift
+	RCache_constants_a_vertex_b_dirty dd ?	
+	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; погодные параметры
 org 004CC590h - shift
@@ -286,3 +343,8 @@ back_to_cer__Render:
 
 org 004CC5CCh - shift
 Msg dd ?
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; время жизни блудмарков
+org 004D8F60h - shift
+wm_lifetime dd ?
