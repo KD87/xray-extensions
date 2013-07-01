@@ -173,3 +173,8 @@ org 00442E05h - shift
 	jmp rain_drop_angle
 org 00442E0Bh - shift
 back_to_rain_drop_angle:
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; время жизни блудмарков
+org 004D8F60h - shift
+wm_lifetime dd ?
