@@ -110,7 +110,9 @@ include actor_shadow_fix.asm
 include mouse_wheel_slot_fix.asm
 include cuilistwnd_fix.asm
 include CUICustomEdit_fix.asm
-
+include cuitrackbar_fix.asm
+include controller_fix.asm
+include cuicombobox_fix.asm
 
 _CODE ENDS
 

@@ -5,6 +5,7 @@ cuiwindow_fix proc
 	pusha
 	; добавляем своё
 	PERFORM_EXPORT_CUIWND__VOID__VOID UIWindow__DetachFromParent, "DetachFromParent"
+	PERFORM_EXPORT_CUIWND__VOID__VOID CUIWindow__BringToTop, "BringToTop"
 	PERFORM_EXPORT_CUIWND__VOID__VOID CUIWindow__Update_virtualcall, "Update"
 	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetVPos, "GetVPos"
 	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetHPos, "GetHPos"
@@ -31,6 +32,16 @@ exit:
 	retn
 UIWindow__DetachFromParent endp
 
+CUIWindow__BringToTop proc
+	mov     eax, [ecx+2Ch] ; parent
+	test    eax, eax
+	jz      exit ; no parent
+	; eax == this == parent windows
+	push    ecx ; аргумент в стеке - окно, которое понимаем наверх
+	call CUIWindow__BringToTop_
+exit:
+	retn
+CUIWindow__BringToTop endp
 
 g_counter_just_for_show dd 0
 scroll_vew_fix proc

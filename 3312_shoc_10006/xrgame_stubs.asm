@@ -1,6 +1,298 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+
+org 103EB9ABh - shift
+register__UI__string__void:
+
+org 10458770h - shift
+CGameFont__SizeOf_ dd ? ; public: float __thiscall CGameFont::SizeOf_(char const *)
+
+;---------- CUIComboBox fix ------
+org 1040E5B0h - shift
+CUIComboBox__SetItem:
+
+;.text:1040DF60 CUIComboBox__SetListLength proc near
+;.text:1040DF60 arg_0           = dword ptr  4
+;.text:1040DF60                 cmp     byte_1056108E, 0
+;.text:1040DF67                 push    esi
+;.text:1040DF68                 mov     esi, ecx
+org 1040DF6Ah - shift
+	jmp loc_1040DFA5
+;.text:1040DF6A                 jnz     short loc_1040DFA5
+;.text:1040DFA5 ; ---------------------------------------------------------------------------
+;.text:1040DFA5
+org 1040DFA5h - shift
+loc_1040DFA5:
+;.text:1040DFA5 loc_1040DFA5:                           ; CODE XREF: CUIComboBox__SetListLength+Aj
+;.text:1040DFA5                 mov     ecx, [esp+4+arg_0]
+;.text:1040DFA9                 mov     [esi+80h], ecx
+;.text:1040DFAF                 pop     esi
+;.text:1040DFB0                 retn    4
+
+org 103D7C60h - shift
+CUIOptionsItem__SaveValue:
+
+;.text:1040E540 CUIComboBox__SaveValue proc near
+org 1040E540h - shift
+	jmp CUIComboBox__SaveValue_fix
+;.text:1040E540                 push    esi
+;.text:1040E541                 push    edi
+;.text:1040E542                 mov     edi, ecx
+;.text:1040E544                 call    CUIOptionsItem__SaveValue
+org 1040E549h - shift
+back_from_CUIComboBox__SaveValue_fix:
+;.text:1040E549                 cmp     dword ptr [edi+1Ch], 10h
+;.text:1040E54D                 jb      short loc_1040E554
+;.text:1040E54F                 mov     eax, [edi+8]
+;.text:1040E552                 jmp     short loc_1040E557
+;.text:1040E554 loc_1040E554:
+;.text:1040E554                 lea     eax, [edi+8]
+;.text:1040E557 loc_1040E557:
+;.text:1040E557                 push    eax
+;.text:1040E558                 mov     eax, ds:?Console@@3PAVCConsole@@A ; CConsole * Console
+;.text:1040E55D                 mov     ecx, [eax]
+;.text:1040E55F                 call    ds:?GetXRToken@CConsole@@QAEPAUxr_token@@PBD@Z ; CConsole::GetXRToken(char const *)
+;.text:1040E565                 xor     edx, edx
+;.text:1040E567                 cmp     [eax], edx
+;.text:1040E569                 jz      short loc_1040E581
+;.text:1040E56B                 mov     esi, [edi+28h]
+;.text:1040E56E                 mov     ecx, eax
+;.text:1040E570 loc_1040E570:
+;.text:1040E570                 cmp     esi, [ecx+4]
+;.text:1040E573                 jz      short loc_1040E591
+;.text:1040E575                 add     edx, 1
+;.text:1040E578                 cmp     dword ptr [eax+edx*8], 0
+;.text:1040E57C                 lea     ecx, [eax+edx*8]
+;.text:1040E57F                 jnz     short loc_1040E570
+;.text:1040E581 loc_1040E581:
+;.text:1040E581                 mov     eax, offset byte_104C885A
+;.text:1040E586                 mov     ecx, eax
+;.text:1040E588                 mov     eax, edi
+;.text:1040E58A                 pop     edi
+;.text:1040E58B                 pop     esi
+;.text:1040E58C                 jmp     sub_103D7AD0
+;.text:1040E591 loc_1040E591:
+;.text:1040E591                 mov     eax, [eax+edx*8]
+;.text:1040E594                 mov     ecx, eax
+;.text:1040E596                 mov     eax, edi
+;.text:1040E598                 pop     edi
+;.text:1040E599                 pop     esi
+;.text:1040E59A                 jmp     sub_103D7AD0
+;.text:1040E59A CUIComboBox__SaveValue endp
+
+
+org 103F9600h - shift
+CUIWindow__BringToTop_:
+
+org 1040E220h - shift
+CUIComboBox__AddItem_:
+
+org 103F1520h - shift
+register_CUI_void__string:
+
+org 1040F216h - shift
+sub_1040F216:
+
+org 1040EF76h - shift
+	jmp CUIComboBox_fix
+;.text:1040EF76                 call    sub_1040F216
+org 1040EF7Bh - shift
+back_from_CUIComboBox_fix:
+;.text:1040EF7B                 mov     ecx, offset sub_1040EE50
+;.text:1040EF80                 mov     [ebp+var_1C], ecx
+;.text:1040EF83                 xor     ecx, ecx
+;.text:1040EF85                 push    ecx
+;.text:1040EF86                 mov     ecx, offset sub_1040DF60
+;.text:1040EF8B                 push    ecx
+;.text:1040EF8C                 push    offset aSetlistlength ; "SetListLength"
+;.text:1040EF91                 push    eax
+;.text:1040EF92                 mov     [ebp+var_18], ebx
+;.text:1040EF95                 call    sub_1040EFF9
+
+; --------------- for controller fixes ----------------------------
+
+;.text:1019C4C0 CControllerPsyHitCamEffector__Process proc near
+;.text:1019C4C0                 push    ebp
+;.text:1019C4C1                 mov     ebp, esp
+org 1019C4C3h - shift
+	xor eax, eax
+	jmp loc_1019CCFD
+;.text:1019C4C3                 and     esp, 0FFFFFFF8h
+;.text:1019C4C6                 sub     esp, 0DCh
+
+
+;.text:1019CCF7                 mov     eax, 1
+;.text:1019CCFC                 pop     ebx
+org 1019CCFDh - shift
+loc_1019CCFD:
+;.text:1019CCFD                 mov     esp, ebp
+;.text:1019CCFF                 pop     ebp
+;.text:1019CD00                 retn    18h
+
+
+
+; removing buggy pp effects
+; CController::CController
+;.text:100E15A0                 mov     [esp+18h+var_4], esi
+org 100E15A4h - shift
+	jmp CController__CController_fix
+;.text:100E15A4                 call    xr_new_CControllerAura_CController___
+;.text:100E15A9                 add     esp, 4
+;.text:100E15AC                 mov     [esi+7E8h], eax
+org 100E15B2h - shift
+back_from_CController__CController_fix:
+;.text:100E15B2                 pop     edi
+
+; CController::~CController
+; ничего не делаем, поскольку нулевой указатель обрабатывается в коде
+
+; CController::UpdateCL
+;.text:100E2BBE                 mov     ebx, [ebp+arg_7E0]
+org 100E2BC4h - shift
+	nop
+	nop
+	nop
+	nop
+	nop
+;.text:100E2BC4                 call    CControllerAura__update_frame
+;.text:100E2BC9                 pop     edi
+
+; CController::shedule_Update
+;.text:100E2C1B                 mov     eax, [edi+7A4h]
+org 100E2C21h - shift
+	nop
+	nop
+	nop
+	nop
+	nop
+;.text:100E2C21                 call    CControllerAura__update_schedule
+;.text:100E2C26                 pop     edi
+
+; CController::Die
+;.text:100E2C3E                 call    CController__FreeFromControl
+org 100E2C43h - shift
+	jmp loc_100E2C77
+;.text:100E2C43                 mov     esi, [edi+7E8h]
+;.text:100E2C49                 mov     edx, [esi]
+;.text:100E2C4B                 mov     eax, [edx+4]
+;.text:100E2C4E                 mov     ecx, esi
+;.text:100E2C50                 call    eax
+;.text:100E2C52                 test    al, al
+;.text:100E2C54                 jz      short loc_100E2C77
+;.text:100E2C56                 mov     eax, [esi+4]
+;.text:100E2C59                 mov     dword ptr [eax+58h], 1
+;.text:100E2C60                 mov     ecx, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
+;.text:100E2C66                 mov     edx, [ecx+204h]
+;.text:100E2C6C                 mov     [eax+5Ch], edx
+;.text:100E2C6F                 xor     eax, eax
+;.text:100E2C71                 mov     [esi+4], eax
+;.text:100E2C74                 mov     [esi+74h], eax
+org 100E2C77h - shift
+loc_100E2C77:
+;.text:100E2C77 loc_100E2C77:
+;.text:100E2C77                 mov     eax, [edi+800h]
+;.text:100E2C7D                 call    CControllerPsyHit__on_death
+
+; CController::net_Destroy
+;.text:100E2C94                 call    CBaseMonster__net_Destroy
+org 100E2C99h - shift
+	jmp loc_100E2CCD
+;.text:100E2C99                 mov     esi, [edi+7E8h]
+;.text:100E2C9F                 mov     eax, [esi]
+;.text:100E2CA1                 mov     edx, [eax+4]
+;.text:100E2CA4                 mov     ecx, esi
+;.text:100E2CA6                 call    edx
+;.text:100E2CA8                 test    al, al
+;.text:100E2CAA                 jz      short loc_100E2CCD
+;.text:100E2CAC                 mov     eax, [esi+4]
+;.text:100E2CAF                 mov     dword ptr [eax+58h], 1
+;.text:100E2CB6                 mov     ecx, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
+;.text:100E2CBC                 mov     edx, [ecx+204h]
+;.text:100E2CC2                 mov     [eax+5Ch], edx
+;.text:100E2CC5                 xor     eax, eax
+;.text:100E2CC7                 mov     [esi+4], eax
+;.text:100E2CCA                 mov     [esi+74h], eax
+org 100E2CCDh - shift
+loc_100E2CCD:
+;.text:100E2CCD loc_100E2CCD:
+;.text:100E2CCD                 call    CController__FreeFromControl
+
+
+
+; CController::Load
+;.text:100E219B                 test    eax, eax
+;.text:100E219D                 setnz   cl
+;.text:100E21A0                 mov     [esi+7E4h], cl
+org 100E21A6h - shift
+	jmp CController__Load_fix_lab1
+;.text:100E21A6                 mov     esi, [esi+7E8h]
+;.text:100E21AC                 mov     edx, [esi]
+;.text:100E21AE                 mov     eax, [edx]
+;.text:100E21B0                 push    edi
+;.text:100E21B1                 mov     ecx, esi
+;.text:100E21B3                 call    eax
+org 100E21B5h - shift
+CController__Load_fix_lab1:
+;.text:100E21B5                 pop     edi
+;.text:100E21B6                 pop     esi
+;.text:100E21B7                 pop     ebx
+;.text:100E21B8                 mov     esp, ebp
+;.text:100E21BA                 pop     ebp
+;.text:100E21BB                 retn    4
+;.text:100E21BB CController__Load endp
+
+;---------------- end of controller fixes ------------------------
+
+
+;.text:103D7BB0 CUIOptionsItem__SaveOptFloatValue proc near
+;...
+;.text:103D7BBC                 mov     eax, [eax+8]
+;.text:103D7BBF                 jmp     short loc_103D7BC4
+;.text:103D7BC1 loc_103D7BC1:                           ; CODE XREF: CUIOptionsItem__SaveOptFloatValue+Aj
+;.text:103D7BC1                 add     eax, 8
+;.text:103D7BC4 loc_103D7BC4:                           ; CODE XREF: CUIOptionsItem__SaveOptFloatValue+Fj
+org 103D7BC4h - shift
+	jmp CUIOptionsItem__SaveOptFloatValue_fix
+;.text:103D7BC4                 fld     [esp+200h+value]
+org 103D7BCBh - shift
+back_from_CUIOptionsItem__SaveOptFloatValue_fix:
+;.text:103D7BCB                 sub     esp, 8
+;.text:103D7BCE                 fstp    [esp+208h+var_208]
+;.text:103D7BD1                 push    eax
+;.text:103D7BD2                 push    offset aSF      ; "%s %f"
+;.text:103D7BD7                 lea     edx, [esp+210h+var_200]
+;.text:103D7BDB                 call    sprintf_s_512_
+;.text:103D7BE0                 mov     ecx, ds:?Console@@3PAVCConsole@@A ; CConsole * Console
+;.text:103D7BE6                 mov     ecx, [ecx]
+;.text:103D7BE8                 add     esp, 10h
+;.text:103D7BEB                 lea     eax, [esp+200h+var_200]
+;.text:103D7BEE                 push    eax
+;.text:103D7BEF                 call    ds:?Execute@CConsole@@QAEXPBD@Z ; CConsole::Execute(char const *)
+;.text:103D7BF5                 add     esp, 200h
+;.text:103D7BFB                 retn    4
+
+
+org 104100E0h - shift
+CUITrackBar__IsChanged:
+
+org 103FB71Eh - shift
+register__UI__bool__void:
+
+org 1040CA2Bh - shift
+register__CUITrackBar__GetCheck:
+
+;CUIButton::script_register
+;...
+;.text:1040B932                 lea     edi, [ebp+var_14]
+org 1040B935h - shift
+jmp CUITrackBar_fix
+;.text:1040B935                 call    register__CUITrackBar__GetCheck
+back_from_CUITrackBar_fix:
+;.text:1040B93A                 mov     ecx, eax
+
+
+
 org 10458D98h - shift 
 xr_FS dd ? ; ; class CLocatorAPI * xr_FS
 org 10458C68h - shift

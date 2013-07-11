@@ -175,3 +175,22 @@
 0x103F4D60 5 ; jmp CUICustomEdit__KeyPressed_fix_5
 0x103F4D79 5 ; jmp CUICustomEdit__KeyPressed_fix_6
 0x103F4D47 5 ; jmp CUICustomEdit__KeyPressed_fix_7
+
+;
+0x1040B935 5 ; jmp CUITrackBar_fix
+0x103D7BC4 5 ; jmp CUIOptionsItem__SaveOptFloatValue_fix
+
+; вырезаем кривой постэффект контролёра
+;0x100E15A4 5 ; jmp CController__CController_fix
+;0x100E21A6 5 ; jmp CController__Load_fix_lab1
+;0x100E2BC4 5 ; вырезаем вызов CControllerAura__update_frame
+;0x100E2C21 5 ; вырезаем вызов CControllerAura__update_schedule
+;0x100E2C43 5 ; jmp loc_100E2C77
+;0x100E2C99 5 ; jmp loc_100E2CCD
+;
+0x1019C4C3 10
+;
+0x1040EF76 5 ; jmp CUIComboBox_fix
+0x1040E540 5 ; jmp CUIComboBox__SaveValue_fix
+0x1040DF6A 5 ; jmp loc_1040DFA5 ; исправляеем феерический баг движка
+	
