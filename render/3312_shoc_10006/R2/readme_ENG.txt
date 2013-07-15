@@ -87,3 +87,7 @@ Fixes description:
 ;====ADDITIONAL SHADOW MAP RESOLUTIONS======
    Fix adds new shadow map resolution - 8192x8192 and 16384x16384.
    Use it if you want to increase sun shadows quality.
+
+;========EXTENDED R2_SUN_NEAR TUNING========
+   Extends upper limit of r2_sun_near to 150. There are graphic bugs when high values
+   are used so just increase smap resolution to avoid that bugs.

@@ -858,3 +858,11 @@ org 10003F48h - shift
 back_from_new_smap_sizes:
 org 1006964Ch - shift
 Core dd ?
+
+;===========================================
+; Расширенная регулировка r2_sun_near
+;===========================================
+org 100024DAh - shift
+	jmp	sun_near_fix_label
+org 100024E1h - shift
+back_from_sun_near_fix_label:
