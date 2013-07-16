@@ -113,6 +113,7 @@ include CUICustomEdit_fix.asm
 include cuitrackbar_fix.asm
 include controller_fix.asm
 include cuicombobox_fix.asm
+include cuioptionsitem_fix.asm
 
 _CODE ENDS
 

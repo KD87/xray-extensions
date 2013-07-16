@@ -193,4 +193,5 @@
 0x1040EF76 5 ; jmp CUIComboBox_fix
 0x1040E540 5 ; jmp CUIComboBox__SaveValue_fix
 0x1040DF6A 5 ; jmp loc_1040DFA5 ; исправляеем феерический баг движка
-	
+
+0x103D7C60 5 ; jmp CUIOptionsItem__SaveValue_fix - добавляем свои опции, требующие рестарта видео

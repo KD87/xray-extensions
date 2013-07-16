@@ -1,6 +1,90 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+org 102D41D0h - shift
+str_cmp:
+
+;.text:103D7C60 CUIOptionsItem__SaveValue proc near
+
+org 103D7C60h - shift
+	jmp CUIOptionsItem__SaveValue_fix
+;.text:103D7C60                 mov     eax, [ecx+18h]
+;.text:103D7C63                 push    ebx
+;.text:103D7C64                 push    esi
+;.text:103D7C65                 push    edi
+;.text:103D7C66                 lea     edi, [ecx+4]
+
+;.text:103D7C69                 push    8
+;.text:103D7C6B                 push    offset aVid_mode ; "vid_mode"
+;.text:103D7C70                 xor     ebx, ebx
+;.text:103D7C72                 mov     ecx, edi
+;.text:103D7C74                 call    sub_102D3750
+;.text:103D7C79                 test    eax, eax
+;.text:103D7C7B                 jz      short loc_103D7CF7
+;.text:103D7C7D                 mov     eax, [edi+14h]
+;.text:103D7C80                 push    7
+;.text:103D7C82                 push    offset a_preset ; "_preset"
+;.text:103D7C87                 mov     ecx, edi
+;.text:103D7C89                 call    sub_102D3750
+;.text:103D7C8E                 test    eax, eax
+;.text:103D7C90                 jz      short loc_103D7CF7
+;.text:103D7C92                 mov     eax, [edi+14h]
+;.text:103D7C95                 push    0Dh
+;.text:103D7C97                 push    offset aRs_fullscreen ; "rs_fullscreen"
+;.text:103D7C9C                 mov     ecx, edi
+;.text:103D7C9E                 call    sub_102D3750
+;.text:103D7CA3                 test    eax, eax
+;.text:103D7CA5                 jz      short loc_103D7CF7
+;.text:103D7CA7                 mov     esi, offset aRs_fullscreen ; "rs_fullscreen"
+;.text:103D7CAC                 mov     ecx, edi
+;.text:103D7CAE                 call    sub_102D41D0
+;.text:103D7CB3                 test    al, al
+;.text:103D7CB5                 jnz     short loc_103D7CF7
+;.text:103D7CB7                 mov     esi, offset aR__supersample ; "r__supersample"
+;.text:103D7CBC                 mov     ecx, edi
+;.text:103D7CBE                 call    sub_102D41D0
+;.text:103D7CC3                 test    al, al
+;.text:103D7CC5                 jnz     short loc_103D7CF7
+;.text:103D7CC7                 mov     esi, offset aRs_refresh_60h ; "rs_refresh_60hz"
+;.text:103D7CCC                 mov     ecx, edi
+;.text:103D7CCE                 call    sub_102D41D0
+;.text:103D7CD3                 test    al, al
+;.text:103D7CD5                 jnz     short loc_103D7CF7
+;.text:103D7CD7                 mov     esi, offset aRs_no_v_sync ; "rs_no_v_sync"
+;.text:103D7CDC                 mov     ecx, edi
+;.text:103D7CDE                 call    sub_102D41D0
+;.text:103D7CE3                 test    al, al
+;.text:103D7CE5                 jnz     short loc_103D7CF7
+;.text:103D7CE7                 mov     esi, offset aTexture_lod ; "texture_lod"
+;.text:103D7CEC                 mov     ecx, edi
+;.text:103D7CEE                 call    sub_102D41D0
+;.text:103D7CF3                 test    al, al
+org 103D7CF5h - shift
+no_vid_restart:
+;.text:103D7CF5                 jz      short loc_103D7CFE
+org 103D7CF7h - shift
+vid_restart:
+;.text:103D7CF7 loc_103D7CF7:
+;.text:103D7CF7                 mov     byte_105608DC, 1
+;.text:103D7CFE
+;.text:103D7CFE loc_103D7CFE:
+;.text:103D7CFE                 mov     eax, [edi+14h]
+;.text:103D7D01                 push    7
+;.text:103D7D03                 push    offset aSnd_efx ; "snd_efx"
+;.text:103D7D08                 xor     ebx, ebx
+;.text:103D7D0A                 mov     ecx, edi
+;.text:103D7D0C                 call    sub_102D3750
+;.text:103D7D11                 test    eax, eax
+;.text:103D7D13                 pop     edi
+;.text:103D7D14                 pop     esi
+;.text:103D7D15                 pop     ebx
+;.text:103D7D16                 jnz     short locret_103D7D1F
+;.text:103D7D18                 mov     byte_105608DD, 1
+;.text:103D7D1F
+;.text:103D7D1F locret_103D7D1F:
+;.text:103D7D1F                 retn
+;.text:103D7D1F CUIOptionsItem__SaveValue endp
+
 
 org 103EB9ABh - shift
 register__UI__string__void:
