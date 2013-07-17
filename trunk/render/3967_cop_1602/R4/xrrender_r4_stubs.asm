@@ -361,3 +361,21 @@ org 1003056Fh - shift
 	jmp	sun_details_1_fix
 org 10030593h - shift
 back_to_sun_details_1_fix:
+
+;===========================================
+; Дополнительные разрешения карты теней
+;===========================================
+org 10015883h - shift
+	jmp	new_smap_sizes
+org 10015888h - shift
+back_from_new_smap_sizes:
+org 100DC54Ch - shift
+Core dd ?
+
+;===========================================
+; Расширенная регулировка r2_sun_near
+;===========================================
+org 10002D6Ah - shift
+	jmp	sun_near_fix_label
+org 10002D71h - shift
+back_from_sun_near_fix_label:

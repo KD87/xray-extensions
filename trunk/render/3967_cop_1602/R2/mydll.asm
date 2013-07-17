@@ -26,6 +26,9 @@ include detail_radius_fix.asm
 include detail_density_fix.asm
 include mip_bias_fix.asm
 include sun_details_fix.asm
+include smap_size_macro.asm
+include new_smap_sizes.asm
+include sun_near_fix.asm
 	
 _code ENDS
 

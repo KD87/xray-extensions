@@ -1,22 +1,76 @@
 ;=====================================
 ;=====ДАЛЬНОСТЬ ОТРИСОВКИ ТРАВЫ=======
+;=EXTENDED TUNING OF DETAILS DISTANCE=
 ;=====================================
-0x10017DE9 9 cache_initialize_1 ; врезка с инструкцией перехода - 5 байт
-0x10017DF4 6 cache_initialize_2 ; врезка с инструкцией перехода - 5 байт
-0x10018192 9 cache_update_1 ; врезка с инструкцией перехода - 5 байт
-0x100181E2 9 cache_update_2 ; врезка с инструкцией перехода - 5 байт
-0x10018268 6 cache_update_3 ; врезка с инструкцией перехода - 5 байт
-0x100182B6 6 cache_update_4 ; врезка с инструкцией перехода - 5 байт
-0x100182A2 6 cache_update_5 ; врезка с инструкцией перехода - 5 байт
-0x10018461 5 cache_update_6 ; врезка с инструкцией перехода - 5 байт
-0x1001847D 5 cache_update_7 ; врезка с инструкцией перехода - 5 байт
-0x10017E98 7 cache_task_1 ; врезка с инструкцией перехода - 5 байт
+0x10017DE9 5 cache_initialize_1 
+0x10017DF4 5 cache_initialize_2 
+0x10018192 5 cache_update_1 
+0x100181E2 5 cache_update_2 
+0x10018268 5 cache_update_3
+0x100182B6 5 cache_update_4
+0x10017E98 5 cache_task_1
+0x10017523 5 cache_upvism_1
+0x10017533 5 cache_upvism_2
+0x10016EF0 5 cache_upvism_3
+0x10018166 5 update_30h_1
+0x100181B6 5 update_30h_3
+0x1001822F 5 update_30h_4
+0x10018287 5 update_30h_5
+0x100182A2 5 update_30h_6
+0x10017DFC 5 cache_init_4
+0x10017E14 5 cache_init_5
+0x1001844E 5 cache_upd_6
+0x10018478 5 cache_upd_7
+0x10017E44 5 cache_init_C4_1
+0x10018240 5 cache_upd_C4_2
+0x10018290 5 cache_upd_C4_3
+0x100166AE 5 const_960_1
+0x100169E7 5 const_960_2
+0x1001664F 5 cache_level1_length
+0x100181D4 5 red_cl1_line_size_minus
+0x1001825A 5 cache_size_w_o_last_line_minus
+0x100182CE 5 cache_length
+0x10017E60 5 four_lines_length_in_cache
+0x10017058 5 vis
+0x1001707E 5 circle
+;расчеты
+0x10007DFF 5 calculate_stuff
+;смещения
+0x10017DC7 5 offset_1
+0x100180CB 5 offset_3
+0x1001815E 5 offset_4
+0x100181AE 5 offset_5
+0x10018227 5 offset_6
+0x1001827D 5 offset_7
+0x10018326 5 offset_8
+0x10018336 5 offset_9
+0x10018350 5 offset_10
+0x100183ED 5 offset_11
+0x100183FB 5 offset_12
+0x10018410 5 offset_13
+0x1001842E 5 offset_14
+0x10016F0E 5 offset_15
 
-0x10017523 6 cache_upvism_1 ; врезка с инструкцией перехода - 5 байт
-0x10017533 6 cache_upvism_2 ; врезка с инструкцией перехода - 5 байт
-0x10016EF0 9 cache_upvism_3 ; врезка с инструкцией перехода - 5 байт
+;=====================================
+;=========КОНСОЛЬНЫЕ КОМАНДЫ==========
+;========NEW CONSOLE COMMANDS=========
+;=====================================
+0x10003C56 5
 
 ;=====================================
 ;==========ПЛОТНОСТЬ ТРАВЫ============
+;==EXTENDED TUNING OF DETAILS DENSITY=
 ;=====================================
 0x10001C62 5
+
+;=====================================
+;====ДАЛЬНОСТЬ ПЕРЕКЛЮЧЕНИЯ ЛОДОВ=====
+;=====LOD SWITCH EXTENDED TUNING======
+;=====================================
+0x10098C10 4
+
+;=====================================
+;=====ЧЕТКОСТЬ ТЕКСТУР (MIPBIAS)======
+;===MIPMAPS SWITCH EXTENDED TUNING====
+;=====================================
+0x10001E1B 5
