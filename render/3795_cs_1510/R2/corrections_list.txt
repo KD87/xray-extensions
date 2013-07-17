@@ -1,19 +1,94 @@
 ;=====================================
 ;=====ДАЛЬНОСТЬ ОТРИСОВКИ ТРАВЫ=======
+;=EXTENDED TUNING OF DETAILS DISTANCE=
 ;=====================================
-0x10023459 9 cache_initialize_1 
-0x10023464 6 cache_initialize_2 
-0x1002380D 6 cache_update_1 
-0x1002386A 9 cache_update_2 
-0x100238F0 6 cache_update_3
-0x1002394C 6 cache_update_4
-0x10023936 10 cache_update_5
-0x10023508 7 cache_task_1
-0x100229D3 6 cache_upvism_1
-0x100229E3 6 cache_upvism_2
-0x100223A0 9 cache_upvism_3
+0x10023459 5 cache_initialize_1 
+0x10023464 5 cache_initialize_2 
+0x10023805 5 cache_update_1 
+0x1002386A 5 cache_update_2 
+0x100238F0 5 cache_update_3
+0x1002394C 5 cache_update_4
+0x10023508 5 cache_task_1
+0x100229D3 5 cache_upvism_1
+0x100229E3 5 cache_upvism_2
+0x100223A0 5 cache_upvism_3
+0x100237E1 5 update_30h_1
+0x10023834 5 update_30h_3
+0x100238BB 5 update_30h_4
+0x10023914 5 update_30h_5
+0x10023936 5 update_30h_6
+0x1002346C 5 cache_init_4
+0x10023484 5 cache_init_5
+0x10023AE0 5 cache_upd_6
+0x10023B0A 5 cache_upd_7
+0x100234B4 5 cache_init_C4_1
+0x100238C2 5 cache_upd_C4_2
+0x10023920 5 cache_upd_C4_3
+0x10021B5E 5 const_960_1
+0x10021E97 5 const_960_2
+0x10021AFF 5 cache_level1_length
+0x10023858 5 red_cl1_line_size_minus
+0x100238DE 5 cache_size_w_o_last_line_minus
+0x10023967 5 cache_length
+0x100234D0 5 four_lines_length_in_cache
+0x10022508 5 vis
+0x1002252E 5 circle
+;расчеты
+0x100086C5 5 calculate_stuff
+;смещения
+0x10023437 5 offset_1
+0x1002373B 5 offset_3
+0x100237BE 5 offset_4
+0x1002382C 5 offset_5
+0x100238B3 5 offset_6
+0x10023907 5 offset_7
+0x100239B6 5 offset_8
+0x100239C6 5 offset_9
+0x100239E3 5 offset_10
+0x10023A7D 5 offset_11
+0x10023A8B 5 offset_12
+0x10023AA0 5 offset_13
+0x10023ABE 5 offset_14
+0x100223BE 5 offset_15
+
+;=====================================
+;=========КОНСОЛЬНЫЕ КОМАНДЫ==========
+;========NEW CONSOLE COMMANDS=========
+;=====================================
+0x10003CAD 5
 
 ;=====================================
 ;==========ПЛОТНОСТЬ ТРАВЫ============
+;==EXTENDED TUNING OF DETAILS DENSITY=
 ;=====================================
 0x10001C62 5
+
+;=====================================
+;====ДАЛЬНОСТЬ ПЕРЕКЛЮЧЕНИЯ ЛОДОВ=====
+;=====LOD SWITCH EXTENDED TUNING======
+;=====================================
+0x100B5D48 4
+
+;=====================================
+;=====ЧЕТКОСТЬ ТЕКСТУР (MIPBIAS)======
+;===MIPMAPS SWITCH EXTENDED TUNING====
+;=====================================
+0x100021BF 5
+
+;===========================================
+;==Дополнительные разрешения карты теней====
+;====ADDITIONAL SHADOW MAP RESOLUTIONS======
+;===========================================
+0x10005309 5
+
+;===========================================
+;====Расширенная регулировка r2_sun_near====
+;========EXTENDED R2_SUN_NEAR TUNING========
+;===========================================
+0x10002AB6 5
+
+;=====================================
+;=======ФИКС ДВИЖЕНИЯ СОЛНЦА==========
+;=========SUN MOVEMENT FIX============
+;=====================================
+0x10007690 15
