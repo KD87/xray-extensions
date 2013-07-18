@@ -29,7 +29,7 @@ Fixes description:
    Fix extends lod switch upper limit (r__geometry_lod) to 3,0
 
 ;====ADDITIONAL SHADOW MAP RESOLUTIONS======
-   Fix adds new shadow map resolution - 8192x8192 and 16384x16384.
+   Fix adds new shadow map resolution - 8192x8192.
    Use it if you want to increase sun shadows quality.
 
 ;========EXTENDED R2_SUN_NEAR TUNING========
