@@ -4,7 +4,7 @@ LOCAL flag
 LOCAL lab1
 LOCAL exit
 	jmp lab1
-flag dd 0FFFE0001h
+flag dd 0FF0000FFh
 smap_key db key_str, 0
 lab1:
 	mov     eax, ds:Core
@@ -18,9 +18,9 @@ lab1:
 	mov		edx, flag
 	or		edx, value
 	mov		flag, edx
-	mov     edx, [edi+2D4h]
+	mov     edx, [edi+2E4h]
 	and     edx, flag
 	or      edx, value
-	mov     [edi+2D4h], edx
+	mov     [edi+2E4h], edx
 exit:
 ENDM

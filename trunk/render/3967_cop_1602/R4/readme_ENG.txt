@@ -36,7 +36,7 @@ Fixes description:
    SOC-style sky, no stretching.
 
 ;===ADDITIONAL SHADOW MAP RESOLUTIONS===
-   Fix adds new shadow map resolution - 8192x8192 and 16384x16384.
+   Fix adds new shadow map resolution - 8192x8192.
    Use it if you want to increase sun shadows quality.
 
 ;======EXTENDED R2_SUN_NEAR TUNING======
