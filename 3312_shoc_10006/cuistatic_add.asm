@@ -32,10 +32,10 @@ arg_8= dword ptr  10h
 	test    eax, eax
 	jz      short skip_weigth
 	
-	push	edi
-	mov 	edi, [ebp+arg_8]
+	push	esi
+	mov 	esi, [ebp+arg_8]
 	call	CUIStatic__AdjustWeigthToText
-	pop		edi
+	pop		esi
 	
 	skip_weigth:
 	
@@ -49,14 +49,12 @@ cuistatic_xml_add endp
 
 aAdjustHeightToText db "adjust_height_to_text", 0
 aAdjustWeigthToText db "adjust_weigth_to_text", 0
-
 aSetTextComplexMode db "SetTextComplexMode", 0
-aSetcolor db "SetColor", 0
 AdjustHeightToText db "AdjustHeightToText", 0
 AdjustWidthToText db "AdjustWidthToText", 0
 
 CUIStatic__script_register_1:
-	; Вырезанное
+	; Вырезанное, должно быть вначале.
 	xor		ecx, ecx
 	push	ecx
 	mov		ecx, offset CUIStatic__SetColor
@@ -78,29 +76,30 @@ CUIStatic__script_register_1:
 	push	ecx
 	push	offset AdjustHeightToText
 	push	ecx	
-
+	
 	xor		ecx, ecx
 	push	ecx
-	mov		ecx, offset CUIStatic__AdjustWeigthToText_script
+	mov		ecx, offset CUIStatic__AdjustWidthToText_script
 	push	ecx
 	push	offset AdjustWidthToText
-	push	ecx
+	push	ecx		
 	
 	jmp		CUIStatic__script_register_1_back
 
 CUIStatic__script_register_2:
-	call	CUIStatic__uint_register
+	call	CUIStatic__void_register
 	pop		ecx
 	push	eax
 	
-	call	CUIStatic__uint_register
+	call	CUIStatic__void_register
 	pop		ecx
 	push	eax
 
 	call	CUIStatic__uint_register
 	pop		ecx
-	push	eax	
+	push	eax		
 	
+	; Вырезанное, должно быть в конце.
 	call	CUIStatic__uint_register
 	
 	jmp		CUIStatic__script_register_2_back
@@ -121,14 +120,14 @@ CUIStatic__AdjustHeightToText_script proc
 	call	CUIStatic__AdjustHeightToText
 	pop		edi
 	
-	retn	4
+	retn
 CUIStatic__AdjustHeightToText_script endp
 	
-CUIStatic__AdjustWeigthToText_script proc
-	push	edi
-	mov		edi, ecx
+CUIStatic__AdjustWidthToText_script proc
+	push	esi
+	mov		esi, ecx
 	call	CUIStatic__AdjustWeigthToText
-	pop		edi
+	pop		esi
 	
-	retn	4
-CUIStatic__AdjustWeigthToText_script endp
+	retn
+CUIStatic__AdjustWidthToText_script endp
