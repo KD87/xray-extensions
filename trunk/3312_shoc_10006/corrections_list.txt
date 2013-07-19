@@ -195,3 +195,15 @@
 0x1040DF6A 5 ; jmp loc_1040DFA5 ; исправляеем феерический баг движка
 
 0x103D7C60 5 ; jmp CUIOptionsItem__SaveValue_fix - добавляем свои опции, требующие рестарта видео
+
+
+;0x10258840 5; jmp CCustomZone__PlayHitParticles ; Коллбек аномалии на хит живого объекта
+;0x10258CD1 5; jmp CCustomZone__hit_callback ; Коллбек аномалии на хит неживого объекта
+
+;0x102485D4 6; jmp CTorch__Switch_Callback ; Коллбек на переключение фонаря.
+
+; Регистрация функций с аргументом uint для CUIStatic.
+;0x103F12D2 15; jmp CUIStatic__script_register_1
+;0x103F133C 5; jmp CUIStatic__script_register_2
+
+;0x1006CA0A 5; jmp CALifeStoryRegistry__add_fix ; Исправление вылета при дуликате story id и вывод самого ида в лог.

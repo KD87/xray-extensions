@@ -158,6 +158,8 @@ MAKE_CASTING2 CScriptGameObject__CProjector, off_1054F5E8
 MAKE_CASTING2 CScriptGameObject__CTrader, off_1054D518
 MAKE_CASTING2 CScriptGameObject__CCar, ??_R0?AVCCar@@@8
 MAKE_CASTING2 CScriptGameObject__CHelicopter, off_1054F02C
+MAKE_CASTING2 CScriptGameObject__CTorch, off_10538CFC
+MAKE_CASTING2 CScriptGameObject__CObject, AVCObject
 
 MAKE_CASTING3 CScriptGameObject__CWeaponGL, off_10556CC8
 MAKE_CASTING3 CScriptGameObject__CMedkit, off_10557248
