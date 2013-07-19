@@ -56,6 +56,9 @@ REGISTER_VOID__INT_INT          register_set_inventory_item_int,        "set_inv
 REGISTER_INT__STRING_INT        register_get_inventory_item_int16,      "get_inventory_item_int16"
 REGISTER_VOID__INT_INT          register_set_inventory_item_int16,      "set_inventory_item_int16"
 REGISTER_INT__STRING_INT        register_set_inventory_item_shared_str, "set_inventory_item_shared_str"
+REGISTER_INT__STRING_INT        register_get_inventory_item_int8,        "get_inventory_item_int8"
+REGISTER_VOID__INT_INT          register_set_inventory_item_int8,        "set_inventory_item_int8"
+	
 ;--
 REGISTER_INT__STRING_INT register_get_actor_int, "get_actor_int"
 REGISTER_INT__STRING_INT register_get_actor_int16, "get_actor_int16"
@@ -365,6 +368,24 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__GO CScriptGameObject__SetGOArg1, "set_object_arg_1"
 	
 	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetHudItemState,             "get_hud_item_state"
+	
+	
+	;;;;;;;;;;;;;;;;;
+	PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SwitchTorch, "switch_torch"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsTorchEnabled, "is_torch_enabled"
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetTorchRange, "set_torch_range"
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetTorchColor, "set_torch_color"
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetTorchOmniRange, "set_torch_omni_range"
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetTorchOmniColor, "set_torch_omni_color"
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetTorchGlowRadius, "set_torch_glow_radius"
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetTorchSpotAngle, "set_torch_spot_angle"
+	PERFORM_EXPORT_VOID__STRING CScriptGameObject__SetTorchColorAnimator, "set_torch_color_animator"
+	
+	PERFORM_EXPORT_INT__STRING_INT        register_get_inventory_item_int8,        CScriptGameObject__GetInvItemInt8
+	PERFORM_EXPORT_VOID__INT_INT          register_set_inventory_item_int8,        CScriptGameObject__SetInvItemInt8
+	
+	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetVisualName, "get_visual_name"
+	PERFORM_EXPORT_VOID__STRING CScriptGameObject__SetVisualName, "set_visual_name"
 	
 	; идём обратно
 	jmp back_from_game_object_fix
@@ -3889,7 +3910,248 @@ exit:
 CScriptGameObject__SwitchProjector endp
 
 
+CScriptGameObject__SwitchTorch proc
+arg = byte ptr 8
+	push    ebp
+	mov     ebp, esp
+	push    esi
+	
+	call    CScriptGameObject__CTorch
+	test    eax, eax
+	jz      exit
+	mov		ecx, eax
+	mov		eax, 0
+	mov     al, [ebp+arg]
+	call    CTorch__Switch
+exit:
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SwitchTorch endp
 
+CScriptGameObject__SetTorchRange proc
+range = dword ptr 8
+	push	ebp
+	mov		ebp, esp
+
+	call	CScriptGameObject__CTorch
+	test	eax, eax
+	jz		exit
+
+	mov		ecx, [eax+2ACh]
+	mov		edx, [ecx]
+	mov		edx, [edx+20h]
+
+	push	[ebp+range]
+
+	call	edx
+exit:
+	mov		esp, ebp
+	pop		ebp
+
+	retn	4
+CScriptGameObject__SetTorchRange endp
+
+CScriptGameObject__SetTorchColor proc
+color = dword ptr 8
+	push	ebp
+	mov		ebp, esp
+
+	call	CScriptGameObject__CTorch
+	test	eax, eax
+	jz		exit
+
+	mov		ecx, [eax+2ACh]
+	mov		edx, [ecx]
+	mov		edx, [edx+2Ch]
+
+	mov 	ebx, [ebp+color]
+
+	push	[ebx]
+	push	[ebx+4]
+	push	[ebx+8]
+	
+	call	edx
+exit:
+	mov		esp, ebp
+	pop		ebp
+
+	retn	4
+CScriptGameObject__SetTorchColor endp
+
+CScriptGameObject__SetTorchOmniRange proc
+range = dword ptr 8
+	push	ebp
+	mov		ebp, esp
+
+	call	CScriptGameObject__CTorch
+	test	eax, eax
+	jz		exit
+
+	mov		ecx, [eax+2B0h]
+	mov		edx, [ecx]
+	mov		edx, [edx+20h]
+
+	push	[ebp+range]
+
+	call	edx
+exit:
+	mov		esp, ebp
+	pop		ebp
+
+	retn	4
+CScriptGameObject__SetTorchOmniRange endp
+
+CScriptGameObject__SetTorchOmniColor proc
+color = dword ptr 8
+	push	ebp
+	mov		ebp, esp
+
+	call	CScriptGameObject__CTorch
+	test	eax, eax
+	jz		exit
+
+	mov		ecx, [eax+2B0h]
+	mov		edx, [ecx]
+	mov		edx, [edx+2Ch]
+
+	mov 	ebx, [ebp+color]
+
+	push	[ebx]
+	push	[ebx+4]
+	push	[ebx+8]
+	
+	call	edx
+exit:
+	mov		esp, ebp
+	pop		ebp
+
+	retn	4
+CScriptGameObject__SetTorchOmniColor endp
+
+CScriptGameObject__SetTorchGlowRadius proc
+radius = dword ptr 8
+	push	ebp
+	mov		ebp, esp
+
+	call	CScriptGameObject__CTorch
+	test	eax, eax
+	jz		exit
+
+	mov		ecx, [eax+2B4h]
+	mov		edx, [ecx]
+	mov		edx, [edx+10h]
+
+	push	[ebp+radius]
+
+	call	edx
+exit:
+	mov		esp, ebp
+	pop		ebp
+
+	retn	4
+CScriptGameObject__SetTorchGlowRadius endp
+
+CScriptGameObject__SetTorchSpotAngle proc
+angle = dword ptr 8
+	push	ebp
+	mov		ebp, esp
+
+	call	CScriptGameObject__CTorch
+	test	eax, eax
+	jz		exit
+
+	mov		ecx, [eax+2ACh]
+	mov		edx, [ecx]
+	mov		edx, [edx+1Ch]
+
+	fld		dword ptr [ebp+angle]
+	fmul	ds:dbl_104D27F8
+	push	ecx
+	fstp	dword ptr [esp]
+	
+	call	edx
+exit:
+	mov		esp, ebp
+	pop		ebp
+
+	retn	4
+CScriptGameObject__SetTorchSpotAngle endp
+
+CScriptGameObject__IsTorchEnabled proc
+	push    ebp
+	mov     ebp, esp
+	
+	call    CScriptGameObject__CInventoryItem
+	mov     eax, [eax + 680]
+	and		eax, 0FFh
+
+	mov     esp, ebp
+	pop     ebp
+
+	retn
+CScriptGameObject__IsTorchEnabled endp
+
+CScriptGameObject__SetTorchColorAnimator proc
+	push 	ebp
+	mov		ebp, esp
+	
+	call	CScriptGameObject__CTorch
+	test	eax, eax
+	jz		exit	
+	
+	push	esi
+	mov		esi, eax
+
+	mov		ecx, ds:off_1045862C ;?LALib@@3VELightAnimLibrary@@A
+	push	[ebp+8]
+	call	ds:off_10458630 ;?FindItem@ELightAnimLibrary@@QAEPAVCLAItem@@PBD@Z
+	mov		[esi+28Ch], eax
+	
+	mov		eax, esi
+	pop		esi
+	
+exit:	
+	mov		esp, ebp
+	pop		ebp
+	
+	retn	4
+CScriptGameObject__SetTorchColorAnimator endp
+
+CScriptGameObject__GetInvItemInt8 proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	
+	call    CScriptGameObject__CInventoryItem
+	mov     ecx, [ebp + pos]
+	mov     eax, [eax + ecx]
+	and		eax, 0FFh
+
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetInvItemInt8 endp
+
+CScriptGameObject__SetInvItemInt8 proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	push    edx
+
+	call    CScriptGameObject__CInventoryItem
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov     [eax+ecx], dl
+
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetInvItemInt8 endp
 
 
 
@@ -5105,3 +5367,53 @@ exit:
 	pop     ebp
 	retn    4
 CScriptGameObject__SetActorDirectionEx endp
+
+CScriptGameObject__GetVisualName proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	call	CScriptGameObject__CObject
+	
+	test	eax, eax
+	jz		exit
+
+	mov     eax, [eax+0B0h]
+	add		eax, 0Ch
+exit:
+	mov		esp, ebp
+	pop		ebp
+	
+	retn
+CScriptGameObject__GetVisualName endp
+
+CScriptGameObject__SetVisualName proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    eax
+	push    ebx
+	push    ecx
+	
+	call    CScriptGameObject__CObject
+	test    eax, eax
+	jz      exit
+	push	eax
+	
+	mov  	ebx, offset g_visual_shared_str
+	mov  	eax, [ebp+8]
+	call 	set_shared_str
+	
+	pop		ecx
+	push	g_visual_shared_str
+	call 	CObject__cNameVisual_set
+exit:
+	pop     ecx
+	pop     ebx
+	pop     eax
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetVisualName endp

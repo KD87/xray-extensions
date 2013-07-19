@@ -114,6 +114,7 @@ include cuitrackbar_fix.asm
 include controller_fix.asm
 include cuicombobox_fix.asm
 include cuioptionsitem_fix.asm
+include game_object_callbacks.asm
 
 _CODE ENDS
 

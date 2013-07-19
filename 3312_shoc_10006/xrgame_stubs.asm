@@ -3325,3 +3325,79 @@ org 103E1B28h - shift	; 5 bytes
 	
 org 103E1B2Dh - shift
 CUIItemInfo__InitItem_EXT_CHUNK_OUT:
+
+;Фонарь.
+org 102485D0h - shift
+CTorch__Switch:
+
+org 10538CFCh - shift ; AVCTorch
+off_10538CFC dd ? 
+
+org 104D27F8h - shift ; 0.01745329300562541
+dbl_104D27F8 dq ?
+
+org 102485D4h - shift ; CTorch__Switch_Callback
+	jmp		CTorch__Switch_Callback
+	nop
+
+org 102485DAh - shift
+CTorch__Switch_Callback_Back:
+
+org 1045862Ch - shift ; ?LALib@@3VELightAnimLibrary@@A
+off_1045862C dd ?
+
+org 10458630h - shift ; ?FindItem@ELightAnimLibrary@@QAEPAVCLAItem@@PBD@Z
+off_10458630 dd ?
+
+
+;Аномалии.
+org 1054E930h - shift ; .?AVCCustomZone@@
+off_1054E930 dd ?
+
+org 10258840h - shift
+	jmp CCustomZone__PlayHitParticles ;(CCustomZone *this<ebx>, CGameObject *pObject<eax>)
+	
+org 10258845h - shift
+CCustomZone__PlayHitParticles_Back:
+
+org 10258CD1h - shift
+	jmp CCustomZone__hit_callback
+
+org 10258CD6h - shift
+CCustomZone__hit_callback_back:
+
+;CUIStatic
+org 103F15A0h - shift
+CUIStatic__uint_register:
+
+org 103ED655h - shift
+CUIStatic__SetColor:
+
+org 103F0520h - shift
+CUIStatic__SetTextComplexMode:
+
+org 103F12D2h - shift
+	jmp CUIStatic__script_register_1
+
+org 103F133Ch - shift
+	jmp CUIStatic__script_register_2
+
+org 103F12E1h - shift
+CUIStatic__script_register_1_back:
+
+org 103F1341h - shift 
+CUIStatic__script_register_2_back:
+
+; Duplicate story id fix
+org 1006CA0Ah - shift
+	jmp		CALifeStoryRegistry__add_fix
+
+org 1006CA65h - shift
+loc_1006CA65:
+
+org 1006CA49h - shift
+loc_1006CA49:
+
+; Получение модели объекта
+org 10536048h - shift
+AVCObject dd ?
