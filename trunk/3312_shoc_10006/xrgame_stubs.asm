@@ -3370,8 +3370,14 @@ CCustomZone__hit_callback_back:
 org 103F15A0h - shift
 CUIStatic__uint_register:
 
+org 103F1576h - shift
+CUIStatic__void_register:
+
 org 103ED655h - shift
 CUIStatic__SetColor:
+
+org 104C8A60h - shift
+aSetcolor db ?
 
 org 103F0520h - shift
 CUIStatic__SetTextComplexMode:
