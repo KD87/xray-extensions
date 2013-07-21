@@ -3407,3 +3407,21 @@ loc_1006CA49:
 ; ѕолучение модели объекта
 org 10536048h - shift
 AVCObject dd ?
+
+; коллизи€ актора с мертвыми телами
+org 103917B5h - shift
+	jmp	collide_fix
+org 103917F1h - shift
+collide_label:
+
+; принудительное убирание оружи€ в машине
+org 101CF1DFh - shift
+	jmp no_weapons_fix	
+org 101CF1E7h - shift
+back_from_no_weapons_fix:
+org 1053E810h - shift
+	dd 0FFFFFFFFh
+
+; смерть от первого лица
+org 101C748Ch - shift	
+	mov     dword ptr [edi+530h], 0		; ACTOR_DEFS::eacFirstEye
