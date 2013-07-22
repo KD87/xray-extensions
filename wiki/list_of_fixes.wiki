@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Descriptions of fixes
 = Список правок =
 <wiki:toc max_depth="3" />
 
@@ -582,4 +582,3 @@ end</code>
 
 получение объекта:<br>
 *local res_obj = level.get_ray_pick_obj()* -- тип - клиентский объект или nil
-
