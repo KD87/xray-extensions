@@ -1,4 +1,5 @@
 #summary Descriptions of fixes
+#labels Featured
 = Список правок =
 <wiki:toc max_depth="3" />
 
