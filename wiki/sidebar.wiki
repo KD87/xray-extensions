@@ -1,1 +1,2 @@
   * [list_of_fixes Список правок]
+  * [new_collbacks Добавленные колбеки]
