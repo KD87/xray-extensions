@@ -65,6 +65,12 @@ lab1_:
 	popa
 ENDM
 
+FLUSH_LOG MACRO
+	pusha
+	call    [FlushLog]
+	popa
+ENDM
+
 ; позиция в том месте, где в целевой DLL начинается наша секция
 org sec1_sec2_dist
 
