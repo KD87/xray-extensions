@@ -1,6 +1,166 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+;CUIKeyBinding__InitFromXml
+
+;.text:103DF199                 call    sub_103E7C70
+;.text:103DF19E                 mov     eax, edi
+;.text:103DF1A0                 add     esp, 4
+;.text:103DF1A3                 lea     ecx, [eax+1]
+org 103DF1A6h - shift
+	jmp no_third_optins_row
+;.text:103DF1A6
+;.text:103DF1A6 loc_103DF1A6:                           ; CODE XREF: CUIKeyBinding__InitFromXml+1CDj
+;.text:103DF1A6                 mov     dl, [eax]
+;.text:103DF1A8                 add     eax, 1
+;.text:103DF1AB                 test    dl, dl
+;.text:103DF1AD                 jnz     short loc_103DF1A6
+;.text:103DF1AF                 sub     eax, ecx
+;.text:103DF1B1                 push    edi             ; Src
+;.text:103DF1B2                 lea     ecx, [esp+114h+Dst]
+;.text:103DF1B6                 push    100h            ; SizeInBytes
+;.text:103DF1BB                 push    ecx             ; Dst
+;.text:103DF1BC                 mov     [esp+11Ch+var_104], eax
+;.text:103DF1C0                 call    esi ; strcpy_s
+;.text:103DF1C2                 add     esp, 0Ch
+;.text:103DF1C5                 mov     edx, 100h
+;.text:103DF1CA                 sub     edx, [esp+110h+var_104]
+;.text:103DF1CE                 push    offset aHeader_3 ; ":header_3"
+;.text:103DF1D3                 push    edx             ; SizeInBytes
+;.text:103DF1D4                 lea     eax, [esp+118h+Dst]
+;.text:103DF1D8                 push    eax             ; Dst
+;.text:103DF1D9                 call    ds:strcat_s
+;.text:103DF1DF                 lea     ecx, [ebx+7BCh]
+;.text:103DF1E5                 add     esp, 0Ch
+;.text:103DF1E8                 push    ecx
+;.text:103DF1E9                 lea     eax, [esp+114h+Dst]
+;.text:103DF1ED                 mov     ecx, ebp
+;.text:103DF1EF                 call    sub_103E7C70
+;.text:103DF1F4                 add     esp, 4
+org 103DF1F7h - shift
+no_third_optins_row:
+;.text:103DF1F7                 push    edi             ; Src
+;.text:103DF1F8                 push    ebp             ; int
+;.text:103DF1F9                 push    ebx             ; int
+;.text:103DF1FA                 call    sub_103DF210
+;.text:103DF1FF                 pop     esi
+;.text:103DF200                 pop     ebp
+;.text:103DF201                 add     esp, 108h
+;.text:103DF207                 retn    4
+;.text:103DF207 CUIKeyBinding__InitFromXml endp
+
+
+
+;CUIKeyBinding::FillUpList
+
+;.text:103DF5FD                 mov     [esp+3E0h+var_3A4], ecx
+;.text:103DF601                 mov     ecx, ds:?Memory@@3VxrMemory@@A ; _DWORD
+org 103DF607h - shift
+	jmp no_alternative_keyboard_binding
+;.text:103DF607                 push    3E4h            ; _DWORD
+;.text:103DF60C                 movss   [esp+3E4h+var_3C4], xmm0
+;.text:103DF612                 mov     [esp+3E4h+var_3A8], eax
+;.text:103DF616                 call    ds:?mem_alloc@xrMemory@@QAEPAXI@Z ; xrMemory::mem_alloc(uint)
+;.text:103DF61C                 test    eax, eax
+;.text:103DF61E                 jz      short loc_103DF62D
+;.text:103DF620                 push    0
+;.text:103DF622                 mov     esi, eax
+;.text:103DF624                 call    CUIEditKeyBind__constructor
+;.text:103DF629                 mov     esi, eax
+;.text:103DF62B                 jmp     short loc_103DF62F
+;.text:103DF62D ; ---------------------------------------------------------------------------
+;.text:103DF62D
+;.text:103DF62D loc_103DF62D:                           ; CODE XREF: sub_103DF210+40Ej
+;.text:103DF62D                 xor     esi, esi
+;.text:103DF62F
+;.text:103DF62F loc_103DF62F:                           ; CODE XREF: sub_103DF210+41Bj
+;.text:103DF62F                 mov     byte ptr [esi+54h], 1
+;.text:103DF633                 mov     eax, [edi+11h]
+;.text:103DF636                 mov     edx, [edi+0Dh]
+;.text:103DF639                 sub     esp, 10h
+;.text:103DF63C                 mov     [esp+3F0h+var_394], eax
+;.text:103DF640                 fld     [esp+3F0h+var_394]
+;.text:103DF644                 fstp    [esp+3F0h+var_3E4]
+;.text:103DF648                 mov     [esp+3F0h+var_398], edx
+;.text:103DF64C                 fld     [esp+3F0h+var_3C4]
+;.text:103DF650                 mov     edx, [esi]
+;.text:103DF652                 mov     eax, [edx+4]
+;.text:103DF655                 fstp    [esp+3F0h+var_3E8]
+;.text:103DF659                 fldz
+;.text:103DF65B                 mov     ecx, esi
+;.text:103DF65D                 fstp    [esp+3F0h+var_3EC]
+;.text:103DF661                 fld     [esp+3F0h+var_3A8]
+;.text:103DF665                 fstp    [esp+3F0h+var_3F0]
+;.text:103DF668                 call    eax
+;.text:103DF66A                 test    ebx, ebx
+;.text:103DF66C                 jz      short loc_103DF673
+;.text:103DF66E                 lea     eax, [ebx+0Ch]
+;.text:103DF671                 jmp     short loc_103DF675
+;.text:103DF673 ; ---------------------------------------------------------------------------
+;.text:103DF673
+;.text:103DF673 loc_103DF673:                           ; CODE XREF: sub_103DF210+45Cj
+;.text:103DF673                 xor     eax, eax
+;.text:103DF675
+;.text:103DF675 loc_103DF675:                           ; CODE XREF: sub_103DF210+461j
+;.text:103DF675                 mov     edx, [esi+3B0h]
+;.text:103DF67B                 lea     ecx, [esi+3B0h]
+;.text:103DF681                 push    offset aKey_binding ; "key_binding"
+;.text:103DF686                 push    eax
+;.text:103DF687                 mov     eax, [edx+4]
+;.text:103DF68A                 call    eax
+;.text:103DF68C                 mov     edx, [edi]
+;.text:103DF68E                 mov     eax, [edx+34h]
+;.text:103DF691                 push    esi
+;.text:103DF692                 mov     ecx, edi
+;.text:103DF694                 call    eax
+org 103DF696h - shift
+no_alternative_keyboard_binding:
+;.text:103DF696                 test    ebx, ebx
+;.text:103DF698                 jz      short loc_103DF69D
+;.text:103DF69A                 add     dword ptr [ebx], 0FFFFFFFFh
+;.text:103DF69D
+;.text:103DF69D loc_103DF69D:                           ; CODE XREF: sub_103DF210+488j
+;.text:103DF69D                 mov     eax, [esp+3E0h+var_3BC]
+;.text:103DF6A1                 test    eax, eax
+;.text:103DF6A3                 jz      short loc_103DF6A8
+;.text:103DF6A5                 add     dword ptr [eax], 0FFFFFFFFh
+;.text:103DF6A8
+;.text:103DF6A8 loc_103DF6A8:                           ; CODE XREF: sub_103DF210+493j
+;.text:103DF6A8                 mov     eax, [esp+3E0h+var_3D0]
+;.text:103DF6AC                 add     eax, 1
+;.text:103DF6AF                 cmp     eax, [esp+3E0h+var_3B8]
+;.text:103DF6B3                 mov     [esp+3E0h+var_3D0], eax
+;.text:103DF6B7                 jl      loc_103DF3EF
+;.text:103DF6BD                 mov     ebx, [esp+3E0h+var_3C0]
+;.text:103DF6C1                 mov     edi, [esp+3E0h+var_3CC]
+;.text:103DF6C5
+;.text:103DF6C5 loc_103DF6C5:                           ; CODE XREF: sub_103DF210+1D9j
+;.text:103DF6C5                 test    ebx, ebx
+;.text:103DF6C7                 mov     ecx, [esp+3E0h+var_84]
+;.text:103DF6CE                 mov     [esp+3E0h+var_80], ecx
+;.text:103DF6D5                 jz      short loc_103DF6DA
+;.text:103DF6D7                 add     dword ptr [ebx], 0FFFFFFFFh
+;.text:103DF6DA
+;.text:103DF6DA loc_103DF6DA:                           ; CODE XREF: sub_103DF210+4C5j
+;.text:103DF6DA                 add     edi, 1
+;.text:103DF6DD                 cmp     edi, [esp+3E0h+var_3B4]
+;.text:103DF6E1                 mov     [esp+3E0h+var_3CC], edi
+;.text:103DF6E5                 jl      loc_103DF285
+;.text:103DF6EB
+;.text:103DF6EB loc_103DF6EB:                           ; CODE XREF: sub_103DF210+6Fj
+;.text:103DF6EB                 lea     ecx, [esp+3E0h+var_290]
+;.text:103DF6F2                 mov     [esp+3E0h+var_290], offset off_104C7F5C
+;.text:103DF6FD                 call    ds:??1CXml@@UAE@XZ ; CXml::~CXml(void)
+;.text:103DF703                 pop     edi
+;.text:103DF704                 pop     esi
+;.text:103DF705                 pop     ebx
+;.text:103DF706                 mov     esp, ebp
+;.text:103DF708                 pop     ebp
+;.text:103DF709                 retn    0Ch
+;.text:103DF709 sub_103DF210    endp
+;.text:103DF709
+
+
 org 102D41D0h - shift
 str_cmp:
 

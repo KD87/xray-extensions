@@ -196,6 +196,8 @@
 
 0x103D7C60 5 ; jmp CUIOptionsItem__SaveValue_fix - добавляем свои опции, требующие рестарта видео
 
+;0x103DF607 5 ; jmp no_alternative_keyboard_binding -- убираем столбец дополнительных назначений клавиш
+;0x103DF1A6 5 ; jmp no_third_optins_row -- убираем столбец дополнительных назначений клавиш. ч2
 
 ;0x10258840 5; jmp CCustomZone__PlayHitParticles ; Коллбек аномалии на хит живого объекта
 ;0x10258CD1 5; jmp CCustomZone__hit_callback ; Коллбек аномалии на хит неживого объекта
