@@ -19,3 +19,31 @@
 ||155||обновление видимости аддонов худа оружия||ТЧ||объект оружия||нет||||
 ||156||событие перед использованием предмета||ТЧ||актор||как у стандартного use_object||Позволяет менять свойства предмета и таким образом реализовать иммунитеты||
 ||180||колбек на открытие закладки PDA||ТЧ||актор||нет||||
+
+Примечание: рекомендуется завести таблицу Lua с константами для кодов введённый колбеков. Поместите этот код в модуль _g.script.
+<code language="lua">callback_ex = {
+	["on_key_press"]                 = 123,
+	["on_key_release"]               = 124,
+	["on_key_hold"]                  = 125,
+	["on_mouse_wheel"]               = 126,
+	["on_mouse_move"]                = 127,
+	["on_anomaly_hit"]               = 128,
+	["on_belt"]                      = 130,
+	["on_ruck"]                      = 131,
+	["on_slot"]                      = 132,
+	["on_select_item"]               = 133,
+	["on_switch_torch"]              = 134,
+	["on_inv_box_put_item"]          = 151,
+	["entity_alive_before_hit"]      = 152,
+	["update_addons_visibility"]     = 154,
+	["update_hud_addons_visibility"] = 155,
+	["on_before_use_item"]           = 156;
+	["pda_contact"]                  = 180,
+}</code>
+
+и используйте в таком стиле:
+<code language="lua">function actor_binder:reinit()
+	...
+	self.object:set_callback(callback_ex.on_key_press, self.on_key, self)			-- нажатие клавиши
+	...
+end</code>
