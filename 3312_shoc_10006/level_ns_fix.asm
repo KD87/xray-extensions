@@ -486,13 +486,16 @@ rq_res collide__rq_result {0, 123.0, 0}
 
 
 PerformRayPickQuery proc
-	mov eax, offset g_vector_arg_1
+	;mov eax, offset g_vector_arg_1
 	;PRINT_VECTOR arg1, eax
-	mov eax, offset g_vector_arg_2
+	;mov eax, offset g_vector_arg_2
 	;PRINT_VECTOR arg1, eax
-	push    dword ptr [g_object_arg_1] ; CObject *O
+	mov     eax, dword ptr [g_object_arg_1] ; CScriptGameObject*
+	jz      no_ingore_object  ; check if ignore object is not defined
+	mov     eax, dword ptr [eax + 4] ; CObject *O
+no_ingore_object:
+	push    eax
 	push    offset rq_res ;  collide::rq_result &
-	
 	push    dword ptr [g_int_argument_1] ; collide::rq_target
 	push    dword ptr [g_float_arg1] ; float range
 	push    offset g_vector_arg_1 ;dir
