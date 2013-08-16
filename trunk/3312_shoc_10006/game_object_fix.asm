@@ -387,6 +387,9 @@ game_object_fix proc
 	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetVisualName, "get_visual_name"
 	PERFORM_EXPORT_VOID__STRING CScriptGameObject__SetVisualName, "set_visual_name"
 	
+	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetShapeRadius, "get_shape_radius"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsTorch,        "is_torch"
+	
 	; идём обратно
 	jmp back_from_game_object_fix
 game_object_fix endp
@@ -4083,10 +4086,12 @@ CScriptGameObject__IsTorchEnabled proc
 	push    ebp
 	mov     ebp, esp
 	
-	call    CScriptGameObject__CInventoryItem
+	call    CScriptGameObject__CTorch
+	test	eax, eax
+	jz 		short exit
 	mov     eax, [eax + 680]
 	and		eax, 0FFh
-
+exit:
 	mov     esp, ebp
 	pop     ebp
 
@@ -5373,11 +5378,7 @@ CScriptGameObject__GetVisualName proc
 	mov     ebp, esp
 	and     esp, 0FFFFFFF8h
 
-	call	CScriptGameObject__CObject
-	
-	test	eax, eax
-	jz		exit
-
+	mov		eax, [eax+4]
 	mov     eax, [eax+0B0h]
 	add		eax, 0Ch
 exit:
@@ -5392,28 +5393,40 @@ CScriptGameObject__SetVisualName proc
 	mov     ebp, esp
 	and     esp, 0FFFFFFF8h
 	
-	push    eax
 	push    ebx
 	push    ecx
+	push    eax
 	
-	call    CScriptGameObject__CObject
-	test    eax, eax
-	jz      exit
-	push	eax
-	
+	mov		ecx, [eax+4]
 	mov  	ebx, offset g_visual_shared_str
 	mov  	eax, [ebp+8]
 	call 	set_shared_str
-	
-	pop		ecx
+
 	push	g_visual_shared_str
 	call 	CObject__cNameVisual_set
 exit:
+	pop     eax
 	pop     ecx
 	pop     ebx
-	pop     eax
 	
 	mov     esp, ebp
 	pop     ebp
 	retn    4
 CScriptGameObject__SetVisualName endp
+
+CScriptGameObject__GetShapeRadius proc
+	push	ebp
+	mov		ebp, esp
+	and		esp, 0FFFFFFF8h
+	
+	call	CScriptGameObject__CSpaceRestrictor
+	test	eax, eax
+	jz		short exit
+	
+	mov		eax, [eax+0A0h]
+	fld		dword ptr [eax+30h]
+exit:
+	mov		esp, ebp
+	pop		ebp
+	retn
+CScriptGameObject__GetShapeRadius endp

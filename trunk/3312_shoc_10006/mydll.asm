@@ -123,6 +123,7 @@ include cuioptionsitem_fix.asm
 include game_object_callbacks.asm
 include collide_fix.asm
 include no_weapon_fix.asm
+include cuitalkwnd_fix.asm
 
 _CODE ENDS
 

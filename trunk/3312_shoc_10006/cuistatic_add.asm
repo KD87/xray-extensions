@@ -54,15 +54,8 @@ AdjustHeightToText db "AdjustHeightToText", 0
 AdjustWidthToText db "AdjustWidthToText", 0
 
 CUIStatic__script_register_1:
-	; Вырезанное, должно быть вначале.
-	xor		ecx, ecx
-	push	ecx
-	mov		ecx, offset CUIStatic__SetColor
-	push	ecx
-	push	offset aSetcolor
-	push	ecx
-	
-	; Наше
+	mov		[ebp-10h], ecx
+
 	xor		ecx, ecx
 	push	ecx
 	mov		ecx, offset CUIStatic__SetTextComplexMode_script
@@ -83,25 +76,26 @@ CUIStatic__script_register_1:
 	push	ecx
 	push	offset AdjustWidthToText
 	push	ecx		
-	
+
+	xor		ecx, ecx
+
 	jmp		CUIStatic__script_register_1_back
 
 CUIStatic__script_register_2:
-	call	CUIStatic__void_register
+	call	CUIStatic__uint_register
 	pop		ecx
-	push	eax
-	
+	push	eax	
+
 	call	CUIStatic__void_register
 	pop		ecx
 	push	eax
 
-	call	CUIStatic__uint_register
+	call	CUIStatic__void_register
 	pop		ecx
-	push	eax		
+	push	eax
 	
-	; Вырезанное, должно быть в конце.
 	call	CUIStatic__uint_register
-	
+
 	jmp		CUIStatic__script_register_2_back
 
 CUIStatic__SetTextComplexMode_script proc
