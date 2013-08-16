@@ -3585,3 +3585,7 @@ CUITalkWnd__Hide_fix_back:
 
 org 104C3524h - shift
 aUi_talk_hide db ?
+
+; экспорты функций для работы с CHangingLamp
+org 10140440h - shift
+CScriptGameObject__get_hanging_lamp:

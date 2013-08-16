@@ -220,3 +220,6 @@
 
 ; first eye cam death
 ;0x101C748C 10
+
+; test lamps
+;0x101F3EEE 5
