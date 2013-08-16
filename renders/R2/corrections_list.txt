@@ -52,5 +52,6 @@
 0x10006E80 5	; CRender::blender_create()
 0x10007190 5	; CRender::blender_destroy()
 0x1005E6A0 5	; CRenderTarget::accum_spot()
+0x1005D090 5	; CRenderTarget::accum_point()
 ;hack to prevent full loading R2 in R1-mode
 0x10002DC9 5	; dllmain hack

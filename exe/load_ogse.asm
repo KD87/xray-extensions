@@ -81,6 +81,7 @@ g_CEffect_Rain__Render dd 0
 g_CRender__blender_create dd 0
 g_CRender__blender_destroy dd 0
 g_CRenderTarget__accum_spot dd 0
+g_CRenderTarget__accum_point dd 0
 
 s_render_import_table STRUCT
 	dd g_CRenderTarget__phase_combine
@@ -102,6 +103,7 @@ s_render_import_table STRUCT
 	dd g_CRender__blender_create
 	dd g_CRender__blender_destroy
 	dd g_CRenderTarget__accum_spot
+	dd g_CRenderTarget__accum_point
 s_render_import_table ENDS
 
 g_RenderImportsTable s_render_import_table <>
@@ -140,5 +142,6 @@ init_external_libs proc
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRender__blender_create", g_CRender__blender_create
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRender__blender_destroy", g_CRender__blender_destroy
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__accum_spot", g_CRenderTarget__accum_spot
+	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__accum_point", g_CRenderTarget__accum_point
 	retn
 init_external_libs endp

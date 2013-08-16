@@ -17,6 +17,7 @@ g_CRenderTarget__phase_scene_prepare dd 0
 g_CRender__blender_create dd 0
 g_CRender__blender_destroy dd 0
 g_CRenderTarget__accum_spot dd 0
+g_CRenderTarget__accum_point dd 0
 
 init_external_libs:
 	mov		ecx, [eax]
@@ -76,6 +77,9 @@ init_external_libs:
 	mov		ecx, [eax+48h]
 	mov		ecx, [ecx]
 	mov		g_CRenderTarget__accum_spot, ecx	
+	mov		ecx, [eax+4Ch]
+	mov		ecx, [ecx]
+	mov		g_CRenderTarget__accum_point, ecx	
 
 	mov     eax, [esp+0Ch]
 	mov     ecx, [eax]
