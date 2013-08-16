@@ -3533,22 +3533,16 @@ CUIStatic__uint_register:
 org 103F1576h - shift
 CUIStatic__void_register:
 
-org 103ED655h - shift
-CUIStatic__SetColor:
-
-org 104C8A60h - shift
-aSetcolor db ?
-
 org 103F0520h - shift
 CUIStatic__SetTextComplexMode:
 
-org 103F12D2h - shift
+org 103F12CFh - shift
 	jmp CUIStatic__script_register_1
 
 org 103F133Ch - shift
 	jmp CUIStatic__script_register_2
 
-org 103F12E1h - shift
+org 103F12D4h - shift
 CUIStatic__script_register_1_back:
 
 org 103F1341h - shift 
@@ -3563,10 +3557,6 @@ loc_1006CA65:
 
 org 1006CA49h - shift
 loc_1006CA49:
-
-; Получение модели объекта
-org 10536048h - shift
-AVCObject dd ?
 
 ; коллизия актора с мертвыми телами
 org 103917B5h - shift
@@ -3585,3 +3575,13 @@ org 1053E810h - shift
 ; смерть от первого лица
 org 101C748Ch - shift	
 	mov     dword ptr [edi+530h], 0		; ACTOR_DEFS::eacFirstEye
+	
+; Выдача инфопоршений при закрытии окна разговора.
+org 103CADB8h - shift
+	jmp		CUITalkWnd__Hide_fix
+	
+org 103CADBDh - shift
+CUITalkWnd__Hide_fix_back:
+
+org 104C3524h - shift
+aUi_talk_hide db ?

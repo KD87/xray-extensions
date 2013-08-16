@@ -202,13 +202,14 @@
 ;0x10258840 5; jmp CCustomZone__PlayHitParticles ; Коллбек аномалии на хит живого объекта
 ;0x10258CD1 5; jmp CCustomZone__hit_callback ; Коллбек аномалии на хит неживого объекта
 
-;0x102485D4 6; jmp CTorch__Switch_Callback ; Коллбек на переключение фонаря.
+0x102485D4 6; jmp CTorch__Switch_Callback ; Коллбек на переключение фонаря.
 
-; Регистрация функций с аргументом uint для CUIStatic.
-;0x103F12D2 15; jmp CUIStatic__script_register_1
+; Регистрация функций для CUIStatic.
+;0x103F12CF 5; jmp CUIStatic__script_register_1
 ;0x103F133C 5; jmp CUIStatic__script_register_2
 
 ;0x1006CA0A 5; jmp CALifeStoryRegistry__add_fix ; Исправление вылета при дуликате story id и вывод самого ида в лог.
+;0x103CADB8 5 ; jmp CUITalkWnd__Hide_fix ; Исправление невыдачи инфопоршня при закрытии окна разговора.
 
 ; collide fix
 0x103917B5 5

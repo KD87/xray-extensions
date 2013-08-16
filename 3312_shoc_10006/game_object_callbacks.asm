@@ -39,15 +39,7 @@ obj = dword ptr 0Ch
 	push 	eax
 	push 	128
 
-	push    0               
-	push    offset ??_R0?AVCGameObject@@@8
-	push    offset off_1054E930 ; .?AVCCustomZone@@
-	push    0
-	push    [ebp+anom]             
-	call    __RTDynamicCast
-	add     esp, 14h
-
-	mov 	ecx, eax
+	mov 	ecx, [ebp+anom]
 	call    CGameObject__callback
 	push    eax
 	call    script_use_callback
