@@ -10,10 +10,14 @@ light__light_fix proc
 	mov [esi + 270h], eax
 	mov eax, [flt_default_SMAP_near_plane_neg]
 	mov [esi + 274h], eax
+	mov	eax, [default_lamp_params]
+	mov [esi + 278h], eax	; speed
+	mov [esi + 27Ch], eax	; amount
+	mov [esi + 280h], eax	; smap_jitter
 	; 
 	jmp back_from_light__light_fix
 light__light_fix endp
-
+default_lamp_params dd 1.0
 
 light__export_fix proc
 	; делаем вырезанное
@@ -25,6 +29,12 @@ light__export_fix proc
 	mov     [esi + 270h], eax
 	mov     eax, [ebp + 274h] ; 
 	mov     [esi + 274h], eax
+	mov     eax, [ebp + 278h] ; 
+	mov     [esi + 278h], eax
+	mov     eax, [ebp + 27Ch] ; 
+	mov     [esi + 27Ch], eax
+	mov     eax, [ebp + 280h] ; 
+	mov     [esi + 280h], eax
 	; --
 	pop eax
 	; возвращаемся

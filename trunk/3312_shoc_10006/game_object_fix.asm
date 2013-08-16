@@ -389,7 +389,11 @@ game_object_fix proc
 	
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetShapeRadius, "get_shape_radius"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsTorch,        "is_torch"
-	
+	; регистрируем функции установки lsf_params для ламп
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLSFSpeed, "set_lsf_speed"
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLSFAmount, "set_lsf_amount"
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLSFSMAPJitter, "set_lsf_smap_jitter"
+	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetLSFSpeed, "get_lsf_speed"
 	; идём обратно
 	jmp back_from_game_object_fix
 game_object_fix endp
@@ -5413,6 +5417,104 @@ exit:
 	pop     ebp
 	retn    4
 CScriptGameObject__SetVisualName endp
+
+CScriptGameObject__SetLSFSpeed proc
+arg = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	push    ebx
+	push    eax
+	
+	call CScriptGameObject__get_hanging_lamp ; в eax получаем указатель на CHangingLamp
+	
+	test	eax, eax
+	jnz		object_is_lamp
+	PRINT "set_lsf_speed: object is not lamp!"
+	jmp		exit
+
+object_is_lamp:	
+	mov     ebx, [ebp+arg]
+;	PRINT_FLOAT "LSF_SPEED==%f", ebx
+	mov		eax, [eax+1D0h]
+	mov     [eax + 278h], ebx
+	
+exit:
+	pop     eax
+	pop     ebx
+	pop     ebp
+	retn    4
+CScriptGameObject__SetLSFSpeed endp
+
+CScriptGameObject__SetLSFAmount proc
+arg = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	push    ebx
+	push    eax
+	
+	call CScriptGameObject__get_hanging_lamp ; в eax получаем указатель на CHangingLamp
+	
+	test	eax, eax
+	jnz		object_is_lamp
+	PRINT "set_lsf_amount: object is not lamp!"
+	jmp		exit
+
+object_is_lamp:	
+	mov     ebx, [ebp+arg]
+;	PRINT_FLOAT "LSF_Amount==%f", ebx
+	mov		eax, [eax+1D0h]
+	mov     [eax + 27Ch], ebx
+	
+exit:
+	pop     eax
+	pop     ebx
+	pop     ebp
+	retn    4
+CScriptGameObject__SetLSFAmount endp
+
+CScriptGameObject__SetLSFSMAPJitter proc
+arg = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	push    ebx
+	push    eax
+	
+	call CScriptGameObject__get_hanging_lamp ; в eax получаем указатель на CHangingLamp
+	
+	test	eax, eax
+	jnz		object_is_lamp
+	PRINT "set_lsf_smap_jitter: object is not lamp!"
+	jmp		exit
+
+object_is_lamp:	
+	mov     ebx, [ebp+arg]
+;	PRINT_FLOAT "LSF_SMAP_JITTER==%f", ebx
+	mov		eax, [eax+1D0h]
+	mov     [eax + 280h], ebx
+	
+exit:
+	pop     eax
+	pop     ebx
+	pop     ebp
+	retn    4
+CScriptGameObject__SetLSFSMAPJitter endp
+
+CScriptGameObject__GetLSFSpeed proc
+	call CScriptGameObject__get_hanging_lamp
+	test	eax, eax
+	jnz		object_is_lamp
+	PRINT "get_lsf_speed: object is not lamp!"
+	fldz
+	jmp		exit
+	
+object_is_lamp:	
+	
+	mov		eax, [eax+1D0h]
+	fld     dword ptr [eax + 278h]
+	
+exit:
+	retn
+CScriptGameObject__GetLSFSpeed endp
 
 CScriptGameObject__GetShapeRadius proc
 	push	ebp

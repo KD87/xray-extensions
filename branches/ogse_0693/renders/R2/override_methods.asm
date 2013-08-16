@@ -97,4 +97,10 @@ override_crt_accum_spot:
 	call	g_CRenderTarget__accum_spot
 	pop		ecx
 	retn	8
+	
+override_crt_accum_point:
+	push	ebx
+	mov		ecx, [esp+4+4h] 
+	call	g_CRenderTarget__accum_point
+	retn	4
 
