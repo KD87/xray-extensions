@@ -10,14 +10,13 @@ light__light_fix proc
 	mov [esi + 270h], eax
 	mov eax, [flt_default_SMAP_near_plane_neg]
 	mov [esi + 274h], eax
-	mov	eax, [default_lamp_params]
-	mov [esi + 278h], eax	; speed
+	mov eax, [default_lamp_params]
+	mov [esi + 278h], eax	; speed;
 	mov [esi + 27Ch], eax	; amount
 	mov [esi + 280h], eax	; smap_jitter
 	; 
 	jmp back_from_light__light_fix
 light__light_fix endp
-default_lamp_params dd 1.0
 
 light__export_fix proc
 	; делаем вырезанное
@@ -86,3 +85,4 @@ CLight_Compute_XFORM_and_VIS__compute_xf_spot_fix endp
 flt_0_001 dd 0.01
 flt_default_SMAP_near_plane dd 0.1
 flt_default_SMAP_near_plane_neg dd -0.1
+default_lamp_params dd 0.0
