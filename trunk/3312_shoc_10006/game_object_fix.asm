@@ -5436,6 +5436,7 @@ object_is_lamp:
 	mov     ebx, [ebp+arg]
 ;	PRINT_FLOAT "LSF_SPEED==%f", ebx
 	mov		eax, [eax+1D0h]
+;	PRINT_UINT "PTR==%d", eax
 	mov     [eax + 278h], ebx
 	
 exit:
