@@ -28,17 +28,37 @@ light__export_fix proc
 	mov     [esi + 270h], eax
 	mov     eax, [ebp + 274h] ; 
 	mov     [esi + 274h], eax
+	; --
+	pop eax
+	; возвращаемся
+	jmp     loc_1002FD4C
+light__export_fix endp
+
+light__export_fix_2 proc
+
+	; вырезанное
+	mov     ecx, [esp+24h+8h]
+	mov     esi, [ecx]
+	
+	push	eax
 	mov     eax, [ebp + 278h] ; 
 	mov     [esi + 278h], eax
 	mov     eax, [ebp + 27Ch] ; 
 	mov     [esi + 27Ch], eax
 	mov     eax, [ebp + 280h] ; 
 	mov     [esi + 280h], eax
-	; --
-	pop eax
-	; возвращаемся
-	jmp     loc_1002FD4C
-light__export_fix endp
+	
+;	PRINT_UINT "FRAME RENDER %d", [ebp+0B4h]
+;	PRINT_UINT "EXPORTING LIGHT PART %d", esi
+;	mov		eax, dword ptr [esi + 278h]
+;	PRINT_FLOAT "LSF_SPEED %f", eax
+;	mov		eax, dword ptr [ebp + 278h]
+;	PRINT_FLOAT "LSF_SPEED1 %f", eax	
+
+	pop		eax
+
+	jmp     loc_1002FD8F
+light__export_fix_2 endp
 
 CLight_Compute_XFORM_and_VIS__compute_xf_spot_fix proc
 SMAP_near_plane_int_scaled = dword ptr -4

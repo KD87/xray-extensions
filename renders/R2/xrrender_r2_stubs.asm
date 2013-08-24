@@ -67,10 +67,17 @@ back_from_CLight_Compute_XFORM_and_VIS__compute_xf_spot_fix:
 ;.text:1002FD41                 mov     esi, eax
 org 1002FD43h - shift
 	jmp light__export_fix
+	
 ;.text:1002FD43                 call    light__light
 ;.text:1002FD48                 jmp     short loc_1002FD4C
 org 1002FD4Ch - shift
 loc_1002FD4C:
+
+org 1002FD89h - shift
+	jmp light__export_fix_2
+org 1002FD8Fh - shift
+loc_1002FD8F:
+
 org 1002E6F0h - shift
 light__light:
 
@@ -251,6 +258,7 @@ back_to_init_external_libs:
 ;===========================================
 ; замена методов
 ;===========================================
+
 org 10062AE0h - shift
 	jmp override_crt__phase_combine
 org 100567E0h - shift

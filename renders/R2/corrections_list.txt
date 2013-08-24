@@ -11,6 +11,7 @@
 ;=====================================
 0x1002E77E 5 ; jmp light__light_fix
 0x1002FD43 5 ; jmp light__export_fix
+0x1002FD89 5 ; jmp light__export_fix_2
 0x100337F2 5 ; jmp CLight_Compute_XFORM_and_VIS__compute_xf_spot_fix
 
 0x10004BB6 5 ; 
