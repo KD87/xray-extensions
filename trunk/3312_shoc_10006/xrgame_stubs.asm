@@ -1,6 +1,39 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+
+; зпглушки для регистрации rw свойства класса cse_abstract типа vector
+org 102EB061h - shift
+cse_abstract__register_position:
+org 101739BEh - shift
+sub_101739BE dd ?
+org  100072F3h - shift
+sub_100072F3 dd ?
+org 10001F8Ch - shift
+sub_10001F8C:
+org 1013A984h - shift
+sub_1013A984 dd ?
+org 100072F3h - shift
+sub_100072F3 dd ?
+org 10458F44h - shift
+?add_getter@class_base@detail@luabind@@QAEXPBDABV?$function2@HPAUlua_State@@HV?$allocator@Vfunction_base@boost@@@std@@@boost@@@Z dd ?
+org 10458E9Ch - shift
+?add_setter@class_base@detail@luabind@@QAEXPBDABV?$function2@HPAUlua_State@@HV?$allocator@Vfunction_base@boost@@@std@@@boost@@@Z dd ?
+
+
+
+;.text:102EA47E CSE_Abstract__script_register proc near ; CODE XREF: sub_1019000A+5Dp
+;.text:102EA52F                 call    sub_102EAFE4
+;.text:102EA534                 push    eax
+org 102EA535h - shift
+	jmp CSE_Abstract__script_register_fix
+;.text:102EA535                 call    cse_abstract__register_position
+back_from_CSE_Abstract__script_register_fix:
+;.text:102EA53A                 push    eax
+;.text:102EA53B                 call    sub_102EB14C
+
+
+
 ;CUIKeyBinding__InitFromXml
 
 ;.text:103DF199                 call    sub_103E7C70

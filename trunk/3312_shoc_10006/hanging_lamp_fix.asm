@@ -1,7 +1,7 @@
 CHangingLamp__net_Spawn_fix proc
 ; edi - cse_hanging_lamp
 ; esi - lamp
-	; добавл€ем сохранение virtual size в незан€тую €чейку старшиего байта флагов
+	; добавл€ем сохранение virtual size в незан€тую €чейку старшего байта флагов
 	push    eax
 	; провер€ем тип рендера
 	call get_render_generation
