@@ -223,3 +223,4 @@
 
 ; test lamps
 ;0x101F3EEE 5
+0x102EA535 5 ; jmp CSE_Abstract__script_register_fix
