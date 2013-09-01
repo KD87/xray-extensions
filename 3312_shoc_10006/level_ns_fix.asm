@@ -72,7 +72,8 @@ PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetInventoryWindow, "get_
 PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetPDAWindow,       "get_pda_wnd"
 PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetTalkWindow,      "get_talk_wnd"
 PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetCarBodyWindow,   "get_car_body_wnd"
-
+PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetTradeWindow,     "get_trade_wnd"
+PERFORM_EXPORT_LEVEL__GO__INT                   Level__GetSecondTalker,    "get_second_talker"
 
 ;PRINT "all_registered"
 ;--------------------------------------
@@ -139,6 +140,12 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	mov     ecx, eax
 	call    esi
 	; get_car_body_wnd
+	mov     ecx, eax
+	call    esi
+	; get_trade_wnd
+	mov     ecx, eax
+	call    esi
+	; get_second_talker
 	mov     ecx, eax
 	call    esi
 ; идём обратно
@@ -571,3 +578,42 @@ Level__GetCarBodyWindow proc
 exit:
 	retn
 Level__GetCarBodyWindow endp
+
+Level__GetTradeWindow proc
+	call    Level__GetTalkWindow
+	test    eax, eax
+	jz      exit
+	mov     eax, [eax + 104]
+exit:
+	retn
+Level__GetTradeWindow endp
+
+Level__GetSecondTalker proc
+	push    edi
+	push    ecx
+	call    Level__GetTalkWindow
+	test    eax, eax
+	jz      exit
+	mov     ecx, [eax + 120]
+	xor     eax, eax
+	test    ecx, ecx
+	jz      exit
+	call    cast_CInventoryOwner_to_CGameObject
+	mov     edi, eax
+	call    CGameObject__lua_game_object
+exit:
+	pop    ecx
+	pop    edi
+	retn
+Level__GetSecondTalker endp
+
+cast_CInventoryOwner_to_CGameObject proc ; ecx = inventory owner
+	push    ecx
+	
+	mov     eax, [ecx]
+	mov     eax, [eax]
+	call    eax
+	
+	pop     ecx
+	retn
+cast_CInventoryOwner_to_CGameObject endp
