@@ -2026,7 +2026,18 @@ addr_10355D9B:
 
 
 ;.text:10356400 xrServer__Process_event_reject proc near 
+;.text:10356428                 call    game_sv_GameState__get_entity_from_eid
+;.text:1035642D                 mov     ecx, [esp+48h+this]
+;.text:10356431                 mov     edi, eax ; edi = entity
+org 10356433h - shift
+	jmp xrServer__Process_event_reject_fix
+;.text:10356433                 push    ebx
+;.text:10356434                 lea     eax, [esp+4Ch+var_1C]
+back_from_xrServer__Process_event_reject_fix:
+;.text:10356438                 call    xrServer__ent_name_safe
 
+
+;...
 ;.text:10356467                 mov     ecx, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
 org 1035646Dh - shift
 	jmp     addr_10356481
