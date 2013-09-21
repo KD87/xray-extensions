@@ -61,3 +61,34 @@ get_render_generation proc
 	retn
 get_render_generation endp
 
+CHangingLamp__net_Spawn_fix_2 proc
+;.text:101F269A                 push    ecx
+;.text:101F269B                 fstp    [esp+2Ch+var_2C]
+;.text:101F269E                 call    edx
+
+	push    ecx
+	fstp    dword ptr [esp]
+	call    edx
+
+	push    eax
+	; проверяем тип рендера
+	call get_render_generation
+	;PRINT_UINT "render_generation: %d", eax
+	cmp     eax, 90
+	jnz not_r2_render
+	
+	; new code
+	mov		ecx, [esi]	;light_render
+	mov		eax, [render_flare]
+	mov		[ecx+284h], eax
+	
+	pop     eax
+	jmp back_from_CHangingLamp__net_Spawn_fix_2
+	
+not_r2_render:
+	pop     eax
+	; идём обратно
+	jmp back_from_CHangingLamp__net_Spawn_fix_2
+CHangingLamp__net_Spawn_fix_2 endp
+
+render_flare dd 1

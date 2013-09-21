@@ -16,14 +16,14 @@
 
 0x10004BB6 5 ; 
 0x1002FD32 5 ; 
-0x100300D0 5 ; 
-0x100301BA 5 ; 
-0x1000ABB1 5 ; jmp      loc_1000AEB3
+;0x100300D0 5 ; 
+;0x100301BA 5 ; 
+;0x1000ABB1 5 ; jmp      loc_1000AEB3
 
 ;===========================================
 ; òåíü îò ÃÃ íà R2
 ;===========================================
-0x1000BA1D 5 ; òåíü
+;0x1000BA1D 5 ; òåíü
 
 ;============================================
 ;============ÎÒËÀÄÎ×ÍÛÅ ÏĞÀÂÊÈ===============
@@ -54,5 +54,8 @@
 0x10007190 5	; CRender::blender_destroy()
 0x1005E6A0 5	; CRenderTarget::accum_spot()
 0x1005D090 5	; CRenderTarget::accum_point()
+;0x1002FCE0 5	; light::export()
+;0x10004BB6 5	; CRender::light_create()
+0x1000ABA0 5	; CRender::render_indirect()
 ;hack to prevent full loading R2 in R1-mode
 0x10002DC9 5	; dllmain hack

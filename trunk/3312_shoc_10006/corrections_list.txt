@@ -102,6 +102,7 @@
 ;0x101A6DC0 5 ; jmp call_mouse_move_callback
 
 0x101F267F 5 ; 	jmp CHangingLamp__net_Spawn_fix
+0x101F269A 5 ; 	jmp CHangingLamp__net_Spawn_fix_2
 0x101E1180 5 ; 	jmp CEntityAlive__Hit_fix
 ;0x101DFA30 5 ; 	jmp CEntity__Hit_fix
 ;0x10015B4E 5 ;  убираем фейковый хит из менеджера памяти
@@ -149,7 +150,7 @@
 0x103BD592 5 ;сетка под броней
 
 ;тень ГГ на R2
-0x101C85CF 6 ;jmp CActor__Update_fix
+;0x101C85CF 6 ;jmp CActor__Update_fix
 
 ;kstn
 ;Перекл. на болт + откл/вкл колеса мышки для переключения м/у слотами
