@@ -103,4 +103,24 @@ override_crt_accum_point:
 	mov		ecx, [esp+4+4h] 
 	call	g_CRenderTarget__accum_point
 	retn	4
+	
+;override_l_export:
+;	push	ecx
+;	mov		ecx, [esp+4+8h] 
+;	push	ecx
+;	mov		ecx, [esp+8+4h] 
+;	call	g_light__export
+;	pop		ecx
+;	retn	8
+;	
+;override_cr_light_create:
+;	jmp		g_CRender__light_create
 
+override_cr_render_indirect:
+	push	ecx
+	mov		ecx, [esp+4+8h] 
+	push	ecx
+	mov		ecx, [esp+8+4h] 
+	call	g_CRender__render_indirect
+	pop		ecx
+	retn	8

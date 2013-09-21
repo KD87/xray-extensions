@@ -14,6 +14,8 @@ light__light_fix proc
 	mov [esi + 278h], eax	; speed;
 	mov [esi + 27Ch], eax	; amount
 	mov [esi + 280h], eax	; smap_jitter
+	xor	eax, eax
+	mov [esi + 284h], eax	; is_require_flare
 	; 
 	jmp back_from_light__light_fix
 light__light_fix endp
@@ -47,6 +49,8 @@ light__export_fix_2 proc
 	mov     [esi + 27Ch], eax
 	mov     eax, [ebp + 280h] ; 
 	mov     [esi + 280h], eax
+	mov     eax, [ebp + 284h] ; 
+	mov     [esi + 284h], eax
 	
 ;	PRINT_UINT "FRAME RENDER %d", [ebp+0B4h]
 ;	PRINT_UINT "EXPORTING LIGHT PART %d", esi

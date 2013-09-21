@@ -4,19 +4,19 @@
 
 ; увеличиваем размер объекта light
 org 10004BB6h - shift						; CRender__light_create
-push    284h ; вместо 270h - 5 байт	
+push    288h ; вместо 270h - 5 байт	
 org 1002FD32h - shift						; light__export
-push    284h
-org 100300D0h - shift						; CLight_DB__Load
-push    284h
-org 100301BAh - shift						; CLight_DB__Load
-push    284h
+push    288h
+;org 100300D0h - shift						; CLight_DB__Load
+;push    284h
+;org 100301BAh - shift						; CLight_DB__Load
+;push    284h
 
-org 1000ABB1h - shift
-	jmp      loc_1000AEB3
+;org 1000ABB1h - shift
+;	jmp      loc_1000AEB3
 ;.text:1000ABB1                 jz      loc_1000AEB3
-org 1000AEB3h - shift
-loc_1000AEB3:
+;org 1000AEB3h - shift
+;loc_1000AEB3:
 
 
 
@@ -301,6 +301,13 @@ org 1005E6A0h - shift
 	jmp override_crt_accum_spot
 org 1005D090h - shift
 	jmp override_crt_accum_point
+	
+;org 1002FCE0h - shift
+;	jmp override_l_export
+;org 10004BB6h - shift
+;	jmp override_cr_light_create
+org 1000ABA0h - shift
+	jmp override_cr_render_indirect
 
 	
 ; temp
