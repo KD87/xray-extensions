@@ -1256,6 +1256,11 @@ back_from_CHangingLamp__net_Spawn_fix:
 ;.text:101F2686                 lea     eax, [esp+28h+var_10]
 ;.text:101F268A                 push    eax
 
+org 101F269Ah - shift
+	jmp CHangingLamp__net_Spawn_fix_2
+org 101F26A0h - shift
+back_from_CHangingLamp__net_Spawn_fix_2:
+
 
 
 
