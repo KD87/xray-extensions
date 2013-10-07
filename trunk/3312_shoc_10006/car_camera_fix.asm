@@ -41,3 +41,16 @@ CCar__cam_Update_fix proc
 	add     esp, 18h
 	retn    8
 CCar__cam_Update_fix endp
+
+CCar__cam_Update_fix0 proc
+	mov eax, [g_CCar__cam_Update]
+	test eax, eax
+	jz no_replacement
+	jmp [g_CCar__cam_Update]
+no_replacement:
+	sub     esp, 18h
+	xorps   xmm0, xmm0
+	;
+	jmp back_from_CCar__cam_Update_fix0
+CCar__cam_Update_fix0 endp
+

@@ -87,7 +87,8 @@
 ;0x102D5B17 5 ; jmp time_fix_jmp_label
 
 ;-------------- тест камеры машины
-0x1026F96E 5 ; 	jmp CCar__cam_Update_fix
+;0x1026F96E 5 ; 	jmp CCar__cam_Update_fix
+0x1026F820 5 ; jmp CCar__cam_Update_fix0 ; замена камеры машины
 ;-------------- end
 ;0x101DE76F 6 ; fdiv    ds:g_fov
 ;0x1023B20D 8 ; divss   xmm0, ds:g_fov
@@ -226,3 +227,4 @@
 ;0x101F3EEE 5
 0x102EA535 5 ; jmp CSE_Abstract__script_register_fix
 0x10356433 5 ; jmp xrServer__Process_event_reject_fix // затычка на вылет "по xrServer::Process_event_reject ... e_parent && e_entity"
+0x102F3663 5 ; jmp CSE_ALifeObject__script_register_fix

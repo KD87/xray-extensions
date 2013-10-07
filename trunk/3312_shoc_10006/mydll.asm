@@ -125,6 +125,7 @@ include collide_fix.asm
 include no_weapon_fix.asm
 include cuitalkwnd_fix.asm
 include CSE_Abstract_fix.asm
+include CSE_ALifeObject_fix.asm
 include xrServer_fix.asm
 
 _CODE ENDS

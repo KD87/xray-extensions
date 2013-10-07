@@ -276,6 +276,7 @@ game_object_fix proc
 	
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetGameObject,        "is_game_object"
 	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetGameObject,        "cast_game_object"
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__CCar,                 "cast_car"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsCar,                "is_car"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsHelicopter,         "is_helicopter"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsHolder,             "is_holder"
