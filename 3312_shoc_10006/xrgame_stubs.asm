@@ -2,6 +2,20 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+org 102F6079h - shift
+sub_102F6079:
+org 102F60EDh - shift
+register_CSE__VOID__BOOL:
+
+;.text:102F33BA CSE_ALifeObject__script_register proc near
+; ...
+;.text:102F365D                 call    sub_102F5FF8
+;.text:102F3662                 push    eax
+org 102F3663h - shift
+	jmp CSE_ALifeObject__script_register_fix
+;.text:102F3663                 call    sub_102F6079
+back_from_CSE_ALifeObject__script_register_fix:
+
 ; зпглушки для регистрации rw свойства класса cse_abstract типа vector
 org 102EB061h - shift
 cse_abstract__register_position:
@@ -1055,6 +1069,14 @@ org 10458518h - shift
 CCameraManager__Update1 dd ? ; public: void __thiscall CCameraManager::Update(CCameraBase const *)
 
 ;.text:1026F820 CCar__cam_Update proc near
+org 1026F820h - shift
+	jmp CCar__cam_Update_fix0
+;.text:1026F820                 sub     esp, 18h
+;.text:1026F823                 xorps   xmm0, xmm0
+org 1026F826h - shift
+back_from_CCar__cam_Update_fix0:
+;.text:1026F826                 push    esi
+;.text:1026F827                 mov     esi, ecx
 ;...
 org 1026F96Eh - shift
 	jmp CCar__cam_Update_fix

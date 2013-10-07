@@ -413,10 +413,14 @@ ENDM
 g_ogse_lib_hinst dd 0
 g_CEffectorZoomInertion__Process dd ?
 g_CCameraManager__Update3 dd ?	
+g_CCar__cam_Update dd ?
+
 init_external_libs proc
 	LOAD_DLL "extensions\ogse.dll", g_ogse_lib_hinst
 	GET_PROC_ADDR g_ogse_lib_hinst, "CEffectorZoomInertion__Process", g_CEffectorZoomInertion__Process
 	GET_PROC_ADDR g_ogse_lib_hinst, "CCameraManager__Update3",        g_CCameraManager__Update3
+	GET_PROC_ADDR g_ogse_lib_hinst, "CCar__cam_Update",               g_CCar__cam_Update
+	
 	;
 	retn
 init_external_libs endp
