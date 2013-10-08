@@ -498,6 +498,7 @@ PerformRayPickQuery proc
 	;mov eax, offset g_vector_arg_2
 	;PRINT_VECTOR arg1, eax
 	mov     eax, dword ptr [g_object_arg_1] ; CScriptGameObject*
+	test		eax, eax
 	jz      no_ingore_object  ; check if ignore object is not defined
 	mov     eax, dword ptr [eax + 4] ; CObject *O
 no_ingore_object:
