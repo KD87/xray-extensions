@@ -78,10 +78,24 @@ CHangingLamp__net_Spawn_fix_2 proc
 	jnz not_r2_render
 	
 	; new code
+	; mark flare flag
 	mov		ecx, [esi]	;light_render
-	mov		eax, [render_flare]
+	mov		eax, [ONE]
 	mov		[ecx+284h], eax
 	
+	; handle volumetric spots
+	mov     al, [edi+138h]	; flags
+	and		al, 40h		;flVolumetric
+	cmp		al, 40h
+	jnz		exit
+	mov     al, [edi+138h]	; flags
+	and		al, 10h		;flTypeSpot
+	cmp		al, 10h
+	jnz		exit
+	mov		eax, [ONE]
+	mov		[ecx+288h], eax
+	
+exit:
 	pop     eax
 	jmp back_from_CHangingLamp__net_Spawn_fix_2
 	
@@ -91,4 +105,4 @@ not_r2_render:
 	jmp back_from_CHangingLamp__net_Spawn_fix_2
 CHangingLamp__net_Spawn_fix_2 endp
 
-render_flare dd 1
+ONE dd 1
