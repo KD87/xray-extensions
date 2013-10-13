@@ -124,3 +124,12 @@ override_cr_render_indirect:
 	call	g_CRender__render_indirect
 	pop		ecx
 	retn	8
+	
+override_crt_accum_direct:
+	push	ecx
+	mov		ecx, [esp+4+8h]
+	push	ecx
+	mov		ecx, [esp+8+4h] 
+	call	g_CRenderTarget__accum_direct
+	pop		ecx
+	retn	8
