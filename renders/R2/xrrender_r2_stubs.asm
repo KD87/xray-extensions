@@ -4,9 +4,9 @@
 
 ; увеличиваем размер объекта light
 org 10004BB6h - shift						; CRender__light_create
-push    288h ; вместо 270h - 5 байт	
+push    28Ch ; вместо 270h - 5 байт	
 org 1002FD32h - shift						; light__export
-push    288h
+push    28Ch
 ;org 100300D0h - shift						; CLight_DB__Load
 ;push    284h
 ;org 100301BAh - shift						; CLight_DB__Load
@@ -301,6 +301,8 @@ org 1005E6A0h - shift
 	jmp override_crt_accum_spot
 org 1005D090h - shift
 	jmp override_crt_accum_point
+org 10057F90h - shift
+	jmp override_crt_accum_direct
 	
 ;org 1002FCE0h - shift
 ;	jmp override_l_export

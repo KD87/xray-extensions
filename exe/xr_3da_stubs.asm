@@ -323,17 +323,17 @@ org 00509334h - shift
 psDeviceFlags dd ?
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; setmapping
+; перегрузка CBlender_Compile::SetMapping()
 org 0048F280h - shift
 	jmp	override_set_mapping
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; updatecl
+; перегрузка CObject::UpdateCL()
 org 00433620h - shift
 	jmp	override_updatecl
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; CEffectsRain__Render
+; перегрузка CEffectRain::Render()
 org 0050BB6Ch - shift 
 Render dd ?
 org 00443480h - shift
@@ -343,8 +343,25 @@ back_to_cer__Render:
 
 org 004CC5CCh - shift
 Msg dd ?
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; перегрузка CTextureDescrMngr::LoadLTX()
+org 0049F4B6h - shift
+	jmp load_ltx_overload
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; перегрузка CTextureDescrMngr::LoadTHM()
+org 0049F800h - shift
+	jmp load_thm_overload
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; время жизни блудмарков
 org 004D8F60h - shift
 wm_lifetime dd ?
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; переделка int CBlender_Compille::bDetail_Bump во флаг
+org 0048D0E1h - shift
+	jmp cblender_cpp_compile_hack
+org 0048D0FCh - shift
+back_from_cblender_cpp_compile_hack:

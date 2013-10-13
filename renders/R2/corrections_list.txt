@@ -57,5 +57,6 @@
 ;0x1002FCE0 5	; light::export()
 ;0x10004BB6 5	; CRender::light_create()
 0x1000ABA0 5	; CRender::render_indirect()
+0x10057F90 5	; CRender::accum_direct()
 ;hack to prevent full loading R2 in R1-mode
 0x10002DC9 5	; dllmain hack

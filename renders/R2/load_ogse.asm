@@ -19,6 +19,7 @@ g_CRender__blender_destroy dd 0
 g_CRenderTarget__accum_spot dd 0
 g_CRenderTarget__accum_point dd 0
 g_CRender__render_indirect dd 0
+g_CRenderTarget__accum_direct dd 0
 ;g_CRender__light_create dd 0
 ;g_light__export dd 0
 
@@ -87,6 +88,9 @@ init_external_libs:
 	mov		ecx, [eax+50h]
 	mov		ecx, [ecx]
 	mov		g_CRender__render_indirect, ecx	
+	mov		ecx, [eax+54h]
+	mov		ecx, [ecx]
+	mov		g_CRenderTarget__accum_direct, ecx	
 ;	mov		ecx, [eax+54h]
 ;	mov		ecx, [ecx]
 ;	mov		g_CRender__light_create, ecx	
