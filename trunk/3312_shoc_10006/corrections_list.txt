@@ -88,7 +88,7 @@
 
 ;-------------- тест камеры машины
 ;0x1026F96E 5 ; 	jmp CCar__cam_Update_fix
-0x1026F820 5 ; jmp CCar__cam_Update_fix0 ; замена камеры машины
+;0x1026F820 5 ; jmp CCar__cam_Update_fix0 ; замена камеры машины
 ;-------------- end
 ;0x101DE76F 6 ; fdiv    ds:g_fov
 ;0x1023B20D 8 ; divss   xmm0, ds:g_fov
