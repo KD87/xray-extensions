@@ -133,3 +133,8 @@ override_crt_accum_direct:
 	call	g_CRenderTarget__accum_direct
 	pop		ecx
 	retn	8
+	
+override_crt_phase_smap_spot:
+	push	esi
+	call	g_CRenderTarget__phase_smap_spot
+	retn	

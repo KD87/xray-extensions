@@ -10,6 +10,8 @@ REGISTER_CC_TOKEN soft_shadows_token, "r2_soft_shadows", soft_shadows
 REGISTER_CC_TOKEN steep_parallax_token, "r2_steep_parallax", steep_parallax
 REGISTER_CC_TOKEN dynamic_dof_token, "r2_dof", dynamic_dof
 REGISTER_CC_TOKEN sunshafts_quality_token, "r2_sunshafts", sunshafts_quality
+REGISTER_CC_TOKEN sunshafts_mode_token, "r2_sunshafts_mode", sunshafts_mode
+REGISTER_CC_TOKEN reflections_quality_token, "r2_reflections", reflections_quality
 
 REGISTER_CC_FLAG dof_flags, 2, "r2_dof_zoom"
 REGISTER_CC_FLAG dof_flags, 4, "r2_dof_reload"
@@ -19,12 +21,18 @@ REGISTER_CC_FLAG ps_r2_ls_flags, 10000h, "r__bloodmarks"
 REGISTER_CC_FLAG fake_flag, 40000h, "r2_soft_water"
 REGISTER_CC_FLAG fake_flag, 80000h, "r2_soft_particles"
 REGISTER_CC_FLAG fake_flag, 100000h, "r2_color_grading"
-REGISTER_CC_FLAG fake_flag, 800000h, "r2_float32"
+;REGISTER_CC_FLAG fake_flag, 800000h, "r2_float32"
 REGISTER_CC_FLAG fake_flag, 1000000h, "r2_detail_bump"
+REGISTER_CC_FLAG fake_flag, 2000000h, "r2_lens_flare"
+REGISTER_CC_FLAG fake_flag, 4000000h, "r2_puddles"
+REGISTER_CC_FLAG fake_flag, 8000000h, "r2_wet_surfaces"
+REGISTER_CC_FLAG fake_flag, 10000000h, "r2_reflections_hq"
+REGISTER_CC_FLAG fake_flag, 20000000h, "r2_gbuffer_opt"
 
 REGISTER_CC_FLAG fake_flag2, 8h, "r2_rain_drops"
 
 REGISTER_CC_FLOAT mblur_amount, "r2_mblur_amount", 0.0, 1.0
+REGISTER_CC_FLOAT sharp, "r2_image_sharpening", 0.0, 1.0
 REGISTER_CC_TOKEN render_mode_token, "r2_render_mode", render_mode
 
 	; делаем вырезанное
@@ -40,8 +48,10 @@ render_mode dd 0
 aa_mode dd 0
 aa_quality dd 0
 mblur_amount dd 0.0
+sharp dd 0.0
 det_rad_value dd 31h
 sunshafts_quality dd 0
+sunshafts_mode dd 0
 ssao_quality dd 0
 ssao_mode dd 0
 soft_shadows dd 0
@@ -49,6 +59,7 @@ steep_parallax dd 0
 dynamic_dof dd 0
 dof_flags dd 0
 posteffect_flags dd 0
+reflections_quality dd 0
 
 ; общий токен
 aOff db "qt_off", 0
@@ -80,14 +91,26 @@ rm_token STRUCT
 	db 8 dup (0)
 rm_token ENDS
 
-render_mode_token rm_token <>
 
+aScreen db "screen_space", 0
+aVolumetric db "volumetric", 0
+sm_token STRUCT
+	dd offset aScreen
+	dd 0
+	dd offset aVolumetric
+	dd 1
+	db 8 dup (0)
+sm_token ENDS
+
+render_mode_token rm_token <>
+sunshafts_mode_token sm_token <>
 sunshafts_quality_token quality_token <>
 ssao_quality_token quality_token <>
 aa_quality_token quality_token <>
 soft_shadows_token quality_token <>
 steep_parallax_token quality_token <>
 dynamic_dof_token quality_token <>
+reflections_quality_token quality_token <>
 
 ; токен для ssao
 aSSDO db "ssdo", 0

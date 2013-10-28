@@ -88,6 +88,7 @@ g_CRender__render_indirect dd 0
 g_CRenderTarget__accum_direct dd 0
 g_CTextureDescrMngr__LoadLTX dd 0
 g_CTextureDescrMngr__LoadTHM dd 0
+g_CRenderTarget__phase_smap_spot dd 0
 
 s_render_import_table STRUCT
 	dd g_CRenderTarget__phase_combine
@@ -112,6 +113,7 @@ s_render_import_table STRUCT
 	dd g_CRenderTarget__accum_point
 	dd g_CRender__render_indirect
 	dd g_CRenderTarget__accum_direct
+	dd g_CRenderTarget__phase_smap_spot
 ;	dd g_CRender__light_create
 ;	dd g_light__export
 s_render_import_table ENDS
@@ -159,5 +161,6 @@ init_external_libs proc
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__accum_direct", g_CRenderTarget__accum_direct
 	GET_PROC_ADDR g_ogse_lib_hinst, "CTextureDescrMngr__LoadLTX", g_CTextureDescrMngr__LoadLTX
 	GET_PROC_ADDR g_ogse_lib_hinst, "CTextureDescrMngr__LoadTHM", g_CTextureDescrMngr__LoadTHM
+	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__phase_smap_spot", g_CRenderTarget__phase_smap_spot
 	retn
 init_external_libs endp
