@@ -303,6 +303,8 @@ org 1005D090h - shift
 	jmp override_crt_accum_point
 org 10057F90h - shift
 	jmp override_crt_accum_direct
+org 10066EA0h - shift
+	jmp override_crt_phase_smap_spot
 	
 ;org 1002FCE0h - shift
 ;	jmp override_l_export
