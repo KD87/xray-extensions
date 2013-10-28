@@ -24,6 +24,9 @@ CLevel__g_sv_Spawn_fix proc
 	mov eax, [ebp+54]
 	and eax, 0ffffh
 	PRINT_UINT "ID=%d", eax
+	mov eax, [ebp+56]
+	and eax, 0ffffh
+	PRINT_UINT "Parent_ID=%d", eax
 	pop eax
 	mov     ecx, edi
 	call    CObjectList__Create
