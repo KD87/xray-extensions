@@ -22,7 +22,7 @@ org sec1_sec2_dist
 ;include empty.asm ; затычка для патчера
 include misc.asm
 include loadscreen_fix.asm
-include rain_timer.asm
+include rain.asm
 include debug_fixes.asm
 include load_ogse.asm
 include envdescriptor_fix.asm

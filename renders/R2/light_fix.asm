@@ -50,8 +50,12 @@ light__export_fix_2 proc
 	mov     [esi + 27Ch], eax
 	mov     eax, [ebp + 280h] ; 
 	mov     [esi + 280h], eax
+	cmp		edi, 0
+	jnz		skip
 	mov     eax, [ebp + 284h] ; 
 	mov     [esi + 284h], eax
+	
+skip:
 	
 ;	PRINT_UINT "FRAME RENDER %d", [ebp+0B4h]
 ;	PRINT_UINT "EXPORTING LIGHT PART %d", esi
