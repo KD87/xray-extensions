@@ -2,6 +2,11 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+org 00443538h - shift
+	jmp	envdescriptor_hack_rain_color_fix
+org 00443562h - shift
+back_to_envdescriptor_hack_rain_color_fix:	
+
 ;.text:00447E70 ; public: void __thiscall CLensFlareDescriptor::load(class CInifile *, char const *)
 org 00447E70h - shift
 	jmp CLensFlareDescriptor__load_fix
@@ -326,12 +331,16 @@ psDeviceFlags dd ?
 ; перегрузка CBlender_Compile::SetMapping()
 org 0048F280h - shift
 	jmp	override_set_mapping
+org 0048F286h - shift
+back_to_set_mapping:
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; перегрузка CObject::UpdateCL()
 org 00433620h - shift
 	jmp	override_updatecl
-	
+org 00433628h - shift
+back_to_updatecl:
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; перегрузка CEffectRain::Render()
 org 0050BB6Ch - shift 

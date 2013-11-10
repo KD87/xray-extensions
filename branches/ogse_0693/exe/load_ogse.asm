@@ -91,29 +91,29 @@ g_CTextureDescrMngr__LoadTHM dd 0
 g_CRenderTarget__phase_smap_spot dd 0
 
 s_render_import_table STRUCT
-	dd g_CRenderTarget__phase_combine
-	dd g_CRenderTarget__CRenderTarget
-	dd g_CRenderTarget___CRenderTarget
-	dd g_CRender__create
-	dd g_CRender__reset_end
-	dd g_xrRender_initconsole
-	dd g_CRender__level_Load
-	dd g_CRender__level_Unload
-	dd g_CRender__shader_compile
-	dd g_CDetailManager__MT_CALC
-	dd g_CDetailManager__Render
-	dd g_CRender__Add_SkeletonWallmark
-	dd g_CRender__Add_SkeletonWallmark_ptr
-	dd g_CLight_DB__Update
-	dd g_uber_deffer
-	dd g_CRenderTarget__phase_scene_prepare
-	dd g_CRender__blender_create
-	dd g_CRender__blender_destroy
-	dd g_CRenderTarget__accum_spot
-	dd g_CRenderTarget__accum_point
-	dd g_CRender__render_indirect
-	dd g_CRenderTarget__accum_direct
-	dd g_CRenderTarget__phase_smap_spot
+	dd g_CRenderTarget__phase_combine		;0h
+	dd g_CRenderTarget__CRenderTarget		;4h
+	dd g_CRenderTarget___CRenderTarget		;8h
+	dd g_CRender__create					;Ch
+	dd g_CRender__reset_end					;10h
+	dd g_xrRender_initconsole				;14h
+	dd g_CRender__level_Load				;18h
+	dd g_CRender__level_Unload				;1Ch
+	dd g_CRender__shader_compile			;20h
+	dd g_CDetailManager__MT_CALC			;24h
+	dd g_CDetailManager__Render				;28h
+	dd g_CRender__Add_SkeletonWallmark		;2Ch
+	dd g_CRender__Add_SkeletonWallmark_ptr	;30h
+	dd g_CLight_DB__Update					;34h
+	dd g_uber_deffer						;38h
+	dd g_CRenderTarget__phase_scene_prepare		;3Ch
+	dd g_CRender__blender_create			;40h
+	dd g_CRender__blender_destroy			;44h
+	dd g_CRenderTarget__accum_spot			;48h
+	dd g_CRenderTarget__accum_point			;4Ch
+	dd g_CRender__render_indirect			;50h
+	dd g_CRenderTarget__accum_direct		;54h
+	dd g_CRenderTarget__phase_smap_spot		;58h
 ;	dd g_CRender__light_create
 ;	dd g_light__export
 s_render_import_table ENDS
