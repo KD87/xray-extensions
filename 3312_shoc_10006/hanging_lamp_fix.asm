@@ -61,6 +61,15 @@ get_render_generation proc
 	retn
 get_render_generation endp
 
+; next fix assumes extended CSE_ALifeObjectHangingLamp::flags field
+;	flPhysic		= 0x01,
+;	flCastShadow	= 0x02,
+;	flR1			= 0x04,
+;	flR2			= 0x08,
+;	flTypeSpot		= 0x10,
+;	flPointAmbient	= 0x20,
+;	flVolumetric	= 0x40,
+;	flUseFlare		= 0x80,
 CHangingLamp__net_Spawn_fix_2 proc
 ;.text:101F269A                 push    ecx
 ;.text:101F269B                 fstp    [esp+2Ch+var_2C]
@@ -80,9 +89,15 @@ CHangingLamp__net_Spawn_fix_2 proc
 	; new code
 	; mark flare flag
 	mov		ecx, [esi]	;light_render
+	
+	mov     al, [edi+138h]	; flags
+	and		al, 80h		;flUseFlare
+	cmp		al, 80h
+	jnz		check_volumetric
 	mov		eax, [ONE]
 	mov		[ecx+284h], eax
-	
+
+check_volumetric:
 	; handle volumetric spots
 	mov     al, [edi+138h]	; flags
 	and		al, 40h		;flVolumetric
