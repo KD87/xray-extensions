@@ -4,10 +4,14 @@ CHangingLamp__net_Spawn_fix proc
 	; добавляем сохранение virtual size в незанятую ячейку старшего байта флагов
 	push    eax
 	; проверяем тип рендера
-	call get_render_generation
+;	call get_render_generation
 	;PRINT_UINT "render_generation: %d", eax
-	cmp     eax, 90
-	jnz not_r2_render
+;	cmp     eax, 90
+;	jnz not_r2_render
+	mov		ecx, psDeviceFlags
+	mov		ecx, [ecx]
+	test	ecx, 80000h		;psR2
+	jz		not_r2_render
 	;PRINT "is_r2"
 	;--
 	;mov     eax, [edi + 336]
@@ -81,10 +85,15 @@ CHangingLamp__net_Spawn_fix_2 proc
 
 	push    eax
 	; проверяем тип рендера
-	call get_render_generation
+;	call get_render_generation
 	;PRINT_UINT "render_generation: %d", eax
-	cmp     eax, 90
-	jnz not_r2_render
+;	cmp     eax, 90
+;	jnz not_r2_render
+
+	mov		ecx, psDeviceFlags
+	mov		ecx, [ecx]
+	test	ecx, 80000h		;psR2
+	jz		not_r2_render
 	
 	; new code
 	; mark flare flag
