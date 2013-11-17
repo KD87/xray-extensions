@@ -5,13 +5,17 @@ CActor__Update_fix proc
 	push	eax
 	
 	; Проверяем тип рендера. 0x5A - R2, 0x51 - R1.
-	mov		ecx, ds:Render
+;	mov		ecx, ds:Render
+;	mov		ecx, [ecx]
+;	mov		eax, [ecx]
+;	mov		edx, [eax]
+;	call	edx
+;	cmp		eax, 5Ah
+;	jnz		exit
+	mov		ecx, psDeviceFlags
 	mov		ecx, [ecx]
-	mov		eax, [ecx]
-	mov		edx, [eax]
-	call	edx
-	cmp		eax, 5Ah
-	jnz		exit
+	test	ecx, 80000h		;psR2
+	jz		exit
 	
 	mov		eax, [edi+530h]
 	test	eax, eax
@@ -26,13 +30,17 @@ CActor__Update_fix endp
 
 CActor__Update_fix_old proc
 	push	eax
-	mov		ecx, ds:Render
+;	mov		ecx, ds:Render
+;	mov		ecx, [ecx]
+;	mov		eax, [ecx]
+;	mov		edx, [eax]
+;	call	edx			; get_generation()
+;	cmp		eax, 5Ah
+;	jnz		exit
+	mov		ecx, psDeviceFlags
 	mov		ecx, [ecx]
-	mov		eax, [ecx]
-	mov		edx, [eax]
-	call	edx			; get_generation()
-	cmp		eax, 5Ah
-	jnz		exit
+	test	ecx, 80000h		;psR2
+	jz		exit
 	mov		eax, [edi+530h]
 	test	eax, eax
 	jnz		exit
@@ -48,13 +56,17 @@ exit:
 CActor__Update_fix_old endp
 
 CActor__Update_two_fix proc
-	mov		ecx, ds:Render
+;	mov		ecx, ds:Render
+;	mov		ecx, [ecx]
+;	mov		eax, [ecx]
+;	mov		edx, [eax]
+;	call	edx			; get_generation()
+;	cmp		eax, 5Ah
+;	jnz		exit
+	mov		ecx, psDeviceFlags
 	mov		ecx, [ecx]
-	mov		eax, [ecx]
-	mov		edx, [eax]
-	call	edx			; get_generation()
-	cmp		eax, 5Ah
-	jnz		exit
+	test	ecx, 80000h		;psR2
+	jz		exit
 	mov		eax, [edi+530h]
 	test	eax, eax
 	jnz		exit

@@ -3504,12 +3504,17 @@ org 103BD592h - shift
 	nop
 
 ; тень от ГГ на R2
+org 104584F4h - shift	
+psDeviceFlags dd ?
 org 101DEE40h - shift	
 sub_101DEE40:
 org 101C85CFh - shift	
 	jmp CActor__Update_fix
 org 101C85D5h - shift
 back_from_CActor__Update_fix:
+org 101C8948h - shift
+nop
+nop
 org 104253C8h - shift
 	jmp CActor__Update_two_fix
 org 104253D0h - shift
