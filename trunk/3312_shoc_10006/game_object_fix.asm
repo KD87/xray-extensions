@@ -395,6 +395,8 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLSFAmount, "set_lsf_amount"
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLSFSMAPJitter, "set_lsf_smap_jitter"
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetLSFSpeed, "get_lsf_speed"
+	; регистрируем функцию получения радиуса объекта
+	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetRadius, "radius"
 	; идём обратно
 	jmp back_from_game_object_fix
 game_object_fix endp
@@ -5534,3 +5536,8 @@ exit:
 	pop		ebp
 	retn
 CScriptGameObject__GetShapeRadius endp
+
+CScriptGameObject__GetRadius proc
+	mov		ecx, [eax+4]
+	jmp     ds:CObject__Radius
+CScriptGameObject__GetRadius endp
