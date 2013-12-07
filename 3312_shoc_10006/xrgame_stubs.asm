@@ -2,6 +2,9 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+org 10458A80h - shift
+CObject__Radius dd ?
+
 org 102F6079h - shift
 sub_102F6079:
 org 102F60EDh - shift
