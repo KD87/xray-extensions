@@ -81,3 +81,25 @@ CTorch__Switch_Callback:      ; CTorch* <esi>, light_on <al>
 	mov 	ecx, [esi+18Ch]
 
 	jmp 	CTorch__Switch_Callback_Back
+CMovementManager__set_level_dest_vertex_callback:
+	;PRINT 	"be"
+	call	CMovementManager__set_level_dest_vertex
+
+	push	eax
+	push	ecx
+	
+	push    0
+	push    esi ;level_vertex_id	
+	
+	;PRINT_UINT "lvid: %d", esi
+
+	push    135 
+	mov     ecx, edi 
+	call    CGameObject__callback
+	push    eax
+	call    script_callback_int_int	
+
+	pop		ecx
+	pop		eax
+	
+	jmp		CMovementManager__set_level_dest_vertex_callback_back

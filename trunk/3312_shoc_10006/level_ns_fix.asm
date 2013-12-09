@@ -75,6 +75,8 @@ PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetCarBodyWindow,   "get_
 PERFORM_EXPORT_LEVEL__DLG__VOID                 Level__GetTradeWindow,     "get_trade_wnd"
 PERFORM_EXPORT_LEVEL__GO__INT                   Level__GetSecondTalker,    "get_second_talker"
 
+PERFORM_EXPORT_LEVEL__INT__INT                  Level__VertexId, "vertex_id"
+
 ;PRINT "all_registered"
 ;--------------------------------------
 	jmp back_to_level_ns_ext_1
@@ -618,3 +620,13 @@ cast_CInventoryOwner_to_CGameObject proc ; ecx = inventory owner
 	pop     ecx
 	retn
 cast_CInventoryOwner_to_CGameObject endp
+
+Level__VertexId proc
+	mov     eax, g_ai_space
+	mov     eax, [eax+0Ch]	
+	push    offset g_vector_arg_1
+
+	call 	CLevelGraph__vertex_id
+	
+	retn	4
+Level__VertexId endp
