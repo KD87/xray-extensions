@@ -3668,3 +3668,15 @@ aUi_talk_hide db ?
 ; экспорты функций для работы с CHangingLamp
 org 10140440h - shift
 CScriptGameObject__get_hanging_lamp:
+;Вызов коллбека после установки lvid'a 
+org 1001AD80h - shift
+CMovementManager__set_level_dest_vertex:
+
+org 1014369Fh - shift
+	jmp		CMovementManager__set_level_dest_vertex_callback
+
+org 101436A4h - shift
+CMovementManager__set_level_dest_vertex_callback_back:
+
+org 1011E490h - shift
+	CLevelGraph__vertex_id:

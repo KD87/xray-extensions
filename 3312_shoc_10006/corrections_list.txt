@@ -229,3 +229,6 @@
 0x102EA535 5 ; jmp CSE_Abstract__script_register_fix
 0x10356433 5 ; jmp xrServer__Process_event_reject_fix // затычка на вылет "по xrServer::Process_event_reject ... e_parent && e_entity"
 0x102F3663 5 ; jmp CSE_ALifeObject__script_register_fix
+
+; Вызов коллбека после set_dest_level_vertex_id
+0x1014369F 5
