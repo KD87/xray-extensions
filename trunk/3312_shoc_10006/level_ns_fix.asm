@@ -150,6 +150,9 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	; get_second_talker
 	mov     ecx, eax
 	call    esi
+	; для vertex_ix
+	mov     ecx, eax
+	call    esi	
 ; идём обратно
 	jmp back_to_level_ns_ext_2
 
@@ -628,5 +631,5 @@ Level__VertexId proc
 
 	call 	CLevelGraph__vertex_id
 	
-	retn	4
+	retn
 Level__VertexId endp
