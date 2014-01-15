@@ -71,7 +71,7 @@ REGISTER_INT__STRING_INT register_get_holder_int, "get_holder_int"
 ;
 REGISTER_VOID__INT_INT register_set_wpn_int, "set_wpn_int"
 
-REGISTER_INT__STRING_INT register_get_wpn_bone_id, "get_wpn_bone_id"
+;REGISTER_INT__STRING_INT register_get_wpn_bone_id, "get_wpn_bone_id"
 REGISTER_INT__STRING_INT register_get_bone_id, "get_bone_id"
 ;REGISTER_INT__STRING_INT register_get_wpn_hud_bone_id, "get_wpn_hud_bone_id"
 
@@ -222,7 +222,7 @@ game_object_fix proc
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_int, CScriptGameObject__GetWeaponInt
 	PERFORM_EXPORT_VOID__INT_INT register_set_wpn_int, CScriptGameObject__SetWeaponInt
 	
-	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_bone_id, CScriptGameObject__GetWeaponBoneID
+	;PERFORM_EXPORT_INT__STRING_INT register_get_wpn_bone_id, CScriptGameObject__GetWeaponBoneID
 	PERFORM_EXPORT_INT__STRING_INT register_get_bone_id, CScriptGameObject__GetBoneID
 	
 	;PERFORM_EXPORT_INT__STRING_INT register_get_wpn_hud_bone_id, CScriptGameObject__GetWeaponHudBoneID
@@ -397,6 +397,10 @@ game_object_fix proc
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetLSFSpeed, "get_lsf_speed"
 	; регистрируем функцию получения радиуса объекта
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetRadius, "radius"
+	; получение имени кости по индексу
+	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetBoneName, "get_bone_name"
+	; наличие визуала (с костями)
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__HasVisual,          "has_visual"
 	; идём обратно
 	jmp back_from_game_object_fix
 game_object_fix endp
@@ -2151,15 +2155,7 @@ stub      = dword ptr 0Ch
 	push    esi
 	
 	mov     eax, [ecx+4]
-	test    eax, eax
-	jz      short exit_fail
-	;---
-	mov     eax, [eax+168h]
-	test    eax, eax
-	jz      short exit_fail
-	mov     eax, [eax]
-	mov     eax, [eax+18h]
-	call    eax
+	call    CGameObject__kinematic
 
 	push    [ebp + bone_name]
 	mov     ecx, eax
@@ -2177,53 +2173,6 @@ exit:
 	pop     ebp
 	retn    8
 CScriptGameObject__GetBoneID endp
-
-CScriptGameObject__GetWeaponBoneID proc
-bone_name = dword ptr 8
-stub      = dword ptr 0Ch
-	push    ebp
-	mov     ebp, esp
-	and     esp, 0FFFFFFF8h
-	
-	push    ecx
-	push    edx
-	push    esi
-	
-	call    CScriptGameObject__CWeapon
-	test    eax, eax
-	jz      short exit_fail
-	;---
-	;jmp exit
-	mov     eax, [eax+168h]
-	test    eax, eax
-	jz      short exit_fail
-	mov     eax, [eax]
-	mov     eax, [eax+18h]
-	call    eax
-	;push [ebp + bone_name]
-	;call msg
-	;pop ecx
-	
-	;mov     esi, eax ; esi = visual
-	;mov     ecx, esi ; this == visual
-	;mov     eax, [ebp + bone_name]
-	;push    eax
-	push    [ebp + bone_name]
-	mov     ecx, eax
-	call    ds:CKinematics__LL_BoneID
-	movzx   eax, ax
-	jmp     exit
-exit_fail:
-	mov     eax, -1
-exit:
-	pop     esi
-	pop     edx
-	pop     ecx
-	
-	mov     esp, ebp
-	pop     ebp
-	retn    8
-CScriptGameObject__GetWeaponBoneID endp
 
 a_str_msg db "arg=%s", 0
 
@@ -5385,7 +5334,7 @@ CScriptGameObject__GetVisualName proc
 	mov     ebp, esp
 	and     esp, 0FFFFFFF8h
 
-	mov		eax, [eax+4]
+	mov		eax, [ecx+4]
 	mov     eax, [eax+0B0h]
 	add		eax, 0Ch
 exit:
@@ -5404,7 +5353,7 @@ CScriptGameObject__SetVisualName proc
 	push    ecx
 	push    eax
 	
-	mov		ecx, [eax+4]
+	mov		ecx, [ecx+4]
 	mov  	ebx, offset g_visual_shared_str
 	mov  	eax, [ebp+8]
 	call 	set_shared_str
@@ -5538,6 +5487,41 @@ exit:
 CScriptGameObject__GetShapeRadius endp
 
 CScriptGameObject__GetRadius proc
-	mov		ecx, [eax+4]
+	mov		ecx, [ecx+4]
 	jmp     ds:CObject__Radius
 CScriptGameObject__GetRadius endp
+
+; аргумент-индекс передаётся через глобальную переменную (младшие два байта)
+CScriptGameObject__GetBoneName proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	mov		eax, [ecx+4] ; eax = m_object
+	call    CGameObject__kinematic ; eax = CKinematics
+	mov     ecx, eax
+	mov     eax, [g_int_argument_0]
+	;PRINT_UINT "arg=%d", eax
+	push    ax
+	call    [CKinematics__LL_BoneName_dbg]
+	
+	;
+	;add		eax, 0Ch ; shared string
+exit:
+	mov		esp, ebp
+	pop		ebp
+	
+	retn
+CScriptGameObject__GetBoneName endp
+
+CScriptGameObject__HasVisual proc
+	mov		eax, [ecx+4] ; eax = m_object
+	call    CGameObject__kinematic ; eax = CKinematics
+	test    eax, eax
+	jnz     has_vis
+	xor     eax, eax
+	retn
+has_vis:
+	mov     eax, 1
+	retn
+CScriptGameObject__HasVisual endp

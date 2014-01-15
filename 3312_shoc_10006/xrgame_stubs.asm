@@ -1,6 +1,81 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+;.text:10416E50 CUIInventoryCellItem__EqualTo proc near
+;.text:10416E50                 push    ecx
+;.text:10416E51                 mov     eax, [esp+4+itm]
+;.text:10416E55                 push    ebx
+;.text:10416E56                 xor     ebx, ebx
+;.text:10416E58                 test    eax, eax
+;.text:10416E5A                 push    edi
+;.text:10416E5B                 mov     edi, ecx
+;.text:10416E5D                 mov     [esp+0Ch+var_4], ebx
+;.text:10416E61                 jz      loc_10416EEE
+;.text:10416E67                 push    ebx             ; a5
+;.text:10416E68                 push    offset ??_R0?AVCUIInventoryCellItem@@@8 ; a4
+;.text:10416E6D                 push    offset ??_R0?AVCUICellItem@@@8 ; a3
+;.text:10416E72                 push    ebx             ; a2
+;.text:10416E73                 push    eax             ; a1
+;.text:10416E74                 call    __RTDynamicCast
+;.text:10416E79                 add     esp, 14h
+;.text:10416E7C                 push    esi
+;.text:10416E7D                 mov     esi, [eax+17Ch] ; arg: inventory_item
+;.text:10416E83                 mov     eax, [edi+17Ch] ; this: inventory_item
+org 10416E89h - shift
+	jmp CUIInventoryCellItem__EqualTo_fix
+;.text:10416E89                 movss   xmm0, dword ptr [eax+0A8h]
+;.text:10416E91                 subss   xmm0, dword ptr [esi+0A8h]
+org 10416E99h - shift
+back_from_CUIInventoryCellItem__EqualTo_fix:
+;.text:10416E99                 push    ecx             ; float
+;.text:10416E9A                 movss   [esp+14h+var_14], xmm0
+;.text:10416E9F                 call    fabs
+;.text:10416EA4                 fld     flt_1053B6EC
+
+
+org 10228B20h - shift
+CWeaponMagazined__GetBriefInfo:
+
+org 10495448h - shift
+CWeaponBinoculars__GetBriefInfo dd offset CWeaponMagazined__GetBriefInfo ; заменяем информацию бинокля на информацию ствола
+
+
+
+;.text:102340F0 CWeaponBinoculars__Action proc near     ; CODE XREF: sub_10234650+6j
+;.text:102340F0                 mov     eax, [esp+arg_0]
+;.text:102340F4                 cmp     eax, 20h
+;.text:102340F7                 push    esi
+;.text:102340F8                 mov     esi, ecx
+; бинокль будет стрелять
+org 102340FAh - shift ; патчить два байта в corrections.txt
+	nop
+	nop
+;.text:102340FA                 jz      short loc_1023410D
+;.text:102340FC                 mov     ecx, [esp+4+arg_4]
+;.text:10234100                 push    ecx
+;.text:10234101                 push    eax
+;.text:10234102                 mov     ecx, esi
+;.text:10234104                 call    CWeaponMagazined__Action
+
+
+org 1045893Ch - shift
+CKinematics__LL_BoneName_dbg dd ?
+
+;.text:10141C60 CScriptGameObject__Hit proc near        ; DATA XREF: script_register_game_object1+6A5o
+org 10141C60h - shift
+	jmp CScriptGameObject__Hit_dbg_fix
+;.text:10141C60                 push    ebp
+;.text:10141C61                 mov     ebp, esp
+;.text:10141C63                 and     esp, 0FFFFFFF8h
+org 10141C66h - shift
+back_from_CScriptGameObject__Hit_dbg_fix:
+;.text:10141C66                 mov     eax, 2064h
+;.text:10141C6B                 call    __alloca_probe
+;.text:10141C70                 movss   xmm0, ds:dword_104D23E4
+;.text:10141C78                 subss   xmm0, dword_1053B648
+;.text:10141C80                 xor     eax, eax
+
+
 
 org 10458A80h - shift
 CObject__Radius dd ?
