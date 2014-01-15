@@ -466,3 +466,12 @@ arg_8           = dword ptr  0Ch
 	retn    0Ch
 game_GameState__SetGameTimeFactor__INT64_float_dbg_fix endp
 
+CScriptGameObject__Hit_dbg_fix proc
+	PRINT "SCRIPT HIT"
+	;
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	;
+	jmp back_from_CScriptGameObject__Hit_dbg_fix
+CScriptGameObject__Hit_dbg_fix endp

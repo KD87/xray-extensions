@@ -232,3 +232,9 @@
 
 ; Вызов коллбека после set_dest_level_vertex_id
 0x1014369F 5
+
+;0x10141C60 5 ; jmp CScriptGameObject__Hit_dbg_fix -- фикс для трассировки скриптовых хитов
+0x102340FA 2 ; стреляющий бинокль
+0x10495448 4 ; заменяем информацию бинокля на информацию ствола
+
+0x10416E89 5 ; jmp CUIInventoryCellItem__EqualTo_fix
