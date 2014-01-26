@@ -42,12 +42,14 @@
 ;0x1023CBDA 5 ; jmp wpn_stat_mgun__upatecl_fix0
 
 ;0x1023D870 5 ; 	jmp wpn_stat_mgun__cam_update_fix
-0x10146D00 5 ; jmp disable_info_portion_fix
+0x10146D00 5 ; jmp disable_info_portion_fix ; убираем лишние действи€ при выключении уже выключенной инфопорции
 
-0x103BE8C0 5 ; jmp CUITradeWnd__CanMoveToOther_fix
+0x103BE8C0 5 ; jmp CUITradeWnd__CanMoveToOther_fix ; ручное управление торгуемостью предметов
+0x10416E89 5 ; jmp CUIInventoryCellItem__EqualTo_fix ; ручное управление группируемостью предметов
 0x10221D75 12 ; блокирование кривого движкового переключени€ гранат
 
-;0x103BF3D0 5 ; jmp CUITradeWnd__FillList_fix
+0x103BF3C7 5 ; jmp CUITradeWnd__FillList_fix ; кастомна€ заливка предметов в окне торговли
+0x103CBF49 5 ; jmp CUICarBodyWnd__UpdateLists_fix ; кастомна€ заливка предметов в окне обыска €щиков
 
 0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix ; отладочное сообщение о начале создани€ объекта
 0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2 ; отладочное сообщение о завершении создани€ объекта
@@ -117,9 +119,6 @@
 0x103BFF64 5 ; jmp call_pda_contact_callback
 0x103C0D87 5 ; jmp cui_pda_fix_map
 0x103E5C6E 5 ; jmp to xml AdjustHeightToText and AdjustWeigthToText
-
-;SkyLoader
-;0x103BF3D6 5 ;jmp CUITradeWnd__FillList_colorize ;заливка предметов в окне торговли
 
 ;использование патронов на по€се
 0x10205D71 5
@@ -237,4 +236,3 @@
 0x102340FA 2 ; стрел€ющий бинокль
 0x10495448 4 ; замен€ем информацию бинокл€ на информацию ствола
 
-0x10416E89 5 ; jmp CUIInventoryCellItem__EqualTo_fix
