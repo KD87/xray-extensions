@@ -1,6 +1,12 @@
 CUIInventoryCellItem__EqualTo_fix proc
 ;esi == arg: inventory_item
 ;eax == this: inventory_item
+	; check manual grouping flag 
+	push eax
+	mov eax, [g_manual_grouping_active]
+	test eax, eax
+	pop eax
+	jz back_to_normal
 	; not in actor's inventory
 	push eax
 	push ecx
@@ -66,6 +72,7 @@ return_not_equal:
 	pop     ecx
 	retn    4
 back_to_normal:
+	;PRINT "GO NORMAL"
 	; делаем вырезанное
 	movss   xmm0, dword ptr [eax+0A8h]
 	subss   xmm0, dword ptr [esi+0A8h]

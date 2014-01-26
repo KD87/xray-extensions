@@ -1,6 +1,127 @@
 ;*******************************************************************************
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
+
+;.text:103CBEE0 CUICarBodyWnd__UpdateLists proc near
+;.text:103CBEE0 var_10          = byte ptr -10h
+;.text:103CBEE0 var_C           = dword ptr -0Ch
+;.text:103CBEE0 var_8           = dword ptr -8
+;.text:103CBEE0 var_4           = dword ptr -4
+;.text:103CBEE0                 push    ebp
+;.text:103CBEE1                 mov     ebp, esp
+;.text:103CBEE3                 and     esp, 0FFFFFFF8h
+;.text:103CBEE6                 sub     esp, 10h
+;.text:103CBEE9                 xor     eax, eax
+;.text:103CBEEB                 push    ebx
+;.text:103CBEEC                 push    edi
+;.text:103CBEED                 mov     [esp+18h+var_C], eax
+;.text:103CBEF1                 mov     [esp+18h+var_8], eax
+;.text:103CBEF5                 mov     [esp+18h+var_4], eax
+;.text:103CBEF9                 mov     eax, [esi+74h]
+;.text:103CBEFC                 push    1
+;.text:103CBEFE                 call    CUIDragDropListEx__ClearAll
+;.text:103CBF03                 mov     eax, [esi+78h]
+;.text:103CBF06                 push    1
+;.text:103CBF08                 call    CUIDragDropListEx__ClearAll
+;.text:103CBF0D                 mov     eax, [esi+68h]
+;.text:103CBF10                 mov     ecx, [eax+24h]
+;.text:103CBF13                 push    1
+;.text:103CBF15                 push    ecx
+;.text:103CBF16                 lea     edi, [esp+20h+var_10]
+;.text:103CBF1A                 call    CInventory__AddAvailableItems
+;.text:103CBF1F                 mov     ebx, [esp+18h+var_8]
+;.text:103CBF23                 mov     edi, [esp+18h+var_C]
+;.text:103CBF27                 mov     edx, ebx
+;.text:103CBF29                 sub     edx, edi
+;.text:103CBF2B                 push    offset InventoryUtilities__GreaterRoomInRuck
+;.text:103CBF30                 sar     edx, 2
+;.text:103CBF33                 push    edx
+;.text:103CBF34                 push    ebx
+;.text:103CBF35                 push    edi
+;.text:103CBF36                 call    std___Sort_std___Vector_iterator_CInventoryItem___xalloc_CInventoryItem_____int_bool____cdecl____CInventoryItem___CInventoryItem____
+;.text:103CBF3B                 add     esp, 10h
+;.text:103CBF3E                 cmp     ebx, edi
+;.text:103CBF40                 jz      short loc_103CBF66
+;.text:103CBF42 loc_103CBF42:
+;.text:103CBF42                 mov     eax, [edi]
+;.text:103CBF44                 call    create_cell_item
+org 103CBF49h - shift
+	jmp CUICarBodyWnd__UpdateLists_fix
+;.text:103CBF49                 mov     ecx, [esi+74h]
+;.text:103CBF4C                 mov     edx, [ecx]
+org 103CBF4Eh - shift
+back_from_CUICarBodyWnd__UpdateLists_fix:
+;.text:103CBF4E                 push    eax
+;.text:103CBF4F                 mov     eax, [edx+90h]
+;.text:103CBF55                 call    eax
+;.text:103CBF57                 add     edi, 4
+;.text:103CBF5A                 cmp     edi, ebx
+;.text:103CBF5C                 jnz     short loc_103CBF42
+;.text:103CBF5E                 mov     ecx, [esp+18h+var_C]
+;.text:103CBF62                 mov     [esp+18h+var_8], ecx
+;.text:103CBF66 loc_103CBF66:
+;.text:103CBF66                 mov     eax, [esi+6Ch]
+;.text:103CBF69                 test    eax, eax
+;.text:103CBF6B                 lea     edi, [esp+18h+var_10]
+;.text:103CBF6F                 jz      short loc_103CBF7E
+;.text:103CBF71                 mov     edx, [eax+24h]
+;.text:103CBF74                 push    0
+;.text:103CBF76                 push    edx
+;.text:103CBF77                 call    CInventory__AddAvailableItems
+;.text:103CBF7C                 jmp     short loc_103CBF86
+;.text:103CBF7E loc_103CBF7E:
+;.text:103CBF7E                 mov     eax, [esi+70h]
+;.text:103CBF81                 call    CInventoryBox__AddAvailableItems
+;.text:103CBF86 loc_103CBF86:
+;.text:103CBF86                 mov     ebx, [esp+18h+var_8]
+;.text:103CBF8A                 mov     edi, [esp+18h+var_C]
+;.text:103CBF8E                 mov     eax, ebx
+;.text:103CBF90                 sub     eax, edi
+;.text:103CBF92                 push    offset InventoryUtilities__GreaterRoomInRuck
+;.text:103CBF97                 sar     eax, 2
+;.text:103CBF9A                 push    eax
+;.text:103CBF9B                 push    ebx
+;.text:103CBF9C                 push    edi
+;.text:103CBF9D                 call    std___Sort_std___Vector_iterator_CInventoryItem___xalloc_CInventoryItem_____int_bool____cdecl____CInventoryItem___CInventoryItem____
+;.text:103CBFA2                 add     esp, 10h
+;.text:103CBFA5                 cmp     ebx, edi
+;.text:103CBFA7                 jz      short loc_103CBFCC
+;.text:103CBFA9                 lea     esp, [esp+0]
+;.text:103CBFB0 loc_103CBFB0:
+;.text:103CBFB0                 mov     eax, [edi]
+;.text:103CBFB2                 call    create_cell_item
+;.text:103CBFB7                 mov     ecx, [esi+78h]
+;.text:103CBFBA                 mov     edx, [ecx]
+;.text:103CBFBC                 push    eax
+;.text:103CBFBD                 mov     eax, [edx+90h]
+;.text:103CBFC3                 call    eax
+;.text:103CBFC5                 add     edi, 4
+;.text:103CBFC8                 cmp     edi, ebx
+;.text:103CBFCA                 jnz     short loc_103CBFB0
+;.text:103CBFCC loc_103CBFCC:
+;.text:103CBFCC                 mov     ecx, [esi+90h]
+;.text:103CBFD2                 push    0
+;.text:103CBFD4                 push    ecx
+;.text:103CBFD5                 call    InventoryUtilities__UpdateWeight
+;.text:103CBFDA                 mov     eax, [esp+20h+var_C]
+;.text:103CBFDE                 add     esp, 8
+;.text:103CBFE1                 test    eax, eax
+;.text:103CBFE3                 mov     byte ptr [esi+64h], 0
+;.text:103CBFE7                 jz      short loc_103CBFF6
+;.text:103CBFE9                 mov     ecx, ds:?Memory@@3VxrMemory@@A ; xrMemory Memory
+;.text:103CBFEF                 push    eax
+;.text:103CBFF0                 call    ds:?mem_free@xrMemory@@QAEXPAX@Z ; xrMemory::mem_free(void *)
+;.text:103CBFF6 loc_103CBFF6:
+;.text:103CBFF6                 pop     edi
+;.text:103CBFF7                 pop     ebx
+;.text:103CBFF8                 mov     esp, ebp
+;.text:103CBFFA                 pop     ebp
+;.text:103CBFFB                 retn
+;.text:103CBFFB CUICarBodyWnd__UpdateLists endp
+
+
+
+
 ;.text:10416E50 CUIInventoryCellItem__EqualTo proc near
 ;.text:10416E50                 push    ecx
 ;.text:10416E51                 mov     eax, [esp+4+itm]
@@ -1724,30 +1845,34 @@ back_from_CUITradeWnd__CanMoveToOther_fix:
 ;.text:103BF3BB                 push    edi
 ;.text:103BF3BC                 jz      short loc_103BF406
 ;.text:103BF3BE                 mov     edi, edi
-;.text:103BF3C0
-;.text:103BF3C0 loc_103BF3C0:                           ; CODE XREF: CUITradeWnd__FillList+54j
+;.text:103BF3C0 loc_103BF3C0:
 ;.text:103BF3C0                 mov     eax, [esi]
 ;.text:103BF3C2                 call    create_cell_item
+org 103BF3C7h - shift
+jmp CUITradeWnd__FillList_fix
 ;.text:103BF3C7                 cmp     [esp+10h+do_colorize], 0
 ;.text:103BF3CC                 mov     edi, eax
-;.text:103BF3CE                 jz      short loc_103BF3F0
-org 103BF3D0h - shift
-jmp CUITradeWnd__FillList_fix
+;.text:103BF3CE                 jz      no_colorization
+;org 103BF3D0h - shift
+;jmp CUITradeWnd__FillList_fix
 ;.text:103BF3D0                 mov     ebx, [esi]      ; a2
 ;.text:103BF3D2                 mov     eax, [esp+10h+this_] ; this
+;org 103BF3D6h - shift
+;	jmp	CUITradeWnd__FillList_colorize
 ;.text:103BF3D6                 call    CUITradeWnd__CanMoveToOther
 ;.text:103BF3DB                 test    al, al
-org 103BF3DDh - shift
-back_from_CUITradeWnd__FillList_fix:
-;.text:103BF3DD                 jnz     short loc_103BF3F0
+;org 103BF3DDh - shift
+;back_from_CUITradeWnd__FillList_fix:
+;.text:103BF3DD                 jnz     no_colorization
 ;.text:103BF3DF                 mov     eax, [edi]
 ;.text:103BF3E1                 mov     edx, [eax+90h]
 ;.text:103BF3E7                 push    0FFFF6464h
 ;.text:103BF3EC                 mov     ecx, edi
-;.text:103BF3EE                 call    edx
-;.text:103BF3F0
-;.text:103BF3F0 loc_103BF3F0:                           ; CODE XREF: CUITradeWnd__FillList+1Ej
-;.text:103BF3F0                                         ; CUITradeWnd__FillList+2Dj
+;.text:103BF3EE                 call    edx ; SetColor
+org 103BF3F0h - shift
+back_from_CUITradeWnd__FillList_fix:
+;back_to_CUITradeWnd__FillList_colorize:
+;.text:103BF3F0 no_colorization:
 ;.text:103BF3F0                 mov     ecx, [esp+10h+a4]
 ;.text:103BF3F4                 mov     eax, [ecx]
 ;.text:103BF3F6                 mov     edx, [eax+90h]
@@ -1756,16 +1881,13 @@ back_from_CUITradeWnd__FillList_fix:
 ;.text:103BF3FF                 add     esi, 4
 ;.text:103BF402                 cmp     esi, ebp
 ;.text:103BF404                 jnz     short loc_103BF3C0
-;.text:103BF406
-;.text:103BF406 loc_103BF406:                           ; CODE XREF: CUITradeWnd__FillList+Cj
+;.text:103BF406 loc_103BF406:
 ;.text:103BF406                 pop     edi
 ;.text:103BF407                 pop     esi
 ;.text:103BF408                 pop     ebp
 ;.text:103BF409                 pop     ebx
 ;.text:103BF40A                 retn    0Ch
 ;.text:103BF40A CUITradeWnd__FillList endp
-
-
 
 org 1014CAE0h - shift
 register__void__void:
@@ -3402,19 +3524,6 @@ org 10150F20h - shift
 sub_10150F20:
 org 1015B3E0h - shift
 sub_1015B3E0:
-
-
-
-
-;для заливки предметов при торговле
-org 103BF3D6h - shift
-	jmp	CUITradeWnd__FillList_colorize
-
-org 103BF3F0h - shift
-back_to_CUITradeWnd__FillList_colorize:
-
-org 103BE8C0h - shift
-sub_0_103BE8C0:
 
 ;для новых методов в пространстве имен level
 org 10190CF7h - shift

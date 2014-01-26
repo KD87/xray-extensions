@@ -128,6 +128,7 @@ include CSE_Abstract_fix.asm
 include CSE_ALifeObject_fix.asm
 include xrServer_fix.asm
 include CUIInventoryCellItem_fix.asm
+include cuicarbodywnd_fix.asm
 
 _CODE ENDS
 

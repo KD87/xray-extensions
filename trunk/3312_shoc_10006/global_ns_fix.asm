@@ -77,6 +77,12 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
      ; call    flush_register
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetTradeFiltrationOn, "set_trade_filtration_on"
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetTradeFiltrationOff, "set_trade_filtration_off"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetManualGroupingOn, "set_manual_grouping_on"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetManualGroupingOff, "set_manual_grouping_off"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetManualHighlightOn, "set_manual_highlight_on"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetManualHighlightOff, "set_manual_highlight_off"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT GetManualHighlight, "get_manual_highlight"
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SetHighlightColor, "set_highlight_color"
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SumArgs, "sum_args"
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT SubArgs, "sub_args"
 	
@@ -270,6 +276,53 @@ SetTradeFiltrationOff proc
 	mov [g_trade_filtration_active], 0
 	retn
 SetTradeFiltrationOff endp
+
+g_manual_grouping_active dd 0
+SetManualGroupingOn proc
+	mov [g_manual_grouping_active], 1
+	retn
+SetManualGroupingOn endp
+
+SetManualGroupingOff proc
+	mov [g_manual_grouping_active], 0
+	retn
+SetManualGroupingOff endp
+
+g_manual_highlignt_active dd 0
+SetManualHighlightOn proc
+	mov [g_manual_highlignt_active], 1
+	retn
+SetManualHighlightOn endp
+
+SetManualHighlightOff proc
+	mov [g_manual_highlignt_active], 0
+	retn
+SetManualHighlightOff endp
+
+GetManualHighlight proc
+	mov eax, [g_manual_highlignt_active]
+	retn
+GetManualHighlight endp
+
+g_highlight_colors dd 16 DUP(0)
+
+SetHighlightColor proc
+color   = dword ptr 0Ch
+col_idx = dword ptr 08h
+	push    ebp
+	mov     ebp, esp
+	push    esi
+	
+	mov     esi, [ebp + col_idx]
+	and     esi, 0Fh
+	mov     eax, [ebp + color]
+	mov     [g_highlight_colors+esi*4], eax
+	
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn
+SetHighlightColor endp
 
 SumArgs proc
 arg2 = dword ptr 8
