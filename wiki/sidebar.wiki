@@ -1,2 +1,3 @@
   * [list_of_fixes Список правок]
+    * [tradability_grouping Управление торгуемостью и группировкой]
   * [new_collbacks Добавленные колбеки]
