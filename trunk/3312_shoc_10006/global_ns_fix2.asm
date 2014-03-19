@@ -9,6 +9,9 @@ global_space_ext2: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetGameTime, "set_game_time"
 	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetFloatArgs12, "set_float_args_12"
 	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetFloatArgs34, "set_float_args_34"
+	;
+	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetHudInertia, "set_hud_inertia"
+	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetHudInertiaParam2, "set_hud_inertia_param2"
 	; идЄм обратно
 	jmp back_from_global_space_ext2
 ;
@@ -19,6 +22,9 @@ global_space_ext2_additional:
 	GLOBAL_NS_SCOPE_ADD
 	; добавл€ем свой код
 	GLOBAL_NS_SCOPE_ADD
+	GLOBAL_NS_SCOPE_ADD
+	GLOBAL_NS_SCOPE_ADD
+	;
 	GLOBAL_NS_SCOPE_ADD
 	GLOBAL_NS_SCOPE_ADD
 	; идЄм обратно
@@ -82,3 +88,24 @@ arg4 = dword ptr 8h
 	mov [g_float_arg4], eax
 	retn
 SetFloatArgs34 endp
+
+g_hud_inertia_factor dd 0.5
+g_hud_inertia_param_2 dd -0.05f
+
+SetHudInertia proc
+hud_inertia = dword ptr 4h
+arg2        = dword ptr 8h
+	mov eax, [esp+hud_inertia]
+	;PRINT_FLOAT "hud_inertia = %f", eax
+	mov [g_hud_inertia_factor], eax
+	retn
+SetHudInertia endp
+
+SetHudInertiaParam2 proc
+hud_inertia = dword ptr 4h
+arg2        = dword ptr 8h
+	mov eax, [esp+hud_inertia]
+	;PRINT_FLOAT "hud_inertia = %f", eax
+	mov [g_hud_inertia_param_2], eax
+	retn
+SetHudInertiaParam2 endp

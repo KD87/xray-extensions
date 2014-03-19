@@ -2,6 +2,26 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+;.text:1024DAE0 CHudItem__UpdateHudInertion proc near
+;.text:1024DCCB                 mov     eax, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
+;.text:1024DCD0                 fld     [esp+78h+var_20]
+;.text:1024DCD4                 movss   xmm5, dword ptr [eax+1F8h]
+org 1024DCDCh - shift
+	mulss   xmm5, ds:g_hud_inertia_factor ; 8 bytes
+;.text:1024DCDC                 mulss   xmm5, ds:flt_10459B74
+;.text:1024DCE4                 movaps  xmm6, xmm0
+;.text:1024DCE7                 mulss   xmm6, xmm5
+;.text:1024DCEB                 addss   xmm6, xmm3
+;.text:1024DCEF                 movaps  xmm3, xmm1
+;.text:1024DCF2                 mulss   xmm3, xmm5
+;.text:1024DCF6                 addss   xmm3, xmm4
+org 1024DCFAh - shift
+	movss   xmm4, ds:g_hud_inertia_param_2 ; 8 bytes
+;.text:1024DCFA                 movss   xmm4, ds:dword_104597D8
+;.text:1024DD02                 movss   dword_10560E08, xmm3
+
+
+
 ;.text:103CBEE0 CUICarBodyWnd__UpdateLists proc near
 ;.text:103CBEE0 var_10          = byte ptr -10h
 ;.text:103CBEE0 var_C           = dword ptr -0Ch
