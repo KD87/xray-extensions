@@ -24,7 +24,7 @@ clear:
 	test    eax, eax
 	lea     edx, ds:0[eax*4]
 	lea     ebx, [edx+esi]
-	jle     short exit
+	jle     short exit11
 
 	push    edx
 	push    ecx
@@ -33,7 +33,7 @@ clear:
 	call    ds:memmove_s
 	add     esp, 10h
 
-	jmp	short exit
+	jmp	short exit11
 is_on:
 	lea     ecx, [esp+94h]
 	mov     eax, [ecx]
@@ -43,7 +43,7 @@ is_on:
 	jz      back_to_sun_details_1_fix
 
 	mov     ebx, [ebp+4]
-exit:
+exit11:
 	mov     [ebp+8], ebx
 	jmp     back_to_sun_details_1_fix
 sun_details_1_fix endp

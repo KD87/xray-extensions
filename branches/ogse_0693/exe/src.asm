@@ -32,6 +32,7 @@ include console_comm_reg_macro.asm
 include console_comm.asm
 include load_ltx_overload.asm
 include cblender_cpp_compile.asm
+include CEngineAPI_fix.asm
 
 _code ENDS
 

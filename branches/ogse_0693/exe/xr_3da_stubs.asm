@@ -2,6 +2,206 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+;.text:0048B6D0 fill_vid_mode_list proc near
+;
+;.text:0048B73B                 mov     eax, [esp+60h+var_30]
+org 0048B73Fh - shift
+	cmp     eax, 450 ; 5 bytes
+;.text:0048B73F                 cmp     eax, 320h
+;.text:0048B744                 jb      loc_48B7D7
+
+org 00506BA4h - shift
+psHUD_FOV dd ?
+
+; ¬€–≈«¿Õ œ≈–¬€… –≈Õƒ≈–
+org 0050BBB8h - shift
+renderer_value  dd 2 ; ‚ÒÂ„‰‡ ÔÓÎÌ‡ˇ ‰ËÌ‡ÏËÍ‡
+
+org 004BA9F4h - shift
+	jmp loc_4BAA99
+;.text:004BA9F4                 jnz     loc_4BAA99
+;.text:004BA9FA                 push    0
+;.text:004BA9FC                 push    80000h
+;.text:004BAA01                 mov     ecx, offset ?psDeviceFlags@@3U?$_flags@I@@A ; _flags<uint> psDeviceFlags
+;.text:004BAA06                 call    _flags_unsigned_int___set
+;.text:004BAA0B                 push    offset aXrrender_r1_dl ; "xrRender_R1.dll"
+;.text:004BAA10                 push    offset aLoadingDll ; "Loading DLL:"
+;.text:004BAA15                 mov     ds:renderer_value, 0
+;.text:004BAA1F                 call    edi ; Log(char const *,char const *)
+;.text:004BAA21                 add     esp, 8
+;.text:004BAA24                 push    offset aXrrender_r1_dl ; "xrRender_R1.dll"
+;.text:004BAA29                 call    ebp ; LoadLibraryA
+;.text:004BAA2B                 test    eax, eax
+;.text:004BAA2D                 mov     [esi+4], eax
+;.text:004BAA30                 jnz     short loc_4BAA68
+;.text:004BAA32                 call    ds:GetLastError
+;.text:004BAA38                 cmp     ds:byte_50E696, 0
+;.text:004BAA3F                 jnz     short loc_4BAA68
+;.text:004BAA41                 test    eax, eax
+;.text:004BAA43                 jge     short loc_4BAA68
+;.text:004BAA45                 mov     ecx, ds:?Debug@@3VxrDebug@@A ; _DWORD
+;.text:004BAA4B                 push    offset byte_50E696 ; _DWORD
+;.text:004BAA50                 push    offset aCengineapiInit ; "CEngineAPI::Initialize"
+;.text:004BAA55                 push    39h             ; _DWORD
+;.text:004BAA57                 push    offset aEStalkerSou_50 ; "E:\\stalker\\sources\\trunk\\xr_3da\\EngineA"...
+;.text:004BAA5C                 push    offset aGetlasterror ; "GetLastError()"
+;.text:004BAA61                 push    eax             ; _DWORD
+;.text:004BAA62                 call    ds:?error@xrDebug@@QAEXJPBD0H0AA_N@Z ; xrDebug::error(long,char const *,char const *,int,char const *,bool &)
+;.text:004BAA68
+;.text:004BAA68 loc_4BAA68:                             ; CODE XREF: CEngineAPI::Initialize(void)+90j
+;.text:004BAA68                                         ; CEngineAPI::Initialize(void)+9Fj ...
+;.text:004BAA68                 cmp     ds:byte_50E697, 0
+;.text:004BAA6F                 jnz     short loc_4BAA99
+;.text:004BAA71                 cmp     dword ptr [esi+4], 0
+;.text:004BAA75                 jnz     short loc_4BAA99
+;.text:004BAA77                 mov     ecx, ds:?Debug@@3VxrDebug@@A ; _DWORD
+;.text:004BAA7D                 push    offset byte_50E697 ; _DWORD
+;.text:004BAA82                 push    offset aCengineapiInit ; "CEngineAPI::Initialize"
+;.text:004BAA87                 push    3Ah             ; _DWORD
+;.text:004BAA89                 push    offset aEStalkerSou_50 ; "E:\\stalker\\sources\\trunk\\xr_3da\\EngineA"...
+;.text:004BAA8E                 push    offset aHrender ; "hRender"
+;.text:004BAA93                 call    ds:?fail@xrDebug@@QAEXPBD0H0AA_N@Z ; xrDebug::fail(char const *,char const *,int,char const *,bool &)
+;.text:004BAA99
+org 004BAA99h - shift
+loc_4BAA99:
+;.text:004BAA99 loc_4BAA99:                             ; CODE XREF: CEngineAPI::Initialize(void)+54j
+;.text:004BAA99                                         ; CEngineAPI::Initialize(void)+CFj ...
+
+;.text:00411400 WinMain_impl    proc near               ; CODE XREF: WinMain(x,x,x,x)
+; ...
+;.text:0041158E                 push    offset aBatch_benchmar ; "-batch_benchmark "
+org 00411593h - shift
+	jmp WinMain_impl_fix
+;.text:00411593                 push    ebx             ; Str
+;.text:00411594                 call    edi ; strstr
+;.text:00411596                 add     esp, 8
+;.text:00411599                 test    eax, eax
+;.text:0041159B                 jz      short loc_4115FA
+
+;...
+;.text:004115FA loc_4115FA:                             ; CODE XREF: WinMain_impl+19Bj
+;.text:004115FA                 push    offset aLauncher ; "-launcher"
+;.text:004115FF                 push    ebx
+;.text:00411600                 call    edi ; strstr
+;org 00411602h - shift
+;	jmp WinMain_impl_fix
+;.text:00411602                 mov     eax, ds:?Core@@3VxrCore@@A ; xrCore Core
+;.text:00411607                 add     eax, 4D0h
+;.text:0041160C                 push    offset aR2a     ; "-r2a"
+;.text:00411611                 push    eax
+;.text:00411612                 call    edi ; strstr
+;.text:00411614                 add     esp, 10h
+;.text:00411617                 test    eax, eax
+;.text:00411619                 jz      short loc_41162D
+;.text:0041161B                 mov     ecx, ds:?Console@@3PAVCConsole@@A ; CConsole * Console
+;.text:00411621                 push    offset aRendererRender ; "renderer renderer_r2a"
+;.text:00411626                 call    ?Execute@CConsole@@QAEXPBD@Z ; CConsole::Execute(char const *)
+;.text:0041162B                 jmp     short loc_41168C
+;.text:0041162D ; ---------------------------------------------------------------------------
+;.text:0041162D
+;.text:0041162D loc_41162D:                             ; CODE XREF: WinMain_impl+219j
+;.text:0041162D                 mov     eax, ds:?Core@@3VxrCore@@A ; xrCore Core
+;.text:00411632                 add     eax, 4D0h
+;.text:00411637                 push    offset aR2      ; "-r2"
+;.text:0041163C                 push    eax
+;.text:0041163D                 call    edi ; strstr
+;.text:0041163F                 add     esp, 8
+;.text:00411642                 test    eax, eax
+;.text:00411644                 jz      short loc_411658
+;.text:00411646                 mov     ecx, ds:?Console@@3PAVCConsole@@A ; CConsole * Console
+;.text:0041164C                 push    offset aRendererRend_0 ; "renderer renderer_r2"
+;.text:00411651                 call    ?Execute@CConsole@@QAEXPBD@Z ; CConsole::Execute(char const *)
+;.text:00411656                 jmp     short loc_41168C
+;.text:00411658 ; ---------------------------------------------------------------------------
+;.text:00411658
+;.text:00411658 loc_411658:                             ; CODE XREF: WinMain_impl+244j
+;.text:00411658                 push    offset aRenderer ; "renderer "
+;.text:0041165D                 call    sub_420FC0
+;.text:00411662                 mov     ecx, ds:?Console@@3PAVCConsole@@A ; CConsole * Console
+;.text:00411668                 add     ecx, 440h
+;.text:0041166E                 add     esp, 4
+;.text:00411671                 mov     [esp+22A0h+FilePart], eax
+;.text:00411675                 mov     edx, [eax]
+;.text:00411677                 mov     edx, [edx+4]
+;.text:0041167A                 push    ecx
+;.text:0041167B                 mov     ecx, eax
+;.text:0041167D                 call    edx
+;.text:0041167F                 lea     eax, [esp+22A0h+FilePart]
+;.text:00411683                 push    eax
+;.text:00411684                 call    sub_421010
+;.text:00411689                 add     esp, 4
+;.text:0041168C
+org 0041168Ch - shift
+back_from_WinMain_impl_fix:
+;.text:0041168C loc_41168C:                             ; CODE XREF: WinMain_impl+22Bj
+;.text:0041168C                                         ; WinMain_impl+256j
+;.text:0041168C                 call    InitInput
+;.text:00411691                 mov     ecx, offset unk_50E544
+
+org 00506BA0h - shift
+r2_sun_static dd ?
+
+;.text:004B6A90 CCC_r2__Execute proc near
+;.text:004B6A90
+;.text:004B6A90 Str2            = dword ptr  4
+;.text:004B6A90
+org 004B6A90h - shift
+	jmp CCC_r2__Execute_fix
+;.text:004B6A90                 mov     eax, [esp+Str2]
+;.text:004B6A94                 push    eax             ; Str2
+;.text:004B6A95                 call    ?Execute@CCC_Token@@UAEXPBD@Z ; CCC_Token::Execute(char const *)
+;.text:004B6A9A                 xor     ecx, ecx
+;.text:004B6A9C                 cmp     ecx, ds:renderer_value
+;.text:004B6AA2                 mov     ecx, offset ?psDeviceFlags@@3U?$_flags@I@@A ; _flags<uint> psDeviceFlags
+;.text:004B6AA7                 sbb     edx, edx
+;.text:004B6AA9                 neg     edx
+;.text:004B6AAB                 push    edx
+;.text:004B6AAC                 push    80000h
+;.text:004B6AB1                 call    _flags_unsigned_int___set
+;.text:004B6AB6                 xor     eax, eax
+;.text:004B6AB8                 cmp     ds:renderer_value, 2
+;.text:004B6ABF                 setnz   al
+;.text:004B6AC2                 mov     ds:?r2_sun_static@@3HA, eax ; int r2_sun_static
+;.text:004B6AC7                 retn    4
+;.text:004B6AC7 CCC_r2__Execute endp
+
+;.text:004B6AD0 CCC_r2__Save    proc near               ; DATA XREF: .rdata:004D8674o
+;.text:004B6AD0
+;.text:004B6AD0 arg_0           = dword ptr  4
+;.text:004B6AD0
+;.text:004B6AD0                 mov     eax, ds:?Core@@3VxrCore@@A ; xrCore Core
+org 004B6AD5h - shift
+	retn 4
+;.text:004B6AD5                 push    esi
+;.text:004B6AD6                 add     eax, 4D0h
+;.text:004B6ADB                 push    offset aR2      ; "-r2"
+;.text:004B6AE0                 push    eax             ; Str
+;.text:004B6AE1                 mov     esi, ecx
+;.text:004B6AE3                 call    ds:strstr
+;.text:004B6AE9                 add     esp, 8
+;.text:004B6AEC                 test    eax, eax
+;.text:004B6AEE                 jnz     short loc_4B6AFC
+;.text:004B6AF0                 mov     eax, [esp+4+arg_0]
+;.text:004B6AF4                 push    eax
+;.text:004B6AF5                 mov     ecx, esi
+;.text:004B6AF7                 call    ?Save@IConsole_Command@@UAEXPAVIWriter@@@Z ; IConsole_Command::Save(IWriter *)
+;.text:004B6AFC
+;.text:004B6AFC loc_4B6AFC:                             ; CODE XREF: CCC_r2__Save+1Ej
+;.text:004B6AFC                 pop     esi
+;.text:004B6AFD                 retn    4
+;.text:004B6AFD CCC_r2__Save    endp
+
+org 004D2098h - shift
+aRendererRend_0 db ?
+
+org 004B9A30h - shift
+CConsole__Execute:
+
+org 004147F0h - shift
+_flags_unsigned_int___set:
+
+; œŒ√ŒƒÕ€≈ œ–¿¬ »
+
 org 00443538h - shift
 	jmp	envdescriptor_hack_rain_color_fix
 org 00443562h - shift
