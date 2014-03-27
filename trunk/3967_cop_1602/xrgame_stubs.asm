@@ -421,3 +421,13 @@ INV_STATE_CAR	 dw ?	; unsigned int INV_STATE_CAR
 org 1064E2C0h - shift
 g_Actor  dd ?
 
+; функция регистрирующая в пространстве имён level функцию с прототипом:
+; int fun(void)
+org 1024199Fh - shift
+get_time_days_register: 
+
+; функция регистрирующая в пространстве имён level функцию с прототипом:
+; void fun(float)
+org 1024188Eh - shift
+set_snd_volume_register: 
+
