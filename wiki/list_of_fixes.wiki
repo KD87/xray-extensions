@@ -588,3 +588,18 @@ end</code>
 
 получение объекта:<br>
 *local res_obj = level.get_ray_pick_obj()* -- тип - клиентский объект или nil
+
+== Функции получения стандартных окон ==
+
+*[ТЧ]* Добавлены функции получения стандартных окон:
+<code lang="Lua">local wnd = level.get_inventory_wnd() -- инвентарь
+local wnd = level.get_pda_wnd() -- PDA
+local wnd = level.get_talk_wnd() -- окно диалога
+local wnd = level.get_car_body_wnd() -- инвентарь трупа или ящика
+local wnd = level.get_trade_wnd() -- окно торговли
+</code>
+
+== Функция получения собеседника во время разговора или торговли ==
+
+*[ТЧ]* Добавлена функция получения клиентского объекта собеседника. Пользоваться можно только во время разговора или торговли.
+local npc = level.get_second_talker()
