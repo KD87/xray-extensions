@@ -14,6 +14,7 @@ light__light_fix proc
 	mov [esi + 278h], eax	; speed;
 	mov [esi + 27Ch], eax	; amount
 	mov [esi + 280h], eax	; smap_jitter
+	mov [esi + 28Ch], eax	; fBlend
 	xor	eax, eax
 	mov [esi + 284h], eax	; is_require_flare
 	mov [esi + 288h], eax	; is_volumetric
@@ -54,6 +55,8 @@ light__export_fix_2 proc
 	jnz		skip
 	mov     eax, [ebp + 284h] ; 
 	mov     [esi + 284h], eax
+	mov     eax, [ebp + 288h] ; 
+	mov     [esi + 288h], eax
 	
 skip:
 	

@@ -4,9 +4,9 @@
 
 ; увеличиваем размер объекта light
 org 10004BB6h - shift						; CRender__light_create
-push    28Ch ; вместо 270h - 5 байт	
+push    290h ; вместо 270h - 5 байт	
 org 1002FD32h - shift						; light__export
-push    28Ch
+push    290h
 ;org 100300D0h - shift						; CLight_DB__Load
 ;push    284h
 ;org 100301BAh - shift						; CLight_DB__Load
