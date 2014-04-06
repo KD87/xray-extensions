@@ -9,6 +9,8 @@ cuiwindow_fix proc
 	PERFORM_EXPORT_CUIWND__VOID__VOID CUIWindow__Update_virtualcall, "Update"
 	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetVPos, "GetVPos"
 	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetHPos, "GetHPos"
+	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetCursorX, "GetCursorX"
+	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetCursorY, "GetCursorY"
 	; восстанавливаем всё
 	popa
 	; делаем то, что вырезали 
@@ -75,3 +77,13 @@ CUIWindow__GetVPos proc
 	fld     dword ptr [ecx+9]
 	retn
 CUIWindow__GetVPos endp
+
+CUIWindow__GetCursorX proc
+	fld     dword ptr [ecx+68]
+	retn
+CUIWindow__GetCursorX endp
+
+CUIWindow__GetCursorY proc
+	fld     dword ptr [ecx+72]
+	retn
+CUIWindow__GetCursorY endp

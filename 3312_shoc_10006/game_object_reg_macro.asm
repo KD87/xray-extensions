@@ -1,3 +1,23 @@
+PERFORM_EXPORT_BOOL__STRING MACRO fun_to_export:REQ, fun_name_str:REQ
+LOCAL lab1
+LOCAL fun_name
+	jmp     lab1
+fun_name db fun_name_str, 0
+lab1:
+	mov     ebx, eax
+	xor     al, al
+	mov     byte ptr [esp+88h-6Ch], al
+	mov     ecx, [esp+88h-6Ch]
+	mov     byte ptr [esp+88h-64h], al
+	mov     eax, [esp+88h-64h]
+	push    eax
+	push    ecx
+	push    offset fun_name
+	lea     eax, [esp+94h-74h]
+	mov     [esp+94h-74h], offset fun_to_export
+	call    give_info_portion_register
+ENDM
+
 PERFORM_EXPORT_PROPERTY__FLOAT_RW MACRO get_fun:REQ, set_fun:REQ, property_name_str:REQ
 LOCAL lab1
 LOCAL property_name
