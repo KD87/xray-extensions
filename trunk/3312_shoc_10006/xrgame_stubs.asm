@@ -3809,28 +3809,6 @@ org 10258CD1h - shift
 org 10258CD6h - shift
 CCustomZone__hit_callback_back:
 
-;CUIStatic
-org 103F15A0h - shift
-CUIStatic__uint_register:
-
-org 103F1576h - shift
-CUIStatic__void_register:
-
-org 103F0520h - shift
-CUIStatic__SetTextComplexMode:
-
-org 103F12CFh - shift
-	jmp CUIStatic__script_register_1
-
-org 103F133Ch - shift
-	jmp CUIStatic__script_register_2
-
-org 103F12D4h - shift
-CUIStatic__script_register_1_back:
-
-org 103F1341h - shift 
-CUIStatic__script_register_2_back:
-
 ; Duplicate story id fix
 org 1006CA0Ah - shift
 	jmp		CALifeStoryRegistry__add_fix
@@ -3884,3 +3862,65 @@ CMovementManager__set_level_dest_vertex_callback_back:
 
 org 1011E490h - shift
 	CLevelGraph__vertex_id:
+
+; =========================================================================================
+; ========================= added by Ray Twitty (aka Shadows) =============================
+; =========================================================================================
+; ====================================== START ============================================
+; =========================================================================================
+; костыль от вылета при юзе предмета из трупа
+org 103CC560h - shift
+	nop
+	nop
+org 103CC564h - shift
+	nop
+	nop
+org 103CC56Ah - shift
+	jmp loc_103CC644
+org 103CC644h - shift
+loc_103CC644:
+; =========================================================================================
+; регистрации новых методов в классе CUIStatic
+org 103F12C5h - shift
+	jmp cuistatic_fix
+org 103F12CAh - shift
+back_from_cuistatic_fix:
+org 103F1781h - shift
+sub_103F1781:
+; void __thiscall CUIStatic__SetTextComplexMode(CUIStatic *this, bool md)
+org 103F0520h - shift
+CUIStatic__SetTextComplexMode:
+; void __userpurge CUIStatic__SetVTextAlignment(CUIStatic *this, EVTextAlignment al<ebx>)
+org 103F0C80h - shift
+CUIStatic__SetVTextAlignment:
+; void __thiscall CUIStatic__SetTextPos(CUIStatic *this, float x, float y)
+org 103C1A60h - shift
+CUIStatic__SetTextPos:
+; =========================================================================================
+; для регистрации новых cui-методов
+; void cui_func(int)
+org 1040EFF9h - shift
+register_CUIComboBox__SetCurrentID:
+; void cui_func(uint)
+org 103F15A0h - shift
+register_CUIStatic__SetColor:
+; void cui_func(bool)
+org 1042084Bh - shift
+register_CUIListWnd__ActivateList:
+; void cui_func(float)
+org 103FB7C8h - shift
+register_CUIWindow__SetHeight:
+; void cui_func(float, float)
+org 103FB772h - shift
+register_CUIWindow__SetWndPos:
+; int cui_func(void)
+org 104208CBh - shift
+register_CUIListWnd__GetSize:
+; =========================================================================================
+; для регистрации новых методов game_object
+; bool fun(string)
+org 1014CC50h - shift
+give_info_portion_register:
+; =========================================================================================
+; ======================================= END =============================================
+; =========================================================================================

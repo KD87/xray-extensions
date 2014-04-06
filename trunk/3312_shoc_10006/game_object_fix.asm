@@ -90,6 +90,7 @@ REGISTER_INT__STRING_INT register_get_custom_monster_int, "get_custom_monster_in
 
 REGISTER_INT__STRING_INT register_set_actor_shared_str, "set_actor_shared_str"
 REGISTER_INT__STRING_INT register_set_wpn_shared_str, "set_wpn_shared_str"
+REGISTER_INT__STRING_INT register_set_hud_shared_str, "set_hud_shared_str"
 
 REGISTER_GO__INT register_item_in_inv_box, "object_from_inv_box"
 
@@ -256,7 +257,10 @@ game_object_fix proc
 	
 	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetWpnSharedStr, "get_wpn_shared_str"
 	PERFORM_EXPORT_INT__STRING_INT register_set_wpn_shared_str, CScriptGameObject__SetWpnSharedStr
-	
+
+	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetHudSharedStr, "get_hud_shared_str"
+	PERFORM_EXPORT_INT__STRING_INT register_set_hud_shared_str, CScriptGameObject__SetHudSharedStr
+
 	PERFORM_EXPORT_VOID__STRING CScriptGameObject__SetActorVisual, "set_actor_visual"
 	
 	PERFORM_EXPORT_VOID__GO CScriptGameObject__OpenInventoryBox, "open_inventory_box"
@@ -401,6 +405,18 @@ game_object_fix proc
 	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetBoneName, "get_bone_name"
 	; наличие визуала (с костями)
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__HasVisual,          "has_visual"
+
+	; =========================================================================================
+	; ========================= added by Ray Twitty (aka Shadows) =============================
+	; =========================================================================================
+	; ====================================== START ============================================
+	; =========================================================================================
+	; восстановление прошлого значения FOV актора
+	PERFORM_EXPORT_VOID__VOID CScriptGameObject__RestoreCameraFOV, "restore_camera_fov"
+	; =========================================================================================
+	; ======================================= END =============================================
+	; =========================================================================================
+
 	; идём обратно
 	jmp back_from_game_object_fix
 game_object_fix endp
@@ -1407,24 +1423,15 @@ CScriptGameObject__GetSprintFactor proc
 	push    esi
 	push    edi
 	
-	; получаем актора
-	mov     eax, [ecx+4] ; m_object
+	call    CScriptGameObject__CActor
 	test    eax, eax
 	jz      short exit_fail
-	mov     eax, [eax]
-	mov     eax, [eax+80h]
-	call    eax
-	test    eax, eax ; eax = actor
-	jz      short exit_fail
 	
-	fld     dword ptr [eax+5BCh]
-	;push offset a_ok_msg
-	;call  Msg
-	;pop  eax
-	jmp     exit2
+	fld     dword ptr [eax+1468]
+	jmp     short exit_ok
 exit_fail:
 	fldz
-exit2:
+exit_ok:
 	pop     edi
 	pop     esi
 	mov     esp, ebp
@@ -2354,6 +2361,8 @@ CScriptGameObject__GetCameraFOV endp
 CScriptGameObject__SetCameraFOV proc
 value = dword ptr  04h
 	mov     eax, [esp+value]
+	mov     ecx, [g_fov]
+	mov     [g_last_fov], ecx
 	mov     [g_fov], eax
 	retn    4
 CScriptGameObject__SetCameraFOV endp
@@ -2560,6 +2569,76 @@ exit_fail:
 	pop     ebp
 	retn    8
 CScriptGameObject__SetWpnSharedStr endp
+
+CScriptGameObject__SetHudSharedStr proc
+str_arg   = dword ptr  8
+shift_arg = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	push    ebx
+	push    ecx
+	push    edx
+
+	call    CScriptGameObject__CHudItem
+	test    eax, eax
+	jz      exit_fail
+	
+	
+	mov  ebx, eax
+	add  ebx, [ebp+shift_arg]
+	mov  eax, [ebp+str_arg]
+	call set_shared_str; ebx = (shared_str*)   eax = (char*)
+exit_fail:	
+	pop     edx
+	pop     ecx
+	pop     ebx
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__SetHudSharedStr endp
+
+CScriptGameObject__GetHudSharedStr proc
+	;===========================
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push ecx
+	push esi
+	
+	call    CScriptGameObject__CHudItem
+	test    eax, eax
+	jnz     lab1
+	push    offset a_msg_argument0_not_set
+	call    Msg
+	pop     eax
+	jmp     short exit_fail
+lab1:
+
+	mov     ecx, g_int_argument_0
+	test    ecx, ecx
+	jz      exit_fail
+	mov     eax, [eax + ecx]
+	test    eax, eax
+	jz      short exit_fail
+	lea     eax, [eax+0Ch]
+	;add     eax, 0Ch
+	;PRINT "it's work"
+	xor     ecx, ecx
+	mov     g_int_argument_0, ecx
+	jmp exit
+exit_fail:
+	xor     eax, eax
+exit:
+	pop esi
+	pop ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetHudSharedStr endp
 
 CScriptGameObject__GetActorSharedStr proc
 	push    ebp
@@ -5525,3 +5604,26 @@ has_vis:
 	mov     eax, 1
 	retn
 CScriptGameObject__HasVisual endp
+
+; =========================================================================================
+; ========================= added by Ray Twitty (aka Shadows) =============================
+; =========================================================================================
+; ====================================== START ============================================
+; =========================================================================================
+; восстановление прошлого значения FOV актора
+g_last_fov dd 0.0
+CScriptGameObject__RestoreCameraFOV proc
+	movss   xmm1, ds:flt_1045A260
+	movss   xmm2, [g_last_fov]
+	comiss  xmm1, xmm2
+	ja      short exit_fail
+
+	mov     eax, [g_last_fov]
+	push    eax
+	call    CScriptGameObject__SetCameraFOV
+exit_fail:
+	retn
+CScriptGameObject__RestoreCameraFOV endp
+; =========================================================================================
+; ======================================= END =============================================
+; =========================================================================================

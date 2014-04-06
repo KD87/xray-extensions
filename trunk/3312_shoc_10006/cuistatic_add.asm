@@ -1,6 +1,3 @@
-;Изначально я собирался сделать функции для вызова AdjustHeightToText и AdjustWeithToText. Но у меня не получалось и я сделал xmk параметр. Теперь создаем дефолтную секцию в xml и кастомизируем ее
-
-
 cuistatic_xml_add proc
 arg_0= dword ptr  8
 arg_8= dword ptr  10h
@@ -48,80 +45,4 @@ arg_8= dword ptr  10h
 cuistatic_xml_add endp
 
 aAdjustHeightToText db "adjust_height_to_text", 0
-aAdjustWeigthToText db "adjust_weigth_to_text", 0
-aSetTextComplexMode db "SetTextComplexMode", 0
-AdjustHeightToText db "AdjustHeightToText", 0
-AdjustWidthToText db "AdjustWidthToText", 0
-
-CUIStatic__script_register_1:
-	mov		[ebp-10h], ecx
-
-	xor		ecx, ecx
-	push	ecx
-	mov		ecx, offset CUIStatic__SetTextComplexMode_script
-	push	ecx
-	push	offset aSetTextComplexMode
-	push	ecx
-	
-	xor		ecx, ecx
-	push	ecx
-	mov		ecx, offset CUIStatic__AdjustHeightToText_script
-	push	ecx
-	push	offset AdjustHeightToText
-	push	ecx	
-	
-	xor		ecx, ecx
-	push	ecx
-	mov		ecx, offset CUIStatic__AdjustWidthToText_script
-	push	ecx
-	push	offset AdjustWidthToText
-	push	ecx		
-
-	xor		ecx, ecx
-
-	jmp		CUIStatic__script_register_1_back
-
-CUIStatic__script_register_2:
-	call	CUIStatic__uint_register
-	pop		ecx
-	push	eax	
-
-	call	CUIStatic__void_register
-	pop		ecx
-	push	eax
-
-	call	CUIStatic__void_register
-	pop		ecx
-	push	eax
-	
-	call	CUIStatic__uint_register
-
-	jmp		CUIStatic__script_register_2_back
-
-CUIStatic__SetTextComplexMode_script proc
-	push 	edi
-	push	[esp+8]	
-	mov 	edi, ecx
-	call	CUIStatic__SetTextComplexMode
-	pop		edi
-
-	retn 	4
-CUIStatic__SetTextComplexMode_script endp
-
-CUIStatic__AdjustHeightToText_script proc
-	push	edi
-	mov		edi, ecx
-	call	CUIStatic__AdjustHeightToText
-	pop		edi
-	
-	retn
-CUIStatic__AdjustHeightToText_script endp
-	
-CUIStatic__AdjustWidthToText_script proc
-	push	esi
-	mov		esi, ecx
-	call	CUIStatic__AdjustWeigthToText
-	pop		esi
-	
-	retn
-CUIStatic__AdjustWidthToText_script endp
+aAdjustWeigthToText db "adjust_width_to_text", 0
