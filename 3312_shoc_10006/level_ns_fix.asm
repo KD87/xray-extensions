@@ -390,9 +390,9 @@ ai_space_exists:
 	mov     ecx, [eax+4]
 	mov     edi, [ecx+esi+18h]
 	call    CALifeTimeManager__game_time
-	PRINT "CALifeTimeManager__game_time"
-	PRINT_UINT "eax=%x", eax
-	PRINT_UINT "edx=%x", edx
+	;PRINT "CALifeTimeManager__game_time"
+	;PRINT_UINT "eax=%x", eax
+	;PRINT_UINT "edx=%x", edx
 	add     eax, [ebp + additional_time]
 	jnc     no_carry
 	inc     edx

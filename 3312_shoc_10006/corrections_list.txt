@@ -20,11 +20,11 @@
 0x102862E0 5 ; jmp inventory_box_fix
 0x101AEF0F 5 ; level_ns_extension_1 ; get_target_dist, get_target_obj
 0x101AF1C1 8 ; level_ns_extension_2 ; get_target_dist, get_target_obj
-;0x103561C9 5 ; jmp     addr_103561DD ; skip annoying msg "sv ownership id_parent ..."
-;0x103561DD 8 ; part2: mov esi,10h; nop; nop; nop;
-;0x1035646D 5 ; jmp     addr_10356481 ; skip annoying msg "sv reject. id_parent ..."
-;0x10356481 8 ; part2: mov ebx,10h; nop; nop; nop;
-;0x10355D85 5 ; jmp addr_10355D9B ; skip annoying msg "sv destroy object ..."
+0x103561C9 5 ; jmp     addr_103561DD ; skip annoying msg "sv ownership id_parent ..."
+0x103561DD 8 ; part2: mov esi,10h; nop; nop; nop;
+0x1035646D 5 ; jmp     addr_10356481 ; skip annoying msg "sv reject. id_parent ..."
+0x10356481 8 ; part2: mov ebx,10h; nop; nop; nop;
+0x10355D85 5 ; jmp addr_10355D9B ; skip annoying msg "sv destroy object ..."
 0x103B8DEB 5 ; jmp addr_103B8DFF ; skip annoying msg "[16-9] get_xml_name for ..."
 0x1004C3D2 5 ; jmp release_fix
 0x101477AF 6 ; отключение проверки при выкидывании из ящиков
@@ -35,7 +35,7 @@
 0x102C4632 5 ; jmp ctime_fix
 0x101398CD 5 ; jmp matrix_fix
 0x1045E73C 6 ; фикс имени функции speed
-0x103C911D 5 ; тестовое слежение за закрытием диалога разговора
+;0x103C911D 5 ; тестовое слежение за закрытием диалога разговора
 ;0x10054AD7 7 ; фикс оффлайнового движения неписей
 ;0x1005568F 5 ; jmp mmm_fix
 ;0x1023CC8E 5 ;	jmp wpn_stat_mgun_fix ; попытка фикса станкового оружия
@@ -51,8 +51,8 @@
 0x103BF3C7 5 ; jmp CUITradeWnd__FillList_fix ; кастомная заливка предметов в окне торговли
 0x103CBF49 5 ; jmp CUICarBodyWnd__UpdateLists_fix ; кастомная заливка предметов в окне обыска ящиков
 
-0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix ; отладочное сообщение о начале создания объекта
-0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2 ; отладочное сообщение о завершении создания объекта
+;0x101AC832 5 ; 	jmp CLevel__g_sv_Spawn_fix ; отладочное сообщение о начале создания объекта
+;0x101AC95A 5 ; jmp CLevel__g_sv_Spawn_fix2 ; отладочное сообщение о завершении создания объекта
 
 ;0x1020921F 5 ; jmp CInventoryItem_constructor_fix
 ;0x102094A8 5 ; jmp CInventoryItem_destructor_fix
@@ -244,6 +244,7 @@
 0x103CC564 2 ; костыль от вылета при юзе предмета из трупа часть 2
 0x103CC56A 5 ; костыль от вылета при юзе предмета из трупа часть 3
 0x103F12C5 5 ; jmp cuistatic_fix
+0x10355DD0 15 ; убираем из лога сообщения "!SV:ge_destroy: [%d] not found on server"
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
