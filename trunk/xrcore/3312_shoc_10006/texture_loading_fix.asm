@@ -37,7 +37,7 @@ is_texture_fail:
 	pop		edi
 	mov		eax, [ebp+argument]
 	
-	PRINT_UINT "%s", eax
+	PRINT_UINT "! %s", eax
 
 	pop		eax	
 	mov     esp, ebp

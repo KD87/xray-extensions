@@ -4654,7 +4654,7 @@ pos = dword ptr  8
 	test    eax, eax
 	jz      exit
 	mov     eax, [eax+16] ; eax == m_pHUD
-	PRINT_UINT "hud1=%x", eax
+	;PRINT_UINT "hud1=%x", eax
 	mov     ecx, [eax+72]
 	;PRINT_MATRIX "hud_xform:", ecx
 	mov     ecx, [ebp + pos]
@@ -5164,14 +5164,14 @@ veh  = dword ptr  8
 	; eax = actor
 	test    eax, eax
 	jz      exit
-	PRINT "is actor"
+	;PRINT "is actor"
 	push    eax
 	
 	mov     ecx, [ebp + veh]
 	call    CScriptGameObject__CHolder
 	test    eax, eax
 	jz      exit
-	PRINT "is holder"
+	;PRINT "is holder"
 	pop     edi
 	call    CActor__attach_Vehicle ; vehicle<eax>, int this<edi>
 exit:

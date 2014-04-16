@@ -10,7 +10,7 @@ UpdateAddonsVisibility_fix proc
 	mov     ecx, esi
 	call    ebp ; CKinematics__LL_SetBoneVisible
 lab1:
-	PRINT "UpdateAddonsVisibility_fix 1"
+	;PRINT "UpdateAddonsVisibility_fix 1"
 	; делаем что хотели сделать
 	; вызываем колбек для объекта оружия
 	push edx
@@ -18,7 +18,7 @@ lab1:
 	push eax
 	push edi
 	;
-	PRINT_UINT "object: %x", edi
+	;PRINT_UINT "object: %x", edi
 	;jmp disable_callback
 	push    777 ; адрес флагов игнора в стеке
 	push    888 ; параметры хита
@@ -29,7 +29,7 @@ lab1:
 ;item: 172fd620 wpn
 
 	call    CGameObject__callback ; eax = callback
-	PRINT_UINT "aaa: %x", eax
+	;PRINT_UINT "aaa: %x", eax
 	push    eax ; callback
 	; вызываем
 	call    script_callback_int_int
@@ -40,7 +40,7 @@ disable_callback:
 	pop ecx
 	pop edx
 	;
-	PRINT "UpdateAddonsVisibility_fix 2"
+	;PRINT "UpdateAddonsVisibility_fix 2"
 	; делаем вырезанное
 	mov     ecx, esi ; <== это было
 	call    ds:CKinematics__CalculateBones_Invalidate ; <== вот эта команда будет испорчена релокацией, если врезаться здесь
@@ -50,7 +50,7 @@ disable_callback:
 	mov     ecx, esi
 	call    edx
 	;
-	PRINT "UpdateAddonsVisibility_fix 3"
+	;PRINT "UpdateAddonsVisibility_fix 3"
 	;
 	pop     esi
 	pop     ebp
