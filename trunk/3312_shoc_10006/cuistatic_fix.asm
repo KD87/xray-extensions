@@ -7,6 +7,7 @@ cuistatic_fix:
 	PERFORM_EXPORT_CUIWND__VOID__VOID CUIStatic__AdjustHeightToText_, "AdjustHeightToText"
 	PERFORM_EXPORT_CUI_VOID__UINT CUIStatic__SetVTextAlignment_, "SetVTextAlign"
 	PERFORM_EXPORT_CUI_VOID__FLOAT_FLOAT CUIStatic__SetTextPos_, "SetTextPos"
+	PERFORM_EXPORT_CUI_VOID__BOOL CUIStatic__CanRotate, "CanRotate"
 	; идём обратно
 	jmp     back_from_cuistatic_fix
 
@@ -19,6 +20,21 @@ mode_on = dword ptr  8
 	pop		edi
 	retn    4
 CUIStatic__SetTextComplexMode_ endp
+
+CUIStatic__CanRotate proc
+can_rotate = dword ptr  4
+	mov     eax, [esp+can_rotate]
+	setnz   al
+	test    al, al
+	mov     [ecx+11Ch], al
+	jz      lab1
+	or      byte ptr [ecx+8Ch], 10h
+	jmp     lab2
+lab1:
+	and     byte ptr [ecx+8Ch], 0EFh
+lab2:
+	retn    4
+CUIStatic__CanRotate endp
 
 CUIStatic__AdjustWidthToText_ proc
 	push    esi
@@ -56,3 +72,14 @@ y = dword ptr  8
 	call	CUIStatic__SetTextPos
 	retn	8
 CUIStatic__SetTextPos_ endp
+
+CUICustomItem__Render_fix proc
+	call    ui_core__is_16_9_mode
+	test    al, al
+	jz      lab1
+	movss   xmm1, ds:g_static_rescale_correction
+	jmp     back_from_CUICustomItem__Render_fix
+lab1:
+	movss   xmm1, ds:float_10459718__1_0
+	jmp     back_from_CUICustomItem__Render_fix
+CUICustomItem__Render_fix endp

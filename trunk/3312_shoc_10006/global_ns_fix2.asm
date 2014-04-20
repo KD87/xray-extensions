@@ -12,6 +12,9 @@ global_space_ext2: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	;
 	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetHudInertia, "set_hud_inertia"
 	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetHudInertiaParam2, "set_hud_inertia_param2"
+	;
+	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetStaticRescalefactor, "set_static_rescale_factor"
+	GLOBAL_NS_PERFORM_EXPORT__FLOAT__VOID GetStaticRescalefactor, "get_static_rescale_factor"
 	; идЄм обратно
 	jmp back_from_global_space_ext2
 ;
@@ -22,6 +25,9 @@ global_space_ext2_additional:
 	GLOBAL_NS_SCOPE_ADD
 	; добавл€ем свой код
 	GLOBAL_NS_SCOPE_ADD
+	GLOBAL_NS_SCOPE_ADD
+	GLOBAL_NS_SCOPE_ADD
+	;
 	GLOBAL_NS_SCOPE_ADD
 	GLOBAL_NS_SCOPE_ADD
 	;
@@ -109,3 +115,19 @@ arg2        = dword ptr 8h
 	mov [g_hud_inertia_param_2], eax
 	retn
 SetHudInertiaParam2 endp
+
+g_static_rescale_correction dd 0.83333333f
+
+SetStaticRescalefactor proc
+rescale_factor = dword ptr 4h
+arg2           = dword ptr 8h
+	mov eax, [esp+rescale_factor]
+	mov [g_static_rescale_correction], eax
+	retn
+SetStaticRescalefactor endp
+
+
+GetStaticRescalefactor proc
+	fld     dword ptr [g_static_rescale_correction]
+	retn
+GetStaticRescalefactor endp

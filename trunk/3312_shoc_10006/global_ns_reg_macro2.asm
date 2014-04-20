@@ -18,4 +18,18 @@ lab1:
 	pop     ecx
 ENDM
 
-	
+GLOBAL_NS_PERFORM_EXPORT__FLOAT__VOID MACRO fun_to_export:REQ, fun_name_str:REQ
+LOCAL lab1
+LOCAL fun_name
+	jmp     lab1
+fun_name db fun_name_str, 0
+lab1:
+	mov     eax, esp
+	push    offset fun_to_export
+	push    offset fun_name
+	push    eax
+	call    get_snd_volume_register
+	pop     ecx
+	pop     ecx
+ENDM
+
