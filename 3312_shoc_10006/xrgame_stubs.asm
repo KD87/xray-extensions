@@ -2,6 +2,31 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+;.text:103EDCE0 ; int __stdcall CUICustomItem__Render(int, int, int, float)
+
+org 103EDEE6h - shift
+	jmp CUICustomItem__Render_fix
+;.text:103EDEE6                 call    ui_core__is_16_9_mode
+;.text:103EDEEB                 test    al, al
+;.text:103EDEED                 jz      short loc_103EDEF9
+;.text:103EDEEF                 movss   xmm1, ds:dword_104D2630
+;.text:103EDEF7                 jmp     short loc_103EDF01
+;.text:103EDEF9 loc_103EDEF9:
+;.text:103EDEF9                 movss   xmm1, ds:float_10459718__1_0
+;.text:103EDF01 loc_103EDF01:
+org 103EDF01h - shift
+back_from_CUICustomItem__Render_fix:
+;.text:103EDF01                 movss   xmm6, ds:dword_104D23E4
+
+
+
+org 10459718h - shift
+float_10459718__1_0 dd ?
+
+org 103B8C70h - shift
+ui_core__is_16_9_mode:
+
+
 ;.text:1024DAE0 CHudItem__UpdateHudInertion proc near
 ;.text:1024DCCB                 mov     eax, ds:?Device@@3VCRenderDevice@@A ; CRenderDevice Device
 ;.text:1024DCD0                 fld     [esp+78h+var_20]
