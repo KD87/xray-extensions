@@ -1,6 +1,46 @@
 CUIInventoryCellItem__EqualTo_fix proc
 ;esi == arg: inventory_item
 ;eax == this: inventory_item
+
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	; by Real Wolf
+	; Вызываем коллбек для ручного регулирования группировки предметов.
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	pusha
+	mov 	edi, [eax+0D4h]
+	call 	CGameObject__lua_game_object	
+	
+	test	eax, eax
+	jz		short exit
+	
+	mov		g_object_arg_1, eax
+	mov 	edi, [esi+0D4h]
+	call 	CGameObject__lua_game_object
+	
+	test	eax, eax
+	jz		short exit
+	
+	push 	eax
+	push 	143
+
+	mov 	ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback
+	
+	; Обнуление в коллбеке означает негруппировку.
+	cmp		g_object_arg_1, 0
+	mov		g_object_arg_1, 0
+	popa
+	
+	jz		return_not_equal
+	jmp		short other_code
+exit:
+	mov		g_object_arg_1, 0
+	popa
+	
+
+other_code:	
 	; check manual grouping flag 
 	push eax
 	mov eax, [g_manual_grouping_active]

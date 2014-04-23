@@ -11,6 +11,8 @@ cuiwindow_fix proc
 	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetHPos, "GetHPos"
 	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetCursorX, "GetCursorX"
 	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetCursorY, "GetCursorY"
+	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetAbsolutePosX, "GetAbsolutePosX"
+	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUIWindow__GetAbsolutePosY, "GetAbsolutePosY"
 	; восстанавливаем всё
 	popa
 	; делаем то, что вырезали 
@@ -87,3 +89,23 @@ CUIWindow__GetCursorY proc
 	fld     dword ptr [ecx+72]
 	retn
 CUIWindow__GetCursorY endp
+
+CUIWindow__GetAbsolutePosX proc
+	fldz
+sum:
+	fadd	dword ptr[ecx+5]
+	mov     ecx, [ecx+2Ch]
+	test	ecx, ecx
+	jnz		short sum
+	retn
+CUIWindow__GetAbsolutePosX endp
+
+CUIWindow__GetAbsolutePosY proc
+	fldz
+sum:
+	fadd	dword ptr[ecx+9]
+	mov     ecx, [ecx+2Ch]
+	test	ecx, ecx
+	jnz		short sum
+	retn
+CUIWindow__GetAbsolutePosY endp		
