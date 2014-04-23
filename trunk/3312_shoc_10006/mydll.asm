@@ -71,6 +71,16 @@ FLUSH_LOG MACRO
 	popa
 ENDM
 
+RT_DYNAMIC_CAST MACRO source, dest, reg
+	push    0
+	push    offset dest
+	push    offset source
+	push    0
+	push    reg
+	call    __RTDynamicCast
+	add     esp, 14h
+ENDM
+
 ; позиция в том месте, где в целевой DLL начинается наша секция
 org sec1_sec2_dist
 
@@ -130,6 +140,7 @@ include xrServer_fix.asm
 include CUIInventoryCellItem_fix.asm
 include cuicarbodywnd_fix.asm
 include cuistatic_fix.asm
+include create_cell_item_fix.asm
 
 _CODE ENDS
 

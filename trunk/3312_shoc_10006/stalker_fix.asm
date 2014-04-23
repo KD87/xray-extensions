@@ -101,6 +101,42 @@ end_hit_call:
 	;popa
 	; ----------- end hit collback
 	; 
+	
+	mov     ecx, [esp+58h+var_30]
+	pusha
+	test    ecx, ecx
+	jz      skip_callback
+	
+	mov     edx, [ecx]
+	mov     eax, [edx+7Ch]
+	call    eax
+	test    eax, eax
+	jz      skip_callback 
+
+	mov		edi, eax
+	call	CGameObject__lua_game_object
+	
+	test	eax, eax
+	jz		short skip_callback
+	
+	; В коллбеке надо сделать set_int_arg0(1), чтобы НПС проигнорировал хит.
+	mov		g_int_argument_0, 0
+	
+	push 	eax
+	push 	153
+
+	mov 	ecx, ebx
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback		
+	popa
+	cmp		g_int_argument_0, 1
+	mov		g_int_argument_0, 0
+	je		ignore_hit
+	jmp		short continue
+skip_callback:
+	popa
+continue:
 	cmp     [esp+58h+var_14], 9 ; if (HDS.hit_type == ALife::eHitTypeWound_2)
 	jnz     short lab1
 	mov     [esp+58h+var_14], 3 ; HDS.hit_type == ALife::eHitTypeWound

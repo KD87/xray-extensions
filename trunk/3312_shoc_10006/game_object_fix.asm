@@ -1,5 +1,7 @@
 include game_object_reg_macro.asm
 
+REGISTER_GO__INT register_get_object_arg_1, "get_object_arg_1"
+
 REGISTER_GO__INT register_item_on_belt, "item_on_belt"
 REGISTER_GO__INT register_item_in_ruck, "item_in_ruck"
 
@@ -375,7 +377,7 @@ game_object_fix proc
 	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetHudItemState,             "get_hud_item_state"
 	
 	
-	;;;;;;;;;;;;;;;;;
+	; by Real Wolf
 	PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SwitchTorch, "switch_torch"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsTorchEnabled, "is_torch_enabled"
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetTorchRange, "set_torch_range"
@@ -394,6 +396,9 @@ game_object_fix proc
 	
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetShapeRadius, "get_shape_radius"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsTorch,        "is_torch"
+	PERFORM_EXPORT_GO__INT register_get_object_arg_1, CScriptGameObject__GetObjectArg1
+	; end
+	
 	; регистрируем функции установки lsf_params для ламп
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLSFSpeed, "set_lsf_speed"
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLSFAmount, "set_lsf_amount"
@@ -5627,3 +5632,15 @@ CScriptGameObject__RestoreCameraFOV endp
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
+
+CScriptGameObject__GetObjectArg1 proc
+	mov		eax, g_object_arg_1
+	test	eax, eax
+	jz		short exit
+	
+	cmp		dword ptr[eax+4], 0
+	jnz		short exit
+	xor		eax, eax
+exit:
+	retn	4
+CScriptGameObject__GetObjectArg1 endp

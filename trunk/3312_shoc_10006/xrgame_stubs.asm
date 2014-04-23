@@ -3966,11 +3966,62 @@ org 10355DD0h - shift
 	nop
 ; =========================================================================================
 ; ======================================= END =============================================
-; =========================================================================================
+
+; Разработчики видно сделали опечатку и нужная команда не попала в блок условия. Real Wolf.
+org 1008F753h - shift
+loc_fix:
+org 1008F72Dh - shift
+	jz short loc_fix
+
+; Коллбеки для машины
+org 101DF1D5h - shift
+	jmp		CActor__attach_Vehicle_callback
+org 101DF1DAh - shift
+CActor__attach_Vehicle_callback_back:
+
+org 101DF2AAh - shift
+	jmp		CActor__detach_Vehicle_callback
+org 101DF2AFh - shift
+CActor__detach_Vehicle_callback_back:
+
+org 101DF506h - shift
+	jmp		CActor__use_Vehicle_callback
+org 101DF50Ch - shift
+CActor__use_Vehicle_callback_skip:
+org 101DF534h - shift
+CActor__use_Vehicle_callback_exit:
+
+org 1054F470h - shift
+??_R0?AVCHolderCustom@@@8 dd ?
+
+org 10418330h - shift
+	jmp		create_cell_item_fix
+org 10418335h - shift
+create_cell_item_changed:
+org 103FAD40h - shift
+	mov		eax, offset CUIFrameWindow__GetTitleStatic_fix
+
+org 103F0D18h - shift
+	jmp		CUIStatic__OnFocusRecieve_callback
+org 103F0D1Eh - shift
+CUIStatic__OnFocusRecieve_callback_back:
+
+org 103F0D50h - shift
+	jmp		CUIStatic__OnFocusLost_callback
+org 103F0D55h - shift
+CUIStatic__OnFocusLost_callback_back:
+
+org 1055DE9Ch - shift
+??_R0?AVCUICellItem@@@8 dd ?
+org 1054FA5Ch - shift
+??_R0?AVCUIStatic@@@8 dd ?
+
+org 1006A189h - shift
+	jmp		after_save_callback
 
 ; замена шейдера прицелов
 org 10227C07h - shift
 	push	offset aSh
 org 10227D2Dh - shift
 	push	offset aSh
-	
+

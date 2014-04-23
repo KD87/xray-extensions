@@ -103,3 +103,110 @@ CMovementManager__set_level_dest_vertex_callback:
 	pop		eax
 	
 	jmp		CMovementManager__set_level_dest_vertex_callback_back
+	
+CActor__attach_Vehicle_callback proc
+	; Вырезанное в начале.
+	add     esp, 14h
+	mov     ebp, eax
+	
+	; eax = ebp = CCar*
+	pusha
+	test	eax, eax
+	jz		short exit
+
+	mov 	edi, eax
+	call 	CGameObject__lua_game_object	
+	
+	test	eax, eax
+	jz		short exit
+	
+	push 	eax
+	push 	137
+
+	mov 	ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback
+exit:	
+	popa
+	jmp		CActor__attach_Vehicle_callback_back
+CActor__attach_Vehicle_callback endp
+
+CActor__detach_Vehicle_callback proc
+	; Вырезанное
+	add     esp, 14h
+	test	eax, eax
+	
+	; eax = CCar*
+	pusha
+	jz		short exit
+
+	mov 	edi, eax
+	call 	CGameObject__lua_game_object
+	
+	test	eax, eax
+	jz		short exit
+	
+	push 	eax
+	push 	139
+
+	mov 	ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback
+exit:	
+	popa
+	test	eax, eax
+	jmp		CActor__detach_Vehicle_callback_back
+CActor__detach_Vehicle_callback endp
+
+CActor__use_Vehicle_callback proc
+	; Вырезанное
+	call    edx
+	test    al, al
+	jnz		CActor__use_Vehicle_callback_skip
+	
+	; esi = CHolderCustom*
+	pusha
+
+	RT_DYNAMIC_CAST ??_R0?AVCHolderCustom@@@8, ??_R0?AVCCar@@@8, esi
+	
+	test	eax, eax
+	jz		short exit
+	
+	mov 	edi, eax
+	call 	CGameObject__lua_game_object
+	
+	test	eax, eax
+	jz		short exit
+	
+	push 	eax
+	push 	138
+
+	mov 	ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback	
+exit:
+	popa
+	jmp		CActor__use_Vehicle_callback_exit
+CActor__use_Vehicle_callback endp
+
+after_save_callback proc
+	mov		ecx, g_Actor
+	test	ecx, ecx
+	jz		short exit
+
+	push 	0
+	push 	140
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback		
+exit:
+	pop     edi
+	pop     esi
+	pop     ebp
+	pop     ebx
+	pop     ecx
+	retn    4
+after_save_callback endp

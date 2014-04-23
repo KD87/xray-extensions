@@ -73,9 +73,81 @@ y = dword ptr  8
 	retn	8
 CUIStatic__SetTextPos_ endp
 
+CUIStatic__OnFocusRecieve_callback proc
+	pusha
+	; eax = CUIStatic*
+	mov		static_for_callback, eax
+	RT_DYNAMIC_CAST ??_R0?AVCUIStatic@@@8, ??_R0?AVCUICellItem@@@8, eax
+	test	eax, eax
+	jz		short exit
+	
+	mov		eax, [eax+17Ch]
+	test	eax, eax
+	jz		short exit
+	
+	mov		edi, [eax+0D4h]
+	test	edi, edi
+	jz		short exit
+	
+	call	CGameObject__lua_game_object
+	test	eax, eax
+	jz		short exit
+	
+	push 	eax
+	push 	141
+
+	mov 	ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback	
+exit:
+	mov		static_for_callback, 0
+	popa
+	
+	mov     edx, [ecx+204h]
+	jmp		CUIStatic__OnFocusRecieve_callback_back
+CUIStatic__OnFocusRecieve_callback endp
+
+CUIStatic__OnFocusLost_callback proc
+	pusha
+	; eax = CUIStatic*
+	mov		static_for_callback, ecx
+	RT_DYNAMIC_CAST ??_R0?AVCUIStatic@@@8, ??_R0?AVCUICellItem@@@8, ecx
+	test	eax, eax
+	jz		short exit
+	
+	mov		eax, [eax+17Ch]
+	test	eax, eax
+	jz		short exit
+	
+	mov		edi, [eax+0D4h]
+	test	edi, edi
+	jz		short exit
+	
+	call	CGameObject__lua_game_object
+	test	eax, eax
+	jz		short exit
+	
+	push 	eax
+	push 	142
+
+	mov 	ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback	
+exit:
+	mov		static_for_callback, 0
+	popa
+	
+	mov     eax, ecx
+	mov     ecx, [eax+3Ch]
+	jmp		CUIStatic__OnFocusLost_callback_back
+CUIStatic__OnFocusLost_callback endp
+
 CUICustomItem__Render_fix proc
 	call    ui_core__is_16_9_mode
 	test    al, al
+
 	jz      lab1
 	movss   xmm1, ds:g_static_rescale_correction
 	jmp     back_from_CUICustomItem__Render_fix
