@@ -101,6 +101,8 @@ org 10018F40h - shift
 sorted_L1:
 org 1001A710h - shift
 FixedMAP_float_R_dsgraph___MatrixItemS__recurseRL:
+org 1001A6D0h - shift
+FixedMAP_float_R_dsgraph___MatrixItemS__recurseLR:
 
 ; CRender__Render
 ;.text:1000D1C9                 mov     eax, [ebx+504h]

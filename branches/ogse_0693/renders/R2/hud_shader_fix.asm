@@ -852,7 +852,8 @@ CRender__render_forward_fix proc
 	mov     eax, [ecx]
 	push    offset sorted_L1
 	push    eax
-	call    FixedMAP_float_R_dsgraph___MatrixItemS__recurseRL
+;	call    FixedMAP_float_R_dsgraph___MatrixItemS__recurseRL
+	call    FixedMAP_float_R_dsgraph___MatrixItemS__recurseLR
 loc_1000D28D:
 	; добавляем своё
 	push    offset RI
