@@ -4025,3 +4025,6 @@ org 10227C07h - shift
 org 10227D2Dh - shift
 	push	offset aSh
 
+; принудительная очистка пула моделей при завершении игры
+org 101A8C9Dh - shift
+	push	byte ptr 1
