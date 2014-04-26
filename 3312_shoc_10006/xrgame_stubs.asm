@@ -3181,7 +3181,7 @@ processing_activate dword ?
 ;сначала находится в билде 2947, а потом ищется в аналогичных функциях релиза
 ;===================| Секция .data  |=========================================
 
-org 1052F630h - shift
+org 10458B94h - shift
 FlushLog dword ?
 
 org 105602E8h - shift
@@ -4025,6 +4025,24 @@ org 10227C07h - shift
 org 10227D2Dh - shift
 	push	offset aSh
 
+; Арты из рюкзака
+org 101C9A71h - shift
+	mov     ebp, [eax+8]
+	cmp     [eax+0Ch], ebp
+org 101C9B6Fh - shift
+	cmp     [ecx+0Ch], ebp
+org 101C9B95h - shift
+	mov     esi, [eax+8]
+	cmp     [eax+0Ch], esi
+org 101C9C12h - shift
+	cmp     [ecx+0Ch], esi
+
 ; принудительная очистка пула моделей при завершении игры
 org 101A8C9Dh - shift
 	push	byte ptr 1
+	
+; Чувствительность мыши
+org 1044D5A3h - shift
+	jmp		cursor_change_sens
+org 1044D5A9h - shift
+cursor_change_sens_back:

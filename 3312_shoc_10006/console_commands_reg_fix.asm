@@ -9,6 +9,8 @@ REGISTER_CC_INT2   g_bHudAdjustMode,  "hud_adjust_mode",    0, 5
 	;mov     [g_fHudAdjustValue], eax
 REGISTER_CC_FLOAT2 g_fHudAdjustValue, "hud_adjust_value", 0.0, 1.0
 
+REGISTER_CC_FLOAT2 g_ui_mouse_sens, "mouse_ui_sens", 0.0, 10.0
+
 REGISTER_CC_FLAG g_ammo_on_belt, 1h, "g_ammunition_on_belt"
 
 REGISTER_CC_FLAG g_mouse_wheel_sc, 1h, "mouse_wheel_slot_changing"
@@ -25,6 +27,8 @@ REGISTER_CC_INT2   g_ogse_bipsizon_bind,     "ogse_bipsizon_bind",     0, 07FFFF
 	pop     ebx
 	retn
 add_console_commands_fix endp
+
+g_ui_mouse_sens dd 1.5
 
 g_ftest dd 0.123
 g_itest dd 123
