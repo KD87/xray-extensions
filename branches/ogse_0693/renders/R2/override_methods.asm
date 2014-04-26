@@ -19,6 +19,10 @@ override_cr__create:
 	call	g_CRender__create
 	retn	
 	
+override_cr__reset_begin:
+	call	g_CRender__reset_begin
+	retn	
+	
 override_cr__reset_end:
 	call	g_CRender__reset_end
 	retn	

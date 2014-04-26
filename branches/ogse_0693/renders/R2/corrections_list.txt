@@ -59,5 +59,6 @@
 0x1000ABA0 5	; CRender::render_indirect()
 0x10057F90 5	; CRender::accum_direct()
 0x10066EA0 5	; CRenderTarget::phase_smap_spot()
+0x10004470 5	; CRender::reset_end()
 ;hack to prevent full loading R2 in R1-mode
 0x10002DC9 5	; dllmain hack
