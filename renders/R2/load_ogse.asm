@@ -21,9 +21,7 @@ g_CRenderTarget__accum_point dd 0
 g_CRender__render_indirect dd 0
 g_CRenderTarget__accum_direct dd 0
 g_CRenderTarget__phase_smap_spot dd 0
-;g_CRender__light_create dd 0
-;g_light__export dd 0
-
+g_CRender__reset_begin dd 0
 
 init_external_libs:
 	mov		ecx, [eax]
@@ -95,12 +93,9 @@ init_external_libs:
 	mov		ecx, [eax+58h]
 	mov		ecx, [ecx]
 	mov		g_CRenderTarget__phase_smap_spot, ecx	
-;	mov		ecx, [eax+54h]
-;	mov		ecx, [ecx]
-;	mov		g_CRender__light_create, ecx	
-;	mov		ecx, [eax+58h]
-;	mov		ecx, [ecx]
-;	mov		g_light__export, ecx	
+	mov		ecx, [eax+5Ch]
+	mov		ecx, [ecx]
+	mov		g_CRender__reset_begin, ecx	
 
 	mov     eax, [esp+0Ch]
 	mov     ecx, [eax]

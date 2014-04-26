@@ -269,6 +269,8 @@ org 10057940h - shift
 	jmp override_crt___crt
 org 10003B30h - shift
 	jmp override_cr__create
+org 10004470h - shift
+	jmp override_cr__reset_begin
 org 100046C5h - shift
 	jmp override_cr__reset_end
 org 10001630h - shift

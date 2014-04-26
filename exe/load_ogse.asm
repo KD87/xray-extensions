@@ -82,13 +82,12 @@ g_CRender__blender_create dd 0
 g_CRender__blender_destroy dd 0
 g_CRenderTarget__accum_spot dd 0
 g_CRenderTarget__accum_point dd 0
-;g_light__export dd 0
-;g_CRender__light_create dd 0
 g_CRender__render_indirect dd 0
 g_CRenderTarget__accum_direct dd 0
 g_CTextureDescrMngr__LoadLTX dd 0
 g_CTextureDescrMngr__LoadTHM dd 0
 g_CRenderTarget__phase_smap_spot dd 0
+g_CRender__reset_begin dd 0
 
 s_render_import_table STRUCT
 	dd g_CRenderTarget__phase_combine		;0h
@@ -114,8 +113,7 @@ s_render_import_table STRUCT
 	dd g_CRender__render_indirect			;50h
 	dd g_CRenderTarget__accum_direct		;54h
 	dd g_CRenderTarget__phase_smap_spot		;58h
-;	dd g_CRender__light_create
-;	dd g_light__export
+	dd g_CRender__reset_begin				;5Ch
 s_render_import_table ENDS
 
 g_RenderImportsTable s_render_import_table <>
@@ -155,12 +153,11 @@ init_external_libs proc
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRender__blender_destroy", g_CRender__blender_destroy
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__accum_spot", g_CRenderTarget__accum_spot
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__accum_point", g_CRenderTarget__accum_point
-;	GET_PROC_ADDR g_ogse_lib_hinst, "light__export", g_light__export
-;	GET_PROC_ADDR g_ogse_lib_hinst, "CRender__light_create", g_CRender__light_create
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRender__render_indirect", g_CRender__render_indirect
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__accum_direct", g_CRenderTarget__accum_direct
 	GET_PROC_ADDR g_ogse_lib_hinst, "CTextureDescrMngr__LoadLTX", g_CTextureDescrMngr__LoadLTX
 	GET_PROC_ADDR g_ogse_lib_hinst, "CTextureDescrMngr__LoadTHM", g_CTextureDescrMngr__LoadTHM
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__phase_smap_spot", g_CRenderTarget__phase_smap_spot
+	GET_PROC_ADDR g_ogse_lib_hinst, "CRender__reset_begin", g_CRender__reset_begin
 	retn
 init_external_libs endp
