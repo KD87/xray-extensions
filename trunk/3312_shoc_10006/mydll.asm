@@ -141,6 +141,7 @@ include CUIInventoryCellItem_fix.asm
 include cuicarbodywnd_fix.asm
 include cuistatic_fix.asm
 include create_cell_item_fix.asm
+include CUICursor_fix.asm
 
 _CODE ENDS
 

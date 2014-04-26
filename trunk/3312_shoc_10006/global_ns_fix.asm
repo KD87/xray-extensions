@@ -105,6 +105,8 @@ global_space_ext: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT set_input_language, "set_input_language"
 	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT get_input_language, "get_input_language"
 	
+	GLOBAL_NS_PERFORM_EXPORT__INT__INT_INT my_flush, "flush_log"
+	
 	; идЄм обратно
 	jmp back_from_global_space_ext
 
@@ -118,7 +120,7 @@ aGet_extensions_flags  db "get_extensions_flags", 0
 aSet_actor_flags  db "set_actor_flags",0
 aGet_actor_flags  db "get_actor_flags",0
 
-my_flush proc near
+my_flush proc
 	call    ds:[FlushLog]
 	retn
 my_flush endp
