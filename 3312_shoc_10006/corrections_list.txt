@@ -117,7 +117,6 @@
 
 ;rus_phantom
 0x103BFF64 5 ; jmp call_pda_contact_callback
-0x103C0D87 5 ; jmp cui_pda_fix_map
 0x103E5C6E 5 ; jmp to xml AdjustHeightToText and AdjustWeigthToText
 
 ;использование патронов на поясе
@@ -146,8 +145,8 @@
 0x101C9B80 5 ;учет предмета в шлемовом слоте при расчете хита актору
 
 ;включение сетки под броней в инвентаре
-0x103BD9E0 5 ;сетка под броней
-0x103BD592 5 ;сетка под броней
+;0x103BD9E0 5 ;сетка под броней
+;0x103BD592 5 ;сетка под броней
 
 ;тень ГГ на R2
 0x101C85CF 6 ;jmp CActor__Update_fix
@@ -159,8 +158,8 @@
 0x101DEF40 7 ; jmp CActor__OnPrevWeaponSlot
 
 ;Инверсия колеса мышки для смены оружия
-0x101DE3F2 6 ; CActor__IR_OnMouseWheel
-0x101DE400 6 ; CActor__IR_OnMouseWheel
+;0x101DE3F2 6 ; CActor__IR_OnMouseWheel
+;0x101DE400 6 ; CActor__IR_OnMouseWheel
 
 ;Коллбэк актора на выделение предмета в инвентаре
 0x103E1B28 5 ; jmp CUIItemInfo__InitItem_EXT_CHUNK
@@ -226,7 +225,7 @@
 0x102F3663 5 ; jmp CSE_ALifeObject__script_register_fix
 
 ; Вызов коллбека после set_dest_level_vertex_id
-;0x1014369F 5
+0x1014369F 5
 
 ;0x10141C60 5 ; jmp CScriptGameObject__Hit_dbg_fix -- фикс для трассировки скриптовых хитов
 0x102340FA 2 ; стреляющий бинокль
@@ -245,6 +244,12 @@
 0x103CC564 2 ; костыль от вылета при юзе предмета из трупа часть 2
 0x103CC56A 5 ; костыль от вылета при юзе предмета из трупа часть 3
 0x103F12C5 5 ; jmp cuistatic_fix
+0x103E0123 5 ; CUICharacterInfo__InitCharacter_fix
+0x103E0D97 5 ; CUIWpnParams__Check_fix
+;0x103C0D87 5 ; jmp cui_pda_fix_map
+;0x103C0E05 5 ; jmp cui_pda_fix_map2
+;0x103DBC23 5 ; CUITaskRootItem__OnSwitchDescriptionClicked_fix
+;0x103DA737 5 ; CUIEventsWnd__OnFilterChanged_fix
 0x10355DD0 15 ; убираем из лога сообщения "!SV:ge_destroy: [%d] not found on server"
 ; =========================================================================================
 ; ======================================= END =============================================

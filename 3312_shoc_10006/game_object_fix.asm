@@ -416,6 +416,14 @@ game_object_fix proc
 	; =========================================================================================
 	; ====================================== START ============================================
 	; =========================================================================================
+	; метод для вкл\выкл ПНВ
+	PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SwitchNightVision, "switch_night_vision"
+	; методы для проверки на тип объекта
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsHangingLamp, "is_hanging_lamp"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponKnife, "is_knife"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponBinoculars, "is_binoculars"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponPistol, "is_weapon_pistol"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponShotgun, "is_weapon_shotgun"
 	; восстановление прошлого значения FOV актора
 	PERFORM_EXPORT_VOID__VOID CScriptGameObject__RestoreCameraFOV, "restore_camera_fov"
 	; =========================================================================================
@@ -5615,6 +5623,24 @@ CScriptGameObject__HasVisual endp
 ; =========================================================================================
 ; ====================================== START ============================================
 ; =========================================================================================
+; вкл\выкл ПНВ
+CScriptGameObject__SwitchNightVision proc
+vision_on = dword ptr  8
+	push    ecx
+
+	call    CScriptGameObject__CTorch
+	test    eax, eax
+	jz      exit
+
+	mov     ecx, [esp+vision_on]
+	push    ecx
+	push    eax
+	call    CTorch__SwitchNightVision
+exit:
+	pop     ecx
+	retn    4
+CScriptGameObject__SwitchNightVision endp
+
 ; восстановление прошлого значения FOV актора
 g_last_fov dd 0.0
 CScriptGameObject__RestoreCameraFOV proc

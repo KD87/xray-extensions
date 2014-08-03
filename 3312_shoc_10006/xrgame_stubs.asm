@@ -3130,17 +3130,11 @@ CScriptGameObject__get_car:
 org 103DF710h - shift
 ch_info_get_from_id:
 
-org 103C0D87h - shift
-	jmp cui_pda_fix_map
-
 org 103F0D90h - shift
 CUIStatic__AdjustHeightToText:
 
 org 103F0DE0h - shift
 CUIStatic__AdjustWeigthToText:
-
-org 103C0E1Fh - shift
-back_from_cui_pda_fix:
 
 org 103BFF69h - shift
 back_from_pda_contact:
@@ -3914,6 +3908,28 @@ org 103CC56Ah - shift
 org 103CC644h - shift
 loc_103CC644:
 ; =========================================================================================
+; функции переключения ПНВ
+; CTorch::SwitchNightVision(CTorch *this, bool vision_on)
+org 102482F0h - shift
+CTorch__SwitchNightVision:
+; =========================================================================================
+; для приведения типов объектов
+; hanging lamp
+org 1054F048h - shift
+off_1054F048 dd ?
+; weapon pistol
+org 10556C20h - shift
+off_10556C20 dd ?
+; weapon knife
+org 10556D50h - shift
+off_10556D50 dd ?
+; weapon binoculars
+org 10556EC4h - shift
+off_10556EC4 dd ?
+; weapon shotgun
+org 10556EF4h - shift
+off_10556EF4 dd ?
+; =========================================================================================
 ; регистрации новых методов в классе CUIStatic
 org 103F12C5h - shift
 	jmp cuistatic_fix
@@ -3951,6 +3967,41 @@ register_CUIWindow__SetWndPos:
 org 104208CBh - shift
 register_CUIListWnd__GetSize:
 ; =========================================================================================
+; убираем из описания ножа прогресс бары оружия
+org 103E0D97h - shift
+	jmp CUIWpnParams__Check_fix
+org 103E0DA7h - shift
+back_from_CUIWpnParams__Check_fix:
+org 103E0DBEh - shift
+loc_103E0DBE:
+; xr_strcmp(shared_str const &,char const *)
+org 10037320h - shift
+xr_strcmp:
+; =========================================================================================
+; фикс выдачи инфо о вкладках ПДА
+org 103C0D87h - shift
+	jmp cui_pda_fix_map
+org 103C0E05h - shift
+	jmp cui_pda_fix_map2
+org 103C0E1Fh - shift
+back_from_cui_pda_fix:
+; =========================================================================================
+; выдача инфо при переключении между описанием задания и картой
+org 103DBC23h - shift
+	jmp CUITaskRootItem__OnSwitchDescriptionClicked_fix
+org 103DBC28h - shift
+back_from_CUITaskRootItem__OnSwitchDescriptionClicked_fix:
+org 103DA9B0h - shift
+CUIEventsWnd__SetDescriptionMode:
+; =========================================================================================
+; также учитываем переключение между вкладками активных, выполненных и проваленных заданий
+org 103DA737h - shift
+	jmp CUIEventsWnd__OnFilterChanged_fix
+org 103DA73Ch - shift
+back_from_CUIEventsWnd__OnFilterChanged_fix:
+org 103DA780h - shift
+CUIEventsWnd__ReloadList:
+; =========================================================================================
 ; для регистрации новых методов game_object
 ; bool fun(string)
 org 1014CC50h - shift
@@ -3973,6 +4024,15 @@ org 10355DD0h - shift
 	nop
 	nop
 	nop
+; =========================================================================================
+; фикс биографии в ПДА
+org 103E0123h - shift
+	jmp CUICharacterInfo__InitCharacter_fix
+org 103E012Ah - shift
+back_from_CUICharacterInfo__InitCharacter_fix:
+; void __thiscall CUIStatic__SetTextColor_script(CUIStatic *this, int a, int r, int g, int b)
+org 103F1090h - shift
+CUIStatic__SetTextColor_script:
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================

@@ -142,6 +142,8 @@ include cuicarbodywnd_fix.asm
 include cuistatic_fix.asm
 include create_cell_item_fix.asm
 include CUICursor_fix.asm
+include cuicharacterinfo_initcharacter_fix.asm
+include cuiwpnparams_check_fix.asm
 
 _CODE ENDS
 

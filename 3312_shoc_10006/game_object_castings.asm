@@ -159,6 +159,11 @@ MAKE_CASTING2 CScriptGameObject__CTrader, off_1054D518
 MAKE_CASTING2 CScriptGameObject__CCar, ??_R0?AVCCar@@@8
 MAKE_CASTING2 CScriptGameObject__CHelicopter, off_1054F02C
 MAKE_CASTING2 CScriptGameObject__CTorch, off_10538CFC
+MAKE_CASTING2 CScriptGameObject__CHangingLamp, off_1054F048
+MAKE_CASTING2 CScriptGameObject__CWeaponPistol, off_10556C20
+MAKE_CASTING2 CScriptGameObject__CWeaponKnife, off_10556D50
+MAKE_CASTING2 CScriptGameObject__CWeaponBinoculars, off_10556EC4
+MAKE_CASTING2 CScriptGameObject__CWeaponShotgun, off_10556EF4
 
 MAKE_CASTING3 CScriptGameObject__CWeaponGL, off_10556CC8
 MAKE_CASTING3 CScriptGameObject__CMedkit, off_10557248
@@ -219,6 +224,11 @@ MAKE_CHECK_FUN CScriptGameObject__IsGrenade            , CScriptGameObject__CGre
 MAKE_CHECK_FUN CScriptGameObject__IsBottleItem         , CScriptGameObject__CBottleItem
 
 MAKE_CHECK_FUN CScriptGameObject__IsTorch		   		, CScriptGameObject__CTorch
+MAKE_CHECK_FUN CScriptGameObject__IsHangingLamp		   , CScriptGameObject__CHangingLamp
+MAKE_CHECK_FUN CScriptGameObject__IsWeaponPistol	   , CScriptGameObject__CWeaponPistol
+MAKE_CHECK_FUN CScriptGameObject__IsWeaponKnife		   , CScriptGameObject__CWeaponKnife
+MAKE_CHECK_FUN CScriptGameObject__IsWeaponBinoculars   , CScriptGameObject__CWeaponBinoculars
+MAKE_CHECK_FUN CScriptGameObject__IsWeaponShotgun	   , CScriptGameObject__CWeaponShotgun
 
 ;	CEatableItem* CInventoryItem::cast_eatable_item();  108
 ;	CWeapon* CInventoryItem::cast_weapon();       112
