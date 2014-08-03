@@ -4007,24 +4007,6 @@ CUIEventsWnd__ReloadList:
 org 1014CC50h - shift
 give_info_portion_register:
 ; =========================================================================================
-; убираем из лога сообщения "!SV:ge_destroy: [%d] not found on server"
-org 10355DD0h - shift
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-; =========================================================================================
 ; фикс биографии в ПДА
 org 103E0123h - shift
 	jmp CUICharacterInfo__InitCharacter_fix
