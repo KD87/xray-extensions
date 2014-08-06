@@ -244,12 +244,15 @@
 0x103CC564 2 ; костыль от вылета при юзе предмета из трупа часть 2
 0x103CC56A 5 ; костыль от вылета при юзе предмета из трупа часть 3
 0x103F12C5 5 ; jmp cuistatic_fix
+0x103BB997 5 ; CUIInventoryWnd__SendEvent_Item_Drop
 0x103E0123 5 ; CUICharacterInfo__InitCharacter_fix
 0x103E0D97 5 ; CUIWpnParams__Check_fix
 ;0x103C0D87 5 ; jmp cui_pda_fix_map
 ;0x103C0E05 5 ; jmp cui_pda_fix_map2
 ;0x103DBC23 5 ; CUITaskRootItem__OnSwitchDescriptionClicked_fix
 ;0x103DA737 5 ; CUIEventsWnd__OnFilterChanged_fix
+0x101C6D69 5 ; CActor__HitMark_callback
+0x1007DC5B 5 ; CBaseMonster__HitEntity_callback
 0x104BD2DC 1 ; убираем из лога сообщения "!SV:ge_destroy: [%d] not found on server"
 ; =========================================================================================
 ; ======================================= END =============================================

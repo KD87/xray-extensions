@@ -1731,6 +1731,7 @@ argv = dword ptr  8
 	mov     ecx, [ebp + argv]
 	mov		eax, [eax+298h]
 	mov    [eax+68h], ecx
+	call    UpdateInventoryWeightStatic
 	jmp     exit
 exit:
 	pop     edi
@@ -1785,6 +1786,7 @@ argv = dword ptr  8
 	mov     ecx, [ebp + argv]
 	mov		eax, [eax+93Ch]
 	mov    [eax+138h], ecx
+	call    UpdateInventoryWeightStatic
 	jmp     exit
 exit:
 	pop     edi

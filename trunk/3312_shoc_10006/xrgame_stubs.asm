@@ -3967,6 +3967,17 @@ register_CUIWindow__SetWndPos:
 org 104208CBh - shift
 register_CUIListWnd__GetSize:
 ; =========================================================================================
+; для обновления статика веса в инвентаре
+; InventoryUtilities::UpdateWeight(CUIStatic *wnd, bool withPrefix)
+org 103E3040h - shift
+InventoryUtilities__UpdateWeight:
+; =========================================================================================
+; коллбек на дроп из окна инвентаря актора (контекстное меню или клавиша G)
+org 103BB997h - shift
+	jmp CUIInventoryWnd__SendEvent_Item_Drop
+org 103BB9A0h - shift
+back_from_CUIInventoryWnd__SendEvent_Item_Drop:
+; =========================================================================================
 ; убираем из описания ножа прогресс бары оружия
 org 103E0D97h - shift
 	jmp CUIWpnParams__Check_fix
@@ -4001,6 +4012,18 @@ org 103DA73Ch - shift
 back_from_CUIEventsWnd__OnFilterChanged_fix:
 org 103DA780h - shift
 CUIEventsWnd__ReloadList:
+; =========================================================================================
+; коллбек на хит ГГ от монстра или НПС
+org 101C6D69h - shift
+	jmp CActor__HitMark_callback
+org 101C6D71h - shift
+back_from_CActor__HitMark_callback:
+org 1007DC5Bh - shift
+	jmp CBaseMonster__HitEntity_callback
+org 1007DC63h - shift
+back_from_CBaseMonster__HitEntity_callback:
+org 1007E730h - shift
+sprintf_s64:
 ; =========================================================================================
 ; для регистрации новых методов game_object
 ; bool fun(string)

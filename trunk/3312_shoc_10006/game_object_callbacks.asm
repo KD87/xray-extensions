@@ -210,3 +210,49 @@ exit:
 	pop     ecx
 	retn    4
 after_save_callback endp
+
+; =========================================================================================
+; ========================= added by Ray Twitty (aka Shadows) =============================
+; =========================================================================================
+; ====================================== START ============================================
+; =========================================================================================
+; от неписей
+CActor__HitMark_callback proc
+	; делаем вырезанное
+	call    sprintf_s64
+	add     esp, 8
+	; делаем свое
+	pusha
+	push    edi ; side
+	push    0 ; mob type: 0 - stalker, 1 - monster
+	push    144
+	mov     ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_callback_int_int
+	popa
+	; возвращаемся
+	jmp     back_from_CActor__HitMark_callback
+CActor__HitMark_callback endp
+
+; от монстров
+CBaseMonster__HitEntity_callback proc
+	; делаем вырезанное
+	call    sprintf_s64
+	add     esp, 0Ch
+	; делаем свое
+	pusha
+	push    edi ; side
+	push    1 ; mob type: 0 - stalker, 1 - monster
+	push    144
+	mov     ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_callback_int_int
+	popa
+	; возвращаемся
+	jmp     back_from_CBaseMonster__HitEntity_callback
+CBaseMonster__HitEntity_callback endp
+; =========================================================================================
+; ======================================= END =============================================
+; =========================================================================================
