@@ -3930,6 +3930,11 @@ off_10556EC4 dd ?
 org 10556EF4h - shift
 off_10556EF4 dd ?
 ; =========================================================================================
+; высадка актора из тачки
+; CActor::detach_Vehicle(CActor *this)
+org 101DF280h - shift
+CActor__detach_Vehicle:
+; =========================================================================================
 ; регистрации новых методов в классе CUIStatic
 org 103F12C5h - shift
 	jmp cuistatic_fix
@@ -4038,6 +4043,21 @@ back_from_CUICharacterInfo__InitCharacter_fix:
 ; void __thiscall CUIStatic__SetTextColor_script(CUIStatic *this, int a, int r, int g, int b)
 org 103F1090h - shift
 CUIStatic__SetTextColor_script:
+; =========================================================================================
+; функция разворота камеры на объект
+; void __usercall UpdateCameraDirection(CGameObject *pTo<eax>)
+org 103CA530h - shift
+UpdateCameraDirection:
+; =========================================================================================
+; функция получения айди худовой анимации с проверкой на наличие самой анимации
+; MotionID *__thiscall CKinematicsAnimated__ID_Cycle_Safe(CKinematicsAnimated *this, MotionID *result, const char *N)
+org 10458A50h - shift
+CKinematicsAnimated__ID_Cycle_Safe dd ?
+; =========================================================================================
+; функция получения длительности худовой анимации
+; unsigned int __thiscall shared_weapon_hud__motion_length(shared_weapon_hud *this, MotionID M)
+org 10239460h - shift
+shared_weapon_hud__motion_length:
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
