@@ -104,6 +104,8 @@ REGISTER_VOID__STR_BOOL register_play_hud_anim, "play_hud_animation"
 REGISTER_VOID__INT_INT_INT      register_set_goodwill_by_id, "set_goodwill_ex"
 REGISTER_VOID__INT_INT_INT      register_change_goodwill_by_id, "change_goodwill_ex"
 
+REGISTER_INT__STRING_INT register_get_hud_animation_length, "get_hud_animation_length"
+
 ALIGN_8
 game_object_fix proc
 ; делаем то, что вырезали 
@@ -370,7 +372,7 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg3, "set_vector_global_arg_3"
 	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg4, "set_vector_global_arg_4"
 	
-	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetActorDirectionEx, "set_actor_direction_ex"
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetActorDirectionEx, "set_camera_direction"
 
 	PERFORM_EXPORT_VOID__GO CScriptGameObject__SetGOArg1, "set_object_arg_1"
 	
@@ -416,6 +418,18 @@ game_object_fix proc
 	; =========================================================================================
 	; ====================================== START ============================================
 	; =========================================================================================
+	; ACTOR STATES
+	; методы дл€ оценки состо€ни€ актора
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorNormal, "is_actor_normal"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorCrouch, "is_actor_crouch"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorCreep, "is_actor_creep"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorClimb, "is_actor_climb"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorWalking, "is_actor_walking"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorRunning, "is_actor_running"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorSprinting, "is_actor_sprinting"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorCrouching, "is_actor_crouching"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorCreeping, "is_actor_creeping"
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsActorClimbing, "is_actor_climbing"
 	; метод дл€ вкл\выкл ѕЌ¬
 	PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SwitchNightVision, "switch_night_vision"
 	; методы дл€ проверки на тип объекта
@@ -424,8 +438,21 @@ game_object_fix proc
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponBinoculars, "is_binoculars"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponPistol, "is_weapon_pistol"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsWeaponShotgun, "is_weapon_shotgun"
+	; метод дл€ высадки актора из машины
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__DetachVehicle, "detach_vehicle"
+	; разворот камеры на геймобъект
+	PERFORM_EXPORT_VOID__GO CScriptGameObject__UpdateCameraDirection, "update_camera_direction"
 	; восстановление прошлого значени€ FOV актора
 	PERFORM_EXPORT_VOID__VOID CScriptGameObject__RestoreCameraFOV, "restore_camera_fov"
+	; HUD CONTROL
+	; получить оставшиес€ врем€ текущей анимации
+	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetHudAnimationRemainingTime, "get_hud_animation_remaining_time"
+	; проверить €вл€етс€ ли текуща€ анимаци€ цикличной
+	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsCyclicHudAnimation, "is_cyclic_hud_animation"
+	; проверить есть ли заданна€ анимаци€ в модели
+	PERFORM_EXPORT_BOOL__STRING CScriptGameObject__HasHudAnimation, "has_hud_animation"
+	; получить длину текущей анимации
+	PERFORM_EXPORT_INT__STRING_INT register_get_hud_animation_length, CScriptGameObject__GetHudAnimationLength
 	; =========================================================================================
 	; ======================================= END =============================================
 	; =========================================================================================
@@ -5625,6 +5652,358 @@ CScriptGameObject__HasVisual endp
 ; =========================================================================================
 ; ====================================== START ============================================
 ; =========================================================================================
+; актор стоит
+CScriptGameObject__IsActorNormal proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 0
+	jz      short exit_ok
+	cmp     eax, 32
+	jz      short exit_ok
+	cmp     eax, 64
+	jz      short exit_ok
+	cmp     eax, 96
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorNormal endp
+
+; актор в прис€де
+CScriptGameObject__IsActorCrouch proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 16
+	jz      short exit_ok
+	cmp     eax, 80
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorCrouch endp
+
+; актор в полном прис€де
+CScriptGameObject__IsActorCreep proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 48
+	jz      short exit_ok
+	cmp     eax, 112
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorCreep endp
+
+; актор на лестнице
+CScriptGameObject__IsActorClimb proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 2048
+	jz      short exit_ok
+	cmp     eax, 2080
+	jz      short exit_ok
+	cmp     eax, 2112
+	jz      short exit_ok
+	cmp     eax, 2144
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorClimb endp
+
+; актор идет
+CScriptGameObject__IsActorWalking proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 33
+	jz      short exit_ok
+	cmp     eax, 34
+	jz      short exit_ok
+	cmp     eax, 36
+	jz      short exit_ok
+	cmp     eax, 38
+	jz      short exit_ok
+	cmp     eax, 40
+	jz      short exit_ok
+	cmp     eax, 42
+	jz      short exit_ok
+	cmp     eax, 37
+	jz      short exit_ok
+	cmp     eax, 41
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorWalking endp
+
+; актор идет быстрым шагом
+CScriptGameObject__IsActorRunning proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 1
+	jz      short exit_ok
+	cmp     eax, 2
+	jz      short exit_ok
+	cmp     eax, 4
+	jz      short exit_ok
+	cmp     eax, 8
+	jz      short exit_ok
+	cmp     eax, 5
+	jz      short exit_ok
+	cmp     eax, 9
+	jz      short exit_ok
+	cmp     eax, 6
+	jz      short exit_ok
+	cmp     eax, 10
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorRunning endp
+
+; актор бежит
+CScriptGameObject__IsActorSprinting proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 4097
+	jz      short exit_ok
+	cmp     eax, 4096
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorSprinting endp
+
+; актор идет в прис€де
+CScriptGameObject__IsActorCrouching proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 17
+	jz      short exit_ok
+	cmp     eax, 18
+	jz      short exit_ok
+	cmp     eax, 20
+	jz      short exit_ok
+	cmp     eax, 24
+	jz      short exit_ok
+	cmp     eax, 21
+	jz      short exit_ok
+	cmp     eax, 26
+	jz      short exit_ok
+	cmp     eax, 22
+	jz      short exit_ok
+	cmp     eax, 25
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorCrouching endp
+
+; актор идет в полном прис€де
+CScriptGameObject__IsActorCreeping proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 49
+	jz      short exit_ok
+	cmp     eax, 50
+	jz      short exit_ok
+	cmp     eax, 52
+	jz      short exit_ok
+	cmp     eax, 56
+	jz      short exit_ok
+	cmp     eax, 54
+	jz      short exit_ok
+	cmp     eax, 58
+	jz      short exit_ok
+	cmp     eax, 53
+	jz      short exit_ok
+	cmp     eax, 57
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorCreeping endp
+
+; актор лезет по лестнице
+CScriptGameObject__IsActorClimbing proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    ecx
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit_fail
+	mov     eax, [eax+1428]
+	
+	cmp     eax, 2049
+	jz      short exit_ok
+	cmp     eax, 2050
+	jz      short exit_ok
+	cmp     eax, 2057
+	jz      short exit_ok
+	cmp     eax, 2053
+	jz      short exit_ok
+	cmp     eax, 2054
+	jz      short exit_ok
+	cmp     eax, 2058
+	jz      short exit_ok
+	cmp     eax, 2081
+	jz      short exit_ok
+	cmp     eax, 2082
+	jz      short exit_ok
+	cmp     eax, 2086
+	jz      short exit_ok
+	cmp     eax, 2090
+	jz      short exit_ok
+	
+exit_fail:
+	xor     eax, eax
+	jmp     short exit
+exit_ok:
+	mov     eax, 1
+exit:
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsActorClimbing endp
+
 ; вкл\выкл ѕЌ¬
 CScriptGameObject__SwitchNightVision proc
 vision_on = dword ptr  8
@@ -5643,6 +6022,76 @@ exit:
 	retn    4
 CScriptGameObject__SwitchNightVision endp
 
+; высадка √√ из машины
+CScriptGameObject__DetachVehicle proc
+exit_pos  = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      exit
+
+	; получим айди текущего холдера
+	mov     eax, [eax+1240]
+	and     eax, 0FFFFh ; eax == holder_id
+	cmp     eax, 65535
+	jz      exit
+
+	; получим объект по айди
+	call    GetClientObjectByID
+	test    eax, eax
+	jz      exit
+
+	; кастуем в CCar
+	mov     ecx, eax
+	call    CScriptGameObject__CCar
+	test    eax, eax
+	jz      exit
+
+	; правим позицию выхода
+	mov     edx, [ebp+exit_pos]
+	mov     ecx, [edx]
+	mov     [eax+1221], ecx ; x
+	mov     ecx, [edx+4]
+	mov     [eax+1225], ecx ; y
+	mov     ecx, [edx+8]
+	mov     [eax+1229], ecx ; z
+
+	; детачим актора из машины
+	mov     eax, g_Actor
+	call    CActor__detach_Vehicle
+exit:
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__DetachVehicle endp
+
+; разворот камеры на геймобъект
+CScriptGameObject__UpdateCameraDirection proc
+SGO_target = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	call    CScriptGameObject__CActor
+	test    eax, eax
+	jz      short exit
+
+	mov     ecx, [ebp+SGO_target]
+	call    CScriptGameObject__GetGameObject
+	test    eax, eax
+	jz      short exit
+
+	push    eax
+	call    UpdateCameraDirection
+exit:
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__UpdateCameraDirection endp
+
 ; восстановление прошлого значени€ FOV актора
 g_last_fov dd 0.0
 CScriptGameObject__RestoreCameraFOV proc
@@ -5657,6 +6106,130 @@ CScriptGameObject__RestoreCameraFOV proc
 exit_fail:
 	retn
 CScriptGameObject__RestoreCameraFOV endp
+
+; получить оставшиес€ врем€ текущей анимации
+CScriptGameObject__GetHudAnimationRemainingTime proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	call    CScriptGameObject__CHudItem
+	test    eax, eax
+	jz      short exit_fail
+
+	mov     eax, [eax+10h] ; m_pHUD
+	test    eax, eax
+	jz      short exit_fail
+
+	cmp     byte ptr [eax+54h], 0 ; m_bStopAtEndAnimIsRunning
+	jz      short exit_fail
+
+	mov     eax, [eax+50h] ; m_dwAnimEndTime
+	mov     ecx, ds:Device
+	mov     ecx, [ecx+204h] ; dwTimeGlobal
+	sub     eax, ecx
+	jmp     short exit_ok
+exit_fail:
+	xor     eax, eax
+exit_ok:
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__GetHudAnimationRemainingTime endp
+
+; проверить €вл€етс€ ли текуща€ анимаци€ цикличной
+CScriptGameObject__IsCyclicHudAnimation proc
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	call    CScriptGameObject__CHudItem
+	test    eax, eax
+	jz      short exit_fail
+
+	mov     eax, [eax+10h] ; m_pHUD
+	test    eax, eax
+	jz      short exit_fail
+
+	cmp     byte ptr [eax+54h], 1 ; m_bStopAtEndAnimIsRunning
+	jz      short exit_fail
+	mov     eax, 1
+	jmp     short exit_ok
+exit_fail:
+	xor     eax, eax
+exit_ok:
+	mov     esp, ebp
+	pop     ebp
+	retn
+CScriptGameObject__IsCyclicHudAnimation endp
+
+; проверить есть ли заданна€ анимаци€ в модели
+CScriptGameObject__HasHudAnimation proc
+motion_ID = dword ptr -4
+anim      = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	sub     esp, 8
+
+	call    CScriptGameObject__GetHudVisual
+	mov     ecx, eax
+	mov     eax, [ebp+anim]
+	push    eax
+	lea     eax, [ebp+motion_ID]
+	push    eax
+	call    ds:CKinematicsAnimated__ID_Cycle_Safe
+	cmp     word ptr [ebp+motion_ID], 0FFFFh
+	jz      short exit_fail
+
+	mov     eax, 1
+	jmp     short exit_ok
+	;mov     eax, [ebp+motion_ID]
+	;and     eax, 03FFFh
+	;PRINT_UINT "anim_index: %d", eax
+exit_fail:
+	xor     eax, eax
+exit_ok:
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__HasHudAnimation endp
+
+; получить длину текущей анимации
+CScriptGameObject__GetHudAnimationLength proc
+motion_ID = dword ptr -4
+anim      = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	sub     esp, 8
+	push    esi
+
+	mov     esi, ecx
+	call    CScriptGameObject__GetHudVisual
+	mov     ecx, eax
+	mov     eax, [ebp+anim]
+	push    eax
+	lea     eax, [ebp+motion_ID]
+	push    eax
+	call    ds:CKinematicsAnimated__ID_Cycle
+	cmp     word ptr [ebp+motion_ID], 0FFFFh
+	jz      short exit_fail
+
+	mov     ecx, esi
+	call    CScriptGameObject__CHudItem
+	mov     esi, [eax+10h] ; m_pHUD
+
+	mov     eax, dword ptr [ebp+motion_ID] ; MotionID M
+	push    eax
+	lea     eax, [esi+48h] ; SHARED_HUD_INFO
+	call    shared_weapon_hud__motion_length
+exit_fail:
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetHudAnimationLength endp
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
