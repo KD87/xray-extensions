@@ -77,6 +77,20 @@ PERFORM_EXPORT_LEVEL__GO__INT                   Level__GetSecondTalker,    "get_
 
 PERFORM_EXPORT_LEVEL__INT__INT                  Level__VertexId, "vertex_id"
 
+; =========================================================================================
+; ========================= added by Ray Twitty (aka Shadows) =============================
+; =========================================================================================
+; ====================================== START ============================================
+; =========================================================================================
+; имитация ввода
+PERFORM_EXPORT_LEVEL__INT__INT                  SendEventMouseWheel, "send_event_mouse_wheel"
+PERFORM_EXPORT_LEVEL__INT__INT                  SendEventKeyHold, "send_event_key_hold"
+PERFORM_EXPORT_LEVEL__INT__INT                  SendEventKeyRelease, "send_event_key_release"
+PERFORM_EXPORT_LEVEL__INT__INT                  SendEventKeyPressed, "send_event_key_press"
+; =========================================================================================
+; ======================================= END =============================================
+; =========================================================================================
+
 ;PRINT "all_registered"
 ;--------------------------------------
 	jmp back_to_level_ns_ext_1
@@ -153,6 +167,15 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	; для vertex_ix
 	mov     ecx, eax
 	call    esi	
+	; имитация ввода
+	mov     ecx, eax
+	call    esi
+	mov     ecx, eax
+	call    esi
+	mov     ecx, eax
+	call    esi
+	mov     ecx, eax
+	call    esi
 ; идём обратно
 	jmp back_to_level_ns_ext_2
 
@@ -633,3 +656,64 @@ Level__VertexId proc
 	
 	retn
 Level__VertexId endp
+
+; =========================================================================================
+; ========================= added by Ray Twitty (aka Shadows) =============================
+; =========================================================================================
+; ====================================== START ============================================
+; =========================================================================================
+; имитации нажатий кнопок и колеса
+SendEventMouseWheel proc
+direction       = dword ptr  4
+	mov     eax, ds:g_pGameLevel
+	mov     eax, [eax]
+	mov     edx, [eax+10h]
+	mov     edx, [edx+14h]
+	lea     ecx, [eax+10h]
+	mov     eax, [esp+direction]
+	push    eax
+	call    edx
+	retn
+SendEventMouseWheel endp
+
+SendEventKeyHold proc
+id       = dword ptr  4
+	mov     eax, ds:g_pGameLevel
+	mov     eax, [eax]
+	mov     edx, [eax+10h]
+	mov     edx, [edx+28h]
+	lea     ecx, [eax+10h]
+	mov     eax, [esp+id]
+	push    eax
+	call    edx
+	retn
+SendEventKeyHold endp
+
+SendEventKeyRelease proc
+id       = dword ptr  4
+	mov     eax, ds:g_pGameLevel
+	mov     eax, [eax]
+	mov     edx, [eax+10h]
+	mov     edx, [edx+24h]
+	lea     ecx, [eax+10h]
+	mov     eax, [esp+id]
+	push    eax
+	call    edx
+	retn
+SendEventKeyRelease endp
+
+SendEventKeyPressed proc
+id       = dword ptr  4
+	mov     eax, ds:g_pGameLevel
+	mov     eax, [eax]
+	mov     edx, [eax+10h]
+	mov     edx, [edx+20h]
+	lea     ecx, [eax+10h]
+	mov     eax, [esp+id]
+	push    eax
+	call    edx
+	retn
+SendEventKeyPressed endp
+; =========================================================================================
+; ======================================= END =============================================
+; =========================================================================================

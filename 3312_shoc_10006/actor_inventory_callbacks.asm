@@ -1,5 +1,6 @@
 on_belt_callback proc
 item            = dword ptr  4
+	call    UpdateInventoryWeightStatic
 	; вызываем колбек
 	mov     ecx, g_actor
 	cmp     [ecx+298h], esi ; esi == this
@@ -40,6 +41,7 @@ on_belt_callback endp
 
 on_ruck_callback proc
 item            = dword ptr  4
+	call    UpdateInventoryWeightStatic
 	; вызываем колбек
 	mov     ecx, g_actor
 	cmp     [ecx+298h], esi ; esi == this
@@ -78,6 +80,7 @@ on_ruck_callback endp
 on_slot_callback proc ; esi == item, ebx == this
 ;item            = dword ptr  4
 	;jmp exit
+	call    UpdateInventoryWeightStatic
 	; вызываем колбек
 	mov     ecx, g_actor
 	cmp     [ecx+298h], ebx ; ebx == this
@@ -129,3 +132,46 @@ CUIItemInfo__InitItem_EXT_CHUNK proc
 ;	Возврат:
 	jmp     CUIItemInfo__InitItem_EXT_CHUNK_OUT
 CUIItemInfo__InitItem_EXT_CHUNK endp
+
+; =========================================================================================
+; ========================= added by Ray Twitty (aka Shadows) =============================
+; =========================================================================================
+; ====================================== START ============================================
+; =========================================================================================
+; колбек на дроп из интерфейса инвентаря
+CUIInventoryWnd__SendEvent_Item_Drop proc
+	; делаем свое
+	pusha
+	mov     edi, [edi+0D4h] ; CGameObject *this<edi>
+	call    CGameObject__lua_game_object
+	push    eax
+	push    129
+	mov     ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback
+	popa
+	; делаем вырезанное
+	mov     eax, [eax]
+	cmp     dword ptr [eax+44FCh], 0
+	; возвращаемся
+	jmp     back_from_CUIInventoryWnd__SendEvent_Item_Drop
+CUIInventoryWnd__SendEvent_Item_Drop endp
+
+; обновление статика веса в инвентаре
+UpdateInventoryWeightStatic proc
+	call    GetGameSP
+	test    eax, eax
+	jz      exit
+	mov     eax, [eax+60] ; CUIInventoryWnd
+	lea     ecx, [eax+348h] ; weight_static
+	push    1
+	push    ecx
+	call    InventoryUtilities__UpdateWeight
+	add     esp, 8
+exit:
+	retn
+UpdateInventoryWeightStatic endp
+; =========================================================================================
+; ======================================= END =============================================
+; =========================================================================================
