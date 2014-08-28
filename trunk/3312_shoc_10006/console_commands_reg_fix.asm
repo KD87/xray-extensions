@@ -9,7 +9,7 @@ REGISTER_CC_INT2   g_bHudAdjustMode,  "hud_adjust_mode",    0, 5
 	;mov     [g_fHudAdjustValue], eax
 REGISTER_CC_FLOAT2 g_fHudAdjustValue, "hud_adjust_value", 0.0, 1.0
 
-REGISTER_CC_FLOAT2 g_ui_mouse_sens, "mouse_ui_sens", 0.0, 10.0
+REGISTER_CC_FLOAT2 g_ui_mouse_sens, "mouse_ui_sens", 1.0, 10.0
 
 REGISTER_CC_FLAG g_ammo_on_belt, 1h, "g_ammunition_on_belt"
 

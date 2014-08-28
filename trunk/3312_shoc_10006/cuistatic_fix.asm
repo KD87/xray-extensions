@@ -11,6 +11,11 @@ cuistatic_fix:
 	; идём обратно
 	jmp     back_from_cuistatic_fix
 
+; =========================================================================================
+; ========================= added by Ray Twitty (aka Shadows) =============================
+; =========================================================================================
+; ====================================== START ============================================
+; =========================================================================================
 CUIStatic__SetTextComplexMode_ proc
 mode_on = dword ptr  8
 	push    edi
@@ -20,21 +25,6 @@ mode_on = dword ptr  8
 	pop		edi
 	retn    4
 CUIStatic__SetTextComplexMode_ endp
-
-CUIStatic__CanRotate proc
-can_rotate = dword ptr  4
-	mov     eax, [esp+can_rotate]
-	setnz   al
-	test    al, al
-	mov     [ecx+11Ch], al
-	jz      lab1
-	or      byte ptr [ecx+8Ch], 10h
-	jmp     lab2
-lab1:
-	and     byte ptr [ecx+8Ch], 0EFh
-lab2:
-	retn    4
-CUIStatic__CanRotate endp
 
 CUIStatic__AdjustWidthToText_ proc
 	push    esi
@@ -72,6 +62,24 @@ y = dword ptr  8
 	call	CUIStatic__SetTextPos
 	retn	8
 CUIStatic__SetTextPos_ endp
+; =========================================================================================
+; ======================================= END =============================================
+; =========================================================================================
+
+CUIStatic__CanRotate proc
+can_rotate = dword ptr  4
+	mov     eax, [esp+can_rotate]
+	setnz   al
+	test    al, al
+	mov     [ecx+11Ch], al
+	jz      lab1
+	or      byte ptr [ecx+8Ch], 10h
+	jmp     lab2
+lab1:
+	and     byte ptr [ecx+8Ch], 0EFh
+lab2:
+	retn    4
+CUIStatic__CanRotate endp
 
 CUIStatic__OnFocusRecieve_callback proc
 	pusha
