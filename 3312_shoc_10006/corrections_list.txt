@@ -107,11 +107,11 @@
 
 0x101F267F 5 ; 	jmp CHangingLamp__net_Spawn_fix
 0x101F269A 5 ; 	jmp CHangingLamp__net_Spawn_fix_2
-0x101E1180 5 ; 	jmp CEntityAlive__Hit_fix
+;0x101E1180 5 ; 	jmp CEntityAlive__Hit_fix
 ;0x101DFA30 5 ; 	jmp CEntity__Hit_fix
 ;0x10015B4E 5 ;  убираем фейковый хит из менеджера памяти
 ;0x101E1189 3 ; 	sub     esp, 50h ; 3 байта
-0x101E35EC 4 ; убираем степень двойки иммунитета пси-хита
+;0x101E35EC 4 ; убираем степень двойки иммунитета пси-хита
 0x1020616D 5 ; jmp CInventory__Eat_fix ; колбек на предиспользование
 
 0x1019FFA0 5 ; jmp [CEffectorZoomInertion__Process]
@@ -150,8 +150,8 @@
 ;0x103BD592 5 ;сетка под броней
 
 ;тень ГГ на R2 (требует также включения в рендере)
-0x101C85CF 6 ;jmp CActor__Update_fix
-0x101C8948 2
+;0x101C85CF 6 ;jmp CActor__Update_fix
+;0x101C8948 2
 
 ;kstn
 ;Перекл. на болт + откл/вкл колеса мышки для переключения м/у слотами
@@ -200,8 +200,8 @@
 ;0x103DF607 5 ; jmp no_alternative_keyboard_binding -- убираем столбец дополнительных назначений клавиш
 ;0x103DF1A6 5 ; jmp no_third_optins_row -- убираем столбец дополнительных назначений клавиш. ч2
 
-0x10258840 5; jmp CCustomZone__PlayHitParticles ; Коллбек аномалии на хит живого объекта
-0x10258CD1 5; jmp CCustomZone__hit_callback ; Коллбек аномалии на хит неживого объекта
+;0x10258840 5; jmp CCustomZone__PlayHitParticles ; Коллбек аномалии на хит живого объекта
+;0x10258CD1 5; jmp CCustomZone__hit_callback ; Коллбек аномалии на хит неживого объекта
 
 0x102485D4 6; jmp CTorch__Switch_Callback ; Коллбек на переключение фонаря.
 
@@ -294,3 +294,12 @@
 0x101A8C9D 2
 
 0x103EDEE6 5 ; jmp CUICustomItem__Render_fix ; фикс для исправления соотношения сторон CUIStatic
+
+; хак для более корректного учета бронебойности патронов
+;0x1024BEF7 5
+
+; затычка от вылета в деструкторе CGameObject
+0x101E6505 5
+
+; исправление неотключения света при выключении аномалии
+;0x10257BAF 5

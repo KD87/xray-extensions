@@ -144,6 +144,9 @@ include create_cell_item_fix.asm
 include CUICursor_fix.asm
 include cuicharacterinfo_initcharacter_fix.asm
 include cuiwpnparams_check_fix.asm
+include armor_piercing_fix.asm
+include game_object_destructor_fix.asm
+include customzone_fix.asm
 
 _CODE ENDS
 
