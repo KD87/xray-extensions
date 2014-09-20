@@ -4154,3 +4154,23 @@ org 1044D5A3h - shift
 	jmp		cursor_change_sens
 org 1044D5A9h - shift
 cursor_change_sens_back:
+
+; хак для более корректного учета бронебойности патронов
+org 1024BEF7h - shift
+	jmp armor_piercing_fix
+org 1024BF05h - shift
+back_from_armor_piercing_fix:
+
+; затычка от вылета в деструкторе CGameObject
+org 101E6505h - shift
+	jmp game_object_destructor_fix
+org 101E650Ah - shift
+back_from_game_object_destructor_fix:
+
+; исправление неотключения света при выключении аномалии
+org 10257BAFh - shift
+	jmp	customzonefix
+
+org 10257BB4h - shift
+back_from_customzonefix:
+	
