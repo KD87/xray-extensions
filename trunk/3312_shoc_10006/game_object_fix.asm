@@ -373,6 +373,7 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetVectorGlobalArg4, "set_vector_global_arg_4"
 	
 	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetActorDirectionEx, "set_camera_direction"
+	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetActorDirectionEx, "set_actor_direction_ex"
 
 	PERFORM_EXPORT_VOID__GO CScriptGameObject__SetGOArg1, "set_object_arg_1"
 	
