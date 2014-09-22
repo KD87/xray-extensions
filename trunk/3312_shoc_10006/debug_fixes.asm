@@ -475,3 +475,15 @@ CScriptGameObject__Hit_dbg_fix proc
 	;
 	jmp back_from_CScriptGameObject__Hit_dbg_fix
 CScriptGameObject__Hit_dbg_fix endp
+
+
+CInventoryOwner__OnEvent_dbg_fix proc
+str_             = dword ptr  4
+
+	PRINT "CInventoryOwner__OnEvent info enable/disable"
+	;
+	mov     esi, [esp+0Ch+str_] ; this
+	add     dword ptr [esi+2004h], 2
+	;
+	jmp back_from_CInventoryOwner__OnEvent_dbg_fix
+CInventoryOwner__OnEvent_dbg_fix endp

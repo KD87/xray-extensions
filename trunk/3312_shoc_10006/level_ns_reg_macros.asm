@@ -297,3 +297,73 @@ lab1:
 	push    eax
 	call    register_ns_dialog_void
 ENDM
+
+
+register_level__vector__int proc
+
+var_8           = dword ptr -8
+var_4           = byte ptr -4
+arg_0           = dword ptr  8
+arg_4           = dword ptr  0Ch
+arg_8           = dword ptr  10h
+
+	push    ebp
+	mov     ebp, esp
+	push    ecx
+	push    ecx
+	mov     ecx, ds:Memory
+	push    esi
+	push    14h             ; _DWORD
+	call    ds:xrMemory__mem_alloc
+	mov     esi, eax
+	test    esi, esi
+	jz      short loc_101AFB3D
+	mov     ecx, esi
+	call    ds:??0registration@detail@luabind@@QAE@XZ ; luabind::detail::registration::registration(void)
+	mov     eax, [ebp+arg_4]
+	mov     [esi+8], eax
+	mov     eax, [ebp+arg_8]
+	mov     dword ptr [esi], offset off_10481EEC
+	mov     [esi+0Ch], eax
+	jmp     short loc_101AFB3F
+loc_101AFB3D:
+	xor     esi, esi
+loc_101AFB3F:
+	and     [ebp+var_8], 0
+	push    ecx
+	mov     eax, esp
+	lea     ecx, [ebp+var_4]
+	mov     [eax], esi
+	call    ds:??0scope@luabind@@QAE@V?$auto_ptr@Uregistration@detail@luabind@@@std@@@Z 
+	mov     ecx, [ebp+arg_0]
+	push    eax
+	call    ds:??0scope@luabind@@QAE@ABU01@@Z ; luabind::scope::scope(scope::scope const &)
+	lea     ecx, [ebp+var_4]
+	call    ds:??1scope@luabind@@QAE@XZ ; luabind::scope::~scope(void)
+	mov     ecx, [ebp+var_8]
+	test    ecx, ecx
+	jz      short loc_101AFB71
+	mov     eax, [ecx]
+	push    1
+	call    dword ptr [eax]
+loc_101AFB71:
+	mov     eax, [ebp+arg_0]
+	pop     esi
+	leave
+	retn
+register_level__vector__int endp
+
+PERFORM_EXPORT_LEVEL__VECTOR__INT MACRO fun_to_export:REQ, fun_name_str:REQ
+LOCAL lab1
+LOCAL fun_name
+	jmp     lab1
+fun_name db fun_name_str, 0
+lab1:
+	pop     ecx
+	pop     ecx
+	mov     eax, esp
+	push    offset fun_to_export
+	push    offset fun_name
+	push    eax
+	call    register_level__vector__int
+ENDM
