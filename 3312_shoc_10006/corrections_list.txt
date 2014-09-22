@@ -73,6 +73,9 @@
 ;0x102A0940 5 ; jmp game_GameState__SetGameTimeFactor__INT64_float_dbg_fix
 0x102AC460 5 ; jmp game_cl_GameState__net_import_GameTime_dbg_fix
 
+;0x1020CFD1 5 ; jmp CInventoryOwner__OnEvent_dbg_fix
+0x1020D3F5 5 ; jmp near CInventoryOwner__TransferInfo_omit_event_send
+
 ;0x10253E2B 40 ; searchlight__turn_on
 
 ;0x10272746 8 ; попытка фикса вылезания из машины

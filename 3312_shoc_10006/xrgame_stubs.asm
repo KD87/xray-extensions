@@ -2,6 +2,103 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+org 10481EECh - shift
+off_10481EEC dd ?
+
+;.text:1020D310 CInventoryOwner__TransferInfo proc near
+;.text:1020D310 var_2024        = dword ptr -2024h
+;.text:1020D310 var_2020        = dword ptr -2020h
+;.text:1020D310 var_201C        = byte ptr -201Ch
+;.text:1020D310 var_2014        = dword ptr -2014h
+;.text:1020D310 var_2010        = dword ptr -2010h
+;.text:1020D310 Dst             = byte ptr -200Ch
+;.text:1020D310 var_C           = dword ptr -0Ch
+;.text:1020D310 arg_0           = dword ptr  4
+;.text:1020D310 arg_4           = byte ptr  8
+;.text:1020D310
+;.text:1020D310                 mov     eax, 2024h
+;.text:1020D315                 call    __alloca_probe
+;.text:1020D31A                 push    ebx
+;.text:1020D31B                 push    ebp
+;.text:1020D31C                 mov     ebp, ecx
+;.text:1020D31E                 test    ebp, ebp
+;.text:1020D320                 push    esi
+;.text:1020D321                 push    edi
+;org 1020D322h - shift
+;	jmp CInventoryOwner__TransferInfo_omit_event_send
+;.text:1020D322                 jnz     short loc_1020D328
+;.text:1020D324                 xor     edi, edi
+;.text:1020D326                 jmp     short loc_1020D341
+;.text:1020D328 loc_1020D328:
+;;                              ...
+;.text:1020D33F                 mov     edi, eax
+;.text:1020D341 loc_1020D341:
+;.text:1020D341                 movzx   eax, word ptr [edi+0A4h]
+;;                              ...
+;.text:1020D37E                 test    edi, edi
+;.text:1020D380                 mov     [esp+2034h+var_2024], ecx
+;.text:1020D384                 mov     [esp+2034h+var_C], eax
+;.text:1020D38B                 jz      short loc_1020D3B2
+;.text:1020D38D                 lea     edx, [edi+0Ch]
+;.text:1020D390                 test    edx, edx
+;.text:1020D392                 jz      short loc_1020D3B2
+;.text:1020D394                 mov     ecx, [edi+4]
+;.text:1020D397                 lea     esi, [ecx+1]
+;;                              ...
+;.text:1020D3A9                 add     [esp+2034h+var_C], esi
+;.text:1020D3B0                 jmp     short loc_1020D3C0
+;.text:1020D3B2 loc_1020D3B2:
+;.text:1020D3B2                 xor     cl, cl
+;.text:1020D3B4                 mov     [esp+eax+2034h+Dst], cl
+;.text:1020D3B8                 add     [esp+2034h+var_C], 1
+;.text:1020D3C0 loc_1020D3C0:
+;.text:1020D3C0                 mov     bl, [esp+2034h+arg_4]
+;.text:1020D3C7                 mov     edx, [esp+2034h+var_C]
+;.text:1020D3CE                 test    bl, bl
+;.text:1020D3D0                 setnz   al
+;.text:1020D3D3                 mov     [esp+edx+2034h+Dst], al
+;.text:1020D3D7                 add     [esp+2034h+var_C], 1
+;.text:1020D3DF                 mov     eax, ds:?g_pGameLevel@@3PAVIGame_Level@@A ; IGame_Level * g_pGameLevel
+;.text:1020D3E4                 mov     eax, [eax]
+;.text:1020D3E6                 mov     edx, [eax+160h]
+;.text:1020D3EC                 mov     edx, [edx+10h]
+;.text:1020D3EF                 lea     ecx, [eax+160h]
+org 1020D3F5h - shift
+	jmp CInventoryOwner__TransferInfo_omit_event_send
+;.text:1020D3F5                 push    0
+;.text:1020D3F7                 push    8
+;.text:1020D3F9                 lea     eax, [esp+203Ch+Dst]
+;.text:1020D3FD                 push    eax
+;.text:1020D3FE                 call    edx
+org 1020D400h - shift
+CInventoryOwner__TransferInfo_omit_event_send:
+;.text:1020D400                 lea     esi, [esp+2030h+var_201C]
+;.text:1020D404                 call    CInfoPortion__CInfoPortion
+
+
+
+;.text:1020CFC0 CInventoryOwner__OnEvent proc near
+;.text:1020CFC0                 cmp     word ptr [esp+this], 0Fh
+;.text:1020CFC6                 push    ebx
+;.text:1020CFC7                 push    esi
+;.text:1020CFC8                 push    edi
+;.text:1020CFC9                 mov     ebx, ecx
+;.text:1020CFCB                 jnz     loc_1020D06B
+org 1020CFD1h - shift
+	jmp CInventoryOwner__OnEvent_dbg_fix
+;.text:1020CFD1                 mov     esi, [esp+0Ch+str] ; this
+;.text:1020CFD5                 add     dword ptr [esi+2004h], 2
+org 1020CFDCh - shift
+back_from_CInventoryOwner__OnEvent_dbg_fix:
+;.text:1020CFDC                 lea     edi, [esp+0Ch+this] ; str
+;.text:1020CFE0                 mov     [esp+0Ch+this], 0
+;.text:1020CFE8                 call    NET_Packet__r_stringZ
+;.text:1020CFED                 mov     eax, [esi+2004h]
+;.text:1020CFF3                 mov     cl, [eax+esi]
+;.text:1020CFF6                 add     eax, 1
+
+
+
 ;.text:103EDCE0 ; int __stdcall CUICustomItem__Render(int, int, int, float)
 
 org 103EDEE6h - shift

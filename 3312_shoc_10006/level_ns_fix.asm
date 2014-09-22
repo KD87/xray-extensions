@@ -89,7 +89,12 @@ PERFORM_EXPORT_LEVEL__INT__INT                  SendEventKeyRelease, "send_event
 PERFORM_EXPORT_LEVEL__INT__INT                  SendEventKeyPressed, "send_event_key_press"
 ; =========================================================================================
 ; ======================================= END =============================================
-; =========================================================================================
+; ===========================================================================
+;------------< регистрируем функции получения вершин статического треугольника по индексу >------
+PERFORM_EXPORT_LEVEL__VECTOR__INT               Level__GetTriangleVertex1, "get_tri_vertex1"
+PERFORM_EXPORT_LEVEL__VECTOR__INT               Level__GetTriangleVertex2, "get_tri_vertex2"
+PERFORM_EXPORT_LEVEL__VECTOR__INT               Level__GetTriangleVertex3, "get_tri_vertex3"
+
 
 ;PRINT "all_registered"
 ;--------------------------------------
@@ -176,6 +181,13 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	call    esi
 	mov     ecx, eax
 	call    esi
+	; для get_tri_vertex1/2/3
+	mov     ecx, eax
+	call    esi	
+	mov     ecx, eax
+	call    esi	
+	mov     ecx, eax
+	call    esi	
 ; идём обратно
 	jmp back_to_level_ns_ext_2
 
@@ -717,3 +729,129 @@ SendEventKeyPressed endp
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
+
+Level__GetTriangleVertex1 proc
+res   = dword ptr  8
+index = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	push    ecx
+	push    edx
+	push edi
+	push esi
+	
+	mov     eax, [ebp + index] ; results.element
+	;PRINT_UINT "index = %d", eax
+	mov     ecx, ds:g_pGameLevel
+	mov     ecx, [ecx]      ; ecx = game_level address
+	mov     esi, [ecx+0DCh] ; tri array
+	mov     edi, [ecx+0E4h] ; vertexes array
+	shl     eax, 4          ; eax = results.element * 8
+	;movzx   edx, word ptr [eax+ecx+0Ch] ; edx = *(game_level + 0dch) + results.element*8 + 12
+	lea     ecx, [eax+esi] ; eax = *(game_level + 0dch) + results.element*8 == pTri
+	mov     eax, [ecx]     ; index of first vertex
+	; умножим eax на 12
+	lea     eax, [eax + eax*2] ; eax = ind * 3
+	lea     ecx, [edi + eax*4] ; ecx = edi + ind * 12
+	;
+
+	;lea     ecx, [edi + eax] ; pointer to the position of the vertex
+
+	mov     eax, [ebp+res]
+	
+	mov     edx, [ecx]
+	;PRINT_UINT "tri1 = %d", edx
+	mov     [eax], edx
+	mov     edx, [ecx+4]
+	;PRINT_UINT "tri2 = %d", edx
+	mov     [eax+4], edx
+	mov     edx, [ecx+8]
+	;PRINT_UINT "tri3 = %d", edx
+	mov     [eax+8], edx
+
+	pop esi
+	pop edi
+	pop     edx
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn    
+Level__GetTriangleVertex1 endp
+
+Level__GetTriangleVertex2 proc
+res   = dword ptr  8
+index = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	push    ecx
+	push    edx
+	push edi
+	push esi
+	
+	mov     eax, [ebp + index] ; results.element
+	mov     ecx, ds:g_pGameLevel
+	mov     ecx, [ecx]      ; ecx = game_level address
+	mov     esi, [ecx+0DCh] ; tri array
+	mov     edi, [ecx+0E4h] ; vertexes array
+	shl     eax, 4          ; eax = results.element * 8
+	lea     ecx, [eax+esi] ; eax = *(game_level + 0dch) + results.element*8 == pTri
+	mov     eax, [ecx + 4]     ; index of second vertex
+	; умножим eax на 12
+	lea     eax, [eax + eax*2] ; eax = ind * 3
+	lea     ecx, [edi + eax*4] ; ecx = edi + ind * 12
+	;
+	mov     eax, [ebp+res]
+	mov     edx, [ecx]
+	mov     [eax], edx
+	mov     edx, [ecx+4]
+	mov     [eax+4], edx
+	mov     edx, [ecx+8]
+	mov     [eax+8], edx
+
+	pop esi
+	pop edi
+	pop     edx
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn    
+Level__GetTriangleVertex2 endp
+
+Level__GetTriangleVertex3 proc
+res   = dword ptr  8
+index = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	push    ecx
+	push    edx
+	push edi
+	push esi
+	
+	mov     eax, [ebp + index] ; results.element
+	mov     ecx, ds:g_pGameLevel
+	mov     ecx, [ecx]      ; ecx = game_level address
+	mov     esi, [ecx+0DCh] ; tri array
+	mov     edi, [ecx+0E4h] ; vertexes array
+	shl     eax, 4          ; eax = results.element * 8
+	lea     ecx, [eax+esi] ; eax = *(game_level + 0dch) + results.element*8 == pTri
+	mov     eax, [ecx + 8]     ; index of second vertex
+	; умножим eax на 12
+	lea     eax, [eax + eax*2] ; eax = ind * 3
+	lea     ecx, [edi + eax*4] ; ecx = edi + ind * 12
+	;
+	mov     eax, [ebp+res]
+	mov     edx, [ecx]
+	mov     [eax], edx
+	mov     edx, [ecx+4]
+	mov     [eax+4], edx
+	mov     edx, [ecx+8]
+	mov     [eax+8], edx
+
+	pop esi
+	pop edi
+	pop     edx
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn    
+Level__GetTriangleVertex3 endp
