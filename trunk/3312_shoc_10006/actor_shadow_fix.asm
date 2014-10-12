@@ -79,3 +79,28 @@ exit:
 	call    sub_101DEE40
 	jmp	back_from_CActor__Update_two_fix
 CActor__Update_two_fix endp
+
+CActor__renderable_Render_fix proc
+	; r2/ не r2
+	mov		ecx, psDeviceFlags
+	mov		ecx, [ecx]
+	test	ecx, 80000h		;psR2
+	jz		exit
+	
+	; рендеринг теней или нет
+	push	eax
+	mov		eax, ds:Render
+	mov		eax, [eax]
+	mov		eax, [eax+124h]
+	test	eax, eax
+	pop		eax
+	jz		exit
+	
+	lea     ecx, [edi+228h]
+	jmp back_from_CActor__renderable_Render_fix
+	
+exit:
+	; cюда мы должны прийти только в том случае, если это р1 или не идет рендеринг теней
+	test	eax, eax
+	jnz loc_101C8957
+CActor__renderable_Render_fix endp

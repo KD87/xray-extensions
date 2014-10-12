@@ -246,6 +246,8 @@ __imp__strstr dd ?
 ;===========================================
 ; тень от ГГ на R2
 ;===========================================
+org 1007A988h - shift
+RImplementation dd ?
 org 10069308h - shift
 g_pGameLevel dd ?
 org 1000BA1Dh - shift

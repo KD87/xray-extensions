@@ -1,6 +1,16 @@
 actor_shadow_fix:
+; загружен ли левел
 	mov		eax, ds:g_pGameLevel
 	test	eax, eax
+	jz		exit
+	
+; phase == PHASE_SMAP
+	push	eax
+	mov		eax, ds:RImplementation
+	mov		eax, [eax]
+	mov		eax, [eax+124h]
+	test	eax, eax
+	pop		eax
 	jz		exit
 	
 ; 4253E3 - CHUDManager::Render_First()  set_invisible (false/true)
