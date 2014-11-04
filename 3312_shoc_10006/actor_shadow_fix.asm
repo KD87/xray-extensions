@@ -85,7 +85,7 @@ CActor__renderable_Render_fix proc
 	mov		ecx, psDeviceFlags
 	mov		ecx, [ecx]
 	test	ecx, 80000h		;psR2
-	jz		exit
+	jz		no_shadow
 	
 	; рендеринг теней или нет
 	push	eax
@@ -94,13 +94,16 @@ CActor__renderable_Render_fix proc
 	mov		eax, [eax+124h]
 	test	eax, eax
 	pop		eax
-	jz		exit
+	jz		no_shadow
 	
-	lea     ecx, [edi+228h]
-	jmp back_from_CActor__renderable_Render_fix
+	jmp		exit
 	
-exit:
+no_shadow:
 	; cюда мы должны прийти только в том случае, если это р1 или не идет рендеринг теней
 	test	eax, eax
 	jnz loc_101C8957
+	
+exit:
+	lea     ecx, [edi+228h]
+	jmp back_from_CActor__renderable_Render_fix
 CActor__renderable_Render_fix endp
