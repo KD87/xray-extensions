@@ -3710,6 +3710,8 @@ sub_1013AA53:
 ; IRender_Light
 org 104588D4h - shift
 resptr_base_IRender_Light____dec dd ? ; 
+org 104588C8h - shift
+resptr_base_IRender_Light____get dd ? ; 
 
 org 10151720h - shift
 sub_10151720:
@@ -4274,6 +4276,6 @@ back_from_game_object_destructor_fix:
 org 10257BAFh - shift
 	jmp	customzonefix
 
-org 10257BB4h - shift
-back_from_customzonefix:
+;org 10257BB4h - shift
+;back_from_customzonefix:
 	
