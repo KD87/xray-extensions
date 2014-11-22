@@ -4276,6 +4276,6 @@ back_from_game_object_destructor_fix:
 org 10257BAFh - shift
 	jmp	customzonefix
 
-org 10257BB4h - shift
+org 10257BB9h - shift
 back_from_customzonefix:
 	
