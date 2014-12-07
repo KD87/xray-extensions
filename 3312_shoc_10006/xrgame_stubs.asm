@@ -4164,6 +4164,14 @@ CKinematicsAnimated__ID_Cycle_Safe dd ?
 org 10239460h - shift
 shared_weapon_hud__motion_length:
 ; =========================================================================================
+; функции для работы с эффектами камеры
+; CCameraManager::AddCamEffector(class CEffectorCam *)
+org 1045886Ch - shift
+CCameraManager__AddCamEffector dword ?
+; xr_new<CMonsterEffectorHit,float,float,float,float>(float const &,float const &,float const &,float const &)
+org 1007E770h - shift
+xr_new__CMonsterEffectorHit:
+; =========================================================================================
 ; инерция во время прицеливания из оружия
 org 1024DB00h - shift
 	nop
@@ -4280,9 +4288,3 @@ org 10257BB9h - shift
 back_from_customzonefix:
 org 1019EF50h - shift
 sub_1019EF50:
-	
-; вылет при запросе vertex_position() из скриптов с невалидным аргументом
-org 10013640h - shift
-	jmp	vertex_position_crash
-org 10013646h - shift
-back_from_vertex_position_crash:

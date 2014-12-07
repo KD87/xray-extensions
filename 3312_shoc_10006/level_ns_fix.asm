@@ -87,6 +87,12 @@ PERFORM_EXPORT_LEVEL__INT__INT                  SendEventMouseWheel, "send_event
 PERFORM_EXPORT_LEVEL__INT__INT                  SendEventKeyHold, "send_event_key_hold"
 PERFORM_EXPORT_LEVEL__INT__INT                  SendEventKeyRelease, "send_event_key_release"
 PERFORM_EXPORT_LEVEL__INT__INT                  SendEventKeyPressed, "send_event_key_press"
+; доступ к внутреннему классу камэффектора
+PERFORM_EXPORT_LEVEL__VOID__FLOAT               CE_Set_Time, "set_ce_time"
+PERFORM_EXPORT_LEVEL__VOID__FLOAT               CE_Set_Amplitude, "set_ce_amplitude"
+PERFORM_EXPORT_LEVEL__VOID__FLOAT               CE_Set_PeriodNumber, "set_ce_period_number"
+PERFORM_EXPORT_LEVEL__VOID__FLOAT               CE_Set_Power, "set_ce_power"
+PERFORM_EXPORT_LEVEL__BOOL__VOID                CE_Add, "add_ce"
 ; =========================================================================================
 ; ======================================= END =============================================
 ; ===========================================================================
@@ -173,6 +179,17 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	mov     ecx, eax
 	call    esi	
 	; имитация ввода
+	mov     ecx, eax
+	call    esi
+	mov     ecx, eax
+	call    esi
+	mov     ecx, eax
+	call    esi
+	mov     ecx, eax
+	call    esi
+	; доступ к внутреннему классу камэффектора
+	mov     ecx, eax
+	call    esi
 	mov     ecx, eax
 	call    esi
 	mov     ecx, eax
@@ -726,6 +743,71 @@ id       = dword ptr  4
 	call    edx
 	retn
 SendEventKeyPressed endp
+
+; доступ к внутреннему классу камэффектора
+global_ce_time dd 0.0
+global_ce_amplitude dd 0.0
+global_ce_period_number dd 0.0
+global_ce_power dd 0.0
+
+CE_Set_Time proc near
+time = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	mov     eax, [ebp+time]
+	mov     [global_ce_time], eax
+	mov     esp, ebp
+	pop     ebp
+	retn
+CE_Set_Time endp
+
+CE_Set_Amplitude proc near
+amp = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	mov     eax, [ebp+amp]
+	mov     [global_ce_amplitude], eax
+	mov     esp, ebp
+	pop     ebp
+	retn
+CE_Set_Amplitude endp
+
+CE_Set_PeriodNumber proc near
+periods = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	mov     eax, [ebp+periods]
+	mov     [global_ce_period_number], eax
+	mov     esp, ebp
+	pop     ebp
+	retn
+CE_Set_PeriodNumber endp
+
+CE_Set_Power proc near
+power = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	mov     eax, [ebp+power]
+	mov     [global_ce_power], eax
+	mov     esp, ebp
+	pop     ebp
+	retn
+CE_Set_Power endp
+
+CE_Add proc
+	push    offset global_ce_power
+	push    offset global_ce_period_number
+	push    offset global_ce_amplitude
+	push    offset global_ce_time
+	call    xr_new__CMonsterEffectorHit
+	add     esp, 10h
+
+	mov     ecx, g_Actor
+	mov     ecx, [ecx+554h]
+	push    eax
+	call    ds:CCameraManager__AddCamEffector
+	retn
+CE_Add endp
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================

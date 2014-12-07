@@ -138,18 +138,18 @@
 ;0x10221B93 5
 
 ;слоты
-0x103BA6AD 5 ;CUIInventoryWnd__Init__
-0x103BBD8D 5 ;CUIInventoryWnd__InitInventory__
-0x103BC590 5 ;CUIInventoryWnd__GetSlotList
-0x103BC5E0 5 ;CUIInventoryWnd__ClearAllLists
-0x10204311 5 ;CInventory__Init__ отключение худа слотов
-0x1042AA44 5 ;память под объект CInventory
-0x1042B8A8 5 ;память под объект CInventory
-0x10206C02 3 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
-0x10206C1F 5 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
-0x10206C35 6 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
-0x10206951 6 ;количество слотов в CInventory__SetSlotsBlocked
-0x101C9B80 5 ;учет предмета в шлемовом слоте при расчете хита актору
+;0x103BA6AD 5 ;CUIInventoryWnd__Init__
+;0x103BBD8D 5 ;CUIInventoryWnd__InitInventory__
+;0x103BC590 5 ;CUIInventoryWnd__GetSlotList
+;0x103BC5E0 5 ;CUIInventoryWnd__ClearAllLists
+;0x10204311 5 ;CInventory__Init__ отключение худа слотов
+;0x1042AA44 5 ;память под объект CInventory
+;0x1042B8A8 5 ;память под объект CInventory
+;0x10206C02 3 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
+;0x10206C1F 5 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
+;0x10206C35 6 ;количество слотов в xr_vector_CInventorySlot_xalloc_CInventorySlot____resize
+;0x10206951 6 ;количество слотов в CInventory__SetSlotsBlocked
+;0x101C9B80 5 ;учет предмета в шлемовом слоте при расчете хита актору
 
 ;включение сетки под броней в инвентаре
 ;0x103BD9E0 5 ;сетка под броней
@@ -306,4 +306,4 @@
 0x101E6505 5
 
 ; исправление неотключения света при выключении аномалии
-;0x10257BA4 5
+0x10257BA4 5
