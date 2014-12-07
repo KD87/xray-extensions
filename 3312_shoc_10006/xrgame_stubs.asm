@@ -4273,9 +4273,16 @@ org 101E650Ah - shift
 back_from_game_object_destructor_fix:
 
 ; исправление неотключения света при выключении аномалии
-org 10257BAFh - shift
+org 10257BA4h - shift
 	jmp	customzonefix
 
 org 10257BB9h - shift
 back_from_customzonefix:
+org 1019EF50h - shift
+sub_1019EF50:
 	
+; вылет при запросе vertex_position() из скриптов с невалидным аргументом
+org 10013640h - shift
+	jmp	vertex_position_crash
+org 10013646h - shift
+back_from_vertex_position_crash:

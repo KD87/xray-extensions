@@ -4,12 +4,19 @@ customzonefix proc
 ;	mov		esi, ecx
 ;	jmp		back_from_customzonefix
 
+	push	ecx
+	mov     esi, [esi+1D4h]
+	call    sub_1019EF50
+	pop		ecx
 	; выключаем свет выброса
 	xorps   xmm1, xmm1
 	movss   dword ptr [ecx+2FCh], xmm1		;m_fLightTimeLeft = 0.f;
 	; проверка, есть ли посто€нный свет
 	mov     esi, [ecx+2BCh]
-	test    esi, esi
+	mov		eax, esi
+	neg     eax
+	sbb     eax, eax
+	test    ds:resptr_base_IRender_Light____get, eax ; resptr_base<IRender_Light>::_get(void)
 	jz      short exit
 	; проверка, включен ли посто€нный свет
 	mov     edx, [esi]

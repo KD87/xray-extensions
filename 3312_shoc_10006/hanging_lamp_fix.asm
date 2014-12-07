@@ -99,23 +99,26 @@ CHangingLamp__net_Spawn_fix_2 proc
 	; mark flare flag
 	mov		ecx, [esi]	;light_render
 	
-	mov     al, [edi+138h]	; flags
-	and		al, 80h		;flUseFlare
-	cmp		al, 80h
-	jnz		check_volumetric
+	mov     ax, [edi+138h]	; flags
+;	and		al, 80h		;flUseFlare
+;	cmp		al, 80h
+	test	ax, 80h
+	jz		check_volumetric
 	mov		eax, [ONE]
 	mov		[ecx+284h], eax
 
 check_volumetric:
 	; handle volumetric spots
-	mov     al, [edi+138h]	; flags
-	and		al, 40h		;flVolumetric
-	cmp		al, 40h
-	jnz		exit
-	mov     al, [edi+138h]	; flags
-	and		al, 10h		;flTypeSpot
-	cmp		al, 10h
-	jnz		exit
+;	mov     al, [edi+138h]	; flags
+;	and		al, 40h		;flVolumetric
+;	cmp		al, 40h
+	test	ax, 40h
+	jz		exit
+;	mov     al, [edi+138h]	; flags
+;	and		al, 10h		;flTypeSpot
+;	cmp		al, 10h
+	test	ax, 10h
+	jz		exit
 	mov		eax, [ONE]
 	mov		[ecx+288h], eax
 	
