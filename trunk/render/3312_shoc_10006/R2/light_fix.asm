@@ -85,6 +85,19 @@ go_next:
 	jmp back_from_CLight_Compute_XFORM_and_VIS__compute_xf_spot_fix
 CLight_Compute_XFORM_and_VIS__compute_xf_spot_fix endp
 
+light_blink_fix proc
+	push	edi
+	mov		edi, [edi+3Ch]		;light::flags
+	and		edi, 3
+	test	edi, 3				
+	pop		edi
+	jz		short exit
+	addss   xmm0, dword ptr [tan_shift]
+
+exit:
+	jmp back_from_light_blink_fix
+light_blink_fix endp
+
 flt_0_01 dd 0.01
 flt_0_01_neg dd -0.01
 ;tan_shift dd 0.0872665
