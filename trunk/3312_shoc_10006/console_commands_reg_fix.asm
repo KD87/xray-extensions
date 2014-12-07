@@ -32,6 +32,8 @@ REGISTER_CC_FLOAT2 phTimefactor, "ph_timefactor", 0.0, 10.0
 REGISTER_CC_FLOAT2 phGravity, "ph_gravity", 0.0, 100.0
 REGISTER_CC_FLAG psActorFlags, 8, "g_unlimitedammo"
 REGISTER_CC_FLAG psActorFlags, 1, "g_god"
+;REGISTER_CC_FLAG psGameFlags, 1, "g_storyline_music"
+;REGISTER_CC_FLAG psGameFlags, 2, "hud_date"
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
@@ -54,3 +56,4 @@ g_mouse_wheel_sc dd 1
 ;g_ogse_bipsizon_bind     dd 100000
 
 phGravity dd 19.62
+;psGameFlags dd 1
