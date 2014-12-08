@@ -66,7 +66,7 @@ back_from_CLight_Compute_XFORM_and_VIS__compute_xf_spot_fix:
 
 
 ;.text:100337C5                 addss   xmm0, ds:__real@3d7a35dd
-org 100337C5h - shift
+org 100337C0h - shift
 ;	addss   xmm0, dword ptr [tan_shift]
 	jmp light_blink_fix
 org 100337CDh - shift
