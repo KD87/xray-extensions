@@ -18,6 +18,7 @@ light__light_fix proc
 	xor	eax, eax
 	mov [esi + 284h], eax	; is_require_flare
 	mov [esi + 288h], eax	; is_volumetric
+	mov [esi + 290h], eax	; is_actor_torch
 	; 
 	jmp back_from_light__light_fix
 light__light_fix endp
@@ -57,6 +58,8 @@ light__export_fix_2 proc
 	mov     [esi + 284h], eax
 	mov     eax, [ebp + 288h] ; 
 	mov     [esi + 288h], eax
+	mov     eax, [ebp + 290h] ; 
+	mov     [esi + 290h], eax
 	
 skip:
 	

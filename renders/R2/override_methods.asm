@@ -142,3 +142,16 @@ override_crt_phase_smap_spot:
 	push	esi
 	call	g_CRenderTarget__phase_smap_spot
 	retn	
+	
+override_crt_phase_smap_direct:
+	push	edi
+	push	esi
+	call	g_CRenderTarget__phase_smap_direct
+	retn	
+	
+override_crt_phase_accumulator:
+	push	ecx
+	mov		ecx, eax
+	call	g_CRenderTarget__phase_accumulator
+	pop		ecx
+	retn	
