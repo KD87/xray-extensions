@@ -147,6 +147,7 @@ include cuiwpnparams_check_fix.asm
 include armor_piercing_fix.asm
 include game_object_destructor_fix.asm
 include customzone_fix.asm
+include actor_torch_light.asm
 
 _CODE ENDS
 
