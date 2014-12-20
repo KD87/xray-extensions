@@ -85,7 +85,7 @@ ENDM
 org sec1_sec2_dist
 
 include types.asm
-
+include defines.asm
 include actor_input_fix.asm
 include global_ns_fix.asm
 include global_ns_fix2.asm

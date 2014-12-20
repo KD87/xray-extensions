@@ -15,11 +15,13 @@ REGISTER_CC_FLAG g_ammo_on_belt, 1h, "g_ammunition_on_belt"
 
 REGISTER_CC_FLAG g_mouse_wheel_sc, 1h, "mouse_wheel_slot_changing"
 
-;REGISTER_CC_INT2   g_ogse_nv_bind,           "ogse_nv_bind",           0, 07FFFFFFFh
-;REGISTER_CC_INT2   g_ogse_antirad_bind,      "ogse_antirad_bind",      0, 07FFFFFFFh
-;REGISTER_CC_INT2   g_ogse_energy_drink_bind, "ogse_energy_drink_bind", 0, 07FFFFFFFh
-;REGISTER_CC_INT2   g_ogse_yod_bind,          "ogse_yod_bind",          0, 07FFFFFFFh
-;REGISTER_CC_INT2   g_ogse_bipsizon_bind,     "ogse_bipsizon_bind",     0, 07FFFFFFFh
+ifdef OGSE_BUILD
+	REGISTER_CC_INT2   g_ogse_nv_bind,           "ogse_nv_bind",           0, 07FFFFFFFh
+	REGISTER_CC_INT2   g_ogse_antirad_bind,      "ogse_antirad_bind",      0, 07FFFFFFFh
+	REGISTER_CC_INT2   g_ogse_energy_drink_bind, "ogse_energy_drink_bind", 0, 07FFFFFFFh
+	REGISTER_CC_INT2   g_ogse_yod_bind,          "ogse_yod_bind",          0, 07FFFFFFFh
+	REGISTER_CC_INT2   g_ogse_bipsizon_bind,     "ogse_bipsizon_bind",     0, 07FFFFFFFh
+endif
 
 ; =========================================================================================
 ; ========================= added by Ray Twitty (aka Shadows) =============================
@@ -49,11 +51,13 @@ g_ui_mouse_sens dd 3.3
 g_ammo_on_belt dd 0
 g_mouse_wheel_sc dd 1
 
-;g_ogse_nv_bind           dd 100000
-;g_ogse_antirad_bind      dd 100000
-;g_ogse_energy_drink_bind dd 100000
-;g_ogse_yod_bind          dd 100000
-;g_ogse_bipsizon_bind     dd 100000
+ifdef OGSE_BUILD
+	g_ogse_nv_bind           dd 100000
+	g_ogse_antirad_bind      dd 100000
+	g_ogse_energy_drink_bind dd 100000
+	g_ogse_yod_bind          dd 100000
+	g_ogse_bipsizon_bind     dd 100000
+endif
 
 phGravity dd 19.62
 ;psGameFlags dd 1

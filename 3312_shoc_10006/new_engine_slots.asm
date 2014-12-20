@@ -465,6 +465,9 @@ CInventory__Init__:
 	mov     eax, [esi+38h]
 	mov     [eax+0A9h], bl	; helmet
 	mov     [eax+0B9h], bl	; nightvision
+ifdef OGSE_BUILD
+	mov     [eax+0C9h], bl	; biodetector
+endif
 		jmp back_to_CInventory__Init__
 	
 	; смещения указателей на ячейки в объекте CInventory
