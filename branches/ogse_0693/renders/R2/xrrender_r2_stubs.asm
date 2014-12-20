@@ -4,13 +4,9 @@
 
 ; увеличиваем размер объекта light
 org 10004BB6h - shift						; CRender__light_create
-push    290h ; вместо 270h - 5 байт	
+push    294h ; вместо 270h - 5 байт	
 org 1002FD32h - shift						; light__export
-push    290h
-;org 100300D0h - shift						; CLight_DB__Load
-;push    284h
-;org 100301BAh - shift						; CLight_DB__Load
-;push    284h
+push    294h
 
 ;org 1000ABB1h - shift
 ;	jmp      loc_1000AEB3
@@ -318,6 +314,10 @@ org 10057F90h - shift
 	jmp override_crt_accum_direct
 org 10066EA0h - shift
 	jmp override_crt_phase_smap_spot
+org 10066CF0h - shift
+	jmp override_crt_phase_smap_direct
+org 10060B30h - shift
+	jmp override_crt_phase_accumulator
 	
 ;org 1002FCE0h - shift
 ;	jmp override_l_export
@@ -339,3 +339,12 @@ psDeviceFlags dd ?
 
 org 1007AC64h - shift
 dword_1007AC64 dd ?
+
+org 10094135h - shift
+CRenderTarget__accum_spot:
+org 10094157h - shift
+CRender__render_indirect:
+org 1000A8D7h - shift
+	jmp volumetric_spot
+org 1000A8FEh - shift
+back_from_volumetric_spot:

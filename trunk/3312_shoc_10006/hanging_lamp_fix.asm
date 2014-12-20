@@ -109,7 +109,7 @@ CHangingLamp__net_Spawn_fix_2 proc
 
 check_volumetric:
 	; handle volumetric spots
-;	mov     al, [edi+138h]	; flags
+	mov     ax, [edi+138h]	; flags
 ;	and		al, 40h		;flVolumetric
 ;	cmp		al, 40h
 	test	ax, 40h

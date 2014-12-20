@@ -45,5 +45,8 @@ CHECK_VID_RESTART_OPTION "r__detail_density"
 CHECK_VID_RESTART_OPTION "r2_lens_flare"
 CHECK_VID_RESTART_OPTION "r2_lens_dirt"
 CHECK_VID_RESTART_OPTION "r2_volumetric_lights"
+CHECK_VID_RESTART_OPTION "r2_lights_shadow_fade"
+CHECK_VID_RESTART_OPTION "r2_ao"
+CHECK_VID_RESTART_OPTION "r2_ao_intensity"
 	jmp no_vid_restart
 CUIOptionsItem__SaveValue_fix endp

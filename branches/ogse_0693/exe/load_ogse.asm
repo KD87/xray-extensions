@@ -88,6 +88,9 @@ g_CTextureDescrMngr__LoadLTX dd 0
 g_CTextureDescrMngr__LoadTHM dd 0
 g_CRenderTarget__phase_smap_spot dd 0
 g_CRender__reset_begin dd 0
+g_CRenderTarget__phase_smap_direct dd 0
+g_CRenderTarget__phase_accumulator dd 0
+g_CRenderTarget__accum_volumetric_spot dd 0
 
 s_render_import_table STRUCT
 	dd g_CRenderTarget__phase_combine		;0h
@@ -114,6 +117,9 @@ s_render_import_table STRUCT
 	dd g_CRenderTarget__accum_direct		;54h
 	dd g_CRenderTarget__phase_smap_spot		;58h
 	dd g_CRender__reset_begin				;5Ch
+	dd g_CRenderTarget__phase_smap_direct	;60h
+	dd g_CRenderTarget__phase_accumulator	;64h
+	dd g_CRenderTarget__accum_volumetric_spot	;68h
 s_render_import_table ENDS
 
 g_RenderImportsTable s_render_import_table <>
@@ -159,5 +165,8 @@ init_external_libs proc
 	GET_PROC_ADDR g_ogse_lib_hinst, "CTextureDescrMngr__LoadTHM", g_CTextureDescrMngr__LoadTHM
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__phase_smap_spot", g_CRenderTarget__phase_smap_spot
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRender__reset_begin", g_CRender__reset_begin
+	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__phase_smap_direct", g_CRenderTarget__phase_smap_direct
+	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__phase_accumulator", g_CRenderTarget__phase_accumulator
+	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__accum_volumetric_spot", g_CRenderTarget__accum_volumetric_spot
 	retn
 init_external_libs endp

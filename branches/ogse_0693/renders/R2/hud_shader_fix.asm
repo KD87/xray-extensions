@@ -852,17 +852,17 @@ CRender__render_forward_fix proc
 	mov     eax, [ecx]
 	push    offset sorted_L1
 	push    eax
-;	call    FixedMAP_float_R_dsgraph___MatrixItemS__recurseRL
-	call    FixedMAP_float_R_dsgraph___MatrixItemS__recurseLR
+	call    FixedMAP_float_R_dsgraph___MatrixItemS__recurseRL
+;	call    FixedMAP_float_R_dsgraph___MatrixItemS__recurseLR
 loc_1000D28D:
 	; добавляем своё
 	push    offset RI
 	call    R_dsgraph_structure__r_dsgraph_render_hud_sorted
 	; идём обратно
-;	jmp back_from_CRender__render_forward_fix
+	jmp back_from_CRender__render_forward_fix
 
-	mov     [esi+164h], ebx
-	and     dword_1007AC64, 0FFFFFFF7h
-	pop     ebx
-	retn
+;	mov     [esi+164h], ebx
+;	and     dword_1007AC64, 0FFFFFFF7h
+;	pop     ebx
+;	retn
 CRender__render_forward_fix endp

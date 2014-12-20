@@ -4288,3 +4288,9 @@ org 10257BB9h - shift
 back_from_customzonefix:
 org 1019EF50h - shift
 sub_1019EF50:
+
+; экспорт состояния включенности для источника света фонаря актора
+org 101DE0A2h - shift
+	jmp	actor_torch_light
+org 101DE0A7h - shift
+back_from_actor_torch_light:
