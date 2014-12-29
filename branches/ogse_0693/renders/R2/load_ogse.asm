@@ -25,6 +25,7 @@ g_CRender__reset_begin dd 0
 g_CRenderTarget__phase_smap_direct dd 0
 g_CRenderTarget__phase_accumulator dd 0
 g_CRenderTarget__accum_volumetric_spot dd 0
+;g_R_dsgraph_structure__r_dsgraph_render_lods dd 0
 
 init_external_libs:
 	mov		ecx, [eax]
@@ -108,6 +109,9 @@ init_external_libs:
 	mov		ecx, [eax+68h]
 	mov		ecx, [ecx]
 	mov		g_CRenderTarget__accum_volumetric_spot, ecx	
+;	mov		ecx, [eax+6Ch]
+;	mov		ecx, [ecx]
+;	mov		g_R_dsgraph_structure__r_dsgraph_render_lods, ecx	
 
 	mov     eax, [esp+0Ch]
 	mov     ecx, [eax]

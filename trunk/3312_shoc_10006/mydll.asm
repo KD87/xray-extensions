@@ -148,6 +148,8 @@ include armor_piercing_fix.asm
 include game_object_destructor_fix.asm
 include customzone_fix.asm
 include actor_torch_light.asm
+include carbody_scroll_fix.asm
+include anims_name_fix.asm
 
 _CODE ENDS
 
