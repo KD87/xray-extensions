@@ -318,6 +318,8 @@ org 10066CF0h - shift
 	jmp override_crt_phase_smap_direct
 org 10060B30h - shift
 	jmp override_crt_phase_accumulator
+;org 1001C620h - shift
+;	jmp override_render_lods
 	
 ;org 1002FCE0h - shift
 ;	jmp override_l_export
@@ -340,9 +342,9 @@ psDeviceFlags dd ?
 org 1007AC64h - shift
 dword_1007AC64 dd ?
 
-org 10094135h - shift
+org 1005E6A0h - shift
 CRenderTarget__accum_spot:
-org 10094157h - shift
+org 1000ABA0h - shift
 CRender__render_indirect:
 org 1000A8D7h - shift
 	jmp volumetric_spot

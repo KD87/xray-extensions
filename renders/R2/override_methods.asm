@@ -155,3 +155,14 @@ override_crt_phase_accumulator:
 	call	g_CRenderTarget__phase_accumulator
 	pop		ecx
 	retn	
+	
+;override_render_lods:
+;	push	ecx
+;	mov		ecx, [esp+8]
+;	push	edx
+;	push	1
+;	push	1
+;	call	g_R_dsgraph_structure__r_dsgraph_render_lods
+;	pop		edx
+;	pop		ecx
+;	retn	4

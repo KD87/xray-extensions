@@ -63,6 +63,7 @@
 0x10004470 5	; CRender::reset_end()
 0x10066CF0 5	; CRenderTarget::phase_smap_direct()
 0x10060B30 5	; CRenderTarget::phase_accumulator()
+;0x1001C620 5	; R_dsgraph_structure::r_dsgraph_render_lods()
 ;hack to prevent full loading R2 in R1-mode
 0x10002DC9 5	; dllmain hack
 0x1000A8D7 5	; volumetric spot
