@@ -266,7 +266,11 @@ no_item1:
 	add     eax, 40h			; slot_idx*10h
 	mov     eax, [eax+4]		; pItem
 	cmp     eax, ebx
+ifdef OGSE_BUILD
 	jz      short no_item2
+else
+	jz      short no_item3
+endif
 	call    sub_10418330
 	mov     ecx, [edi+binocular]	; obj
 	mov     edx, [ecx]
@@ -296,7 +300,11 @@ no_item3:
 	add     eax, 90h			; slot_idx*10h
 	mov     eax, [eax+4]		; pItem
 	cmp     eax, ebx
+ifdef OGSE_BUILD
 	jz      short no_item4
+else
+	jz      short no_item7
+endif
 	call    sub_10418330
 	mov     ecx, [edi+torch]	; obj
 	mov     edx, [ecx]
