@@ -385,8 +385,10 @@ CUIInventoryWnd__GetSlotList proc	;103BC590
 ifdef OGSE_BUILD
 	sub     eax, 2
 	jz      short is_detector	; eax == 8
-endif
 	sub     eax, 1
+else
+	sub     eax, 3
+endif
 	jz      short is_torch		; eax == 9
 ifdef OGSE_BUILD
 	sub     eax, 1
