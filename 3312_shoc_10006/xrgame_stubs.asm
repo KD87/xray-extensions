@@ -4294,3 +4294,32 @@ org 101DE0A2h - shift
 	jmp	actor_torch_light
 org 101DE0A7h - shift
 back_from_actor_torch_light:
+
+; фикс сброса положения скролла при перекладывании вещей
+org 103CBEE0h - shift
+CUICarBodyWnd__UpdateLists:
+org 1041B920h - shift
+CUIScrollBar__UpdateScrollBar:
+org 103CC100h - shift
+	jmp	carbody_scroll_fix
+org 103CC133h - shift
+back_from_carbody_scroll_fix:
+
+
+; отладка анимок
+org 10076229h - shift
+	jmp	anims_name_fix_1
+org 1007622Eh - shift
+back_from_anims_name_fix_1:
+org 100762BBh - shift
+	jmp	anims_name_fix_2
+org 100762C0h - shift
+back_from_anims_name_fix_2:
+org 100762CCh - shift
+	jmp	anims_name_fix_3
+org 100762D1h - shift
+back_from_anims_name_fix_3:
+org 100FA47Bh - shift
+	jmp	anims_name_fix_4
+org 100FA481h - shift
+back_from_anims_name_fix_4:

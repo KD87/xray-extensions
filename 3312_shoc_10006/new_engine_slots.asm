@@ -80,6 +80,7 @@ sucsess_alloc2:
 	add     esp, 8
 	mov     ecx, ebp
 	call    loc_103BBB40
+ifdef OGSE_BUILD
 ; detector
 	mov     ecx, ds:Memory
 	push    0B0h
@@ -111,6 +112,7 @@ sucsess_alloc3:
 	add     esp, 8
 	mov     ecx, ebp
 	call    loc_103BBB40
+endif
 ; torch
 	mov     ecx, ds:Memory
 	push    0B0h
@@ -142,6 +144,7 @@ sucsess_alloc4:
 	add     esp, 8
 	mov     ecx, ebp
 	call    loc_103BBB40
+ifdef OGSE_BUILD
 ; helmet
 	mov     ecx, ds:Memory
 	push    0B0h
@@ -235,6 +238,7 @@ sucsess_alloc7:
 	add     esp, 8
 	mov     ecx, ebp
 	call    loc_103BBB40
+endif
 	jmp	back_to_CUIInventoryWnd__Init__	;103BA6B2
 
 	; создание объектов CUICellItem для слотов
@@ -269,6 +273,7 @@ no_item1:
 	push    eax
 	mov     eax, [edx+90h]
 	call    eax
+ifdef OGSE_BUILD
 no_item2:
 ; detector	
 	mov     ecx, [edi+26A8h]	; Inventory
@@ -283,6 +288,7 @@ no_item2:
 	push    eax
 	mov     eax, [edx+90h]
 	call    eax
+endif
 no_item3:
 ; torch	
 	mov     ecx, [edi+26A8h]	; Inventory
@@ -297,6 +303,7 @@ no_item3:
 	push    eax
 	mov     eax, [edx+90h]
 	call    eax
+ifdef OGSE_BUILD
 no_item4:
 ; helmet	
 	mov     ecx, [edi+26A8h]	; Inventory
@@ -339,6 +346,7 @@ no_item6:
 	push    eax
 	mov     eax, [edx+90h]
 	call    eax
+endif
 no_item7:
 	jmp back_toCUIInventoryWnd__InitInventory__		;103BBD95
 	
@@ -366,16 +374,20 @@ CUIInventoryWnd__GetSlotList proc	;103BC590
 	jz      short is_binocular	; eax == 4
 	sub     eax, 2
 	jz      short is_outfit		; eax == 6
+ifdef OGSE_BUILD
 	sub     eax, 2
 	jz      short is_detector	; eax == 8
+endif
 	sub     eax, 1
 	jz      short is_torch		; eax == 9
+ifdef OGSE_BUILD
 	sub     eax, 1
 	jz      short is_helmet		; eax == 10
 	sub     eax, 1
 	jz      short is_nv			; eax == 11
 	sub     eax, 1
 	jz      short is_biodetector	; eax == 12
+endif
 	; fix end
 	jmp     short no_slot
 is_outfit:  	
@@ -387,6 +399,7 @@ is_automatic:
 is_pistol: 
 	mov     eax, [edx+10B0h]
 	retn
+ifdef OGSE_BUILD
 is_biodetector:     
 	mov     eax, [edx+biodetector]
 	retn
@@ -396,12 +409,15 @@ is_nv:
 is_helmet:     
 	mov     eax, [edx+helmet]
 	retn
+endif
 is_torch:     
 	mov     eax, [edx+torch]
 	retn
+ifdef OGSE_BUILD
 is_detector:     
 	mov     eax, [edx+detector]
 	retn
+endif
 is_binocular:     
 	mov     eax, [edx+binocular]
 	retn
@@ -438,12 +454,15 @@ CUIInventoryWnd__ClearAllLists proc	;103BC5E0
 	mov     eax, [esi+binocular]
 	push    1
 	call    sub_10418D70	
+ifdef OGSE_BUILD
 	mov     eax, [esi+detector]
 	push    1
 	call    sub_10418D70	
+endif
 	mov     eax, [esi+torch]
 	push    1
 	call    sub_10418D70	
+ifdef OGSE_BUILD
 	mov     eax, [esi+helmet]
 	push    1
 	call    sub_10418D70	
@@ -453,6 +472,7 @@ CUIInventoryWnd__ClearAllLists proc	;103BC5E0
 	mov     eax, [esi+biodetector]
 	push    1
 	call    sub_10418D70	
+endif
 	; end of new code place
 	pop     ecx
 	retn
@@ -463,9 +483,9 @@ CInventory__Init__:
 	add     eax, 90h
 	; новое
 	mov     eax, [esi+38h]
+ifdef OGSE_BUILD
 	mov     [eax+0A9h], bl	; helmet
 	mov     [eax+0B9h], bl	; nightvision
-ifdef OGSE_BUILD
 	mov     [eax+0C9h], bl	; biodetector
 endif
 		jmp back_to_CInventory__Init__
