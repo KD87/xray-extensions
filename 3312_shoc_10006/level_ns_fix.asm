@@ -200,6 +200,9 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	call    esi
 	mov     ecx, eax
 	call    esi
+	; для get_target_element
+	mov     ecx, eax
+	call    esi
 	; для get_tri_vertex1/2/3
 	mov     ecx, eax
 	call    esi	
