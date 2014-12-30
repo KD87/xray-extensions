@@ -34,8 +34,10 @@ REGISTER_CC_FLOAT2 phTimefactor, "ph_timefactor", 0.0, 10.0
 REGISTER_CC_FLOAT2 phGravity, "ph_gravity", 0.0, 100.0
 REGISTER_CC_FLAG psActorFlags, 8, "g_unlimitedammo"
 REGISTER_CC_FLAG psActorFlags, 1, "g_god"
-;REGISTER_CC_FLAG psGameFlags, 1, "g_storyline_music"
-;REGISTER_CC_FLAG psGameFlags, 2, "hud_date"
+ifdef PZ_BUILD
+	REGISTER_CC_FLAG psGameFlags, 1, "g_storyline_music"
+	REGISTER_CC_FLAG psGameFlags, 2, "hud_date"
+endif
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
@@ -60,4 +62,6 @@ ifdef OGSE_BUILD
 endif
 
 phGravity dd 19.62
-;psGameFlags dd 1
+ifdef PZ_BUILD
+	psGameFlags dd 1
+endif
