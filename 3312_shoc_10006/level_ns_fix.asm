@@ -93,6 +93,8 @@ PERFORM_EXPORT_LEVEL__VOID__FLOAT               CE_Set_Amplitude, "set_ce_amplit
 PERFORM_EXPORT_LEVEL__VOID__FLOAT               CE_Set_PeriodNumber, "set_ce_period_number"
 PERFORM_EXPORT_LEVEL__VOID__FLOAT               CE_Set_Power, "set_ce_power"
 PERFORM_EXPORT_LEVEL__BOOL__VOID                CE_Add, "add_ce"
+; возвращает номер элемента на который смотрим
+PERFORM_EXPORT_LEVEL__INT__INT                  GetTargetElement, "get_target_element"
 ; =========================================================================================
 ; ======================================= END =============================================
 ; ===========================================================================
@@ -808,6 +810,15 @@ CE_Add proc
 	call    ds:CCameraManager__AddCamEffector
 	retn
 CE_Add endp
+
+; возвращает номер элемента на который смотрим
+GetTargetElement proc
+	mov     eax, [g_hud] ; CCustomHUD * g_hud
+	mov     ecx, [eax]
+	call    CCustomHUD__GetRQ ; eax = RQ
+	mov     eax, [eax+8] ; return EQ.element
+	retn
+GetTargetElement endp
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================

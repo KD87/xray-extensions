@@ -95,13 +95,15 @@ arg4 = dword ptr 8h
 	retn
 SetFloatArgs34 endp
 
-; default settings
-g_hud_inertia_factor dd 5.0 ; TENDTO_SPEED
-g_hud_inertia_param_2 dd 0.050000001 ; CHWON_CALL_UP_SHIFT
-
-; PZ settings
-;g_hud_inertia_factor dd 5.0
-;g_hud_inertia_param_2 dd 0.07
+ifdef PZ_BUILD
+	; PZ settings
+	g_hud_inertia_factor dd 5.0
+	g_hud_inertia_param_2 dd 0.07
+else
+	; default settings
+	g_hud_inertia_factor dd 5.0 ; TENDTO_SPEED
+	g_hud_inertia_param_2 dd 0.050000001 ; CHWON_CALL_UP_SHIFT
+endif
 
 SetHudInertia proc
 hud_inertia = dword ptr 4h
