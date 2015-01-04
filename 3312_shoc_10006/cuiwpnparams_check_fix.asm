@@ -22,6 +22,10 @@ CUIWpnParams__Check_fix:
 	; делаем свое
 	CUIWPN_PARAMS_CHECK_SECTION "wpn_knife"
 	CUIWPN_PARAMS_CHECK_SECTION "mp_wpn_knife"
+	ifdef OGSE_BUILD
+		CUIWPN_PARAMS_CHECK_SECTION "wpn_knife_m1"
+		CUIWPN_PARAMS_CHECK_SECTION "wpn_montirovka"
+	endif
 	; делаем вырезанное
 	CUIWPN_PARAMS_CHECK_SECTION "wpn_binoc"
 	; возвращаемся
