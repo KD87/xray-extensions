@@ -91,6 +91,7 @@ g_CRender__reset_begin dd 0
 g_CRenderTarget__phase_smap_direct dd 0
 g_CRenderTarget__phase_accumulator dd 0
 g_CRenderTarget__accum_volumetric_spot dd 0
+;g_FProgressive__Render dd 0
 ;g_R_dsgraph_structure__r_dsgraph_render_lods dd 0
 
 s_render_import_table STRUCT
@@ -121,7 +122,8 @@ s_render_import_table STRUCT
 	dd g_CRenderTarget__phase_smap_direct	;60h
 	dd g_CRenderTarget__phase_accumulator	;64h
 	dd g_CRenderTarget__accum_volumetric_spot	;68h
-;	dd g_R_dsgraph_structure__r_dsgraph_render_lods	;6Ch
+;	dd g_FProgressive__Render	;6Ch
+;	dd g_R_dsgraph_structure__r_dsgraph_render_lods	;70h
 s_render_import_table ENDS
 
 g_RenderImportsTable s_render_import_table <>
@@ -170,6 +172,7 @@ init_external_libs proc
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__phase_smap_direct", g_CRenderTarget__phase_smap_direct
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__phase_accumulator", g_CRenderTarget__phase_accumulator
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__accum_volumetric_spot", g_CRenderTarget__accum_volumetric_spot
+;	GET_PROC_ADDR g_ogse_lib_hinst, "FProgressive__Render", g_FProgressive__Render
 ;	GET_PROC_ADDR g_ogse_lib_hinst, "R_dsgraph_structure__r_dsgraph_render_lods", g_R_dsgraph_structure__r_dsgraph_render_lods
 	retn
 init_external_libs endp

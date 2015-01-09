@@ -156,7 +156,11 @@ override_crt_phase_accumulator:
 	pop		ecx
 	retn	
 	
+;override_fp_render:
+;	jmp		g_FProgressive__Render
+	
 ;override_render_lods:
+;	retn 4
 ;	push	ecx
 ;	mov		ecx, [esp+8]
 ;	push	edx
