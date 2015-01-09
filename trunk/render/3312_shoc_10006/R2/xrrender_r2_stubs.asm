@@ -873,3 +873,15 @@ org 100024DAh - shift
 	jmp	sun_near_fix_label
 org 100024E1h - shift
 back_from_sun_near_fix_label:
+
+;===========================================
+; Фикс отрисовки самосветящейся геометрии
+;===========================================
+org 1003BBF8h - shift
+	db 2
+org 1003BBFCh - shift
+	db 1
+org 1003BCB8h - shift
+	db 2
+org 1003BCBCh - shift
+	db 1

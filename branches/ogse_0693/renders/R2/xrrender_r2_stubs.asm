@@ -320,6 +320,9 @@ org 10060B30h - shift
 	jmp override_crt_phase_accumulator
 ;org 1001C620h - shift
 ;	jmp override_render_lods
+;	retn 4
+;org 10042A00h - shift
+;	jmp override_fp_render
 	
 ;org 1002FCE0h - shift
 ;	jmp override_l_export
@@ -350,3 +353,6 @@ org 1000A8D7h - shift
 	jmp volumetric_spot
 org 1000A8FEh - shift
 back_from_volumetric_spot:
+
+;org 1006E680h - shift
+;	dd 100.0
