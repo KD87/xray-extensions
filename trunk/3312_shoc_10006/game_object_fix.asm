@@ -14,9 +14,9 @@ REGISTER_BOOL__GO register_move_to_belt, "move_to_belt" ; --
 REGISTER_BOOL__GO register_move_to_slot, "move_to_slot" ; --
 REGISTER_BOOL__GO register_move_to_slot_and_activate, "move_to_slot_and_activate" ; --
 
-REGISTER_BOOL__GO register_can_move_to_slot, "can_move_to_slot" ; --
-REGISTER_BOOL__GO register_can_move_to_ruck, "can_move_to_ruck" ;--
-REGISTER_BOOL__GO register_can_move_to_belt, "can_move_to_belt" ; --
+;REGISTER_BOOL__GO register_can_move_to_slot, "can_move_to_slot" ; --
+;REGISTER_BOOL__GO register_can_move_to_ruck, "can_move_to_ruck" ;--
+;REGISTER_BOOL__GO register_can_move_to_belt, "can_move_to_belt" ; --
 
 REGISTER_FLOAT__INT register_get_actor_float, "get_actor_float"
 REGISTER_VOID__VECTOR_FLOAT_INT register_set_actor_float, "set_actor_float"
@@ -153,7 +153,7 @@ game_object_fix proc
 	; регистрируем функцию получения предмета из инвентарного ящика по номеру
 	PERFORM_EXPORT_GO__INT register_item_in_inv_box, CScriptGameObject__item_in_inv_box
 	; test get_id
-	PERFORM_EXPORT_INT__VOID CScriptGameObject__GetID, "get_id"
+	;PERFORM_EXPORT_INT__VOID CScriptGameObject__GetID, "get_id"
 	; регистрируем функцию установки коэффициента спринта для актора
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetSprintFactor, "set_sprint_factor"
 	; регистрируем функцию получения коэффициента спринта для актора
@@ -161,7 +161,7 @@ game_object_fix proc
 	; регистрируем функцию получения состояния актора
 	PERFORM_EXPORT_UINT__VOID CScriptGameObject__ActorBodyState, "actor_body_state"
 	; регистрируем функцию получения видимости актора
-	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetActorVisible, "get_actor_visible"
+	;PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetActorVisible, "get_actor_visible"
 	
 	; регистрируем функцию получения max weight
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetActorMaxWeight, "get_actor_max_weight"
@@ -245,7 +245,7 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_wpn_float, CScriptGameObject__SetWeaponFloat
 	
 	
-	PERFORM_EXPORT_UINT__VOID CScriptGameObject__IsGameObject, "is_game_object"
+	;PERFORM_EXPORT_UINT__VOID CScriptGameObject__IsGameObject, "is_game_object"
 
 	; регистрируем функцию получения FOV актора
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetCameraFOV, "get_camera_fov"
@@ -255,7 +255,7 @@ game_object_fix proc
 	PERFORM_EXPORT_FLOAT__INT register_get_custom_monster_float, CScriptGameObject__GetCustomMonsterFloat
 	PERFORM_EXPORT_INT__STRING_INT register_get_custom_monster_int, CScriptGameObject__GetCustomMonsterInt
 
-	PERFORM_EXPORT_VOID__STRING CScriptGameObject__TestStr, "test_str"
+	;PERFORM_EXPORT_VOID__STRING CScriptGameObject__TestStr, "test_str"
 	PERFORM_EXPORT_STRING__VOID CScriptGameObject__GetActorSharedStr, "get_actor_shared_str"
 	PERFORM_EXPORT_INT__STRING_INT register_set_actor_shared_str, CScriptGameObject__SetActorSharedStr
 	
@@ -325,7 +325,6 @@ game_object_fix proc
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsPhysicsShellHolder, "is_physics_shell_holder"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsGrenade,            "is_grenade"
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsBottleItem,         "is_bottle_item"
-	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__IsEatableItem,        "is_eatable_item"
 	
 	PERFORM_EXPORT_VECTOR__STRING register_get_hud_bone_pos, CScriptGameObject__hud_bone_position
 	
@@ -2102,7 +2101,7 @@ CScriptGameObject__SetWeaponInt endp
 
 
 CScriptGameObject__GetHudBoneID proc
-stub  = dword ptr  8
+bone_name  = dword ptr  8
 pos   = dword ptr  0Ch
 	push    ebp
 	mov     ebp, esp
@@ -5229,9 +5228,17 @@ CScriptGameObject__EnableCarPanel proc
 is_visible = byte ptr  8
 	push    ebp
 	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	call    CScriptGameObject__CActor
+	; eax = actor
+	test    eax, eax
+	jz      exit
+
 	xor     eax, eax
 	mov     al, [ebp+is_visible]
 	mov     [g_car_panel_visible], eax
+exit:
 	mov     esp, ebp
 	pop     ebp
 	retn    4
