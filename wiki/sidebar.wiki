@@ -1,5 +1,6 @@
   * [list_of_fixes Список правок]
     * [global_ns глобальные функции и из глобальных пространств имён]
+      * [test1#test2 тест]
     * [game_object game_object]
       * [game_object_general для всех типов]
         * [type_check проверка типа объекта, получение адреса базового объекта]
