@@ -1,5 +1,5 @@
   * [list_of_fixes Список правок]
-    * [game_object добавочные методы]
+    * [game_object game_object]
       * [game_object_general для всех типов]
         * [type_check проверка типа объекта, получение адреса базового объекта]
     * [tradability_grouping Управление торгуемостью, группированием и подсветкой]
