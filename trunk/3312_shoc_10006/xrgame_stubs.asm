@@ -4407,3 +4407,13 @@ org 100FA47Bh - shift
 	jmp	anims_name_fix_4
 org 100FA481h - shift
 back_from_anims_name_fix_4:
+
+
+org 100FF264h - shift
+	jmp critical_hit_anim_fix
+org 100FF277h - shift
+back_from_critical_hit_anim_fix:
+
+; отключение автосейва
+org 101BE8C0h - shift
+	retn 4
