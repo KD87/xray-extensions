@@ -305,40 +305,6 @@ end</code>
 
 *local pos = hud_item:get_hud_bone_pos(bone_name)*
 
-== Функции определения типа объекта ==
-
-*[ТЧ]* Добавлен ряд функций, которые позволяют на уровне движка определить класс объекта, (требуется клиентский объект, game_object). Возвращают true/false в зависимости от принадлежности объекта к заданному классу:
-
-is_entity_alive<br>
-is_inventory_owner<br>
-is_trader<br>
-is_actor<br>
-is_custom_monster<br>
-is_monster<br>
-is_stalker<br>
-is_holder<br>
-is_inventory_box<br>
-is_inventory_item<br>
-is_hud_item<br>
-is_weapon<br>
-is_weapon_magazined<br>
-is_weapon_gl<br>
-is_medkit<br>
-is_eatable_item<br>
-is_antirad<br>
-is_outfit<br>
-is_scope<br>
-is_silencer<br>
-is_grenade_launcher<br>
-is_space_restrictor<br>
-is_anomaly<br>
-is_explosive<br>
-is_script_zone<br>
-is_projector<br>
-is_artefact<br>
-is_ammo<br>
-is_missile<br>
-
 == Фикс функции disable_info_portion ==
 *[ТЧ]* В начале функции вставлена проверка, чтобы при отсутствии нужной инфопорции функция не делала вообще ничего. Смысл фикса в удалении ненужных действий, в частности обновления диалоговых окон. Без этого фикса постоянно сбрасывается позиция скроллинга списка ответов в диалоге разговора, из-за чего становится проблематично добавить больше вариантов ответов, чем влезает в видимую область окна.
 
