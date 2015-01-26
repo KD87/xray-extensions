@@ -19,6 +19,7 @@ ifdef OGSE_BUILD
 	REGISTER_CC_INT2   g_ogse_energy_drink_bind, "ogse_energy_drink_bind", 0, 07FFFFFFFh
 	REGISTER_CC_INT2   g_ogse_yod_bind,          "ogse_yod_bind",          0, 07FFFFFFFh
 	REGISTER_CC_INT2   g_ogse_bipsizon_bind,     "ogse_bipsizon_bind",     0, 07FFFFFFFh
+	REGISTER_CC_FLAG   g_ogse_flag,     	1h,  "write_debug_log"
 endif
 
 ; =========================================================================================
@@ -63,6 +64,7 @@ ifdef OGSE_BUILD
 	g_ogse_energy_drink_bind dd 100000
 	g_ogse_yod_bind          dd 100000
 	g_ogse_bipsizon_bind     dd 100000
+	g_ogse_flag			     dd 0
 endif
 
 phGravity dd 19.62

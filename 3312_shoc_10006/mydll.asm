@@ -150,6 +150,7 @@ include customzone_fix.asm
 include actor_torch_light.asm
 include carbody_scroll_fix.asm
 include anims_name_fix.asm
+include critical_hit_anim_fix.asm
 
 _CODE ENDS
 
