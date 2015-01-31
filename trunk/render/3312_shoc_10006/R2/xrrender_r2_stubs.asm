@@ -885,3 +885,24 @@ org 1003BCB8h - shift
 	db 2
 org 1003BCBCh - shift
 	db 1
+	
+;------------------------------------------
+; r2_sun_near_border [0,5..1,5]
+; исправляем глюк тени на краю экрана.
+;------------------------------------------
+
+org 10089888h - shift
+unk_10089888:
+
+org 10002523h - shift	; 2 bytes
+	nop
+	nop
+
+org 1000252Fh - shift	; 7 bytes
+	nop
+	nop
+	jmp		r2_sun_near_border_EXT_CHUNK
+	
+org 10002544h - shift
+r2_sun_near_border_EXT_CHUNK_OUT:
+	

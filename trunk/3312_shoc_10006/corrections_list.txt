@@ -160,7 +160,7 @@
 ;0x101C85CF 6 ;jmp CActor__Update_fix
 ;0x101C8946 5	;2
 
-;kstn
+;kstn-------------->
 ;Перекл. на болт + откл/вкл колеса мышки для переключения м/у слотами
 0x101DEEA0 7 ; jmp CActor__OnNextWeaponSlot
 0x101DEF40 7 ; jmp CActor__OnPrevWeaponSlot
@@ -171,6 +171,20 @@
 
 ;Коллбэк актора на выделение предмета в инвентаре
 0x103E1B28 5 ; jmp CUIItemInfo__InitItem_EXT_CHUNK
+
+;Исправление растянутых иконок подбираемых предметов на 16:9
+0x103D24BB 6 ; jmp CUIMainIngameWnd__UpdatePickUpItem_EXT_CHUNK
+
+;Исправление растянутых иконок патронов в ui актора на 16:9
+0x103D0D70 6 ; jmp CUIMainIngameWnd__SetAmmoIcon_EXT_CHUNK
+
+;Исправление статистики в КПК (Вариант 1: расчёт по очками)
+0x101AE902 3
+
+;Исправление статистики в КПК (Вариант 2: расчёт по штукам)
+;0x101AE8FD 8
+;0x104C5118 4
+;------------------<
 
 ; добавляем метод установки выбранного элемента в CUIListWnd
 0x10420423 5 ; jmp CUIListWnd__script_register_fix
