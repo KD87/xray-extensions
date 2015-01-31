@@ -4417,3 +4417,37 @@ back_from_critical_hit_anim_fix:
 ; отключение автосейва
 org 101BE8C0h - shift
 	retn 4
+
+;-------------------------------------------------------
+; Исправление растянутых иконок подбираемых предметов на 16:9
+;-------------------------------------------------------
+
+org 103D24BBh - shift	; 6 bytes
+	nop
+	jmp		CUIMainIngameWnd__UpdatePickUpItem_EXT_CHUNK
+	
+org 103D24E0h - shift
+CUIMainIngameWnd__UpdatePickUpItem_EXT_CHUNK_OUT:
+
+;------------------------------------------------------------
+; Исправление растянутых иконок патронов в ui актора на 16:9
+;------------------------------------------------------------
+
+org 103D0D70h - shift	; 6 bytes
+	nop
+	jmp		CUIMainIngameWnd__SetAmmoIcon_EXT_CHUNK
+	
+;------------------------------------------------------------
+; Исправление формулы рассчёта статистики убийств в КПК
+;------------------------------------------------------------
+
+org 101AE902h - shift	; 3 bytes
+	mov [eax+10h], ecx
+
+org 101AE8FDh - shift	; 8 bytes
+	dword	90909090h
+	nop
+	mov [eax+10h], ecx
+
+org 104C5118h - shift	; 4 bytes
+	aXD db "%d",0
