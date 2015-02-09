@@ -16,5 +16,7 @@
         * [CUIListWnd__SetSelectedItem метод установки выбранного элемента в CUIListWnd]
         * [CUIComboBox]
         * [cyrillic_lng поддержка русского языка при вводе текста]
+        * [CUITalkWnd]
+        * [CUIStatic]
     * [tradability_grouping Управление торгуемостью, группированием и подсветкой]
   * [new_collbacks Добавленные колбеки]
