@@ -24,5 +24,6 @@
             * [CUIStatic__SetVTextAlign]
             * [CUIStatic__SetTextPos]
             * [CUIStatic__CanRotate]
+            * [CUIStatic#test]
     * [tradability_grouping Управление торгуемостью, группированием и подсветкой]
   * [new_collbacks Добавленные колбеки]
