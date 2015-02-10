@@ -4451,3 +4451,23 @@ org 101AE8FDh - shift	; 8 bytes
 
 org 104C5118h - shift	; 4 bytes
 	aXD db "%d",0
+	retn 4
+
+; фикс вылета there is no proper graph point neighbour
+org 100563A5h - shift
+db	0EBh			; this is jmp rel8 opcode
+org 10056920h - shift
+	jmp game_graph__distance_fix
+org 100569C9h - shift
+loc_100569C9: 
+org 10056925h - shift
+back_from_game_graph__distance_fix:
+
+; отключение движкового удаления патронов из неписей после смерти
+org 100FA371h - shift
+db 90h
+db 0E9h
+db 0DCh
+db 00
+db 00
+db 00
