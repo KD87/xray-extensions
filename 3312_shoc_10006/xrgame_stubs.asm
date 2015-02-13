@@ -4123,7 +4123,7 @@ back_from_CUIEventsWnd__OnFilterChanged_fix:
 org 103DA780h - shift
 CUIEventsWnd__ReloadList:
 ; =========================================================================================
-; коллбек на хит ГГ от монстра или НПС
+; коллбек на появление хитэффектора от монстра или НПС
 org 101C6D69h - shift
 	jmp CActor__HitMark_callback
 org 101C6D71h - shift
@@ -4471,3 +4471,7 @@ db 0DCh
 db 00
 db 00
 db 00
+
+;------------- ; -==НаноБот==-
+org 10560718h - shift
+dword_10560718 dd ?
