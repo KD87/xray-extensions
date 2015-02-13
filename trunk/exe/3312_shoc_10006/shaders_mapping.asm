@@ -145,7 +145,7 @@ script_setup proc
 ; вычисление константы	
 
 	movss   xmm0, sunshafts_exposure	;x
-	xorps   xmm1, xmm1					;y
+	movss   xmm1, sunshafts_density		;y
 	xorps   xmm2, xmm2					;z
 	xorps   xmm3, xmm3					;w
 ; регистрация константы в системе 

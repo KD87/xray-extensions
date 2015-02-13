@@ -102,7 +102,10 @@ PERFORM_EXPORT_LEVEL__INT__INT                  GetTargetElement, "get_target_el
 PERFORM_EXPORT_LEVEL__VECTOR__INT               Level__GetTriangleVertex1, "get_tri_vertex1"
 PERFORM_EXPORT_LEVEL__VECTOR__INT               Level__GetTriangleVertex2, "get_tri_vertex2"
 PERFORM_EXPORT_LEVEL__VECTOR__INT               Level__GetTriangleVertex3, "get_tri_vertex3"
-
+;------------< регистрируем функции получения свойства статического треугольника по индексу: простреливаемость>------
+PERFORM_EXPORT_LEVEL__FLOAT__STR_INT_BOOL_STR	Level__GetMtlShootFactor, "get_tri_shootfactor"
+;------------< регистрируем функции получения свойства статического треугольника по индексу: флаги>------
+PERFORM_EXPORT_LEVEL__INT__INT					Level__GetMtlFlags, 	"get_tri_flags"
 
 ;PRINT "all_registered"
 ;--------------------------------------
@@ -210,6 +213,12 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	call    esi	
 	mov     ecx, eax
 	call    esi	
+	; get_tri_shootfactor
+	mov     ecx, eax
+	call    esi
+	; get_tri_flags
+	mov     ecx, eax
+	call    esi
 ; идём обратно
 	jmp back_to_level_ns_ext_2
 
@@ -838,6 +847,8 @@ index = dword ptr  0Ch
 	
 	mov     eax, [ebp + index] ; results.element
 	;PRINT_UINT "index = %d", eax
+	cmp		eax, -1				; проверка на -1
+	jz		exit
 	mov     ecx, ds:g_pGameLevel
 	mov     ecx, [ecx]      ; ecx = game_level address
 	mov     esi, [ecx+0DCh] ; tri array
@@ -864,7 +875,14 @@ index = dword ptr  0Ch
 	mov     edx, [ecx+8]
 	;PRINT_UINT "tri3 = %d", edx
 	mov     [eax+8], edx
-
+	jmp		return
+exit:
+	mov     eax, [ebp+res]
+	xor		edx, edx
+	mov     [eax], edx
+	mov     [eax+4], edx
+	mov     [eax+8], edx
+return:
 	pop esi
 	pop edi
 	pop     edx
@@ -885,6 +903,8 @@ index = dword ptr  0Ch
 	push esi
 	
 	mov     eax, [ebp + index] ; results.element
+	cmp		eax, -1
+	jz		exit
 	mov     ecx, ds:g_pGameLevel
 	mov     ecx, [ecx]      ; ecx = game_level address
 	mov     esi, [ecx+0DCh] ; tri array
@@ -903,7 +923,14 @@ index = dword ptr  0Ch
 	mov     [eax+4], edx
 	mov     edx, [ecx+8]
 	mov     [eax+8], edx
-
+	jmp		return
+exit:
+	mov     eax, [ebp+res]
+	xor		edx, edx
+	mov     [eax], edx
+	mov     [eax+4], edx
+	mov     [eax+8], edx
+return:
 	pop esi
 	pop edi
 	pop     edx
@@ -924,6 +951,8 @@ index = dword ptr  0Ch
 	push esi
 	
 	mov     eax, [ebp + index] ; results.element
+	cmp		eax, -1
+	jz		exit
 	mov     ecx, ds:g_pGameLevel
 	mov     ecx, [ecx]      ; ecx = game_level address
 	mov     esi, [ecx+0DCh] ; tri array
@@ -942,7 +971,14 @@ index = dword ptr  0Ch
 	mov     [eax+4], edx
 	mov     edx, [ecx+8]
 	mov     [eax+8], edx
-
+	jmp		return
+exit:
+	mov     eax, [ebp+res]
+	xor		edx, edx
+	mov     [eax], edx
+	mov     [eax+4], edx
+	mov     [eax+8], edx
+return:
 	pop esi
 	pop edi
 	pop     edx
@@ -951,3 +987,87 @@ index = dword ptr  0Ch
 	pop     ebp
 	retn    
 Level__GetTriangleVertex3 endp
+
+; --------=====НаноБот=====---------
+Level__GetMtlShootFactor proc		
+arg0 = dword ptr 8		; string
+arg1 = dword ptr 0Ch	; integer
+arg2 = byte  ptr 10h	; boolean (byte)
+arg3 = dword ptr 14h	; string
+	push    ebp
+	mov     ebp, esp
+	push    ecx
+	push    edx
+	push 	esi
+	;----------------------
+	;mov     eax, [ebp + arg0] 	; 
+	;PRINT_UINT "arg0 = %s", eax
+	;movzx	eax, [ebp + arg2] 	; 
+	;PRINT_UINT "arg2 = %d", eax
+	;mov     eax, [ebp + arg3] 	; 
+	;PRINT_UINT "arg3 = %s", eax
+	;----------------------
+	mov     eax, [ebp + arg1]	; results.element
+	;PRINT_UINT "element = %d", eax
+	cmp		eax, -1
+	jz		exit
+	mov     ecx, ds:g_pGameLevel
+	mov     ecx, [ecx]
+	mov     esi, [ecx+0DCh] 	; tri array
+	shl     eax, 4				; eax = results.element * 8
+	mov     cx,  [eax+esi+0Ch]
+	and     cx,	 3FFFh
+	movzx   edx, cx				; hit_material_idx
+	mov     eax, ds:dword_10560718
+	mov     ecx, [eax+edx*4]	; ecx = mtl
+	fld 	dword ptr [ecx+28h]	; в стек сопроцессора
+	;mov	ecx, [ecx+28h]		; ecx = mtl->fShootFactor
+	;PRINT_FLOAT "MtlShootFactor=%f", ecx
+	jmp		return
+exit:
+	fldz						; в стек сопроц. ноль
+return:
+	;----------------------
+	pop 	esi
+	pop     edx
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn    
+Level__GetMtlShootFactor  endp
+; --------===============---------
+
+; --------=====НаноБот=====---------
+Level__GetMtlFlags proc		
+index = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	push    ecx
+	push    edx
+	push 	esi
+	;----------------------
+	mov     eax, [ebp + index] 	;[g_int_argument_0]	; results.element
+	;PRINT_UINT "element = %d", eax
+	inc		eax
+	jz		exit				; if (element != -1)
+	dec		eax					; {
+	mov     ecx, ds:g_pGameLevel
+	mov     ecx, [ecx]
+	mov     esi, [ecx+0DCh] 	; tri array
+	shl     eax, 4				; eax = results.element * 8
+	mov     cx,  [eax+esi+0Ch]
+	and     cx,	 3FFFh
+	movzx   edx, cx				; hit_material_idx
+	mov     eax, ds:dword_10560718
+	mov     ecx, [eax+edx*4]	; ecx = mtl
+	mov		eax, [ecx+0Ch]		; eax = mtl->Flags
+exit:							; }
+	;----------------------
+	pop 	esi
+	pop     edx
+	pop     ecx
+	mov     esp, ebp
+	pop     ebp
+	retn    
+Level__GetMtlFlags  endp
+; --------===============---------
