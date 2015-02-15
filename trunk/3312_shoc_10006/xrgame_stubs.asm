@@ -4475,3 +4475,27 @@ db 00
 ;------------- ; -==НаноБот==-
 org 10560718h - shift
 dword_10560718 dd ?
+
+; фикс аттача нескольких вещей
+org 10207DF1h - shift
+db	0EBh			; this is jmp rel8 opcode
+
+; фикс подсчета суммарных очков статистики
+org 10203430h - shift
+	nop
+	nop
+	nop
+	nop
+
+; фикс визуала актора
+org 1024C2D2h - shift
+	jmp actor_visual_fix
+org 1024C2D8h - shift
+back_from_actor_visual_fix:
+org 1024C35Fh - shift
+loc_1024C35F:
+
+org 102049E1h - shift
+	jmp actor_visual_drop_fix
+org 102049E8h - shift
+back_from_actor_visual_drop_fix:
