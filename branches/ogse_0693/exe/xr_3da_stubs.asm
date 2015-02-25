@@ -574,3 +574,18 @@ org 0048D0E1h - shift
 	jmp cblender_cpp_compile_hack
 org 0048D0FCh - shift
 back_from_cblender_cpp_compile_hack:
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; фикс вертикальной синхронизации
+org 0048A879h - shift
+	jmp vsync_fix_1
+org 0048A883h - shift
+back_from_vsync_fix_1:
+
+org 0048B095h - shift
+	jmp vsync_fix_2
+org 0048B09Ch - shift
+back_from_vsync_fix_2:
+
+org 0048B3C0h - shift
+CHW__selectPresentInterval:

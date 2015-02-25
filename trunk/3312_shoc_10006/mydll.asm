@@ -154,6 +154,7 @@ include critical_hit_anim_fix.asm
 include widescreen_fixes.asm
 include game_graph_distance_fix.asm
 include actor_visual_fix.asm
+include quicksave_fix.asm
 
 _CODE ENDS
 

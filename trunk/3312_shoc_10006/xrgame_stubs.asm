@@ -4499,3 +4499,20 @@ org 102049E1h - shift
 	jmp actor_visual_drop_fix
 org 102049E8h - shift
 back_from_actor_visual_drop_fix:
+
+org 1017E5BDh - shift
+	jmp quicksave_fix
+org 1017E5C7h - shift
+back_from_quicksave_fix:
+
+org 1053C93Ch - shift
+dd 5
+org 101A7081h - shift
+db	0EBh			; this is jmp rel8 opcode
+
+org 1017E8E6h - shift
+	jmp quicksave_fix2
+org 1017E8ECh - shift
+back_from_quicksave_fix2:
+org 100106E0h - shift
+sub_100106E0:

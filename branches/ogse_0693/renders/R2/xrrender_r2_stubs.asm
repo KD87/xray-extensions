@@ -354,5 +354,17 @@ org 1000A8D7h - shift
 org 1000A8FEh - shift
 back_from_volumetric_spot:
 
-;org 1006E680h - shift
-;	dd 100.0
+org 1000BA86h - shift
+	jmp hemi_update_fix
+org 1000BAB6h - shift
+back_from_hemi_update_fix:
+
+org 10034420h - shift
+CROS_impl__update:
+org 10069370h - shift
+IRenderable__renderable_ROS dd ?
+
+org 100350ADh - shift
+	jmp hemi_smooth_fix
+org 100350B5h - shift
+back_from_hemi_smooth_fix:

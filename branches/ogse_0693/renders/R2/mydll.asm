@@ -28,6 +28,7 @@ include load_ogse.asm
 include override_methods.asm
 include dllmain.asm
 include volumetric_spot_fix.asm
+include hemi_update_fix.asm
 
 _code ENDS
 
