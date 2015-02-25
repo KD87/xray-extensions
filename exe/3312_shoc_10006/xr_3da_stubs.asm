@@ -171,3 +171,18 @@ back_to_rain_drop_angle:
 ;; время жизни блудмарков
 org 004D8F60h - shift
 	dd 0.001 ;(16 мин)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; фикс вертикальной синхронизации
+org 0048A879h - shift
+	jmp vsync_fix_1
+org 0048A883h - shift
+back_from_vsync_fix_1:
+
+org 0048B095h - shift
+	jmp vsync_fix_2
+org 0048B09Ch - shift
+back_from_vsync_fix_2:
+
+org 0048B3C0h - shift
+CHW__selectPresentInterval:

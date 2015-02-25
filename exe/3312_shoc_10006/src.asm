@@ -27,6 +27,7 @@ include console_comm_reg_macro.asm
 include console_comm.asm
 include loadscreen_fix.asm
 include weather_parameters.asm
+include vsync_fix.asm
 
 _code ENDS
 
