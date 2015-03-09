@@ -3504,6 +3504,9 @@ _atexit:
 org 104589C0h - shift
 CConsole__AddCommand dd ?
 
+org 10458690h - shift
+CConsole__Execute dd ?
+
 org 104587FCh - shift
 CCC_Integer__CCC_Integer dd ?
 
@@ -4500,19 +4503,27 @@ org 102049E1h - shift
 org 102049E8h - shift
 back_from_actor_visual_drop_fix:
 
-org 1017E5BDh - shift
+; фикс квиксейва
+org 101A7090h - shift
 	jmp quicksave_fix
-org 1017E5C7h - shift
-back_from_quicksave_fix:
 
-org 1053C93Ch - shift
-dd 5
 org 101A7081h - shift
 db	0EBh			; this is jmp rel8 opcode
 
-org 1017E8E6h - shift
-	jmp quicksave_fix2
-org 1017E8ECh - shift
-back_from_quicksave_fix2:
-org 100106E0h - shift
-sub_100106E0:
+; фикс очистки базы отношений
+org 1005C7F8h - shift
+	jmp clear_relations_before_deleting
+org 1005C801h - shift
+back_from_clear_relations_before_deleting:
+org 102138B0h - shift
+RELATION_REGISTRY__relation_registry:
+org 10069DB0h - shift
+SRelation_map__find:
+org 1005E8F0h - shift
+SRelation_map__erase:
+org 10004430h - shift
+CAI_Space__ai:
+org 102145A0h - shift
+RELATION_DATA_map__find:
+org 10214420h - shift
+CALifeRegistryWrapper__objects_ptr:
