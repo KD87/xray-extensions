@@ -455,7 +455,9 @@ game_object_fix proc
 	; =========================================================================================
 	; ======================================= END =============================================
 	; =========================================================================================
-
+	
+	PERFORM_EXPORT_VOID__INT CScriptGameObject__ClearRelations, "clear_relations"
+	
 	; идём обратно
 	jmp back_from_game_object_fix
 game_object_fix endp
@@ -6240,6 +6242,22 @@ CScriptGameObject__GetHudAnimationLength endp
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
+
+
+CScriptGameObject__ClearRelations proc
+id_ = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	movzx	eax, word ptr[ebp+id_]
+	push	eax
+	call	RELATION_REGISTRY__ClearRelations
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__ClearRelations endp
 
 CScriptGameObject__GetObjectArg1 proc
 	mov		eax, g_object_arg_1
