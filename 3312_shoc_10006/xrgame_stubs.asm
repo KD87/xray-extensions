@@ -4527,3 +4527,9 @@ org 102145A0h - shift
 RELATION_DATA_map__find:
 org 10214420h - shift
 CALifeRegistryWrapper__objects_ptr:
+
+; фикс вылета по анимке критхита для анимслотов > 3
+org 100FF284h - shift
+	jmp global_critical_hit_anim_fix
+org 100FF28Ah - shift
+back_from_global_critical_hit_anim_fix:
