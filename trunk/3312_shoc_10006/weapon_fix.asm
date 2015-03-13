@@ -1,27 +1,20 @@
 UpdateAddonsVisibility_fix proc
-	; делаем вырезанный фрагмент беред врезкой
-	; пришлось сместить место врезки на несколько команда ранее,
-	; поскольку в нужном нам месте стоит команда, зависимая от таблицы релокаций
-	test    eax, eax
-	jz      short lab1
-	push    1
-	push    0
-	push    ebx
-	mov     ecx, esi
-	call    ebp ; CKinematics__LL_SetBoneVisible
-lab1:
-	;PRINT "UpdateAddonsVisibility_fix 1"
+	;
 	; делаем что хотели сделать
 	; вызываем колбек для объекта оружия
-	push edx
 	push ecx
 	push eax
 	push edi
 	;
+	movzx eax, byte ptr [edi + 936]
+	;PRINT_UINT "UpdateAddonsVisibility: %x", eax
+	test eax, 040h
+	jz disable_callback
+	;PRINT "UpdateAddonsVisibility_fix 1"
 	;PRINT_UINT "object: %x", edi
-	;jmp disable_callback
-	push    777 ; адрес флагов игнора в стеке
-	push    888 ; параметры хита
+	
+	push    777 ; заглушка
+	push    888 ; заглушка
 	push    154 ; константа - тип колбека
 	mov     ecx, edi ; this
 	add     ecx, 0d8h
@@ -38,7 +31,6 @@ disable_callback:
 	pop edi
 	pop eax
 	pop ecx
-	pop edx
 	;
 	;PRINT "UpdateAddonsVisibility_fix 2"
 	; делаем вырезанное
@@ -59,23 +51,26 @@ disable_callback:
 UpdateAddonsVisibility_fix endp
 
 UpdateHUDAddonsVisibility_fix proc
-	push edx
 	push ecx
 	push eax
-	push edi
+	
+	movzx eax, byte ptr [ebp + 936]
+	;PRINT_UINT "UpdateHUDAddonsVisibility: %x", eax
+	test eax, 040h
+	jz disable_callback
+	;PRINT "UpdateHUDAddonsVisibility 1"
 	;
-	push    777 ; адрес флагов игнора в стеке
-	push    888 ; параметры хита
+	push    777 ; заглушка
+	push    888 ; заглушка
 	push    155 ; константа - тип колбека
 	mov     ecx, ebp ; this
 	add     ecx, 0d8h
 	call    CGameObject__callback ; eax = callback
 	push    eax ; callback
 	call    script_callback_int_int
-	pop edi
+disable_callback:
 	pop eax
 	pop ecx
-	pop edx
 
 	; делаем вырезанное
 	push    ebx
@@ -86,3 +81,45 @@ UpdateHUDAddonsVisibility_fix proc
 	jmp back_from_UpdateHUDAddonsVisibility_fix
 UpdateHUDAddonsVisibility_fix endp
 aWpn_scope db "wpn_scope", 0
+
+CWeaponMagazinedWGrenade__UseScopeTexture_fix proc
+	mov    al, byte ptr [ecx+3A8h] ; m_flagsAddOnState
+	and     al, 080h
+	jz     go_as_usual
+	xor     eax, eax
+	;mov     eax, 1
+	retn
+go_as_usual:
+	mov     eax, [ecx+3B4h]
+	cmp     eax, 2 ; IsGrenadeLauncherAttached()
+	jnz     short loc_1022B3D3
+	test    [ecx+3A8h], al
+	jnz     short loc_1022B3D8
+loc_1022B3D3:
+	cmp     eax, 1 ; m_bGrenadeMode
+	jnz     short return_true
+loc_1022B3D8:
+	cmp     byte ptr [ecx+958h], 0
+	jz      short return_true
+	xor     eax, eax ; return false
+	retn
+; ---------------------------------------------------------------------------
+return_true:
+	mov     eax, 1 ; return true
+	retn
+CWeaponMagazinedWGrenade__UseScopeTexture_fix endp
+
+CWeapon__UseScopeTexture_fix proc
+	mov     al, [ecx+3A8h] ; m_flagsAddOnState
+	and     eax, 080h
+	jnz     lab1
+	; return true
+	mov     eax, 1
+	;PRINT_UINT "eax=%x", eax
+	retn
+lab1:
+	; return false
+	xor     eax, eax
+	;PRINT_UINT "eax=%x", eax
+	retn
+CWeapon__UseScopeTexture_fix endp

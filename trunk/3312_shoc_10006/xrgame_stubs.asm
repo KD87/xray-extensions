@@ -2,6 +2,112 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+;.text:102278F0 CWeaponMagazined__InitAddons proc near  ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+3p
+
+;.text:10227DA4                 call    ds:?r_float@CInifile@@QAEMABVshared_str@@PBD@Z ; CInifile::r_float(shared_str const &,char const *)
+org 10227DAAh - shift
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+;.text:10227DAA                 fstp    dword ptr [edi+3ECh]
+;.text:10227DB0                 mov     eax, [esp+20h+var_4]
+
+
+
+org 102EB14Ch - shift
+cse_abstract__register_string__void:
+
+org 1018367Bh - shift
+cse_alife_object__register_readonly_u32:
+
+;.text:102EA47E CSE_Abstract__script_register proc near ; CODE XREF: sub_1019000A+5Dp
+;
+;.text:102EA53B                 call    sub_102EB14C
+org 102EA540h - shift
+	jmp CSE_Abstract__script_register_fix
+;.text:102EA540                 push    eax
+;.text:102EA541                 call    sub_102EB14C
+;.text:102EA546                 mov     ecx, eax
+;.text:102EA548                 xor     eax, eax
+;.text:102EA54A                 lea     edi, [ebp+var_8]
+;.text:102EA54D                 stosb
+;.text:102EA54E                 push    [ebp+var_8]
+
+
+
+
+;.text:1022B3C0 CWeaponMagazinedWGrenade__UseScopeTexture proc near
+org 1022B3C0h - shift
+	jmp CWeaponMagazinedWGrenade__UseScopeTexture_fix
+;.text:1022B3C0                 mov     eax, [ecx+3B4h]
+;.text:1022B3C6                 cmp     eax, 2
+;.text:1022B3C9                 jnz     short loc_1022B3D3
+;.text:1022B3CB                 test    [ecx+3A8h], al
+;.text:1022B3D1                 jnz     short loc_1022B3D8
+;.text:1022B3D3 loc_1022B3D3:
+;.text:1022B3D3                 cmp     eax, 1
+;.text:1022B3D6                 jnz     short loc_1022B3E4
+;.text:1022B3D8 loc_1022B3D8:
+;.text:1022B3D8                 cmp     byte ptr [ecx+958h], 0
+;.text:1022B3DF                 jz      short loc_1022B3E4
+;.text:1022B3E1                 xor     al, al
+;.text:1022B3E3                 retn
+;.text:1022B3E4 ; ---------------------------------------------------------------------------
+;.text:1022B3E4 loc_1022B3E4:
+;.text:1022B3E4                 mov     al, 1
+;.text:1022B3E6                 retn
+;.text:1022B3E6 CWeaponMagazinedWGrenade__UseScopeTexture endp
+
+org 1048ADD4h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 1048B7E4h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 1048BF0Ch - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 1048D1E4h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 1048F47Ch - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 1048FA4Ch - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 10490144h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 1049118Ch - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 1049175Ch - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 104921ACh - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 1049278Ch - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 1049325Ch - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 10493E04h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 104943D4h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 10494994h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 10494F6Ch - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 10495554h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 10495C14h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 104961FCh - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 104967C4h - shift 
+dd offset CWeapon__UseScopeTexture_fix
+org 10496E0Ch - shift 
+dd offset CWeapon__UseScopeTexture_fix
+
+
+org 102EAFE4h - shift
+register_cse_abstract_u16_rw_prop:
+
 org 10481EECh - shift
 off_10481EEC dd ?
 
@@ -2720,8 +2826,8 @@ back_from_UpdateHUDAddonsVisibility_fix:
 
 
 ; фрагмент функции CWeapon__UpdateAddonsVisibility
-org 1021CA22h - shift
-	jmp UpdateAddonsVisibility_fix
+;org 1021CA22h - shift
+;	jmp UpdateAddonsVisibility_fix
 ;.text:1021CA22                 test    eax, eax
 ;.text:1021CA24                 jz      short loc_1021CA2F
 ;.text:1021CA26                 push    1
@@ -2730,8 +2836,13 @@ org 1021CA22h - shift
 ;.text:1021CA2B                 mov     ecx, esi
 ;.text:1021CA2D                 call    ebp ; CKinematics::LL_SetBoneVisible(ushort,int,int) ; CKinematics::LL_SetBoneVisible(ushort,int,int)
 ;.text:1021CA2F loc_1021CA2F:
+org 1021CA2Fh - shift
+	jmp short CWeapon__UpdateAddonsVisibility_lab
 ;.text:1021CA2F                 mov     ecx, esi ; <== это было
 ;.text:1021CA31                 call    ds:?CalculateBones_Invalidate@CKinematics@@QAEXXZ ; CKinematics::CalculateBones_Invalidate(void)
+org 1021CA37h - shift
+CWeapon__UpdateAddonsVisibility_lab:
+	jmp UpdateAddonsVisibility_fix
 ;.text:1021CA37                 mov     eax, [esi]
 ;.text:1021CA39                 mov     edx, [eax+40h]
 ;.text:1021CA3C                 push    0

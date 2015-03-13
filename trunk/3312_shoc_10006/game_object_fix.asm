@@ -47,9 +47,12 @@ REGISTER_INT__STRING_INT        register_get_memory_int,        "get_memory_int"
 REGISTER_VOID__INT_INT          register_set_memory_int,        "set_memory_int"
 REGISTER_INT__STRING_INT        register_get_memory_int16,      "get_memory_int16"
 REGISTER_VOID__INT_INT          register_set_memory_int16,      "set_memory_int16"
+REGISTER_INT__STRING_INT        register_get_memory_int8,      "get_memory_int8"
+REGISTER_VOID__INT_INT          register_set_memory_int8,      "set_memory_int8"
 
 REGISTER_INT__STRING_INT        register_save_hud_bone_float, "save_hud_bone_float"
 REGISTER_FLOAT__INT             register_get_hud_float, "get_hud_float"
+REGISTER_VOID__VECTOR_FLOAT_INT register_set_hud_float, "set_hud_float"
 ;--
 REGISTER_FLOAT__INT             register_get_inventory_item_float,      "get_inventory_item_float"
 REGISTER_VOID__VECTOR_FLOAT_INT register_set_inventory_item_float,      "set_inventory_item_float"
@@ -80,6 +83,7 @@ REGISTER_INT__STRING_INT register_get_bone_id, "get_bone_id"
 REGISTER_INT__STRING_INT register_get_hud_bone_id, "get_hud_bone_id"
 REGISTER_INT__STRING_INT register_set_wpn_bone_visible, "set_wpn_bone_visible"
 REGISTER_INT__STRING_INT register_set_hud_bone_visible, "set_hud_bone_visible"
+REGISTER_INT__STRING_INT register_get_hud_bone_visible, "get_hud_bone_visible"
 REGISTER_INT__STRING_INT register_get_wpn_bone_visible, "get_wpn_bone_visible"
 REGISTER_INT__STRING_INT register_get_bone_visible, "get_bone_visible"
 REGISTER_INT__STRING_INT register_set_bone_visible, "set_bone_visible"
@@ -202,6 +206,8 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__INT_INT          register_set_memory_int,             CScriptGameObject__SetMemoryInt
 	PERFORM_EXPORT_INT__STRING_INT        register_get_memory_int16,           CScriptGameObject__GetMemoryInt16
 	PERFORM_EXPORT_VOID__INT_INT          register_set_memory_int16,           CScriptGameObject__SetMemoryInt16
+	PERFORM_EXPORT_INT__STRING_INT        register_get_memory_int8,            CScriptGameObject__GetMemoryInt8
+	PERFORM_EXPORT_VOID__INT_INT          register_set_memory_int8,            CScriptGameObject__SetMemoryInt8
 	
 	PERFORM_EXPORT_STRING__VOID      CScriptGameObject__GetGameObjectSharedStr, "get_go_shared_str"
 	;--
@@ -236,6 +242,7 @@ game_object_fix proc
 	
 	PERFORM_EXPORT_INT__STRING_INT register_set_wpn_bone_visible, CScriptGameObject__SetWeaponBoneVisible
 	PERFORM_EXPORT_INT__STRING_INT register_set_hud_bone_visible, CScriptGameObject__SetHudBoneVisible
+	PERFORM_EXPORT_INT__STRING_INT register_get_hud_bone_visible, CScriptGameObject__GetHudBoneVisible
 	
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_bone_visible, CScriptGameObject__GetWeaponBoneVisible
 	PERFORM_EXPORT_INT__STRING_INT register_get_bone_visible, CScriptGameObject__GetBoneVisible
@@ -251,6 +258,10 @@ game_object_fix proc
 	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetCameraFOV, "get_camera_fov"
 	; регистрируем функцию установки FOV актора
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetCameraFOV, "set_camera_fov"
+	; регистрируем функцию получения FOV худа
+	;PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetHudFOV, "get_hud_fov"
+	; регистрируем функцию установки FOV худа
+	;PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetHudFOV, "set_hud_fov"
 	;
 	PERFORM_EXPORT_FLOAT__INT register_get_custom_monster_float, CScriptGameObject__GetCustomMonsterFloat
 	PERFORM_EXPORT_INT__STRING_INT register_get_custom_monster_int, CScriptGameObject__GetCustomMonsterInt
@@ -338,9 +349,14 @@ game_object_fix proc
 	PERFORM_EXPORT_VOID__VOID CScriptGameObject__UpdateCondition, "update_condition"
 	
 	PERFORM_EXPORT_VOID__STR_BOOL register_play_hud_anim, CScriptGameObject__PlayHudAnimation
+	PERFORM_EXPORT_VOID__INT CScriptGameObject__SetHudAnimationChannel, "set_hud_animation_channel"
+	PERFORM_EXPORT_VOID__INT CScriptGameObject__SetHudAnimationCallbackParam, "set_hud_animation_callback_param"
+	PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SetUseHudAnimationCallback, "set_use_hud_animation_callback"
+
 	
 	PERFORM_EXPORT_INT__STRING_INT register_save_hud_bone_float, CScriptGameObject__SaveHudBoneFloat
-	PERFORM_EXPORT_FLOAT__INT      register_get_hud_float, CScriptGameObject__GetHudFloat
+	PERFORM_EXPORT_FLOAT__INT             register_get_hud_float, CScriptGameObject__GetHudFloat
+	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_hud_float, CScriptGameObject__SetHudFloat
 	; lights management
 	PERFORM_EXPORT_VOID__VOID CScriptGameObject__CreateLight01,  "create_light01"
 	PERFORM_EXPORT_VOID__VOID CScriptGameObject__DestroyLight01, "destroy_light01"
@@ -2172,7 +2188,8 @@ visible   = dword ptr 0Ch
 	push    [ebp + bone_name] 
 	mov     ecx, eax ; pHudVisual
 	call    ds:CKinematics__LL_BoneID
-	
+	movzx   eax, ax
+	;----------
 	push    1
 	push    [ebp + visible]
 	push    eax ; bone_id
@@ -2191,6 +2208,54 @@ exit:
 	pop     ebp
 	retn    8
 CScriptGameObject__SetHudBoneVisible endp
+
+CScriptGameObject__GetHudBoneVisible proc
+bone_name = dword ptr 8
+visible   = dword ptr 0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	push    esi
+
+	call    CScriptGameObject__CHudItem
+	
+	mov     eax, [eax+16] ; eax == m_pHUD
+	movzx   ecx, byte ptr [eax+4]
+	test    ecx, ecx
+	jnz     exit_fail
+	
+	mov     eax, [eax+48h]
+	mov     ecx, [eax+8]    ; ecx == visual
+	test    ecx, ecx
+	jz      exit_fail
+	
+	mov     eax, [ecx]
+	mov     eax, [eax+18h]
+	call    eax             ; pHudVisual = smart_cast<CKinematics*>(m_pHUD->Visual());
+	test    eax, eax
+	jz      exit_fail
+	mov     esi, eax
+
+	push    [ebp + bone_name] 
+	mov     ecx, eax ; pHudVisual
+	call    ds:CKinematics__LL_BoneID
+	movzx   eax, ax
+	;----------
+	push    eax ; bone_id
+	mov     ecx, esi
+	call    ds:CKinematics__LL_GetBoneVisible
+	jmp     exit
+exit_fail:
+	mov     eax, -1
+exit:
+	
+	pop     esi
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+	;-----------
+CScriptGameObject__GetHudBoneVisible endp
 
 
 CScriptGameObject__GetBoneID proc
@@ -2409,6 +2474,18 @@ value = dword ptr  04h
 	mov     [g_fov], eax
 	retn    4
 CScriptGameObject__SetCameraFOV endp
+
+;CScriptGameObject__GetHudFOV proc
+;	fld     dword ptr [g_hud_fov]
+;	retn
+;CScriptGameObject__GetHudFOV endp
+;
+;CScriptGameObject__SetHudFOV proc
+;value = dword ptr  04h
+;	mov     eax, [esp+value]
+;	mov     [g_hud_fov], eax
+;	retn    4
+;CScriptGameObject__SetHudFOV endp
 
 CScriptGameObject__GetCustomMonsterFloat proc
 pos   = dword ptr  8
@@ -4572,6 +4649,99 @@ exit:
 	retn
 CScriptGameObject__UpdateCondition endp
 
+g_hud_animation_channel dd 0
+
+CScriptGameObject__SetHudAnimationChannel proc
+channel = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	mov eax, [ebp+channel]
+	mov [g_hud_animation_channel], eax
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetHudAnimationChannel endp
+
+g_hud_animation_callback_param dd 0
+
+CScriptGameObject__SetHudAnimationCallbackParam proc
+param = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	mov eax, [ebp+param]
+	PRINT_UINT "set anim callback param: %d", eax
+	mov [g_hud_animation_callback_param], eax
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetHudAnimationCallbackParam endp
+
+g_use_hud_animation_callback db 0
+
+CScriptGameObject__SetUseHudAnimationCallback proc
+param = byte ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	xor eax, eax
+	mov al, [ebp+param]
+	PRINT_UINT "set use anim: %d", eax
+	mov byte ptr [g_use_hud_animation_callback], al
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetUseHudAnimationCallback endp
+
+on_animation_end_callback proc
+B = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	mov     eax, [ebp+B]
+	PRINT_UINT "on_animation_end_callback: %x", eax
+	mov     eax, [eax+38h]
+	PRINT_UINT "value: %d", eax
+
+	
+	; вызываем колбек
+	push edx
+	push ecx
+	push eax
+	push edi
+	
+	;
+	mov     eax, [ebp+B]
+	push    eax ; указатель на объект blend - второй аргумент
+	PRINT_UINT "on_animation_end_callback: blend = %x", eax
+	mov     eax, [eax+38h]
+	push    eax ; переданный в колбек аргумент - первый аргумент
+	push    157 ; константа - тип колбека
+	mov     ecx, g_Actor
+	call    CGameObject__callback ; eax = callback
+	push    eax ; callback
+	; вызываем
+	call    script_callback_int_int
+	;
+	pop edi
+	pop eax
+	pop ecx
+	pop edx
+
+	mov     esp, ebp
+	pop     ebp
+	retn
+on_animation_end_callback endp
+
+
 CScriptGameObject__PlayHudAnimation proc
 motion_ID = dword ptr -4
 anim      = dword ptr  8
@@ -4593,12 +4763,33 @@ mix_in    = byte ptr  0Ch
 	push    eax
 	call    ds:CKinematicsAnimated__ID_Cycle
 	cmp     word ptr [ebp+motion_ID], 0FFFFh
-	jz      short exit_fail
+	jz      exit_fail
 	;mov     eax, [ebp+anim]
 	;PRINT_UINT "ready: %s", eax
-	push    0
-	push    0
-	push    0
+	mov eax, [g_hud_animation_channel]
+	;push    0
+	push eax
+	xor eax, eax
+	mov [g_hud_animation_channel], eax
+	;push    0
+	mov eax, [g_hud_animation_callback_param]
+	push eax
+	;PRINT_UINT "push callback param: %d", eax
+	; обнуляем параметр для последующих вызовов
+	xor eax,eax
+	mov [g_hud_animation_callback_param], eax
+	;push    0
+	;xor eax, eax
+	;mov al, byte ptr [g_use_hud_animation_callback]
+	;PRINT_UINT "use callback: %x", eax
+	;cmp eax, 0
+	cmp byte ptr [g_use_hud_animation_callback], 0
+	jz no_callback
+	;PRINT "use callback"
+	mov byte ptr [g_use_hud_animation_callback], 0
+	mov eax, offset on_animation_end_callback
+no_callback:
+	push eax
 	movzx   eax, [ebp+mix_in]
 	push    eax
 	mov     eax, [ebp+motion_ID]
@@ -4698,7 +4889,7 @@ pos = dword ptr  8
 	jz      exit
 	mov     eax, [eax+16] ; eax == m_pHUD
 	;PRINT_UINT "hud1=%x", eax
-	mov     ecx, [eax+72]
+	;mov     ecx, [eax+72]
 	;PRINT_MATRIX "hud_xform:", ecx
 	mov     ecx, [ebp + pos]
 	;PRINT_UINT "pos=%d", ecx
@@ -4710,6 +4901,36 @@ exit:
 	retn    4
 CScriptGameObject__GetHudFloat endp
 
+CScriptGameObject__SetHudFloat proc
+stub  = dword ptr  8
+value = dword ptr  0Ch
+pos   = dword ptr  10h
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	push    eax
+	push    ecx
+	push    edx
+
+	call    CScriptGameObject__CHudItem
+	test    eax, eax
+	jz      short exit_fail
+	
+	mov     eax, [eax+16] ; eax == m_pHUD
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [eax+ecx], edx
+exit_fail:
+	pop     edx
+	pop     ecx
+	pop     eax
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    0Ch
+CScriptGameObject__SetHudFloat endp
 
 CScriptGameObject__CreateLight01 proc
 	push esi
@@ -5195,6 +5416,41 @@ pos   = dword ptr  0Ch
 	pop     ebp
 	retn    8
 CScriptGameObject__GetMemoryInt16 endp
+
+CScriptGameObject__SetMemoryInt8 proc
+pos   = dword ptr  8
+value = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	push    edx
+	;---
+	mov     ecx, [ebp + pos]
+	mov     edx, [ebp + value]
+	mov    [ecx], dl
+	;---
+	pop     edx
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetMemoryInt8 endp
+
+CScriptGameObject__GetMemoryInt8 proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	
+	mov     ecx, [ebp + pos]
+	xor     eax, eax
+	mov     al, byte ptr [ecx]
+	;and     eax, 0FFFFh
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetMemoryInt8 endp
 
 
 CScriptGameObject__AttachVehicle proc
