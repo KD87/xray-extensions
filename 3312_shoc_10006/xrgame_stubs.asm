@@ -4623,9 +4623,13 @@ db	0EBh			; this is jmp rel8 opcode
 
 ; фикс очистки базы отношений
 org 1005C7F8h - shift
-	jmp clear_relations_before_deleting
+	jmp alife__release_callback
 org 1005C801h - shift
-back_from_clear_relations_before_deleting:
+back_from_alife__release_callback:
+org 10213AFDh - shift
+	jmp RELATION_REGISTRY__SetGoodwill_callback
+org 10213B02h - shift
+back_from_RELATION_REGISTRY__SetGoodwill_callback:
 org 102138B0h - shift
 RELATION_REGISTRY__relation_registry:
 org 10069DB0h - shift
