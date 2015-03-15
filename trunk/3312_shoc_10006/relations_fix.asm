@@ -1,142 +1,123 @@
-clear_relations_before_deleting proc
+alife__release_callback proc
 	mov		edx, [ebp+8h]
 	mov		eax, [edx]
 	mov		edx, [eax+7Ch]
 	call	edx
 	test	eax, eax
 	jz		no_monster_or_stalker
+
+	pusha
 	mov		edx, [ebp+8h]
 	add		edx, 36h
-	movzx	eax, word ptr [edx]
-	push	eax             ; person_id
+	movzx	edx, word ptr [edx]
+	push	edx
+	; вызываем очистку записи удаляемого непися
+	push	edx
 	call	RELATION_REGISTRY__ClearRelations
+	pop		edx
+	
+	; вызываем колбек, чтобы почистить из скриптов зависимые записи
+	xor		eax, eax
+	push	eax
+	push    edx 	; id
+	push    146
+	mov     ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_callback_int_int
+	popa
 	
 no_monster_or_stalker:
 	; делаем вырезанное
 	test	bl, bl
 	mov		byte ptr [esi+84h], 0
-	jmp	back_from_clear_relations_before_deleting
-clear_relations_before_deleting endp
+	jmp	back_from_alife__release_callback
+alife__release_callback endp
 
+; колбек на изменение репутации
+RELATION_REGISTRY__SetGoodwill_callback proc
+	; делаем вырезанное
+	mov     [eax], esi
+
+	; делаем свое
+	pusha
+	mov		eax, [ebp+0Ch]
+	push	eax		; to
+	mov		eax, [ebp+8h]
+	push    eax 	; from
+	push    145
+	mov     ecx, g_Actor
+	call    CGameObject__callback
+	push    eax
+	call    script_callback_int_int
+	popa
+	
+	; возвращаемся
+	pop     esi
+	mov     esp, ebp
+	jmp     back_from_RELATION_REGISTRY__SetGoodwill_callback
+RELATION_REGISTRY__SetGoodwill_callback endp
+
+; функция для удаления реестра отношений для объекта
 RELATION_REGISTRY__ClearRelations proc
-rel_it          = dword ptr -8
-_Where          = dword ptr -4
 person_id       = word ptr  4
 
-	sub     esp, 8
-	push    ebx
-	push    ebp
-	push    esi
-	push    edi
-	mov     ebp, 1
-	lea     esp, [esp+0]
-look_in_next_object:
 	call    RELATION_REGISTRY__relation_registry ; CRelationRegistryWrapper * RELATION_REGISTRY::relation_registry()
+	movzx   ecx, word ptr [esp+person_id]
 	mov     eax, [eax+4]
-	push    ebp             ; id
+	push    ecx             ; id
 	call    CALifeRegistryWrapper__objects_ptr ; CALifeRegistryWrapper<CALifeAbstractRegistry<ushort,RELATION_DATA>>::objects_ptr_no_insert(ushort)
 	test    eax, eax
-	jz      no_object_lets_see_next
-	cmp     bp, [esp+18h+person_id]
-	jnz     short this_is_not_deleting_object
+	jz      no_object
 	mov     edx, [eax]
 	mov     ecx, eax
 	mov     eax, [edx+4]
 	call    eax
 	; отладка
-	movzx	eax, [esp+18h+person_id]
-	PRINT_UINT "RELATIONS CLEARED FOR OBJECT %d", eax
-	
-	jmp     short no_object_lets_see_next
+;	movzx	eax, [esp+person_id]
+;	PRINT_UINT "RELATIONS CLEARED FOR OBJECT %d", eax
 
-this_is_not_deleting_object:                           ; CODE XREF: RELATION_REGISTRY::ClearRelations(ushort)+ADj
-	lea     esi, [eax+8]
-	lea     ebx, [esp+18h+person_id] ; _Keyval
-	lea     eax, [esp+18h+rel_it]
-	mov     ecx, esi
-	call    SRelation_map__find ; std::_Tree<std::_Tmap_traits<ushort,SRelation,std::less<ushort>,xalloc<std::pair<ushort,SRelation>>,0>>::find(ushort const &)
-	mov     eax, dword ptr [esp+18h+rel_it]
-	cmp     eax, [esi+4]
-	jz      short no_object_lets_see_next
-	push    eax			; what to delete
-	lea     ecx, [esp+1Ch+_Where]
-	push    ecx             ; last iterator
-	push    esi             ; this
-	call    SRelation_map__erase ; std::_Tree<std::_Tmap_traits<uint,CState<CAI_Boar> *,std::less<uint>,xalloc<std::pair<uint,CState<CAI_Boar> *>>,0>>::erase(std::_Tree_const_iterator<std::_Tree_val<std::_Tmap_traits<uint,CState<CAI_Boar> *,std::less<uint>,xalloc<std::pair<uint,CState<CAI_Boar> *>>,0>>>)
-	PRINT_UINT "RELATIONS TO OBJECT ERASED FOR OBJECT %d", ebp
-
-no_object_lets_see_next:
-	inc     ebp
-	mov     edx, 0FFFFh
-	cmp     bp, dx
-	jb      look_in_next_object
-	pop     edi
-	pop     esi
-	pop     ebp
-	pop     ebx
-	add     esp, 8
+no_object:
 	retn    4
 RELATION_REGISTRY__ClearRelations endp
 
-aDanger db "danger_", 0
-aFree db "free_", 0
+; функция для удаления записи отношений одного объекта к другому
+RELATION_REGISTRY__ClearPersonalRecord proc
+	rel_it			=	dword ptr -8
+	_Where			=	dword ptr -4
+	from	        =	word ptr  4
+	to              =	word ptr  8
 
-CALifeRegistryWrapper__objects_ptr_no_insert proc
-	I               = dword ptr -4
-	id              = word ptr  4
-
-	push    ecx
-	push    ebx             ; result
-	push    esi             ; this
-	mov     esi, eax
-	call    CAI_Space__ai ; ai(void)
-	cmp     dword ptr [eax+18h], 0
-	jnz     short simulator_present
-	lea     ecx, [esi+8]
-	lea     ebx, [esp+0Ch+id] ; _Keyval
-	lea     eax, [esp+0Ch+I]
-	call    RELATION_DATA_map__find ; std::_Tree<std::_Tmap_traits<ushort,RELATION_DATA,std::less<ushort>,xalloc<std::pair<ushort,RELATION_DATA>>,0>>::find(ushort const &)
-	mov     eax, dword ptr [esp+0Ch+I]
-	cmp     eax, [esi+0Ch]
-	jz      short no_object_found
-	pop     esi
-	add     eax, 10h
-	pop     ebx
-	pop     ecx
-	retn    4
-
-simulator_present: 
-	call    CAI_Space__ai ; ai(void)
-	mov     eax, [eax+18h]		; alife_simulator
-	mov     ecx, [eax+0Ch]
-	mov     edx, [eax+4]
-	mov     eax, [edx+eax+3Ch]
+	sub		esp, 8
+	push    esi
+	call    RELATION_REGISTRY__relation_registry ; CRelationRegistryWrapper * RELATION_REGISTRY::relation_registry()
+	mov     ecx, dword ptr [esp+0Ch+from] ; this
+	mov     eax, [eax+4]
+	push    ecx             ; id
+	call    CALifeRegistryWrapper__objects_ptr ; CALifeRegistryWrapper<CALifeAbstractRegistry<ushort,RELATION_DATA>>::objects_ptr(ushort)
 	test    eax, eax
-;	jz      short loc_1013B45D
-	jz      short exit_from_here
-	lea     esi, [eax+1Ch]
-;	jmp     short register_container_present
+	jz      short no_object_exit
 
-;loc_1013B45D:
-;	xor     esi, esi
+	lea     esi, [eax+8]
+	lea     ebx, [esp+0Ch+to] ; _Keyval
+	lea     eax, [esp+0Ch+rel_it]
+	mov     ecx, esi
+	call    SRelation_map__find ; std::_Tree<std::_Tmap_traits<ushort,SRelation,std::less<ushort>,xalloc<std::pair<ushort,SRelation>>,0>>::find(ushort const &)
+	mov     eax, dword ptr [esp+0Ch+rel_it]
+	cmp     eax, [esi+4]
+	jz      short no_object_exit
+	
+	push    eax
+	lea     edx, [esp+10h+_Where]
+	push    edx             ; _Where
+	push    esi             ; result
+	call    SRelation_map__erase ; std::_Tree<std::_Tmap_traits<uint,CState<CAI_Boar> *,std::less<uint>,xalloc<std::pair<uint,CState<CAI_Boar> *>>,0>>::erase(std::_Tree_const_iterator<std::_Tree_val<std::_Tmap_traits<uint,CState<CAI_Boar> *,std::less<uint>,xalloc<std::pair<uint,CState<CAI_Boar> *>>,0>>>)
+	; отладка
+;	movzx	eax, [esp+0Ch+to]
+;	PRINT_UINT "RELATION RECORD DELETED FOR OBJECT %d", eax
 
-register_container_present:
-	lea     ecx, [esi+8]
-	lea     ebx, [esp+0Ch+id] ; _Keyval
-	lea     eax, [esp+0Ch+I]
-	call    RELATION_DATA_map__find ; std::_Tree<std::_Tmap_traits<ushort,RELATION_DATA,std::less<ushort>,xalloc<std::pair<ushort,RELATION_DATA>>,0>>::find(ushort const &)
-	mov     eax, dword ptr [esp+0Ch+I]
-	cmp     eax, [esi+0Ch]
-	jz      short no_object_found
-	add     eax, 10h
-	jnz     short exit_from_here
-
-no_object_found:
-	xor     eax, eax
-
-exit_from_here:
+no_object_exit:
 	pop     esi
-	pop     ebx
-	pop     ecx
-	retn    4
-CALifeRegistryWrapper__objects_ptr_no_insert endp
+	add		esp, 8
+	retn    8
+RELATION_REGISTRY__ClearPersonalRecord endp

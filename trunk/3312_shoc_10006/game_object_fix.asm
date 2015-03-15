@@ -110,6 +110,8 @@ REGISTER_VOID__INT_INT_INT      register_change_goodwill_by_id, "change_goodwill
 
 REGISTER_INT__STRING_INT register_get_hud_animation_length, "get_hud_animation_length"
 
+REGISTER_VOID__INT_INT          register_clear_personal_record,      "clear_personal_record"
+
 ALIGN_8
 game_object_fix proc
 ; делаем то, что вырезали 
@@ -472,7 +474,8 @@ game_object_fix proc
 	; ======================================= END =============================================
 	; =========================================================================================
 	
-	PERFORM_EXPORT_VOID__INT CScriptGameObject__ClearRelations, "clear_relations"
+	;PERFORM_EXPORT_VOID__INT		CScriptGameObject__ClearRelations, "clear_relations"
+	PERFORM_EXPORT_VOID__INT_INT	register_clear_personal_record, CScriptGameObject__ClearPersonalRecord
 	
 	; идём обратно
 	jmp back_from_game_object_fix
@@ -6514,6 +6517,25 @@ id_ = dword ptr  8
 	pop     ebp
 	retn    4
 CScriptGameObject__ClearRelations endp
+
+CScriptGameObject__ClearPersonalRecord proc
+id_from = dword ptr  8
+id_to = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	movzx	eax, word ptr[ebp+id_to]
+	push	eax
+	movzx	eax, word ptr[ebp+id_from]
+	push	eax
+	call	RELATION_REGISTRY__ClearPersonalRecord
+	
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__ClearPersonalRecord endp
 
 CScriptGameObject__GetObjectArg1 proc
 	mov		eax, g_object_arg_1
