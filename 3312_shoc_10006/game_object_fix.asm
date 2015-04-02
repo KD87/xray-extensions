@@ -293,7 +293,7 @@ game_object_fix proc
 	; изменение скорости кровотечения
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__ChangeBleedingSpeed, "heal_wounds"
 	
-	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetCarShift,          "get_car_shift"
+	;PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetCarShift,          "get_car_shift"
 	
 	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetGameObject,        "is_game_object"
 	PERFORM_EXPORT_UINT__VOID CScriptGameObject__GetGameObject,        "cast_game_object"
@@ -360,16 +360,16 @@ game_object_fix proc
 	PERFORM_EXPORT_FLOAT__INT             register_get_hud_float, CScriptGameObject__GetHudFloat
 	PERFORM_EXPORT_VOID__VECTOR_FLOAT_INT register_set_hud_float, CScriptGameObject__SetHudFloat
 	; lights management
-	PERFORM_EXPORT_VOID__VOID CScriptGameObject__CreateLight01,  "create_light01"
-	PERFORM_EXPORT_VOID__VOID CScriptGameObject__DestroyLight01, "destroy_light01"
-	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLight01Range, "set_light01_range"
-	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLight01Angle, "set_light01_angle"
-	PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SetLight01Enabled, "set_light01_enabled"
-	PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SetLight01Shadow, "set_light01_shadow"
-	PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetLight01Enabled, "get_light01_enabled"
-	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetLight01Position, "set_light01_pos"
-	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetLight01Color, "set_light01_color"
-	PERFORM_EXPORT_VOID__INT CScriptGameObject__SetLight01Type, "set_light01_type"
+	;PERFORM_EXPORT_VOID__VOID CScriptGameObject__CreateLight01,  "create_light01"
+	;PERFORM_EXPORT_VOID__VOID CScriptGameObject__DestroyLight01, "destroy_light01"
+	;PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLight01Range, "set_light01_range"
+	;PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetLight01Angle, "set_light01_angle"
+	;PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SetLight01Enabled, "set_light01_enabled"
+	;PERFORM_EXPORT_VOID__BOOL CScriptGameObject__SetLight01Shadow, "set_light01_shadow"
+	;PERFORM_EXPORT_BOOL__VOID CScriptGameObject__GetLight01Enabled, "get_light01_enabled"
+	;PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetLight01Position, "set_light01_pos"
+	;PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetLight01Color, "set_light01_color"
+	;PERFORM_EXPORT_VOID__INT CScriptGameObject__SetLight01Type, "set_light01_type"
 	
 	PERFORM_EXPORT_VOID__VECTOR CScriptGameObject__SetCalibratingVector, "set_calibrating_vector"
 	
