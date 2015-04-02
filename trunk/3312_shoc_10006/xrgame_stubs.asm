@@ -4383,6 +4383,18 @@ org 101DE150h - shift
 org 101DE329h - shift
 loc_101DE329:
 ; =========================================================================================
+; включение миксовки анимаций у оружия с подствольником (bMixIn = on)
+org 1022A155h - shift ; CWeaponMagazinedWGrenade::switch2_Reload()
+	push    1
+org 1022B4F9h - shift ; CWeaponMagazinedWGrenade::PlayAnimShow()
+	push    1
+org 1022B66Eh - shift ; CWeaponMagazinedWGrenade::PlayAnimIdle() part 1
+	push    1
+org 1022B6A4h - shift ; CWeaponMagazinedWGrenade::PlayAnimIdle() part 2
+	push    1
+org 1022B847h - shift ; CWeaponMagazinedWGrenade::PlayAnimModeSwitch()
+	push    1
+; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
 
