@@ -38,8 +38,9 @@ ifdef DEBUG_COMMANDS
 	REGISTER_CC_FLAG psActorFlags, 1, "g_god"
 endif
 ifdef PZ_BUILD
-	REGISTER_CC_FLAG psGameFlags, 1, "g_storyline_music"
-	REGISTER_CC_FLAG psGameFlags, 2, "hud_date"
+	REGISTER_CC_FLAG g_storyline_music, 1h, "g_storyline_music"
+	REGISTER_CC_FLAG hud_date, 1h, "hud_date"
+	REGISTER_CC_FLAG dump_info, 1h, "dump_info"
 endif
 ; =========================================================================================
 ; ======================================= END =============================================
@@ -73,5 +74,7 @@ endif
 
 phGravity dd 19.62
 ifdef PZ_BUILD
-	psGameFlags dd 1
+	g_storyline_music dd 1
+	hud_date dd 1
+	dump_info dd 0
 endif

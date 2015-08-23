@@ -8,4 +8,5 @@ CALifeStoryRegistry__add_fix:
 
 aSh db "hud\scope", 0
 a_torso_5_aim_0 db "_torso_5_aim_0", 0
+aTracerTexture db "effects\bullet_tracer", 0
 TALK_DIST dd 150.0

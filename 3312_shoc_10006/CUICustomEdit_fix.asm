@@ -1,5 +1,5 @@
 CUICustomEdit_fix proc
-	PERFORM_EXPORT_CUIWND__FLOAT__VOID CUICustomEdit__GetTestValue, "get_test_value"
+	;PERFORM_EXPORT_CUIWND__FLOAT__VOID CUICustomEdit__GetTestValue, "get_test_value"
 
 	;
 	mov     ecx, eax
@@ -10,12 +10,12 @@ CUICustomEdit_fix proc
 
 CUICustomEdit_fix endp
 
-g_test_value dd  123.456
+;g_test_value dd  123.456
 
-CUICustomEdit__GetTestValue proc
-	fld     [g_test_value]
-	retn
-CUICustomEdit__GetTestValue endp
+;CUICustomEdit__GetTestValue proc
+;	fld     [g_test_value]
+;	retn
+;CUICustomEdit__GetTestValue endp
 
 g_input_language dd 0 ; 0 - eng, 1 - rus
 
@@ -50,7 +50,7 @@ letter_inserting:
 	jmp back_from_CUICustomEdit__KeyPressed_fix
 CUICustomEdit__KeyPressed_fix endp
 
-g_test_input_letter db 'ÿ'
+;g_test_input_letter db 'ÿ'
 
 ;                 ? esc 1 2 3 4 5 6 7 8 9 0 - = bk tb "qwertyuiop[]" ret lc "asdfghjkl;'" gr ls bs "zxcvbnm,." last - 52
 g_rus_char_map db 0,0,  0,0,0,0,0,0,0,0,0,0,0,0, 0, 0,"יצףךוםדרשחץת",  0, 0,"פûגאןנמכהז‎", 0, 0, 0,"ÿקסלטעüב‏"
