@@ -261,10 +261,10 @@ game_object_fix proc
 	; регистрируем функцию установки FOV актора
 	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetCameraFOV, "set_camera_fov"
 	; регистрируем функцию получения FOV худа
-	;PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetHudFOV, "get_hud_fov"
+	PERFORM_EXPORT_FLOAT__VOID CScriptGameObject__GetHudFOV, "get_hud_fov"
 	; регистрируем функцию установки FOV худа
-	;PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetHudFOV, "set_hud_fov"
-	;
+	PERFORM_EXPORT_VOID__FLOAT CScriptGameObject__SetHudFOV, "set_hud_fov"
+
 	PERFORM_EXPORT_FLOAT__INT register_get_custom_monster_float, CScriptGameObject__GetCustomMonsterFloat
 	PERFORM_EXPORT_INT__STRING_INT register_get_custom_monster_int, CScriptGameObject__GetCustomMonsterInt
 
@@ -2478,17 +2478,19 @@ value = dword ptr  04h
 	retn    4
 CScriptGameObject__SetCameraFOV endp
 
-;CScriptGameObject__GetHudFOV proc
+CScriptGameObject__GetHudFOV proc
 ;	fld     dword ptr [g_hud_fov]
-;	retn
-;CScriptGameObject__GetHudFOV endp
-;
-;CScriptGameObject__SetHudFOV proc
-;value = dword ptr  04h
-;	mov     eax, [esp+value]
+	fld     dword ptr ds:00506BA4h
+	retn
+CScriptGameObject__GetHudFOV endp
+
+CScriptGameObject__SetHudFOV proc
+value = dword ptr  04h
+	mov     eax, [esp+value]
 ;	mov     [g_hud_fov], eax
-;	retn    4
-;CScriptGameObject__SetHudFOV endp
+	mov     ds:00506BA4h, eax
+	retn    4
+CScriptGameObject__SetHudFOV endp
 
 CScriptGameObject__GetCustomMonsterFloat proc
 pos   = dword ptr  8
