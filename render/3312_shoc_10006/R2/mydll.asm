@@ -35,7 +35,6 @@ include shader_defines.asm		; установка дефайнов для шейдеров
 include	register_sampler_macro.asm	; макросы регистрации семплеров для шейдера
 include	register_sampler_combine.asm	; регистрация семплеров для CBlender_combine
 include	register_sampler_particle.asm	; регистрация семплеров для CBlender_Particle
-include	ikvision_blender.asm		; блендер ик-видения
 include noise_texture.asm		; шумовая текстура высокого разрешения
 include mip_bias_fix.asm
 include detail_bump.asm

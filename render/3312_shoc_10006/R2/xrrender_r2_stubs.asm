@@ -668,7 +668,9 @@ smooth_circle	REAL4 ?
 
 off dd offset det_dens_max_offset
 
+;===========================================
 ; тени травы
+;===========================================
 org 100690ECh - shift
 memmove_s dword ?
 org 1000D1C9h - shift
@@ -683,11 +685,15 @@ org 10027997h - shift
 org 100279C6h - shift
 back_to_sun_details_1_fix:
 
+;===========================================
 ; rt_position fix
+;===========================================
 org 1006679Ch - shift
 	jmp	rt_position_clear
 
+;===========================================
 ; bloodmarks
+;===========================================
 org 1000D0B6h - shift
 	jmp	bloodmarks
 org 1000D0BCh - shift
@@ -696,8 +702,9 @@ back_to_bloodmarks:
 org 10079480h - shift
 g_r dd 1
 
-
+;===========================================
 ; дефайны шейдеров
+;===========================================
 org 100059A2h - shift
 	nop
 	nop
@@ -734,13 +741,17 @@ shared_str__shared_str:
 org 1003CE80h - shift
 uber_deffer:
 
+;===========================================
 ; регистрация семплеров в combine-шейдере
+;===========================================
 org 1003ADEEh - shift
 	jmp combine_2_sampler_register
 org 1003ADF4h - shift
 back_to_combine_2_sampler_register:
 
+;===========================================
 ; добавление собственного блендера в CRenderTarget
+;===========================================
 org 10069698h - shift
 _Memory dd ?
 org 1006969Ch - shift
@@ -785,24 +796,18 @@ push 190h		; 180h по умолчанию
 	; увеличение места под экземпляр класса CRenderTarget в CRender::reset_end()
 org 10004773h - shift
 push 190h		; 180h по умолчанию
-	; инициализируем блендер и создаем шейдер на его основе
-org 100578C7h - shift
-	jmp	CRenderTarget_constructor
-org 100578CFh - shift
-back_to_CRenderTarget_constructor:
-	; добавляем переключение между шейдерами при рендере
-org 1006468Fh - shift
-	jmp	CRenderTarget_phase_combine_add
-org 10064694h - shift
-back_to_CRenderTarget_phase_combine_add:
 
-	; добавляем нойз-текстуру хорошего разрешения
+;===========================================
+; добавляем нойз-текстуру хорошего разрешения
+;===========================================
 org 10057871h - shift
 	jmp	noise_texture
 org 10057877h - shift
 back_to_noise_texture:
 
+;===========================================
 ; правильное положение солнца
+;===========================================
 org 1006E564h - shift
 __real@bf400000 dd 0.0
 org 10030515h - shift
