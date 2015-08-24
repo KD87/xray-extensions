@@ -886,11 +886,10 @@ org 1003BCB8h - shift
 org 1003BCBCh - shift
 	db 1
 	
-;------------------------------------------
+;===========================================
 ; r2_sun_near_border [0,5..1,5]
 ; исправл€ем глюк тени на краю экрана.
-;------------------------------------------
-
+;===========================================
 org 10089888h - shift
 unk_10089888:
 
@@ -905,4 +904,21 @@ org 1000252Fh - shift	; 7 bytes
 	
 org 10002544h - shift
 r2_sun_near_border_EXT_CHUNK_OUT:
-	
+
+;===========================================
+; увеличение скорости апдейта hemi для динамической геометрии
+;===========================================
+org 1000BA86h - shift
+	jmp hemi_update_fix
+org 1000BAB6h - shift
+back_from_hemi_update_fix:
+
+org 10034420h - shift
+CROS_impl__update:
+org 10069370h - shift
+IRenderable__renderable_ROS dd ?
+
+org 100350ADh - shift
+	jmp hemi_smooth_fix
+org 100350B5h - shift
+back_from_hemi_smooth_fix:
