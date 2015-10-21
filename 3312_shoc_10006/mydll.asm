@@ -156,6 +156,8 @@ include game_graph_distance_fix.asm
 include actor_visual_fix.asm
 include quicksave_fix.asm
 include relations_fix.asm
+include zoom_factor_fix.asm
+include art_activation_fix.asm
 
 _CODE ENDS
 

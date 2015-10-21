@@ -17,14 +17,17 @@ alife__release_callback proc
 	pop		edx
 	
 	; вызываем колбек, чтобы почистить из скриптов зависимые записи
-	xor		eax, eax
-	push	eax
-	push    edx 	; id
-	push    146
-	mov     ecx, g_Actor
-	call    CGameObject__callback
-	push    eax
-	call    script_callback_int_int
+;	xor		eax, eax
+;	push	eax
+;	push    edx 	; id
+;	push    146
+;	mov     ecx, g_Actor
+;	call    CGameObject__callback
+;	push    eax
+;	call    script_callback_int_int
+	
+;	PRINT_UINT "!DELETING OBJECT %d", edx
+	
 	popa
 	
 no_monster_or_stalker:

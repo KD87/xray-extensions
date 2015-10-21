@@ -4514,6 +4514,8 @@ org 103CBEE0h - shift
 CUICarBodyWnd__UpdateLists:
 org 1041B920h - shift
 CUIScrollBar__UpdateScrollBar:
+org 103CC1CFh - shift
+to_CUIWindow__Update:
 org 103CC100h - shift
 	jmp	carbody_scroll_fix
 org 103CC133h - shift
@@ -4664,3 +4666,28 @@ org 100FF284h - shift
 	jmp global_critical_hit_anim_fix
 org 100FF28Ah - shift
 back_from_global_critical_hit_anim_fix:
+
+; масштабирование scope_zoom_factor в зависимости от текущего fov
+org 1021CA90h - shift
+	jmp zoom_factor_fix1
+org 1022B3F0h - shift
+	jmp zoom_factor_fix4
+org 10234380h - shift
+	jmp zoom_factor_fix2
+org 102343F0h - shift
+	jmp zoom_factor_fix3
+	
+org 10459FB8h - shift
+dword_10459FB8 dd ?
+org 10459FACh - shift
+dword_10459FAC dd ?
+org 104D2410h - shift
+dword_104D2410 dd ?
+
+; исправление вылета при активации артефактов, не использующих ai_location
+org 102413C0h - shift
+	jmp art_activation_fix
+org 102413CBh - shift
+back_from_art_activation_fix:
+org 1011E010h - shift
+CLevelGraph__vertex__Fvector3:

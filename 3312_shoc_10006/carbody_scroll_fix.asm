@@ -14,6 +14,10 @@ carbody_scroll_fix proc
 	test    eax, eax
 	jz      loc_103CC133
 	mov     edx, [eax+24h]
+	; затычка от случая, когда инвентарь, откуда берем вещь, удаляется при открытом окне обмена
+	test	edx, edx
+	jz		to_CUIWindow__Update
+	; конец затычки
 	cmp     [edx+78h], ecx
 	jnz     loc_103CC133
 
