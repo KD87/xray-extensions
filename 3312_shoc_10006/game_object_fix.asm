@@ -4847,7 +4847,7 @@ pos   = dword ptr  0Ch
 	mov     ebp, esp
 	and     esp, 0FFFFFFF8h
 
-	mov     [g_float_res00], 0
+	;mov     [g_float_res00], 0
 	call    CScriptGameObject__GetHudVisual
 	test    eax, eax
 	jz      exit_fail
@@ -4874,7 +4874,7 @@ pos   = dword ptr  0Ch
 
 	mov     ecx, [ebp + pos]
 	mov     eax, [eax + ecx] ; value
-	mov     [g_float_res00], eax
+	;mov     [g_float_res00], eax
 
 exit_fail:
 	mov     esp, ebp

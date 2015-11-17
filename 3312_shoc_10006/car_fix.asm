@@ -11,14 +11,19 @@ car_fix proc
 	push    ebx
 	push    ecx
 	push    edx
-	
+
+; передаем объект машины в колбек
+	call    CGameObject__lua_game_object
+	push    0 ; who
+	push    eax ; victim
+
 ; вызываем скриптовый колбек на смерть
 	push    8h ; type = death
 	mov     ecx, edi ; ecx = this
 	call    CGameObject__callback ; eax = hit_callback
 	xor     ecx, ecx
-	push    ecx
-	push    ecx
+	;push    ecx
+	;push    ecx
 	push    eax ; callback
 
 	call    script_death_callback
@@ -35,7 +40,7 @@ car_fix proc
 
 car_fix endp
 
-g_marker db "marker_marker", 0
+;g_marker db "marker_marker", 0
 car_panel_fix proc
 	mov     ecx, ds:g_pGameLevel
 	mov     edx, [ecx]

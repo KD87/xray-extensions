@@ -1,0 +1,46 @@
+staler_outfit:get_go_float(byte)
+
+byte	:	название в структуре	:	[название в конфиге	:	значение по умолчанию]
+
+432	:	eHitTypeBurn		:	[burn_protection			:	0.5]
+436	:	eHitTypeShock		:	[shock_protection			:	0.5]
+440	:	eHitTypeStrike		:	[strike_protection			:	0.5]
+444	:	eHitTypeWound		:	[wound_protection			:	0.4]
+448	:	eHitTypeRadiation	:	[radiation_protection		:	0.5]
+452	:	eHitTypeTelepatic	:	[telepatic_protection		:	0.0]
+456	:	eHitTypeChemicalBurn:	[chemical_burn_protection	:	0.5]
+460	:	eHitTypeExplosion	:	[explosion_protection		:	0.3]
+464	:	eHitTypeFireWound	:	[fire_wound_protection		:	0.3]
+468	:	eHitTypeWound_2		:	[							:	1.0]
+472	:	eHitTypePhysicStrike:	[							:	0.0]
+
+480	:	m_fPowerLoss		:	[power_loss					:	0.87]
+
+500	:	m_additional_weight	:	[additional_inventory_weight	:	0]
+504	:	m_additional_weight2:	[additional_inventory_weight2	:	0]
+
+
+
+staler_outfit:get_inventory_item_float(byte)
+byte	:	название в структуре	:	[название в конфиге	:	значение по умолчанию]
+
+84	:	eHitTypeBurn			:	[burn_immunity			:	0.03]
+88	:	eHitTypeShock			:	[shock_immunity			:	0.03]
+92	:	eHitTypeStrike			:	[strike_immunity		:	0.01]
+96	:	eHitTypeWound			:	[wound_immunity			:	0.015]
+100	:	eHitTypeRadiation		:	[radiation_immunity		:	0.00]
+104	:	eHitTypeTelepatic		:	[telepatic_immunity		:	0.00]
+108	:	eHitTypeChemicalBurn	:	[chemical_burn_immunity	:	0.03]
+112	:	eHitTypeExplosion		:	[explosion_immunity		:	0.03]
+116	:	eHitTypeFireWound		:	[fire_wound_immunity	:	0.01]
+120	:	eHitTypeWound_2			:	[						:	1.00]
+124	:	eHitTypePhysicStrike	:	[						:	1.00]
+
+164	:	m_weight				:	[inv_weight				:	5.0]
+168	:	m_fCondition			:	[						:	1]
+
+staler_outfit:get_inventory_item_int(nil, byte)
+byte	:	название в структуре	:	[название в конфиге	:	значение по умолчанию]
+
+156	:	m_slot						[slot	:	6]
+160	:	m_cost					:	[cost	:	15000]

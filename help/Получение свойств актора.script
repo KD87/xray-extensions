@@ -1,0 +1,131 @@
+db.actor:get_actor_condition_float(float)
+db.actor:set_actor_condition_float(float)?
+float : имя в структуре : [имя в конфиге : значение по умолчанию]
+
+struct CEntityConditionSimple {
+4	: m_fHealth					: []	--# Уровень здоровья в данный момент (аналогично db.actor.health).
+8	: m_fHealthMax				: []	--# Максимальное значение здоровья.
+}
+enum ALife::EHitType {
+16	: eHitTypeBurn				: [burn_immunity		: 0.8*]
+20	: eHitTypeShock				: [shock_immunity		: 0.8*]
+24	: eHitTypeStrike			: [strike_immunity		: 0.8*]
+28	: eHitTypeWound				: [wound_immunity		: 0.8*]
+32	: eHitTypeRadiation			: [radiation_immunity	: 0.8*]
+36	: eHitTypeTelepatic			: [telepatic_immunity	: 0.8*]
+40	: eHitTypeChemicalBurn		: [chemical_burn_immunity	: 0.8*]
+44	: eHitTypeExplosion			: [explosion_immunity	: 0.8*]
+48	: eHitTypeFireWound			: [fire_wound_immunity	: 0.8*]
+52	: eHitTypeWound_2			: [						: 1]
+56	: eHitTypePhysicStrike		: [						: 1]
+{* зависит от того, на какой сложности начинаем игру.
+Как оказывается в игре есть ещё два типа урона, но как они должны зваться в конфигах - не известно, так же неизвестно используются ли они в движке вообще.}
+}
+struct CEntityCondition {
+88	: m_fPower					: []	--# Уровень выносливости в данный момент.
+92	: m_fRadiation				: []	--# Уровень радиации в данный момент.
+96	: m_fPsyHealth				: []	--# Уровень пси-здоровья в данный момент.
+100	: m_fEntityMorale			: []	--# Уровень морали в данный момент (на что влияет - непонятно).
+104	: m_fPowerMax				: []	--# Максимальное значение выносливости. 
+108	: m_fRadiationMax			: []	--# Максимальное значение радиации.
+112	: m_fPsyHealthMax			: []	--# Максимальное значение пси-здоровья.
+116	: m_fEntityMoraleMax		: []	--# Максимально значение морали.
+--# Величины изменения параметров на каждом обновлении.
+120	: m_fDeltaHealth			: []	--# Последние значение полученного здоровья (при отрицательном числе - здоровье было отнято).
+124	: m_fDeltaPower				: []	--# Последние значение полученной выносливости (при отрицательном числе - выносливости была отнята).
+128	: m_fDeltaRadiation			: []	--# Последние значение полученной радиации (при отрицательном числе - радиация была отнята).
+132	: m_fDeltaPsyHealth			: []	--# Последние значение полученного пси-здоровья (при отрицательном числе - пси-здоровье было отнято).
+136	: m_fDeltaCircumspection	: []	--# Настороженность???
+140	: m_fDeltaEntityMorale		: []	--#	Последние значение полученной морали (при отрицательном числе - мораль была отнята).
+
+struct CEntityCondition::SConditionChangeV {
+--# Скорости изменения характеристик состояния.
+144 : m_fV_Radiation			: [radiation_v			: 0.0001]	--# Скорость восстановления радиации.
+148 : m_fV_PsyHealth			: [psy_health_v			: 0.001]	--# Скорость восстановления пси-здоровья.
+152 : m_fV_Circumspection		: [						: 0.01]		--# Скорость восстановления настороженности???.
+156	: m_fV_EntityMorale			: [morale_v				: 0.0001]	--# Скорость восстановления морали.
+160 : m_fV_RadiationHealth		: [radiation_health_v	: 0.004]	--# Уменьшение здоровья при воздействии радиации.
+164 : m_fV_Bleeding				: [bleeding_v			: 0.0005]	--# Потеря крови при номинальной ране в секунду.
+168 : m_fV_WoundIncarnation		: [wound_incarnation_v	: 0.003]	--# Скорость заживления раны.
+172 : m_fV_HealthRestore		: [health_restore_v		: 0]		--# Скорость восстановления здоровья.
+}
+
+176 : m_fMinWoundSize			: [min_wound_size		: 0.0256]	--# Минимальный размер раны, после которого она считается зажившей.
+
+184 : m_fHealthHitPart			: [health_hit_part		: 1.0]		--# Процент хита, уходящий на отнимание здоровья.
+188 : m_fPowerHitPart			: [power_hit_part		: 0.1]		--# Процент хита, уходящий на отнимание силы.
+192	: m_fHealthLost				: [						:	]		--# Значение последнего полученного хита (не сбрасывается!).
+}
+
+struct CActorCondition {
+248 : m_fAlcohol				: [						: 0]		--# Уровень алкоголя в данный момент.
+252 : m_fV_Alcohol				: [alcohol_v			: -0.0003]	--# Скорость восстановления алкоголя.
+256 : m_fSatiety				: [						: 1]		--# Уровень сытости в данный момент.
+260 : m_fV_Satiety				: [satiety_v			: 0.000015]	--# Скорость уменьшения сытости.
+264 : m_fV_SatietyPower			: [satiety_power_v		: 0.000055]	--# Увеличение силы при уменьшении сытости.
+268 : m_fV_SatietyHealth		: [satiety_health_v		: 0.0001]	--# Увеличение здоровья при уменьшении сытости (ЗАЧЕМ???).
+272 : m_fPowerLeakSpeed			: [max_power_leak_speed	: 0]		--# Накопление усталости (макс граница, до которой восстанавливается сила)
+																	--# в секунду игрового времени.
+276 : m_fJumpPower				: [jump_power			: 0.01]		--# Уменьшение силы с прыжком без учета веса ноши.
+280 : m_fStandPower				: [stand_power			: -0.005]	--# Скорость восстановления выносливости (силы).
+284 : m_fWalkPower				: [walk_power			: 0.00001]	--# Уменьшение силы за секунду во время ходьбы без учета веса ноши.
+288 : m_fJumpWeightPower		: [jump_weight_power	: 0.05]		--# Уменьшение силы с прыжком с учетом веса ноши,
+																	--# для максимального допустимого веса.
+292 : m_fWalkWeightPower		: [walk_weight_power	: 0.00005]	--# Уменьшение силы за секунду во время ходьбы с учетом веса ноши,
+																	--# для максимального допустимого веса.
+296 : m_fOverweightWalkK		: [overweight_walk_k	: 5]		--# Коэффициент влияние перегрузки ноши (* на walk_weight_power).
+300 : m_fOverweightJumpK		: [overweight_jump_k	: 5]		--# Коэффициент влияние перегрузки прыжок с весом(* на jump_weight_power).
+304 : m_fAccelK					: [accel_k				: 3]		--# Коэффициент на бег (* на walk_power, walk_weight_power).
+308 : m_fSprintK				: [sprint_k				: 75]		--# Коэффициент на "sprint" бег (* на walk_power, walk_weight_power).
+312 : m_MaxWalkWeight			: [max_walk_weight		: 60]		--# Максимальный вес с которым актор может идти.
+
+320 : m_fLimpingPowerBegin		: [limping_power_begin		: 0.1]	--# Порог силы меньше которого актер начинает хромать.
+324 : m_fLimpingPowerEnd		: [limping_power_end		: 0.2]	--# Порог силы больше которого актер перестает хромать.
+328 : m_fCantWalkPowerBegin		: [cant_walk_power_begin	: 0.1]	--# Порог силы меньше которого актер не может двигаться.
+332 : m_fCantWalkPowerEnd		: [cant_walk_power_end		: 0.1]	--# Порог силы больше которого актер сможет двигаться.
+336 : m_fCantSprintPowerBegin	: [cant_sprint_power_begin	: 0.2]	--# Порог силы меньше которого актер не может бежать в спринте.
+340 : m_fCantSprintPowerEnd		: [cant_sprint_power_end	: 0.2]	--# Порог силы больше которого актер сможет бежать в спринте.
+344 : m_fLimpingHealthBegin		: [limping_health_begin		: 0.1]	--# Порог здоровья меньше которого актер начинает хромать.
+348 : m_fLimpingHealthEnd		: [limping_health_end		: 0.2]	--# Порог здоровья больше которого актер перестает хромать.
+}
+
+
+--#---------------------------------------------------------
+
+db.actor:get_actor_float (float)
+db.actor:set_actor_float (nil, new_value ,float)
+float : имя в структуре : [имя в конфиге : значение по умолчанию]
+
+976  : m_fOldTimeFactor		: [						: 0]		--# 
+980  : m_fOldOnlineRadius	: [						: 0]		--# 
+984  : m_fSleepTimeFactor	: [sleep_time_factor	: 1000]		--# 
+988  : hit_slowmo			: [						: 0]		--# 
+992  : hit_probability		: [hit_probability_gd_	: 0.4*]		--# 
+
+1192 : m_fLandingTime		: [						: 0]?		--# Время приседания?
+1196 : m_fJumpTime			: [						: -3.375]?	--# Время прыжка?
+1200 : m_fFallTime			: [						: 0.022]?	--# Время падения?
+1204 : m_fCamHeightFactor	: [camera_height_factor	: 0.85]		--# Коэффициент высоты камеры?
+
+1440 : m_fWalkAccel			: [walk_accel		: 17]
+1444 : m_fJumpSpeed			: [jump_speed		: 6]
+1448 : m_fRunFactor			: [run_coef			: 2.1]
+1452 : m_fRunBackFactor 	: [run_back_coef	: 1.8]
+1456 : m_fWalkBackFactor	: [walk_back_coef	: 0.8]
+1460 : m_fCrouchFactor		: [crouch_coef		: 0.45]
+1464 : m_fClimbFactor		: [climb_coef		: 0.7]
+1468 : m_fSprintFactor		: [sprint_koef		: 2.6]
+1472 : m_fWalk_StrafeFactor	: [					: 1]
+1476 : m_fRun_StrafeFactor	: [					: 1]
+
+1484 : m_fDispBase			: [disp_base		: 0.8**]		--# Базовая дисперсия (когда игрок стоит на месте).
+1488 : m_fDispAim			: [disp_aim			: 0.04**]
+1492 : m_fDispVelFactor		: [disp_vel_factor	: 2.0]			--# Коэффициенты на сколько процентов увеличится базовая дисперсия учитывая скорость актера.
+1496 : m_fDispAccelFactor	: [disp_accel_factor: 2.0]			--# Коэффициенты на сколько процентов увеличится базовая дисперсия если актер бежит.
+1500 : m_fDispCrouchFactor	: [disp_crouch_factor: -0.2]		--# Коэффициенты на сколько процентов увеличится базовая дисперсия если актер сидит.
+1504 : m_fDispCrouchNoAccelFactor : [disp_crouch_no_acc_factor : -0.4]
+1508 : m_vMissileOffset		: [missile_throw_offset[1] : 0.3]	--# смещение firepoint относительно default firepoint для бросания болтов и гранат.
+1512 : m_vMissileOffset		: [missile_throw_offset[2] : 0.5]
+1516 : m_vMissileOffset		: [missile_throw_offset[3] : 0.5]
+{* зависит от уровня сложности.
+** указано значение в конфигах, на самом деле, результат отличается; осуществляется перевод в радианы}

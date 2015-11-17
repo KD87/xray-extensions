@@ -1,0 +1,40 @@
+af_night_star:get_go_float (byte)
+af_night_star:set_go_float (nil, value, byte)
+byte	:	имя в структуре	:	[имя в конфиге	: значение по умолнчанию]
+
+532	:	m_TrailLightColor		:	[trail_light_color[3]	:	0.6]
+536	:	m_TrailLightColor		:	[trail_light_color[2]	:	0.7]
+540	:	m_TrailLightColor		:	[trail_light_color[1]	:	0.5]
+548	:	m_fTrailLightRange		:	[trail_light_range		:	3]
+556	:	m_fHealthRestoreSpeed	:	[health_restore_speed	:	0]
+560	:	m_fRadiationRestoreSpeed:	[radiation_restore_speed:	0.0005]
+564	:	m_fSatietyRestoreSpeed	:	[satiety_restore_speed	:	0]
+568	:	m_fPowerRestoreSpeed	:	[power_restore_speed	:	0]
+572	:	m_fBleedingRestoreSpeed	:	[bleeding_restore_speed	:	0]
+580	:	eHitTypeBurn			:	[burn_immunity			:	1.0]
+584	:	eHitTypeShock			:	[shock_immunity			:	1.0]
+588	:	eHitTypeStrike			:	[strike_immunity		:	1.0]
+592	:	eHitTypeWound			:	[wound_immunity			:	1.0]
+596	:	eHitTypeRadiation		:	[radiation_immunity		:	1.0]
+600	:	eHitTypeTelepatic		:	[telepatic_immunity		:	1.0]
+604	:	eHitTypeChemicalBurn	:	[chemical_burn_immunity	:	1.0]
+608	:	eHitTypeExplosion		:	[explosion_immunity		:	1.0]
+612	:	eHitTypeFireWound		:	[fire_wound_immunity	:	0.95]
+616	:	eHitTypeWound_2			:	[						:	1]
+620	:	eHitTypePhysicStrike	:	[						:	1]
+
+736	:	m_fJumpHeight			:	[jump_height			:	0.2]
+740	:	m_fEnergy				:	[						:	1]
+
+
+af_night_star:get_inventory_item_float (byte)
+byte	:	имя в структуре	:	[имя в конфиге	: значение по умолнчанию]
+
+164	:	m_weight				:	[inv_weight				:	0.5]
+170	:	m_fCondition			:	["состояние предмета"	:	1]
+
+af_night_star:get_inventory_item_int (nil, value, byte)
+byte	:	имя в структуре	:	[имя в конфиге	: значение по умолнчанию]
+
+156	:		m_slot				:	[slot					:	-1]
+160	:		m_cost				:	[cost					:	5000]

@@ -61,7 +61,7 @@ level_ns_extension_1:
 ;--< установка степени дождливости >---
 ;PERFORM_EXPORT_LEVEL__VOID__FLOAT               set_rain_factor, "set_rain_factor"
 PERFORM_EXPORT_LEVEL__INT__INT                  advance_game_time, "advance_game_time"
-PERFORM_EXPORT_LEVEL__FLOAT__VOID               get_float_result00, "get_float_res00"
+;PERFORM_EXPORT_LEVEL__FLOAT__VOID               get_float_result00, "get_float_res00"
 PERFORM_EXPORT_LEVEL__FLOAT__STR_INT_BOOL_STR   get_memory_float, "get_memory_float"
 PERFORM_EXPORT_LEVEL__INT__INT                  get_memory_int, "get_memory_int"
 PERFORM_EXPORT_LEVEL__BOOL__VOID                PerformRayPickQuery, "perform_ray_pick_query"
@@ -142,8 +142,8 @@ level_ns_extension_2: ; здесь надо добавлять столько раз   "mov ecx, eax" + "cal
 	mov     ecx, eax
 	call    esi
 	; для get_float_result00
-	mov     ecx, eax
-	call    esi
+	;mov     ecx, eax
+	;call    esi
 	; для get_memory_float
 	mov     ecx, eax
 	call    esi
@@ -510,12 +510,12 @@ game_GameState__UpdateTime proc near
 	retn
 game_GameState__UpdateTime endp
 
-g_float_res00 dd 0.0
+;g_float_res00 dd 0.0
 
-get_float_result00 proc
-	fld     dword ptr [g_float_res00]
-	retn
-get_float_result00 endp
+;get_float_result00 proc
+;	fld     dword ptr [g_float_res00]
+;	retn
+;get_float_result00 endp
 
 get_memory_float proc
 ;var_4           = byte ptr -4

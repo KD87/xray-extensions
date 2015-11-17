@@ -135,5 +135,5 @@ final_calc:
 	retn
 zoom_factor_fix4 endp
 
-default_fov dd 70.0
+default_fov dd 67.5
 

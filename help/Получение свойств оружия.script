@@ -1,0 +1,139 @@
+wpn_ak74u:get_wpn_float(byte)
+
+byte	:	название в структуре			:	[название в конфиге					:	значение по умолчанию]
+--# {CInventoryItem}
+164		:	m_weight						:	[inv_weight 			:	2.7]		--#	Инвентарный вес оружия (без подсоединенных вещей).
+168		:	m_fCondition					:	[						:	1.0]		--#	Текущее состояние оружия (1.0 - полностью работоспособная, 0 - испорченная).
+
+192		:	m_fControlInertionFactor		:	[control_inertion_factor	:	1.09]	--#	
+204		:	m_holder_range_modifier			:	[holder_range_modifier 		:	1.0]	--#	Во сколько раз увеличивается eye_range.
+208		:	m_holder_fov_modifier			:	[holder_fov_modifier		:	0.7]	--#	
+
+--# {CShootingObject}
+744		:	fTimeToFire						:	[?						:	0.1]	--#	
+748		:	fvHitPower						:	[hit_power[4] 			:	0.42]	--#	Убойность оружия (мастер).
+752		:	fvHitPower						:	[hit_power[3]			:	0.39]	--#	Убойность оружия (ветеран).
+756		:	fvHitPower						:	[hit_power[2] 			:	0.36]	--#	Убойность оружия (сталкер).
+760		:	fvHitPower						:	[hit_power[1] 			:	0.32]	--#	Убойность оружия (новичок).
+764		:	fHitImpulse						:	[hit_impulse			:	140.0]	--#	Импульс при попадании. Действует на мертвые тела и динамичные предметы. Чем больше значение - тем дальше отлетает тело\предмет.
+768		:	m_fStartBulletSpeed				:	[bullet_speed 			:	790.0]	--#	Скорость полёта пули в игре.
+772		:	fireDistance					:	[fire_distance			:	200]	--#	Максимальное расстояние стрельбы в игровых метрах.
+776		:	fireDispersionBase				:	[fire_dispersion_base	:	0.35]*	--#	Изначальная дисперсия (точность) оружия (чем больше значение, тем больше разброс)(рассеивание во время стрельбы в радианах).
+780		:	fTime							:	[?						:	0.0]	--#	Счетчик времени, затрачиваемого на выстрел.
+
+792		:	light_base_color				:	[light_color[1] 		:	0.6]	--#	
+796		:	light_base_color				:	[light_color[2] 		:	0.5]	--#	
+800		:	light_base_color				:	[light_color[3] 		:	0.3]	--#	
+804		:	light_base_color				:	[light_color[alpha]		:	1]		--#	
+808		:	light_base_range				:	[light_range			:	5]		--#	
+
+836		:	light_var_color					:	[light_var_color 		:	0.05]	--#	
+840		:	light_var_range					:	[light_var_range 		:	0.5]	--#	
+844		:	light_lifetime					:	[light_time 			:	0.2]	--#	
+
+864		:	vLoadedShellPoint				:	[shell_point[1] 		:	0.0]	--#	
+868		:	vLoadedShellPoint				:	[shell_point[2] 		:	0.262]	--#	
+872		:	vLoadedShellPoint				:	[shell_point[3] 		:	0.189]	--#	
+876		:	m_fPredBulletTime				:	[?						:	0.0]	--#	
+880		:	m_fTimeToAim					:	[time_to_aim 			:	1.0]	--#	
+
+--# {CWeapon}
+992		:	m_fZoomFactor					:	[?						:	67.5]	--#	Текущий фактор приближения.
+996		:	m_fZoomRotateTime				:	[?						:	0.25]	--#	Время приближения.
+1000	:	m_fIronSightZoomFactor			:	[?						:	0.0]	--#	
+1004	:	m_fScopeZoomFactor				:	[scope_zoom_factor		:	50.0]	--#	Степень увеличения картинки при использовании режима "прицеливания" или использования оптического прицела. Чем больше значение - тем меньше увеличение. значение "90" - это для ТЧ означает "ноль".
+
+1080	:	m_StrapOffset					:	[strap_position[1]		:	-0.18]	--#	Позиция (смещение) и ориентация оружия, когда он... привязан?
+1084	:	m_StrapOffset					:	[strap_position[2]		:	-0.45]	--#	
+1088	:	m_StrapOffset					:	[strap_position[3]		:	0.2]	--#	
+1092	:	m_StrapOffset					:	[strap_position[?]		:	1.0]	--#	
+1146	:	m_Offset						:	[position[1] 			:	-0.026]	--#	
+1150	:	m_Offset						:	[position[2] 			:	-0.215]	--#	
+1154	:	m_Offset						:	[position[3] 			:	0.0]	--#	
+1158	:	m_Offset						:	[position[?] 			:	1.0]	--#	
+
+1308	:	camMaxAngle						:	[cam_max_angle			:	9.0]*	--#	Максимальный угол отдачи (в радианах).
+1312	:	camRelaxSpeed					:	[cam_relax_speed		:	6.0]*	--#	Скорость возврата ствола в исходное положение после выстрела(ов) (радиан в секунду).
+1316	:	camRelaxSpeed_AI				:	[cam_relax_speed_ai		:	6.0]*	--#	Тоже самое для НПС (радиан в секунду).
+1320	:	camDispersion					:	[cam_dispersion			:	0.3]*	--#	Увеличения угла с каждым выстрелом (в радианах).
+1324	:	camDispersionInc				:	[cam_dispersion_inc		:	0.2]*	--#	Увеличение cam_dispersion с каждым выстрелом (в радианах).
+1328	:	camDispertionFrac				:	[cam_dispertion_frac	:	0.9]	--#	Ствол будет подыматься на:
+																					--# cam_dispersion*cam_dispertion_frac +- cam_dispersion*(1-cam_dispertion_frac)
+1332	:	camMaxAngleHorz					:	[cam_max_angle_horz		:	30.0]*	--#	Рандомный разброс при стрельбе (по горизонтали) (в радианах).
+1336	:	camStepAngleHorz				:	[cam_step_angle_horz	:	1.25]*	--#	Размер шага перемещения камеры при стрельбе в горизонтальном положении (в радианах).
+1340	:	fireDispersionConditionFactor	:	[fire_dispersion_condition_factor	:	5.0]	--#	Увеличение дисперсии в процентах при максимальном износе.
+1344	:	misfireProbability				:	[misfire_probability	:	0.003]	--#	Вероятность осечки при максимальном износе.
+1348	:	misfireConditionK				:	[misfire_condition_k	:	0.05]	--#	
+1352	:	conditionDecreasePerShot		:	[condition_shot_dec		:	0.0001]	--#	Увеличение износа при каждом выстреле.
+1356	:	m_fPDM_disp_base				:	[PDM_disp_base			:	1.0]	--#	
+1360	:	m_fPDM_disp_vel_factor			:	[PDM_disp_vel_factor	:	0.95]	--#	
+1364	:	m_fPDM_disp_accel_factor		:	[PDM_disp_accel_factor	:	0.95]	--#	
+1368	:	m_fPDM_disp_crouch				:	[PDM_crouch				:	1.0]	--#	
+1372	:	m_fPDM_disp_crouch_no_acc		:	[PDM_crouch_no_acc		:	1.0]	--#	
+
+1388	:	m_fMinRadius					:	[min_radius 			:	30.0]	--#	Для сталкеров, чтоб они знали эффективные границы использования оружия.
+1392	:	m_fMaxRadius					:	[max_radius 			:	100.0]	--#	
+
+--# {CWeaponAmmo}
+--<# Параметры из секции патронов находящихся в оружии (те, которые были в нём в последний момент), в моём случае это ammo_5.45x39_fmj.
+-- # Но есть и более локальные параметры в структуре, а именно отвечающие за каждый патрон CCartridge, но получить их, к сожалению не получилось.
+1484	:	m_kDist							:	[k_dist 				:	1.0]	--#	
+1488	:	m_kDisp							:	[k_disp					:	3.0]	--#	
+1492	:	m_kHit							:	[k_hit					:	1.0]	--#	
+1496	:	m_kImpulse						:	[k_impulse				:	1.0]	--#	
+1500	:	m_kPierce						:	[k_pierce				:	1.0]	--#	
+1504	:	m_kAP							:	[?						:	0.0]	--#	
+1508	:	m_kAirRes						:	[air_resistance_k		:	0.4]	--#	
+1516	:	m_impair						:	[impair					:	1.0]	--#	
+1520	:	fWallmarkSize					:	[wm_size				:	0.05]	--#	
+--#>
+
+--# {CWeapon}
+1556	:	m_hit_probability				:	[hit_probability_gd_novice	:	0.2]	--#	
+1560	:	m_hit_probability				:	[hit_probability_gd_stalker	:	0.3]	--#	
+1564	:	m_hit_probability				:	[hit_probability_gd_veteran	:	0.4]	--#	
+1568	:	m_hit_probability				:	[hit_probability_gd_master	:	0.5]	--#	
+		
+*Некотрые параметры "внутри" поделены на непонятный коэффициент равный 57.295779956917, т.е. в движке просчёт идёт в радианах, т.к. 1 радиан = 57.29578 градусов.
+
+---------------------------------------------------------------------------------------------------
+
+wpn_ak74u:get_wpn_int(nil, byte)
+
+byte	:	название в структуре			:	[название в конфиге	:	значение по умолчанию]
+
+--# {CInventoryItem}
+156		:	m_slot							:	[slot				:	2]		--#	Номер слота для оружия в инвентаре.
+160		:	m_cost							:	[cost				:	2500]	--#	Стоимость оружия.
+
+--# {CWeapon}
+1404	:	iAmmoElapsed					:	[ammo_elapsed		:	30]		--#	Текущее количество патронов в магазине\обойме.
+1408	:	iMagazineSize					:	[ammo_mag_size		:	30]		--#	Ёмкость магазина\обоймы.
+1412	:	iAmmoCurrent					:	[?					:	-1]		--#	Возможно (?) тип стрельбы (одиночные, очередь).
+1416	:	m_dwAmmoCurrentCalcFrame		:	[?					:	0]		--#	Кадр на котором просчитали кол-во патронов
+
+
+--# {CInventoryItem}
+--<# Очень любопытное значение байта.
+--# Возвращает одно из значений перечисления EItemPlace:
+--#		eItemPlaceUndefined = 0	не определено
+--#		eItemPlaceSlot		= 1	находится в слоте
+--#		eItemPlaceBelt		= 2	находится на поясе (для оружия скорее всего не вернёт)
+--#		eItemPlaceRuck		= 3	в рюкзаке
+152		:	m_eItemPlace					:	[?					:	?]		
+--#>
+
+--<# Тоже весьма любопытное значение байта.
+--# Возвращает одно из значений перечисления EWeaponStates класса CWeapon:
+--# eIdle		= 0,	просто держим в руках
+--# eFire		= 1,	стреляем
+--# eFire2		= 2,	по всей видимости стрельба из подствольника
+--# eReload		= 3,	перезарядка
+--# eShowing	= 4,	достаём
+--# eHiding		= 5,	прячем (также возвращает, когда оружие не находится в слоте)
+--# eHidden		= 6,	спрятано
+--# eMisfire	= 7,	не удалось получить
+--# eMagEmpty	= 8,	не удалось получить
+--# eSwitch		= 9,	не удалось получить
+652		:	EWeaponStates					:	[?					:	?]
+--#>

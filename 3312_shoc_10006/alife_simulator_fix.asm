@@ -18,7 +18,7 @@ alife_simulator_fix proc
 	jmp back_from_alife_simulator_fix
 alife_simulator_fix endp
 
-alife_sim_reg_msg db "alife simulator fix",0
+;alife_sim_reg_msg db "alife simulator fix",0
 
 
 CALifeSimulator__TeleportObject proc
@@ -58,9 +58,9 @@ parent_id       = dword ptr  1Ch
 
 CALifeSimulator__TeleportObject endp
 
-parent_id_fmt db "parent_id=%d",0
-game_vertex_id_fmt  db "game_vertex_id=%d",0
-level_vertex_id_fmt  db "level_vertex_id=%d",0
+;parent_id_fmt db "parent_id=%d",0
+;game_vertex_id_fmt  db "game_vertex_id=%d",0
+;level_vertex_id_fmt  db "level_vertex_id=%d",0
 
 
 release_fix proc
@@ -78,7 +78,7 @@ release_fix proc
 	call    ds:xrDebug__fail
 aHZ db "deep deep in space",0
 release_fix endp
-ignore_always1 db 0
+;ignore_always1 db 0
 aCALifeSimulator__release db "CALifeSimulator__release",0
 aObjectNotDefined db "Object to release is a zero pointer",0
 
