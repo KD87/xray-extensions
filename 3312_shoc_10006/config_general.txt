@@ -1,0 +1,4 @@
+#mode comment "//" "\n"
+#define AMMOFROMBELTFIX
+#define MIXWPNANIM
+

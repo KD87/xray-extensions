@@ -2,6 +2,38 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+;.text:1006F3C0 CALifeStorageManager__load proc near
+;
+;.text:1006F5F1                 mov     edx, ds:?g_pGamePersistent@@3PAVIGame_Persistent@@A
+;.text:1006F5F7                 mov     ecx, [edx]
+;.text:1006F5F9                 mov     eax, [ecx]
+;.text:1006F5FB                 mov     eax, [eax+38h]
+;.text:1006F5FE                 lea     edx, [esp+584h+var_204]
+org 1006F605h - shift
+	nop
+	nop
+	nop
+;.text:1006F605                 push    edx
+;.text:1006F606                 call    eax
+org 1006F608h - shift
+no_load_save_msg_lbl:
+;.text:1006F608                 mov     ecx, [ebp+0]
+
+
+
+;.text:101ACB60 CLevel__net_start_client1 proc near
+;.text:101ACC58                 push    eax
+org 101ACC59h - shift
+push    offset aS_for_loadscr ; 5
+;.text:101ACC59                 push    offset aSS_1    ; "%s %s"
+;.text:101ACC5E                 lea     edx, [esp+164h+var_100]
+
+
+; убираем троеточие в надписи под загрузочными экранами
+; функция CGamePersistent__LoadTitle
+org 10480E7Eh - shift
+	db 0 ; '%s...' заменяем на '%s'
+
 ;.text:102278F0 CWeaponMagazined__InitAddons proc near  ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+3p
 
 ;.text:10227DA4                 call    ds:?r_float@CInifile@@QAEMABVshared_str@@PBD@Z ; CInifile::r_float(shared_str const &,char const *)

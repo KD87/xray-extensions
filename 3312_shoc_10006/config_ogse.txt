@@ -1,0 +1,17 @@
+#mode comment "//" "\n"
+#define GRENADEFIC
+#define HANGLAMPFIX
+#define NEWINVENTORYSLOTS
+#define HITWITHHELMFIX
+#define ARMORSLOTGRID
+#define R2ACTORSHADOW
+#define NOSECKEYS
+#define TRACCERTEXTFIX
+#define BINOCSHUT
+#define SIGHTTEXTFIX
+#define BULLETPENFIX
+#define ACTLIGHTEXPFIX
+#define AUTOSVDIS
+#define QCKSVDIS
+#define RELATBASEFIX
+#define LOADMSGFIX
