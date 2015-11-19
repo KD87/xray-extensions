@@ -306,7 +306,9 @@ GetManualHighlight proc
 	retn
 GetManualHighlight endp
 
-g_highlight_colors dd 16 DUP(0)
+;g_highlight_colors dd 16 DUP(0)
+g_highlight_colors dd 0FF7C0000h, 0FF00007Ch, 0FF007C00h, 0FFFF7C00h
+	dd 12 DUP(0)
 
 SetHighlightColor proc
 color   = dword ptr 0Ch
