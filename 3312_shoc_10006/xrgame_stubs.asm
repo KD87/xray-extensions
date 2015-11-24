@@ -4431,6 +4431,18 @@ org 1022B847h - shift ; CWeaponMagazinedWGrenade::PlayAnimModeSwitch()
 org 101BB9B7h - shift
 	push	offset aTracerTexture
 ; =========================================================================================
+; скриптовый колбек before_update для актора
+org 101C8079h - shift
+	jmp CActor__shedule_Update_fix
+	nop
+org 101C808Eh - shift
+back_from_CActor__shedule_Update_fix:
+org 101D26D7h - shift
+	jmp CActor__net_Destroy_fix
+	nop
+org 101D26E1h - shift
+back_from_CActor__net_Destroy_fix:
+; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
 

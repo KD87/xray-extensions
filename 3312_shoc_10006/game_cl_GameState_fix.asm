@@ -87,10 +87,16 @@ doing_update:
 	cmp     [esp+18h+var_8], ebx
 	jbe     short loc_102AC542
 loc_102AC52E:
+	; if (Device.dwPrecacheFrame > 0)
+	; делаем Invalidate пока непрокэшировали, потом уже не надо
+	mov     ecx, ds:Device
+	cmp     dword ptr [ecx+0F8h], 0
+	jz      short loc_102AC542
+
 	mov     ecx, ds:g_pGamePersistent
 	mov     edx, [ecx]
 	mov     ecx, [edx+46Ch]
-	;call    ds:CEnvironment__Invalidate
+	call    ds:CEnvironment__Invalidate
 loc_102AC542:
 	pop     edi
 	pop     esi

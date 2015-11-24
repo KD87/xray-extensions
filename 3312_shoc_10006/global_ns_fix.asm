@@ -307,7 +307,13 @@ GetManualHighlight proc
 GetManualHighlight endp
 
 ;g_highlight_colors dd 16 DUP(0)
-g_highlight_colors dd 0FF7C0000h, 0FF00007Ch, 0FF007C00h, 0FFFF7C00h
+
+; colors
+; 0 - red
+; 1 - blue
+; 2 - green
+; 3 - yellow
+g_highlight_colors dd 0FFFF6464h, 0FF6464FFh, 0FF64FF64h, 0FFFFFF64h
 	dd 12 DUP(0)
 
 SetHighlightColor proc

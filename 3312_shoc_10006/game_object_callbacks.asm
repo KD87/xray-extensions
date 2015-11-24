@@ -216,7 +216,7 @@ after_save_callback endp
 ; =========================================================================================
 ; ====================================== START ============================================
 ; =========================================================================================
-; от неписей
+; хит от неписей
 CActor__HitMark_callback proc
 	; делаем вырезанное
 	call    sprintf_s64
@@ -235,7 +235,7 @@ CActor__HitMark_callback proc
 	jmp     back_from_CActor__HitMark_callback
 CActor__HitMark_callback endp
 
-; от монстров
+; хит от монстров
 CBaseMonster__HitEntity_callback proc
 	; делаем вырезанное
 	call    sprintf_s64
@@ -253,6 +253,49 @@ CBaseMonster__HitEntity_callback proc
 	; возвращаемся
 	jmp     back_from_CBaseMonster__HitEntity_callback
 CBaseMonster__HitEntity_callback endp
+
+; колбек вызывается перед первым апдейтом актора
+g_actor_first_update dd 1
+CActor__shedule_Update_fix proc
+	; делаем свое
+	cmp     [g_actor_first_update], 1
+	jnz     short exit
+	pusha
+	; вызываем колбек
+	mov     ecx, g_Actor
+	test    ecx, ecx
+	jz      short skip_callback
+	push    0 ; nil
+	push    150
+	call    CGameObject__callback
+	push    eax
+	call    script_use_callback
+skip_callback:
+	; сбрасываем флажок
+	popa
+	mov     [g_actor_first_update], 0
+exit:
+	; делаем вырезанное
+	mov     edx, [ebx+230h]
+	mov     esi, [ebp+8]
+	mov     eax, [edx+48h]
+	lea     ecx, [ebx+230h]
+	push    esi
+	call    eax
+	; возвращаемся
+	jmp     back_from_CActor__shedule_Update_fix
+CActor__shedule_Update_fix endp
+
+CActor__net_Destroy_fix:
+	; делаем свое
+	; восстанавливаем флаг
+	mov     [g_actor_first_update], 1
+	; делаем вырезанное
+	mov     edx, [eax+28Ch]
+	mov     ecx, esi
+	call    edx
+	; возвращаемся
+	jmp     back_from_CActor__net_Destroy_fix
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
