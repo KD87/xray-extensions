@@ -1,4 +1,53 @@
 #mode comment "//" "\n"
-#define AMMOFROMBELTFIX
-#define MIXWPNANIM
 
+// Различные исправления движка, консольные команды, а также скриптовые правки (новые функции, колбеки и т.д.)
+// включены по умолчанию, поскольку они не требуют дополнительных вмешательств в геймдату
+
+//#define LOAD_TITLES_FIXES
+//#define DISABLE_GRENADES_SWITCH
+//#define TRADE_ITEMS_COLORING
+#define RESTORE_SUN
+//#define HANGING_LAMP_NEW_FLAGS
+//#define EFFECTOR_ZOOM_INERTION_EXPORT
+#define AMMO_FROM_BELT
+//#define GRENADES_FROM_BELT
+//#define NEW_INVENTORY_SLOTS
+//#define AF_HITS_IN_HELMET_SLOT
+//#define ARMOR_SLOT_GRID
+//#define R2_ACTOR_SHADOW
+#define HUD_BOLT_MOUSE_WHEEL_SWITCHING
+//#define INVERT_MOUSE_WHEEL_ON_HUD
+#define PDA_TOTAL_POINTS_STATISTIC_FIX
+#define PDA_KILLS_STATISTIC_FIX_VER_1
+//#define PDA_KILLS_STATISTIC_FIX_VER_2
+//#define REMOVE_CONTROLLER_EFFECTOR
+//#define REMOVE_ALTERNATIVE_KEYBOARD_BINDING
+//#define PDA_INFOPORTIONS_FIXES
+//#define WEAPON_AIMING_INERTION
+//#define HUD_ROUND_CURSOR
+#define 3RD_PERSON_VIEW_FIX
+//#define LUMINOSITY_PROGRESS_BAR_FIX
+//#define HANDS_ON_WHEEL
+//#define DISABLE_CROSSHAIR_NPC_DETECT
+//#define ENABLE_BINDERS_IN_MP
+//#define TALK_DIST_FIX
+//#define PICK_BOLTS_FIX
+//#define REPLACE_HUD_FONT
+//#define UNLOAD_MAGAZINE_SCRIPT_FIX
+//#define DISABLE_QUICK_MEDICAMENTS
+#define WEAPON_GL_MIX_ANIMS
+//#define REPLACE_TRACCER_TEXTURE
+//#define FIRST_PERSON_DEATH
+#define CORPSES_COLLISION
+#define DISABLE_WEAPON_IN_CAR_AND_LADDER
+//#define BINOC_FIRING
+//#define AF_WORKS_FROM_ALL_INVENTORY
+//#define AF_HITS_FROM_ALL_INVENTORY
+//#define REPLACE_HUD_SCOPE_SHADER
+#define RENDER_MODELS_CLEAR
+//#define AMMO_PIERCING_FIX
+//#define ACTOR_TORCH_STATE_EXPORT
+//#define DISABLE_AUTOSAVE
+//#define DISABLE_QUICKSAVE
+//#define RELATIONS_BASE_FIX
+#define AUTOSCALING_ZOOM_FOV

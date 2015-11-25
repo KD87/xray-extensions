@@ -2429,6 +2429,9 @@ org 1014DD20h - shift
 register__critically_wounded: ; функция регистрации метода game_object с прототипом bool fun(void)
 
 ; активировать слот детекторов (8-й)
+; CInventory::CInventory()
+; убираем принудительную деактивацию => //m_slots[DETECTOR_SLOT].m_bVisible = false;
+; теперь задается из конфига
 org 102042FDh - shift
 	nop ; 6 байт размер инструкции mov [eax+89h], bl (10204303 - 102042FD)
 	nop
@@ -4517,6 +4520,8 @@ org 101C9C12h - shift
 	cmp     [ecx+0Ch], esi
 
 ; принудительная очистка пула моделей при завершении игры
+; CLevel::remove_objects()
+; Render->models_Clear(FALSE); => Render->models_Clear(TRUE);
 org 101A8C9Dh - shift
 	push	byte ptr 1
 	
@@ -4657,6 +4662,8 @@ org 10207DF1h - shift
 db	0EBh			; this is jmp rel8 opcode
 
 ; фикс подсчета суммарных очков статистики
+; SStatSectionData::GetTotalPoints()
+; res += (*it).int_count*(*it).int_points; => res += (*it).int_points;
 org 10203430h - shift
 	nop
 	nop

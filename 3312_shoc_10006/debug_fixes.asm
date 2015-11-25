@@ -182,7 +182,7 @@ fail:
 	shl eax, 16
 	or eax, esi
 	
-	CALL_ACTOR_CALLBACK_INT_INT 153, edx, eax
+	CALL_ACTOR_CALLBACK_INT_INT 179, edx, eax
 	;
 is_ok:
 	pop eax
