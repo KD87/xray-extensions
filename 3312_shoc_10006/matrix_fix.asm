@@ -8,7 +8,7 @@ matrix_fix proc
 	; делаем вырезанное
 	call    register__matrix_div_number
 	; делаем своё
-PERFORM_EXPORT__MATRIX__PMATR__FLOAT matrix__set_xform, "set_xform"
+;PERFORM_EXPORT__MATRIX__PMATR__FLOAT matrix__set_xform, "set_xform"
 PERFORM_EXPORT__MATRIX__PMATR__FLOAT matrix__transpose, "transpose"
 PERFORM_EXPORT__MATRIX__PMATR_PMATR register__matrix__mul43, matrix__mul_43
 PERFORM_EXPORT__MATRIX__PMATR__PVECTOR_PVECTOR_PVECTOR_PVECTOR register__matrix__transform_tiny_2args, matrix__transform_tiny_2args

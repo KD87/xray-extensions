@@ -6,7 +6,7 @@ global_space_ext2: ; вставка, дополн€юща€ функцию экспорта глобальных функций
 	pop     ecx
 	pop     ecx
 	; добавл€ем свой код
-	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetGameTime, "set_game_time"
+	;GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetGameTime, "set_game_time" ; not works
 	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetFloatArgs12, "set_float_args_12"
 	GLOBAL_NS_PERFORM_EXPORT__VOID__FLOAT_FLOAT SetFloatArgs34, "set_float_args_34"
 	;

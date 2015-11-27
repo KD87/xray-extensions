@@ -76,7 +76,7 @@
 ;0x102094A8 5 ; jmp CInventoryItem_destructor_fix
 0x104A067C 4 ; замена пустого виртуального метода Projector::Hit на наш
 
-0x104760D4 4 ; CAI_Stalker__IsVisibleForZones
+0x104760D4 4 ; CAI_Stalker__IsVisibleForZones ; возможность установки невидимости сталкеров для аномалий через скрипт
 ;0x10118C50 5 ; jmp CAI_Stalker__feel_touch_new_fix
 
 ;0x102196C7 5 ; jmp CWeapon__UpdateFireDependencies_internal_dbg_fix2 - отладка
@@ -93,7 +93,7 @@
 #endif
 
 ;0x1020CFD1 5 ; jmp CInventoryOwner__OnEvent_dbg_fix
-0x1020D3F5 5 ; jmp near CInventoryOwner__TransferInfo_omit_event_send
+0x1020D3F5 5 ; jmp near CInventoryOwner__TransferInfo_omit_event_send ; вырезание посылки сообщения, чтобы повторно не срабатывал колбек на получения инфопорции
 
 ;0x10253E2B 40 ; searchlight__turn_on
 
@@ -253,7 +253,7 @@
 ; скриптовые методы в CUITrackBar
 0x1040B935 5 ; jmp CUITrackBar_fix
 
-; ???
+; затычки на вылеты в CUIOptionsItem::SaveOptFloatValue и CUIComboBox::SaveValue при использовании без привязки к консольным командам
 0x103D7BC4 5 ; jmp CUIOptionsItem__SaveOptFloatValue_fix
 0x1040E540 5 ; jmp CUIComboBox__SaveValue_fix
 
