@@ -24,7 +24,7 @@ global_space_ext2_additional:
 	GLOBAL_NS_SCOPE_ADD
 	GLOBAL_NS_SCOPE_ADD
 	; добавляем свой код
-	GLOBAL_NS_SCOPE_ADD
+	;GLOBAL_NS_SCOPE_ADD
 	GLOBAL_NS_SCOPE_ADD
 	GLOBAL_NS_SCOPE_ADD
 	;

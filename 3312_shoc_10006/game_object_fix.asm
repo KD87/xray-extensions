@@ -71,10 +71,14 @@ REGISTER_VOID__INT_INT register_set_actor_int, "set_actor_int"
 
 REGISTER_INT__STRING_INT register_get_wpn_gl_int, "get_wpn_gl_int"
 REGISTER_INT__STRING_INT register_get_wpn_int, "get_wpn_int"
+REGISTER_INT__STRING_INT register_get_wpn_int8, "get_wpn_int8"
+REGISTER_INT__STRING_INT register_get_wpn_int16, "get_wpn_int16"
 ; -- to del
 REGISTER_INT__STRING_INT register_get_holder_int, "get_holder_int"
 ;
 REGISTER_VOID__INT_INT register_set_wpn_int, "set_wpn_int"
+REGISTER_VOID__INT_INT register_set_wpn_int16, "set_wpn_int16"
+REGISTER_VOID__INT_INT register_set_wpn_int8, "set_wpn_int8"
 
 ;REGISTER_INT__STRING_INT register_get_wpn_bone_id, "get_wpn_bone_id"
 REGISTER_INT__STRING_INT register_get_bone_id, "get_bone_id"
@@ -234,6 +238,10 @@ game_object_fix proc
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_gl_int, CScriptGameObject__GetWeaponGLInt
 	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_int, CScriptGameObject__GetWeaponInt
 	PERFORM_EXPORT_VOID__INT_INT register_set_wpn_int, CScriptGameObject__SetWeaponInt
+	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_int16, CScriptGameObject__GetWeaponInt16
+	PERFORM_EXPORT_VOID__INT_INT register_set_wpn_int16, CScriptGameObject__SetWeaponInt16
+	PERFORM_EXPORT_INT__STRING_INT register_get_wpn_int8, CScriptGameObject__GetWeaponInt8
+	PERFORM_EXPORT_VOID__INT_INT register_set_wpn_int8, CScriptGameObject__SetWeaponInt8
 	
 	;PERFORM_EXPORT_INT__STRING_INT register_get_wpn_bone_id, CScriptGameObject__GetWeaponBoneID
 	PERFORM_EXPORT_INT__STRING_INT register_get_bone_id, CScriptGameObject__GetBoneID
@@ -2063,6 +2071,7 @@ dbg_msg db "arg=%d", 0
 is_wpn_msg1 db "is_wpn_msg1: %x", 0
 is_wpn_msg2 db "is_wpn_msg2: %x", 0
 
+;-----32 bit
 CScriptGameObject__GetWeaponInt proc
 stub  = dword ptr  8
 pos   = dword ptr  0Ch
@@ -2118,7 +2127,118 @@ exit:
 	pop     ebp
 	retn    08h
 CScriptGameObject__SetWeaponInt endp
+;-----16 bit
+CScriptGameObject__GetWeaponInt16 proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push ecx
+	
+	call    CScriptGameObject__CWeapon
+	test    eax, eax
+	jz      short exit_fail
+	;---
+	mov     ecx, [ebp + pos]
+	movzx   eax, word ptr[eax + ecx]
+	;---
+	jmp     exit
+exit_fail:
+	xor     eax, eax
+exit:
+	pop ecx
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetWeaponInt16 endp
 
+CScriptGameObject__SetWeaponInt16 proc
+
+pos   = dword ptr  8
+value = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	push    edx
+	push    ecx
+	
+	
+	call    CScriptGameObject__CWeapon
+	test    eax, eax
+	jz      short exit
+
+	;---
+	mov     edx, [ebp + value]
+	mov     ecx, [ebp + pos]
+	mov     word ptr [eax + ecx], dx
+	;---
+exit:
+	pop     ecx
+	pop     edx
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetWeaponInt16 endp
+;----------- 8 bit
+CScriptGameObject__GetWeaponInt8 proc
+stub  = dword ptr  8
+pos   = dword ptr  0Ch
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push ecx
+	
+	call    CScriptGameObject__CWeapon
+	test    eax, eax
+	jz      short exit_fail
+	;---
+	mov     ecx, [ebp + pos]
+	movzx   eax, byte ptr [eax + ecx]
+	;---
+	jmp     exit
+exit_fail:
+	xor     eax, eax
+exit:
+	pop ecx
+	mov     esp, ebp
+	pop     ebp
+	retn    8
+CScriptGameObject__GetWeaponInt8 endp
+
+CScriptGameObject__SetWeaponInt8 proc
+
+pos   = dword ptr  8
+value = dword ptr  0Ch
+
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+	push    eax
+	push    edx
+	push    ecx
+	
+	
+	call    CScriptGameObject__CWeapon
+	test    eax, eax
+	jz      short exit
+
+	;---
+	mov     edx, [ebp + value]
+	mov     ecx, [ebp + pos]
+	mov     byte ptr [eax + ecx], dl
+	;---
+exit:
+	pop     ecx
+	pop     edx
+	pop     eax
+	mov     esp, ebp
+	pop     ebp
+	retn    08h
+CScriptGameObject__SetWeaponInt8 endp
 
 
 CScriptGameObject__GetHudBoneID proc
