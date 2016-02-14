@@ -82,6 +82,7 @@
 ;0x102196C7 5 ; jmp CWeapon__UpdateFireDependencies_internal_dbg_fix2 - отладка
 ;0x1021846B 5 ; 	jmp CShootingObject__RenderLight_dbg_fix2 - отладка
 ;0x10412EB0 5 ; jmp scroll_vew_fix
+;0x101ABA4F 5 ; jmp ping_dump_dbg_fix
 
 ;0x101E2FC5 5 ; jmp CEntityCondition__UpdateConditionTime_dbg
 ;0x102A0848 5 ; jmp game_GameState__GetGameTime_dbg_fix
@@ -551,6 +552,15 @@
 0x1022B3F0 5
 0x10234380 5
 0x102343F0 5
+#endif
+
+#ifdef NEW_WEAPON_ZOOM_FOV
+; 
+0x101C7AD5 5 ; jmp CActor__currentFOV_fix
+0x10234388 5 ; jmp CWeaponBinoculars__ZoomInc_fix ; обратно не возврашаемся, там вся функция целиком
+0x102343F8 5 ; jmp CWeaponBinoculars__ZoomDec_fix
+0x10218B8C 5 ; jmp CWeapon__CWeapon_fov_fix
+0x1021CB08 5 ; jmp CWeapon__OnZoomOut_fov_fix
 #endif
 
 ; фикс вылета при активации артефактов, не использующих lvid и gvid

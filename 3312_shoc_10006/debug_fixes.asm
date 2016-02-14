@@ -487,3 +487,12 @@ str_             = dword ptr  4
 	;
 	jmp back_from_CInventoryOwner__OnEvent_dbg_fix
 CInventoryOwner__OnEvent_dbg_fix endp
+
+ping_dump_dbg_fix proc
+	PRINT_UINT "ping = %d", esi
+	;
+	add     eax, esi
+	cmp     eax, [ebp+2008h]
+	;
+	jmp     back_from_ping_dump_dbg_fix
+ping_dump_dbg_fix endp

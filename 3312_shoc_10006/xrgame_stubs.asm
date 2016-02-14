@@ -2,6 +2,71 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+;.text:101ABA48                 mov     esi, [esp+3268h+var_308C]
+org 101ABA4Fh - shift
+	jmp ping_dump_dbg_fix
+;.text:101ABA4F                 add     eax, esi
+;.text:101ABA51                 cmp     eax, [ebp+2008h]
+org 101ABA57h - shift
+back_from_ping_dump_dbg_fix:
+;.text:101ABA57                 jnb     short loc_101ABA5D
+
+
+
+
+; глобальна€ переделка системы FOV оружи€: увеличение ствола задаЄтс€ не абсолютным значением FOV,
+; а множителем, на который умножаетс€ текущий глобальный FOV
+; по идее снимает все проблемы с настройкой и перенастройкой стволов дл€ разных FOV, а также
+; делает настройки более очевидными
+
+;.text:101C7A60 CActor__currentFOV proc near
+;...
+;.text:101C7AD5 loc_101C7AD5:
+org 101C7AD5h - shift
+	jmp CActor__currentFOV_fix
+;.text:101C7AD5                 movss   xmm0, dword ptr [esi+3E0h]
+;.text:101C7ADD                 mulss   xmm0, ds:dword_104D246C
+;.text:101C7AE5                 pop     esi
+;.text:101C7AE6                 retn
+
+;.text:10234380 CWeaponBinoculars__ZoomInc proc near
+;.text:10234380                 movss   xmm1, g_fov
+org 10234388h - shift
+	jmp CWeaponBinoculars__ZoomInc_fix ; обратно не возврашаемс€, там вс€ функци€ целиком
+;.text:10234388                 movaps  xmm0, xmm1
+
+;.text:102343F0 CWeaponBinoculars__ZoomDec proc near
+;.text:102343F0                 movss   xmm1, g_fov
+org 102343F8h - shift
+	jmp CWeaponBinoculars__ZoomDec_fix
+;.text:102343F8                 movaps  xmm0, xmm1
+
+; конструктор CWeapon::CWeapon
+;.text:10218B78                 movss   xmm0, g_fov
+;.text:10218B80                 mov     edx, ds:?g_pStringContainer@@3PAVstr_container@@A ; str_container * g_pStringContainer
+;.text:10218B86                 mov     [edi+5A8h], eax
+org 10218B8Ch - shift
+	jmp CWeapon__CWeapon_fov_fix
+;.text:10218B8C                 movss   dword ptr [edi+3E0h], xmm0
+org 10218B94h - shift
+back_from_CWeapon__CWeapon_fov_fix:
+;.text:10218B94                 xorps   xmm0, xmm0
+
+;.text:1021CB00 CWeapon__OnZoomOut proc near
+;.text:1021CB00                 movss   xmm0, g_fov
+org 1021CB08h - shift
+	jmp CWeapon__OnZoomOut_fov_fix
+;.text:1021CB08                 mov     byte ptr [ecx+3F4h], 0
+;.text:1021CB0F                 movss   dword ptr [ecx+3E0h], xmm0
+;.text:1021CB17                 mov     byte ptr [ecx+2B4h], 1
+;.text:1021CB1E                 retn
+;.text:1021CB1E CWeapon__OnZoomOut endp
+
+
+
+
+;--------------------
+
 ;.text:1006F3C0 CALifeStorageManager__load proc near
 ;
 ;.text:1006F5F1                 mov     edx, ds:?g_pGamePersistent@@3PAVIGame_Persistent@@A
