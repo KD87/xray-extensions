@@ -20,24 +20,32 @@
 ;actor_torch_light endp
 
 actor_torch_light proc
-; делаем свое. Учитывая, куда врезались, на парент проверять не надо!
+; делаем свое.
 	push	edi
+	mov		edi, [esi+18Ch]
+	test	edi, edi
+	jz		short torch_full_exit
+	movzx	edi, word ptr [edi+0A4h]
+;	PRINT_UINT "TESTING OBJECT %d", edi
+	test	edi, edi
+	jnz		short torch_full_exit		
 	mov		edi, [esi+2ACh]
 	mov		al, byte ptr [esi+2A8h]
 	test	al, 1
-	jz		torch_off
+	jz		short torch_off
 	mov		edx, yes
-	jmp		torch_exit
+	jmp		short torch_exit
 	
 torch_off:
 	mov		edx, no
 	
 torch_exit:	
+;	PRINT_UINT "TORCH FLAG IS %d", edx
 	mov		dword ptr [edi+290h], edx
+torch_full_exit:
 	pop		edi
 ; делаем затертое
-	mov     ecx, [esi+2B0h]
-	mov     edx, [ecx]
+	mov		ecx, [esi+2B4h]
 	jmp back_from_actor_torch_light
 actor_torch_light endp
 

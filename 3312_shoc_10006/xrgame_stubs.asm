@@ -4554,10 +4554,10 @@ sub_1019EF50:
 
 ; экспорт состояния включенности для источника света фонаря актора
 ;org 101DE0A2h - shift
-org 10248628h - shift
+org 10248636h - shift
 	jmp	actor_torch_light
 ;org 101DE0A7h - shift
-org 10248630h - shift
+org 1024863Ch - shift
 back_from_actor_torch_light:
 
 ; фикс сброса положения скролла при перекладывании вещей
