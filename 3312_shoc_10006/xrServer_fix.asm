@@ -12,12 +12,12 @@ xrServer__Process_event_reject_fix proc
 ;	retn    18h
 
 	push	eax
-	mov		eax, [esp+5Ch]
-	PRINT_UINT "SV REJECT: FAILED! NO ENTITY! ID = %d", eax
-	mov		eax, [esp+60h]
+	movzx	eax, word ptr[esp+5Ch]
 	PRINT_UINT "SV REJECT: FAILED! NO ENTITY! PARENT_ID = %d", eax
+	movzx	eax, word ptr[esp+60h]
+	PRINT_UINT "SV REJECT: FAILED! NO ENTITY! ID = %d", eax
 	mov		eax, [esp+4Ch]
-	PRINT_UINT "SV REJECT: FAILED! NO ENTITY! RETURN ADDRESS = %d", eax
+	PRINT_UINT "SV REJECT: FAILED! NO ENTITY! RETURN ADDRESS = %x", eax
 	pop		eax
 	
 	; уходим
