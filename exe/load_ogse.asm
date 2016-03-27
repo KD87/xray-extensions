@@ -93,6 +93,7 @@ g_CRenderTarget__phase_accumulator dd 0
 g_CRenderTarget__accum_volumetric_spot dd 0
 ;g_FProgressive__Render dd 0
 ;g_R_dsgraph_structure__r_dsgraph_render_lods dd 0
+g_render_hw_skeleton dd 0
 
 s_render_import_table STRUCT
 	dd g_CRenderTarget__phase_combine		;0h
@@ -174,5 +175,6 @@ init_external_libs proc
 	GET_PROC_ADDR g_ogse_lib_hinst, "CRenderTarget__accum_volumetric_spot", g_CRenderTarget__accum_volumetric_spot
 ;	GET_PROC_ADDR g_ogse_lib_hinst, "FProgressive__Render", g_FProgressive__Render
 ;	GET_PROC_ADDR g_ogse_lib_hinst, "R_dsgraph_structure__r_dsgraph_render_lods", g_R_dsgraph_structure__r_dsgraph_render_lods
+	GET_PROC_ADDR g_ogse_lib_hinst, "render_hw_skeleton", g_render_hw_skeleton
 	retn
 init_external_libs endp

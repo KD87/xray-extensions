@@ -51,5 +51,17 @@ exit_3:
 	and     esp, 0FFFFFFF8h
 	jmp		back_to_cer__Render
 cer__Render endp
+
+render_skeleton proc
+	mov     ecx, [esp+14h]	; count
+	push	ecx
+	mov     ecx, [esp+14h]
+	mov     ecx, [ecx+4]	; Parent
+	push	esi
+	push	ecx
+	call	g_render_hw_skeleton
+	add		esp, 0Ch
+	jmp		back_from_render_skeleton
+render_skeleton endp
 	
 __real dd 0.25

@@ -64,6 +64,7 @@
 0x00443480 5	; CEffectRain::Render()
 0x0049F4B6 5	; CTextureDescrMngr::LoadLTX()
 0x0049F800 5	; CTextureDescrMngr::LoadTHM()
+;0x00479930 5	; _render_hw_skeleton()
 
 ;============================================
 ;===============Ã≈À »≈ œ¿“◊»=================

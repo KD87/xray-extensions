@@ -589,3 +589,8 @@ back_from_vsync_fix_2:
 
 org 0048B3C0h - shift
 CHW__selectPresentInterval:
+
+org 00479930h - shift
+	jmp render_skeleton
+org 00479B8Bh - shift
+back_from_render_skeleton:
