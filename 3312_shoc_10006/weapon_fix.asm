@@ -55,6 +55,7 @@ UpdateHUDAddonsVisibility_fix proc
 	push eax
 	
 	movzx eax, byte ptr [ebp + 936]
+	;PRINT_UINT "UpdateHUDAddonsVisibility_fix: this = ebp = %d", ebp
 	;PRINT_UINT "UpdateHUDAddonsVisibility: %x", eax
 	test eax, 040h
 	jz disable_callback
@@ -67,7 +68,9 @@ UpdateHUDAddonsVisibility_fix proc
 	add     ecx, 0d8h
 	call    CGameObject__callback ; eax = callback
 	push    eax ; callback
+	;PRINT "before HUD update callback"
 	call    script_callback_int_int
+	;PRINT "after HUD update callback"
 disable_callback:
 	pop eax
 	pop ecx
@@ -123,3 +126,87 @@ lab1:
 	;PRINT_UINT "eax=%x", eax
 	retn
 CWeapon__UseScopeTexture_fix endp
+
+;CWeaponMagazined__InitAddons_fix1 proc
+;	; делаем вырезанное
+;	pop     edi
+;	pop     esi
+;	pop     ebp
+;	pop     ebx
+;	add     esp, 10h
+;	;
+;	pop ecx
+;	PRINT_UINT "CWeaponMagazined__InitAddons_fix1: this = ecx = %d", ecx
+;	retn
+;CWeaponMagazined__InitAddons_fix1 endp
+
+CWeaponMagazined__InitAddons_fix2 proc
+
+	;PRINT "CWeaponMagazined__InitAddons_fix"
+	; делаем вырезанное
+	pop     edi
+	pop     esi
+	pop     ebp
+	pop     ebx
+	add     esp, 10h
+	;
+	pop ecx
+	push ecx
+	;
+	push    1 ; признак типа, 1 - CWeaponMagazined
+	push    1 ; признак типа
+	push    158 ; константа - тип колбека
+	;mov     ecx, edi ; this
+	add     ecx, 0d8h
+	call    CGameObject__callback ; eax = callback
+	push    eax ; callback
+	call    script_callback_int_int
+	;
+	pop ecx
+	;PRINT_UINT "CWeaponMagazined__InitAddons_fix2: this = ecx = %d", ecx
+	
+	retn
+CWeaponMagazined__InitAddons_fix2 endp
+
+CWeaponMagazinedWGrenade__InitAddons_fix proc
+	push ecx
+	
+	push    2 ; признак типа, 2 - CWeaponMagazinedWGrenade
+	push    2 ; признак типа
+	push    158 ; константа - тип колбека
+	mov     ecx, esi ; this
+	add     ecx, 0d8h
+	call    CGameObject__callback ; eax = callback
+	push    eax ; callback
+	call    script_callback_int_int
+	
+	pop ecx
+
+	;PRINT "CWeaponMagazinedWGrenade__InitAddons_fix"
+	; делаем вырезанное
+	pop     esi
+	retn
+CWeaponMagazinedWGrenade__InitAddons_fix endp
+
+
+CWeaponMagazined__InitAddons_fix_dbg1 proc
+	;PRINT_UINT "CWeaponMagazined__InitAddons_fix_dbg1: edi = %d", edi
+	push    eax
+	mov     eax, [edx+20h]
+	mov     ecx, ebp
+	;
+	jmp back_from_CWeaponMagazined__InitAddons_fix_dbg1
+CWeaponMagazined__InitAddons_fix_dbg1 endp
+
+CWeaponMagazined__InitAddons_fix0 proc
+	;PRINT_UINT "CWeaponMagazined__InitAddons_fix_dbg2: ecx = %d", ecx
+	;
+	; saving this pointer
+	push ecx
+	;
+	sub     esp, 10h
+	push    ebx
+	push    ebp
+	push    esi
+	jmp back_from_CWeaponMagazined__InitAddons_fix0
+CWeaponMagazined__InitAddons_fix0 endp

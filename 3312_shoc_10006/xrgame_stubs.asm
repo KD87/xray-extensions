@@ -2,6 +2,132 @@
 ; S.T.A.L.K.E.R data stubs
 ;*******************************************************************************
 
+;.text:1022B310 CWeaponMagazinedWGrenade__InitAddons proc near 
+;.text:1022B310                 push    esi
+;.text:1022B311                 mov     esi, ecx
+;.text:1022B313                 call    CWeaponMagazined__InitAddons
+;.text:1022B318                 mov     eax, [esi]
+;.text:1022B31A                 mov     edx, [eax+134h]
+;.text:1022B320                 mov     ecx, esi
+;.text:1022B322                 call    edx
+;.text:1022B324                 test    al, al
+;.text:1022B326                 jz      loc_1022B3B1
+;.text:1022B32C                 mov     eax, [esi+3B4h]
+;.text:1022B332                 cmp     eax, 2
+;.text:1022B335                 jnz     short loc_1022B33F
+;.text:1022B337                 test    [esi+3A8h], al
+;.text:1022B33D                 jnz     short loc_1022B344
+;.text:1022B33F
+;.text:1022B33F loc_1022B33F:                           ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+25j
+;.text:1022B33F                 cmp     eax, 1
+;.text:1022B342                 jnz     short loc_1022B36E
+;.text:1022B344
+;.text:1022B344 loc_1022B344:                           ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+2Dj
+;.text:1022B344                 mov     eax, [esi+3C0h]
+;.text:1022B34A                 test    eax, eax
+;.text:1022B34C                 jz      short loc_1022B353
+;.text:1022B34E                 add     eax, 0Ch
+;.text:1022B351                 jmp     short loc_1022B355
+;.text:1022B353 ; ---------------------------------------------------------------------------
+;.text:1022B353
+;.text:1022B353 loc_1022B353:                           ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+3Cj
+;.text:1022B353                 xor     eax, eax
+;.text:1022B355
+;.text:1022B355 loc_1022B355:                           ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+41j
+;.text:1022B355                 push    offset aGrenade_vel ; "grenade_vel"
+;.text:1022B35A                 push    eax             ; _DWORD
+;.text:1022B35B                 mov     eax, ds:?pSettings@@3PAVCInifile@@A ; CInifile * pSettings
+;.text:1022B360                 mov     ecx, [eax]      ; _DWORD
+;.text:1022B362                 call    ds:?r_float@CInifile@@QAEMPBD0@Z ; CInifile::r_float(char const *,char const *)
+;.text:1022B368                 fstp    dword ptr [esi+7CCh]
+;.text:1022B36E
+;.text:1022B36E loc_1022B36E:                           ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+32j
+;.text:1022B36E                 cmp     byte ptr [esi+3DCh], 0
+;.text:1022B375                 jz      short loc_1022B3B1
+;.text:1022B377                 cmp     dword ptr [esi+298h], 0
+;.text:1022B37E                 jz      short loc_1022B3B1
+;.text:1022B380                 cmp     byte ptr [esi+958h], 0
+;.text:1022B387                 jz      short loc_1022B396
+;.text:1022B389                 mov     eax, offset aGrenade_ ; "grenade_"
+;.text:1022B38E                 push    esi
+;.text:1022B38F                 call    sub_1021AD80
+org 1022B394h - shift
+	jmp short CWeaponMagazinedWGrenade__InitAddons_lab1
+;.text:1022B394                 pop     esi
+;.text:1022B395                 retn
+;.text:1022B396 ; ---------------------------------------------------------------------------
+;.text:1022B396
+;.text:1022B396 loc_1022B396:                           ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+77j
+;.text:1022B396                 mov     ecx, esi
+;.text:1022B398                 call    sub_1021C510
+;.text:1022B39D                 test    al, al
+;.text:1022B39F                 mov     eax, offset aGrenade_normal ; "grenade_normal_"
+;.text:1022B3A4                 jnz     short loc_1022B3AB
+;.text:1022B3A6                 mov     eax, offset byte_104C885A
+;.text:1022B3AB
+;.text:1022B3AB loc_1022B3AB:                           ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+94j
+;.text:1022B3AB                 push    esi
+;.text:1022B3AC                 call    sub_1021AD80
+;.text:1022B3B1
+;.text:1022B3B1 loc_1022B3B1:                           ; CODE XREF: CWeaponMagazinedWGrenade__InitAddons+16j
+;.text:1022B3B1                                         ; CWeaponMagazinedWGrenade__InitAddons+65j ...
+org 1022B3B1h - shift
+CWeaponMagazinedWGrenade__InitAddons_lab1:
+	jmp CWeaponMagazinedWGrenade__InitAddons_fix
+;.text:1022B3B1                 pop     esi
+;.text:1022B3B2                 retn
+;.text:1022B3B2 CWeaponMagazinedWGrenade__InitAddons endp
+
+;.text:1022B3C0 CWeaponMagazinedWGrenade__UseScopeTexture proc near
+
+
+;.text:10227EC0                 push    offset aSilencer_ ; "silencer_"
+org 10227EC5h - shift
+	jmp CWeaponMagazined__InitAddons_fix_dbg1
+;.text:10227EC5                 push    eax
+;.text:10227EC6                 mov     eax, [edx+20h]
+;.text:10227EC9                 mov     ecx, ebp
+org 10227ECBh - shift
+back_from_CWeaponMagazined__InitAddons_fix_dbg1:
+;.text:10227ECB                 call    eax
+;.text:10227ECD                 test    esi, esi
+;.text:10227ECF                 jz      short loc_10227ED4
+
+org 102278F0h - shift
+	jmp CWeaponMagazined__InitAddons_fix0
+;.text:102278F0                 sub     esp, 10h
+;.text:102278F3                 push    ebx
+;.text:102278F4                 push    ebp
+;.text:102278F5                 push    esi
+org 102278F6h - shift
+back_from_CWeaponMagazined__InitAddons_fix0:
+;.text:102278F6                 xor     ebx, ebx
+
+
+
+
+; CWeaponMagazined__InitAddons proc near
+;.text:10227ED5                 call    sub_10227FC0
+org 10227EDAh - shift
+	jmp CWeaponMagazined__InitAddons_fix2
+;.text:10227EDA                 pop     edi
+;.text:10227EDB                 pop     esi
+;.text:10227EDC                 pop     ebp
+;.text:10227EDD                 pop     ebx
+;.text:10227EDE                 add     esp, 10h
+;.text:10227EE1                 retn
+;
+;.text:10227FAF loc_10227FAF:                           ; CODE XREF: CWeaponMagazined__InitAddons+6BAj
+org 10227FAFh - shift
+	jmp CWeaponMagazined__InitAddons_fix2
+;.text:10227FAF                 pop     edi
+;.text:10227FB0                 pop     esi
+;.text:10227FB1                 pop     ebp
+;.text:10227FB2                 pop     ebx
+;.text:10227FB3                 add     esp, 10h
+;.text:10227FB6                 retn
+
+
 ;.text:101ABA48                 mov     esi, [esp+3268h+var_308C]
 org 101ABA4Fh - shift
 	jmp ping_dump_dbg_fix

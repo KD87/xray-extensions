@@ -124,6 +124,15 @@
 0x1021CA2F 5 ; jmp UpdateAddonsVisibility_lab
 0x1021CA37 5 ; jmp UpdateAddonsVisibility_fix
 0x1021C632 5 ; jmp UpdateHUDAddonsVisibility_fix
+
+; колбэк на событие инициализации аддонов оружия
+0x1022B394 2 ; jmp short CWeaponMagazinedWGrenade__InitAddons_lab1
+0x1022B3B1 5 ; jmp CWeaponMagazinedWGrenade__InitAddons_fix
+0x102278F0 5 ; jmp CWeaponMagazined__InitAddons_fix0
+0x10227EDA 5 ; jmp CWeaponMagazined__InitAddons_fix1
+0x10227FAF 5 ; jmp CWeaponMagazined__InitAddons_fix2
+;0x10227EC5 5 ; jmp CWeaponMagazined__InitAddons_fix_dbg1 - debug, remove later!
+
 ;0x1021B80F 6
 
 ;0x100138F0 5 ;	jmp CHitMemoryManager__add3_fix
