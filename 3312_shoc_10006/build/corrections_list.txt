@@ -1,7 +1,11 @@
 #ifdef OGSE
-#include "config_ogse.txt"
+	#include "config_ogse.txt"
 #else
-#include "config_general.txt"
+	#ifdef PZ
+		#include "config_pz.txt"
+	#else
+		#include "config_general.txt"
+	#endif
 #endif
 
 0x10190492 5 ; jmp global_space_ext ; скриптовые методы в глобальное пространство имен (часть 1)
