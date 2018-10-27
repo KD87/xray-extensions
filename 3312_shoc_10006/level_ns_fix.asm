@@ -422,6 +422,13 @@ additional_time = dword ptr 8
 	
 	pop     ecx
 	call    game_GameState__UpdateTime
+
+	; обновляем погоду
+	mov     ecx, ds:g_pGamePersistent
+	mov     edx, [ecx]
+	mov     ecx, [edx+46Ch]
+	call    ds:CEnvironment__Invalidate
+
 	mov     esp, ebp
 	pop     ebp
 	retn
