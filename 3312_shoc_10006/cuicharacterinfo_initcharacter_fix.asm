@@ -7,7 +7,7 @@
 CUICharacterInfo__InitCharacter_fix:
 	; делаем свое
 	; раскрасим текст
-	push	255 ; B
+	push	225 ; B
 	push	190 ; G
 	push	190 ; R
 	push	255 ; A
