@@ -74,7 +74,7 @@ endif
 
 phGravity dd 19.62
 ifdef PZ_BUILD
-	g_storyline_music dd 1
+	g_storyline_music dd 0
 	hud_date dd 1
 	dump_info dd 0
 endif
