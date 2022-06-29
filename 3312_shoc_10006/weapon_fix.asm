@@ -210,3 +210,47 @@ CWeaponMagazined__InitAddons_fix0 proc
 	push    esi
 	jmp back_from_CWeaponMagazined__InitAddons_fix0
 CWeaponMagazined__InitAddons_fix0 endp
+
+; =========================================================================================
+; ========================= added by Ray Twitty (aka Shadows) =============================
+; =========================================================================================
+; ====================================== START ============================================
+; =========================================================================================
+; отключение автоматической перезарядки оружия
+;void CWeaponMagazined::switch2_Empty() {
+;	OnZoomOut();
+;	if (ParentIsActor()) {
+;		SwitchState(eIdle);
+;		OnEmptyClick();
+;	} else if (!TryReload())
+;		OnEmptyClick();
+;	else
+;		inherited::FireEnd();
+;}
+CWeaponMagazined__switch2_Empty_fix proc
+	mov     eax, [esi]
+	mov     edx, [eax+1Ch]
+	mov     ecx, esi
+	call    edx ; ParentIsActor()
+	test    eax, eax
+	jz      exit
+
+	mov     eax, [esi+288h]
+	mov     edx, [eax+28h]
+	lea     ecx, [esi+288h]
+	push    0
+	call    edx ; SwitchState(eIdle);
+	mov     ecx, esi
+	jmp     loc_10227088 ; goto OnEmptyClick();
+
+exit:
+	; делаем вырезанное
+	call    CWeaponMagazined__TryReload
+	test    al, al
+	mov     ecx, esi
+	jnz     loc_10227093 ; goto inherited::FireEnd();
+	jmp     loc_10227088 ; goto OnEmptyClick();
+CWeaponMagazined__switch2_Empty_fix endp
+; =========================================================================================
+; ======================================= END =============================================
+; =========================================================================================

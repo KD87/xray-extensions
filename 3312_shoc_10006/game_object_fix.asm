@@ -478,6 +478,10 @@ game_object_fix proc
 	PERFORM_EXPORT_BOOL__STRING CScriptGameObject__HasHudAnimation, "has_hud_animation"
 	; получить длину текущей анимации
 	PERFORM_EXPORT_INT__STRING_INT register_get_hud_animation_length, CScriptGameObject__GetHudAnimationLength
+	; установить время конца текущей анимации
+	PERFORM_EXPORT_VOID__INT CScriptGameObject__SetHudAnimationEndTime, "set_hud_animation_end_time"
+	; остановить все звуки худа
+	PERFORM_EXPORT_VOID__VOID CScriptGameObject__StopHudSounds, "stop_hud_sounds"
 	; =========================================================================================
 	; ======================================= END =============================================
 	; =========================================================================================
@@ -6620,6 +6624,48 @@ exit_fail:
 	pop     ebp
 	retn    8
 CScriptGameObject__GetHudAnimationLength endp
+
+; установить время конца текущей анимации
+CScriptGameObject__SetHudAnimationEndTime proc
+end_time = dword ptr  8
+	push    ebp
+	mov     ebp, esp
+	and     esp, 0FFFFFFF8h
+
+	call    CScriptGameObject__CHudItem
+	test    eax, eax
+	jz      short exit
+
+	mov     eax, [eax+10h] ; m_pHUD
+	test    eax, eax
+	jz      short exit
+
+	cmp     byte ptr [eax+54h], 0 ; m_bStopAtEndAnimIsRunning
+	jz      short exit
+
+	mov     ecx, [ebp+end_time]
+	mov     [eax+50h], ecx ; m_dwAnimEndTime
+exit:
+	mov     esp, ebp
+	pop     ebp
+	retn    4
+CScriptGameObject__SetHudAnimationEndTime endp
+
+; остановить все звуки худа
+CScriptGameObject__StopHudSounds proc
+	push    esi
+
+	call    CScriptGameObject__CHudItem
+	test    eax, eax
+	jz      short exit
+
+	mov     ecx, eax
+	mov     eax, [eax]
+	call    dword ptr [eax+18h] ; CHudItem::StopHUDSounds();
+exit:
+	pop     esi
+	retn
+CScriptGameObject__StopHudSounds endp
 ; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================
