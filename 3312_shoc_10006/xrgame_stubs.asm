@@ -4336,10 +4336,12 @@ org 1011E490h - shift
 ; ph_timefactor
 org 1053B6E8h - shift
 phTimefactor dd ?
-
 ; ph_gravity
 org 103581CEh - shift
 	movss xmm0, ds:phGravity
+; ENGINE_API extern Flags32 psHUD_Flags
+org 104586E0h - shift
+psHUD_Flags dd ?
 ; =========================================================================================
 ; костыль от вылета при юзе предмета из трупа
 org 103CC560h - shift

@@ -19,12 +19,14 @@ include xrrender_r1_stubs.asm
 ; позиция в том месте, где в целевой DLL начинается наша секция
 org sec1_sec2_dist
 
+include misc.asm
 include console_comm_reg_macro.asm
 include console_comm.asm
 include detail_radius_fix.asm
 include detail_density_fix.asm
 include mip_bias_fix.asm
 include bloodmarks.asm
+include sun_near_fix.asm
 	
 _CODE ENDS
 
