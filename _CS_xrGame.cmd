@@ -1,5 +1,5 @@
 @echo off
-cd 3967_cop_1602
+cd 3795_cs_10010
 if exist mydll.obj del mydll.obj
 if exist mydll.dll del mydll.dll
 if exist mydll.exp del mydll.exp
@@ -15,3 +15,5 @@ del /Q mydll.obj
 del /Q mydll.dll
 del /Q mydll.exp
 del /Q mydll.lib
+
+pause
