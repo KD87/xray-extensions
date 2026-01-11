@@ -1,0 +1,2 @@
+corrections_list.txt text=crlf linguist-language=Assembly
+config_*.txt text=crlf linguist-language=C
