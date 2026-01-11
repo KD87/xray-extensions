@@ -123,8 +123,17 @@ arg_0           = dword ptr  4
 	movss   xmm0, dword ptr [ecx+1B4h]
 	mov     edx, ds:psHUD_FOV
 	movss   [esp+94h+var_84], xmm0
-	movss   xmm0, dword ptr [eax+33Ch]
-	mulss   xmm0, dword ptr [edx]
+	;movss   xmm0, dword ptr [eax+33Ch]
+	;mulss   xmm0, dword ptr [edx]
+
+	; deg2rad(psHUD_FOV*Device.fFOV) -> deg2rad(psHUD_FOV<1.f ? psHUD_FOV*Device.fFOV : psHUD_FOV)
+	movss   xmm0, dword ptr [edx]
+	comiss  xmm0, ds:ORIG_HUD_FOV_LIMIT
+	ja      skip_mul_fov
+	; домножаем Device.fFOV если psHUD_FOV <= 1.0
+	mulss   xmm0, dword ptr [eax+33Ch]
+skip_mul_fov:
+
 	mulss   xmm0, ds:dword_1006E430
 	mulss   xmm0, ds:flt_1006E3E8
 	push    ecx             ; float
@@ -136,7 +145,7 @@ arg_0           = dword ptr  4
 	movss   xmm1, [esp+98h+var_84]
 	movss   xmm2, dword_1007981C
 	movaps  xmm0, xmm1
-	subss   xmm0, ds:flt_1006E3FC
+	subss   xmm0, ds:VIEWPORT_NEAR_HUD
 	divss   xmm1, xmm0
 	xorps   xmm0, xmm0
 	add     esp, 4
@@ -156,7 +165,7 @@ arg_0           = dword ptr  4
 	movss   dword ptr [ebx+34h], xmm0
 	movss   dword ptr [ebx+3Ch], xmm0
 	movss   dword ptr [ebx+28h], xmm1
-	mulss   xmm1, ds:dword_1006E644
+	mulss   xmm1, ds:VIEWPORT_NEAR_HUD_N
 	movss   dword ptr [ebx+2Ch], xmm2
 	movss   dword ptr [ebx+38h], xmm1
 	mov     edx, ds:Device
@@ -569,8 +578,17 @@ arg_0           = dword ptr  4
 	movss   xmm0, dword ptr [ecx+1B4h]
 	mov     edx, ds:psHUD_FOV
 	movss   [esp+94h+var_84], xmm0
-	movss   xmm0, dword ptr [eax+33Ch]
-	mulss   xmm0, dword ptr [edx]
+	;movss   xmm0, dword ptr [eax+33Ch]
+	;mulss   xmm0, dword ptr [edx]
+
+	; deg2rad(psHUD_FOV*Device.fFOV) -> deg2rad(psHUD_FOV<1.f ? psHUD_FOV*Device.fFOV : psHUD_FOV)
+	movss   xmm0, dword ptr [edx]
+	comiss  xmm0, ds:ORIG_HUD_FOV_LIMIT
+	ja      skip_mul_fov
+	; домножаем Device.fFOV если psHUD_FOV <= 1.0
+	mulss   xmm0, dword ptr [eax+33Ch]
+skip_mul_fov:
+
 	mulss   xmm0, ds:dword_1006E430
 	mulss   xmm0, ds:flt_1006E3E8
 	push    ecx             ; float
@@ -582,7 +600,7 @@ arg_0           = dword ptr  4
 	movss   xmm1, [esp+98h+var_84]
 	movss   xmm2, dword_1007981C
 	movaps  xmm0, xmm1
-	subss   xmm0, ds:flt_1006E3FC
+	subss   xmm0, ds:VIEWPORT_NEAR_HUD
 	divss   xmm1, xmm0
 	xorps   xmm0, xmm0
 	add     esp, 4
@@ -602,7 +620,7 @@ arg_0           = dword ptr  4
 	movss   dword ptr [ebx+34h], xmm0
 	movss   dword ptr [ebx+3Ch], xmm0
 	movss   dword ptr [ebx+28h], xmm1
-	mulss   xmm1, ds:dword_1006E644
+	mulss   xmm1, ds:VIEWPORT_NEAR_HUD_N
 	movss   dword ptr [ebx+2Ch], xmm2
 	movss   dword ptr [ebx+38h], xmm1
 	mov     edx, ds:Device

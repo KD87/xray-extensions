@@ -31,9 +31,9 @@ endif
 ; =========================================================================================
 REGISTER_CC_FLOAT2 g_fov, "cam_fov", 55.0, 90.0
 ifdef PZ_BUILD
-	REGISTER_CC_FLOAT2 hud_fov, "hud_fov", 0.0, 1.0
+	REGISTER_CC_FLOAT2 hud_fov, "hud_fov", 0.0, 90.0
 else
-	REGISTER_CC_FLOAT2 00506BA4h, "hud_fov", 0.0, 1.0
+	REGISTER_CC_FLOAT2 00506BA4h, "hud_fov", 0.0, 90.0
 endif
 REGISTER_CC_FLAG2 psHUD_Flags, 16, "hud_draw"
 REGISTER_CC_FLOAT2 phTimefactor, "ph_timefactor", 0.0, 10.0

@@ -44,6 +44,7 @@ include new_smap_sizes.asm
 include detail_blink_fix.asm
 include sun_near_fix.asm
 include hemi_update_fix.asm
+include hud_fov_fix.asm
 
 _code ENDS
 

@@ -452,5 +452,27 @@ org 10012F32h - shift
 org 10012EFBh - shift
 	push offset aSs_S_S_S_png
 ; =========================================================================================
+; фикс обрезки худ моделей камерой (clip plane fix)
+; R_dsgraph_structure::r_dsgraph_render_hud()
+; VIEWPORT_NEAR: 0.2f -> 0.05f
+org 1000EDC7h - shift
+	subss xmm1, ds:VIEWPORT_NEAR_HUD
+org 1000EE36h - shift
+	mulss xmm1, ds:VIEWPORT_NEAR_HUD_N
+; =========================================================================================
+; поддержка абсолютного hud_fov (требует расширения диапазона значений команды hud_fov и правку всех position у худа оружия)
+; R_dsgraph_structure::r_dsgraph_render_hud()
+; deg2rad(psHUD_FOV*Device.fFOV) -> deg2rad(psHUD_FOV<1.f ? psHUD_FOV*Device.fFOV : psHUD_FOV)
+org 1000EDACh - shift
+	jmp absolute_hud_fov_support
+	nop
+	nop
+	nop
+org 1000EDBAh - shift
+back_from_absolute_hud_fov_support:
+; ENGINE_API extern float psHUD_FOV
+org 10054398h - shift
+psHUD_FOV dd ?
+; =========================================================================================
 ; ======================================= END =============================================
 ; =========================================================================================

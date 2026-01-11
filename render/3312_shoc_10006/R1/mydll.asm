@@ -27,6 +27,7 @@ include detail_density_fix.asm
 include mip_bias_fix.asm
 include bloodmarks.asm
 include sun_near_fix.asm
+include hud_fov_fix.asm
 	
 _CODE ENDS
 
